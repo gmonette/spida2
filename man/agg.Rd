@@ -41,6 +41,32 @@ Adapted
 from \code{gsummary} in the \code{nlme} package and from \code{up} in
 the \code{spida2} package.
 }
+\examples{
+# a labor force survey with individual level data
+surv <- read.table(header = TRUE, text = "
+year sex region status
+2010   M      A employed
+2011   F      B unemployed
+2012   M      C employed
+2010   F      A employed
+2011   F      B employed
+2012   M      C out_of_labor_force
+2010   F      A employed
+2011   F      B employed
+2012   M      C out_of_labor_force
+2010   M      A employed
+2011   M      B unemployed
+2012   M      C employed
+2010   M      A employed
+2011   M      B unemployed
+2012   M      C employed
+2010   M      A employed
+2011   F      B unemployed
+2012   F      C unemployed
+")
+surv
+
+}
 \author{
 largely adapted from gsummary in Bates & Pinheiro
 }
