@@ -4,7 +4,7 @@
 \alias{cvar}
 \title{Create a contextual variable for regression}
 \usage{
-cvar(x, id, ...)
+cvar(x, id, all, na.rm, ...)
 }
 \arguments{
 \item{x}{variable to be centered or residualized within groups. If x is a
@@ -12,6 +12,12 @@ factor, cvar and dvar return matrices whose columns are named consistently
 with the names of coding variables for factors.}
 
 \item{id}{identifies clusters}
+
+\item{all}{(default FALSE) if TRUE cvar.factor returns the columns means of
+an incidence matrix including the first level. Otherwise, the first level is
+dropped for use in a linear model.}
+
+\item{na.rm}{(default TRUE) whether to drop missing values}
 }
 \description{
 cvar and dvar are designed to be used in regression formulas to

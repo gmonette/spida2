@@ -251,6 +251,10 @@ capply.default <- function ( x, by, FUN , ...) {
 #' factor, cvar and dvar return matrices whose columns are named consistently
 #' with the names of coding variables for factors.
 #' @param id identifies clusters
+#' @param all (default FALSE) if TRUE cvar.factor returns the columns means of
+#' an incidence matrix including the first level. Otherwise, the first level is
+#' dropped for use in a linear model.
+#' @param na.rm (default TRUE) whether to drop missing values
 #' @export
 #' @examples
 #' \dontrun{
@@ -264,32 +268,33 @@ capply.default <- function ( x, by, FUN , ...) {
 #' # should be included in the model
 #' }
 #' @export
-cvar <- function( x, id ,... ) UseMethod("cvar")
+cvar <- function( x, id , all, na.rm , ... ) UseMethod("cvar")
 #' @describeIn cvar
 #' @export
-cvar.factor <- function( x, id, ... ) {
-  mat <- contrasts( x) [ x,]
-  ret <- cvar(mat, id, ...)
+cvar.factor <- function(x, id, all = FALSE, na.rm = TRUE, ... ) {
+  if(all) mat <- contrasts(x, contrasts = FALSE) [ x,]
+  else mat <- contrasts(x) [x, ]
+  ret <- cvar(mat, id, na.rm = na.rm, ...)
   colnames(ret) <- colnames(mat)
   ret
 }
 #' @describeIn cvar
 #' @export
-cvar.default <- function( x, id, ... ) {
+cvar.default <- function( x, id, all , na.rm = TRUE, ... ) {
   if ( is.matrix (x) ) {
-    if ( dim(x)[2] == 1) return( cvar( x[,], id, ...))
+    if ( dim(x)[2] == 1) return( cvar( x[,], id, na.rm = na.rm, ...))
     else {
-      ret <-  cbind( cvar(x[,1], id, ...), cvar(x[,-1],id,...))
+      ret <-  cbind( cvar(x[,1], id, na.rm = na.rm, ...), cvar(x[,-1],id, na.rm = na.rm, ...))
       colnames(ret) <- colnames(x)
       return( ret )
     }
   } else {
-    capply( x, id, mean, na.rm = T)
+    capply( x, id, mean, na.rm = na.rm)
   }
 }
 #' @describeIn cvar
 #' @export
-dvar <- function( x, id ,... ) {
+dvar <- function( x, id , all , na.rm , ... ) {
   help = "
   dvar: produces group mean centering: x - cvar(x, id)
   See 'cvar'
@@ -298,24 +303,25 @@ dvar <- function( x, id ,... ) {
 }
 #' @describeIn cvar
 #' @export
-dvar.factor <- function( x, id, ... ) {
-  mat <- contrasts( x) [ x,]
-  ret <- mat - cvar(mat, id, ...)
+dvar.factor <- function( x, id, all = FALSE, na.rm = TRUE, ... ) {
+  if(all) mat <- contrasts( x, contrasts= FALSE) [ x,]
+  else mat  <- contrasts( x ) [ x,]
+  ret <- mat - cvar(mat, id, all = all, na.rm = na.rm, ...)
   colnames(ret) <- colnames(mat)
   ret
 }
 #' @describeIn cvar
 #' @export
-dvar.default <- function( x, id, ... ) {
+dvar.default <- function( x, id, all, na.rm = TRUE, ... ) {
   if ( is.matrix (x) ) {
-    if ( dim(x)[2] == 1) return( dvar( x[,], id, ...))
+    if ( dim(x)[2] == 1) return( dvar( x[,], id, na.rm = na.rm,...))
     else {
-      ret <-  cbind( dvar(x[,1], id, ...), dvar(x[,-1],id,...))
+      ret <-  cbind( dvar(x[,1], id, na.rm = na.rm, ...), dvar(x[,-1], id, na.rm = na.rm, ...))
       colnames(ret) <- colnames(x)
       return( ret )
     }
   } else {
-    x - capply( x, id, mean, na.rm = T)
+    x - capply( x, id, mean, na.rm = na.rm)
   }
 }
 

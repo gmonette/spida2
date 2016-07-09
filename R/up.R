@@ -248,6 +248,7 @@ up <- function ( object, form = formula(object),
   }
   value
 }
+
 #' na.include action
 #'
 #' From the Hmisc package, author: Frank Harrell
