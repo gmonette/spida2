@@ -10,3 +10,9 @@ disp <- function(x, head = deparse(substitute(x)))
   cat("\n::: ", head, " :::\n")
   print(x)
 }
+disp<-function(x, head = deparse(substitute(x)))
+{
+  cat("::: ", head, " :::\n")
+  print(x)
+  cat("======================\n")
+}
