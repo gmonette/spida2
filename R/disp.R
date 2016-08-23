@@ -15,4 +15,5 @@ disp<-function(x, head = deparse(substitute(x)))
   cat("::: ", head, " :::\n")
   print(x)
   cat("======================\n")
+  invisible(x)
 }

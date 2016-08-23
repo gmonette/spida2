@@ -4,19 +4,28 @@
 \alias{up}
 \title{Create a data frame at a higher level of aggregation}
 \usage{
-up(object, form = formula(object), all = FALSE, sep = "/",
-  FUN = function(x) mean(x, na.rm = TRUE), omitGroupingFactor = FALSE,
-  groups, invariantsOnly = !all, ...)
+up(object, form = formula(object), agg = NULL, sep.agg = "_",
+  all = FALSE, sep = "/", na.rm = TRUE, FUN = function(x) mean(x, na.rm
+  = na.rm), omitGroupingFactor = FALSE, groups, invariantsOnly = !all, ...)
 }
 \arguments{
-\item{object}{a data frame to be summarized.}
+\item{object}{a data frame to be aggregated.}
 
 \item{form}{a one-sided formula identifying the variable(s) in \code{object}
 that identifies clusters. e.g. ~ school/Sex to get a summary within each Sex
 of each school.}
 
+\item{agg}{(NEW: Aug 2016) a one-sided formula identifying variables to be aggregated,
+i.e. variables that vary withing cluster and that need to be aggregated 
+(within-cluster mean for numeric variables and within-cluster incidence
+proportions for factors). Default: NULL}
+
+\item{sep.agg}{(NEW: Aug 2016) separator between factor names and factor
+level for within-cluster incidence proportions. Default: '_'}
+
 \item{all}{if TRUE, include summaries of variables that vary within
-clusters, otherwise keep only cluster-invariant variables.}
+clusters, otherwise keep only cluster-invariant variables and variables
+listed in 'agg'}
 
 \item{sep}{separator to form cluster names combining more than one
 clustering variables.  If the separator leads to the same name for distinct

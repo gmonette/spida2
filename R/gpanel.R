@@ -1,8 +1,8 @@
 ##
 ## panel functions:
 ##
-## gpanel.fit incorporating gpanel.band
-## gpanel.text
+## panel.fit incorporating panel.band
+## panel.text
 ##
 ## designed to work easily with 'layer' and 'glayer' in latticeExtra
 ## Added: 2014 09 18
@@ -15,7 +15,6 @@
 #' With 'layer' and 'glayer' in 'latticeExtra', these functions can be used to easily generate fitted values and
 #' confidence or prediction bands that have a reasonable appearance whether a plot uses 'groups' or not.
 #'
-#
 #' @param data data frame to be used to add additional values of numeric variable
 #' @param form formula evaluated in data. The first term defines the variable with values to be filled in and the remaining terms define the variables to be used for grouping determining the minima and maxima within which values are added.
 #' @param n the number of values to be added between the global mininum and maximum.
@@ -38,7 +37,7 @@
 #' @author Georges Monette <georges@@yorku.ca>
 #' @examples
 #' \dontrun{
-#'   library(yscs)
+#'   library(spida2)
 #'   library(latticeExtra)
 #'   library(car)
 #'
@@ -51,7 +50,7 @@
 #'                 fit = pred$fit,
 #'                 lower = with(pred, fit - 2*se.fit),
 #'                 upper = with(pred, fit + 2*se.fit)))
-#'   p + glayer(gpanel.fit(...))
+#'   p + glayer(panel.fit(...))
 #'
 #'   ###
 #'   ### Use 'fillin' to add points in sparse regions of the predictor
@@ -76,14 +75,14 @@
 #'                  lower = z$fit - z$se,
 #'                  upper = z$fit + z$se,
 #'                  auto.key = list(space='right', lines= T)))
-#'   p + glayer( gpanel.fit(...))
-#'   p + glayer( gpanel.fit(...,  alpha = .1))
+#'   p + glayer( panel.fit(...))
+#'   p + glayer( panel.fit(...,  alpha = .1))
 #'   # Using spida:gd() to get a ggplot-like appearance
 #'   gd(3,lty=1,lwd=2)
-#'   p + glayer( gpanel.fit(...,alpha = .1))
+#'   p + glayer( panel.fit(...,alpha = .1))
 #'
 #'   ###
-#'   ###  Using gpanel.fit with no groups
+#'   ###  Using panel.fit with no groups
 #'   ###
 #'
 #'   (p <-  xyplot( income ~ education| type, z,
@@ -120,7 +119,7 @@
 #'                  layout = c(1,3),
 #'                  auto.key = list(space='right', lines= T, cex = 1.5)))
 #'
-#'   p + glayer(gpanel.fit(...))
+#'   p + glayer(panel.fit(...))
 #'   trellis.focus()
 #'   panel.identify(labels= z$occupation)
 #'   trellis.unfocus()
@@ -135,7 +134,7 @@
 #'                  par.strip.text = list(cex = 2),
 #'                  auto.key = list(space='right', lines= T, cex = 1.5)))
 #'
-#'   p + glayer( gpanel.fit(...))
+#'   p + glayer( panel.fit(...))
 #'   trellis.focus()
 #'   panel.identify(labels= z$occupation)
 #'   trellis.unfocus()
@@ -164,11 +163,11 @@
 #'                  upper = z$fit + z$se,
 #'                  auto.key = list(space='right', lines= T, cex = 1.5)))
 #'
-#'   p + layer( gpanel.fit(...))
-#'   p + layer( gpanel.fit(..., col = 'black', alpha = .1)) + layer(gpanel.labels(...))
+#'   p + layer( panel.fit(...))
+#'   p + layer( panel.fit(..., col = 'black', alpha = .1)) + layer(panel.labels(...))
 #' }
 #' @export
-gpanel.fit <-
+panel.fit <-
   function(x, y, fit, lower, upper,
            subscripts, ..., type, group.number, alpha, col, col.line, col.symbol, border = F, font, fontface)
   {
@@ -201,18 +200,18 @@ gpanel.fit <-
     }
     #  panel.polygon(c(dd$x, rev(dd$x)), c(dd$upper, rev(dd$lower)), col = col, alpha = alpha, ...)
   }
-#' @describeIn gpanel.fit to be used with 'layer' -- but, actually, identical to 'glayer'
+#' @describeIn panel.fit to be used with 'layer' -- but, actually, identical to 'glayer'
 #' @export
-panel.fit <- gpanel.fit
-#' @describeIn gpanel.fit identical to gpanel.fit but kept for backward compatibility
+gpanel.fit <- panel.fit
+#' @describeIn panel.fit identical to panel.fit but kept for backward compatibility
 #' @export
-gpanel.band <- gpanel.fit
-#' gpanel.labels: shows all labels
+panel.band <- panel.fit
+#' panel.labels: shows all labels
 #'
 #' This is an experiment in writing a function that can be
 #' called via layer or glayer without further complications
-#' e.g. \code{xyplot(......,labels = rownames(data)) + layer(gpanel.labels(...))}
-#' or  \code{xyplot(....., labels = rownames(data), subscripts = T) + glayer(gpanel.labels(...))}.
+#' e.g. \code{xyplot(......,labels = rownames(data)) + layer(panel.labels(...))}
+#' or  \code{xyplot(....., labels = rownames(data), subscripts = T) + glayer(panel.labels(...))}.
 #' For selected labels see the examples with \code{\link{trellis.focus}} and \code{\link{panel.identify}}
 #' @param x,y position of labels, usually supplied through panel call
 #' @param labels default is rownames of data
@@ -224,12 +223,12 @@ gpanel.band <- gpanel.fit
 #' trellis.unfocus()
 #' }
 #' @param labels to display
-#' @describeIn gpanel.fit
+#' @describeIn panel.fit
 #'
 # NOTE: Also include names of anything you DON'T want passed.
 #
 #' @export
-gpanel.labels <-
+panel.labels <-
   function (x, y, labels , subscripts, ...)
   {
 
@@ -248,7 +247,7 @@ gpanel.labels <-
 #' @param form formula idenfying variable x to fill in and grouping variables, g1, g2, etc.
 #'       using syntax: \code{~ x + g1 + g2} (the variable to fill in comes first)
 #' @param xpd expansion beyond range of predictor (default 1.0, i.e. no expansion)
-#' @describeIn gpanel.fit
+#' @describeIn panel.fit
 #' @export
 fillin <- function(data, form, n = 200, xpd = 1.0) {
   #       levels of g
@@ -300,7 +299,7 @@ fillin <- function(data, form, n = 200, xpd = 1.0) {
 #   xyplot( x ~ g|g2, fillin(zd, ~ x + g+g2, n =100),col='red')
 #
 # as.data.frame(tab(zd, ~g))
-# gpanel.fit ####
+# panel.fit ####
 #   Adds error bands. Uses two additional arguments:
 #   'lower' and 'upper' for the lower and upper values of the bands
 #   There are, provisionally, two versions:
@@ -309,6 +308,107 @@ fillin <- function(data, form, n = 200, xpd = 1.0) {
 #   more work with colors, etc.
 #   We'll see which approach works best.
 #
-#FUTURE: gpanel.model
-# gpanel.model( x, y, model, se = T)
-# will combine gpanel.fit and gpanel.band
+#FUTURE: panel.model
+# panel.model( x, y, model, se = T)
+# will combine panel.fit and panel.band
+
+
+
+##
+## panel functions:
+##
+## panel.box
+##
+## designed to work easily with 'layer' and 'glayer' in latticeExtra
+## Added: 2016 08 05
+## Author: GM
+##
+#' Panel functions for predicted values and SE box
+#'
+#' With 'layer' and 'glayer' in 'latticeExtra', these functions can be used to easily generate fitted values and
+#' error boxes that have a reasonable appearance whether a plot uses 'groups' or not.
+#
+#' @param data data frame to be used to add additional values of numeric variable
+#' @param form formula evaluated in data. The first term defines the variable with values to be filled in and the remaining terms define the variables to be used for grouping determining the minima and maxima within which values are added.
+#' @param xpd expansion factor to add points beyond minima and maxima. Default 1.0.
+#' @param y
+#' @param fit fitted values of a model, generally passed through 'layer' from a call to 'xyplot': e.g. \code{xyplot( y ~ x, data, groups = g, fit = data$yhat, lower = with(data, yhat - 2*se), upper = with(data, yhat + 2*se), subscripts = T)}
+#' @param lower,upper
+#' @param subscripts
+#' @param dots
+#' @param col
+#' @param group.number
+#' @param alpha
+#' @param col.symbol is used to control color when using 'groups'
+#' @param border default = FALSE for panel.band.
+#' @param font
+#' @param fontface
+#' @return The 'panel.bands', 'panel.fit', and 'panel.labels' functions are
+#'         invoked for their graphical effect.
+#' @author Georges Monette <georges@@yorku.ca>
+#' @examples
+#' \dontrun{
+#'   library(spida2)
+#'   library(latticeExtra)
+#'   library(car)
+#'   Prestige$Education <- cut(Prestige$education,
+#'          breaks = c(-Inf,8,12,+Inf), labels = c('< HS','some HS','some PS'))
+#'   Prestige$Gender <- cut(Prestige$women, breaks = c(-Inf, 10, 50, +Inf),
+#'          labels = c('Male','Mixed','Female'))
+#'
+#'   fit <- lm(income ~ Gender * Education, Prestige,
+#'       na.action = na.exclude)
+#'   pred <- with(Prestige, expand.grid(Education = levels(Education),
+#'            Gender = levels(Gender)))
+#'   pred <- cbind(pred, predict(fit, newdata = pred, se = TRUE))
+#'   pred
+#'   (p <- xyplot( fit ~ Education | Gender , pred,  
+#'                 subscripts = T, width = .5,
+#'                 fit = pred$fit,
+#'                 labels = pred$Education,
+#'                 lower = with(pred, fit - 2*se.fit),
+#'                 upper = with(pred, fit + 2*se.fit)))
+#'   gd(3,pch = 16)
+#'   p + layer(panel.fit(...))
+#'   (p <- update(p + layer(panel.box(...)), ylim = c(0, 15000), 
+#'          auto.key = list(columns= 3)))
+#'   ###### Need to fix handling of width with factor predictor   
+#'   p + layer(panel.labels(...))
+#'   
+#' # NOTE: with groups use 'glayer' instead of 'layer' 
+#' }
+#' @export
+panel.box <-
+  function(x, y, se, lower = y - se, 
+           upper = y + se, 
+           width = if(is.numeric(x)) max(diff(sort(x)))/2 else 1/2,
+           subscripts, ..., type, group.number, 
+           alpha = .9, alpha.fit = alpha, alpha.box = .3,
+           col, col.line, col.symbol, border = F, font, fontface)
+  {
+    circ <- function(x, y, width, n = 32) {
+      th <- c(seq_len(n)*2*pi/n, NA)
+      xyscale <- current.panel.limits()
+      ytox <- diff(xyscale$ylim)/diff(xyscale$xlim)
+      cbind(c(as.numeric(x) + width*sin(th)/2), c(y+width*ytox*cos(th)/2))
+    }  
+    if(missing(col)) col <- 'blue'
+    if(!missing(group.number)) col <- col.symbol
+    pmat <- do.call(rbind, lapply(seq_along(x), function(ii) circ(x[ii], y[ii], width = width)))
+    panel.polygon(pmat, col = col, border = TRUE, alpha = alpha.fit, ...)
+    # modify to allow width to vary 
+    if(is.null(width)) width <- min(diff(x), na.rm = TRUE)/2
+    if(!missing(lower)){
+      if( missing(alpha) || alpha == 1) alpha <- .3
+      if( !missing(subscripts) ) {
+        upper <- upper[subscripts]
+        lower <- lower[subscripts]
+      }
+      xx <- c(rbind(x,x,x,x,NA))
+      xx <- xx + c(-1,-1,1,1,NA)*width/2  
+      yy <- c(rbind(lower,upper,upper,lower,NA))
+      panel.polygon(xx,yy,
+                     border = border, col = col, alpha = alpha.box,...)
+    }
+  }
+

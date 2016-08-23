@@ -94,12 +94,19 @@ varLevel <- function(x, form, ...) {
 #' easier to use and to make an equivalent of \code{gsummary} available when
 #' using \code{lme4}.
 #'
-#' @param object a data frame to be summarized.
+#' @param object a data frame to be aggregated.
 #' @param form a one-sided formula identifying the variable(s) in \code{object}
 #' that identifies clusters. e.g. ~ school/Sex to get a summary within each Sex
 #' of each school.
+#' @param agg (NEW: Aug 2016) a one-sided formula identifying variables to be aggregated,
+#'        i.e. variables that vary withing cluster and that need to be aggregated 
+#'        (within-cluster mean for numeric variables and within-cluster incidence
+#'        proportions for factors). Default: NULL 
+#' @param sep.agg (NEW: Aug 2016) separator between factor names and factor
+#'        level for within-cluster incidence proportions. Default: '_'        
 #' @param all if TRUE, include summaries of variables that vary within
-#' clusters, otherwise keep only cluster-invariant variables.
+#'        clusters, otherwise keep only cluster-invariant variables and variables
+#'        listed in 'agg'
 #' @param sep separator to form cluster names combining more than one
 #' clustering variables.  If the separator leads to the same name for distinct
 #' clusters (e.g. if var1 has levels 'a' and 'a/b' and var2 has levels 'b/c'
@@ -142,10 +149,12 @@ varLevel <- function(x, form, ...) {
 #' @author largely from gsummary in Bates & Pinheiro
 #' @export
 up <- function ( object, form = formula(object),
-                 all = FALSE, sep = "/",
-                 FUN = function(x) mean(x, na.rm = TRUE),
-                 omitGroupingFactor = FALSE,
-                 groups, invariantsOnly = !all , ...)
+           agg = NULL, sep.agg = "_",
+           all = FALSE, sep = "/",
+           na.rm = TRUE,
+           FUN = function(x) mean(x, na.rm = na.rm),
+           omitGroupingFactor = FALSE,
+           groups, invariantsOnly = !all , ...)
 {
   if (!inherits(object, "data.frame")) {
     stop("Object must inherit from data.frame")
@@ -168,7 +177,25 @@ up <- function ( object, form = formula(object),
   } else {
     groups <- as.factor(sel.mf[[1]])
   }
-
+  
+  if(!is.null(agg)) {
+    agg.mf <- model.frame(agg, object, na.action = na.include)
+    
+    #ret <- object
+    for (i in seq_along(agg.mf)) {
+      x <- agg.mf[[i]]
+      if(is.factor(x)) {
+        mat <- cvar(x, sel.mf, all = T, na.rm = na.rm)
+        colnames(mat) <- paste0(names(agg.mf[i]),sep.agg,colnames(mat))
+      }
+      else {
+        mat <- cvar(x, sel.mf, na.rm = na.rm, ...)
+        mat <- data.frame(x=mat)
+        names(mat) <- names(agg.mf[i])
+      }
+      object <- cbind(object, mat)
+    }
+  }
   gunique <- unique(groups)
   firstInGroup <- match(gunique, groups)
   asFirst <- firstInGroup[match(groups, gunique)]
@@ -215,7 +242,7 @@ up <- function ( object, form = formula(object),
                                             groups, FUN[['numeric']],...))
           }
           value[[nm]] <- do.call(cbind, ret)
-
+          
         } else {
           value[[nm]] <- as.vector(tapply(object[[nm]],
                                           groups, FUN[["numeric"]], ...))
@@ -249,6 +276,7 @@ up <- function ( object, form = formula(object),
   value
 }
 
+
 #' na.include action
 #'
 #' From the Hmisc package, author: Frank Harrell
@@ -266,3 +294,56 @@ function (obj)
     }
     obj
 }
+#' Apply a function to clusters of rows in a data frame
+#' 
+#' Apply a function to clusters of rows in a data frame and return
+#' the result so it is conformable with the data frame created by
+#' 'up' applied to the same data frame and same clustering formula
+#' 
+#' @param object a data frame as source for an aggregated result
+#' @param form a one-sided formula identifying the variable(s) in \code{object}
+#' that identifies clusters. e.g. ~ school/Sex to get a summary within each Sex
+#' of each school
+#' @param FUN a function to be applied to each data frame consisting of a 
+#'        cluster of rows of 'object'. The most common choice is \code{\link{with}} so that
+#'        '...' can be an expression using variable names in 'object'. 
+#' @param ... other arguments to FUN, frequently when FUN is 'with', an expression 
+#'        using variable names in 'object'        
+#' @examples
+#' zd <- data.frame(a=c('a','a','b','b','c','c','c'),
+#'       b = c("B","B","A","B","C","D","D"), x = 1:7, y = 11:17)
+#' zd$n <- capply(zd$x, zd[c('a','b')], length)
+#' zdu <- up(zd, ~a, agg = ~b)
+#' zdu
+#' zdu$p <- up_apply(zd, ~ a, with, sum(x)/sum(y))
+#' zdu
+#' @export
+up_apply <-
+  function ( object, form, FUN , ...,  sep = '/') {
+    sel.mf <- model.frame( form , object , na.action = na.include )
+    narows <- apply(sel.mf,1,function(x) any(is.na(x)))
+    if(any(narows)) {
+      warning("Rows with NAs in grouping variable(s) are omitted")
+      sel.mf <- droplevels(sel.mf[!narows,,drop=FALSE])
+      object <- object[!narows,,drop=FALSE]
+    }
+    if ( ncol(sel.mf) > 1) {
+      sel <- apply( sel.mf, 1 , paste, collapse = sep)
+      groups <- as.factor(sel)
+      # Check if sep works to create unique group combinations
+      sel2 <- apply(sel.mf,1, paste, collapse = as.character(sample(1000:9999,1)))
+      if ( length( unique(sel)) != length( unique(sel2))) {
+        stop( 'distinct grouping combinations have the same name: change the "sep" argument')
+      }
+    } else {
+      groups <- as.factor(sel.mf[[1]])
+    }
+    
+    FUN <- match.fun(FUN)
+    # if (inherits(by,'formula')) by <- model.frame( by , x , na.action = na.include)
+    # if (is.character(by)) by <- factor(by)
+    # if (is.factor(by)) by <- as.numeric(by)
+    ret <- sapply ( split ( object , groups ), FUN, ...)
+    if(is.null(dim(ret))) ret else t(ret)
+  }
+
