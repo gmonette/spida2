@@ -16,7 +16,13 @@
 ###
 ###    Incorporate testing from package rdc
 ####
-
+disp <- function(x, head = deparse(substitute(x)))
+{
+  cat("::: ", head, " :::\n")
+  print(x)
+  cat("======================\n")
+  invisible(x)
+}
 # Changes:
 # 2014:
 #   October 16: added tab.table, tab.matrix, tab.array
@@ -24,7 +30,10 @@
 # TODO: update tab.Rd to explain new features in Tab
 # and keep = "All"
 
-#' @export
+#' Display matrix
+#'
+#' Transform a matrix of test results for display
+#' 
 .mat2arr <- function(x) {
       ret <- as.list(x)
       dim(ret) <- NULL
@@ -37,8 +46,8 @@
       names(ret) <- nams
       ret
 }
-#mat2arr( zza)
-
+#' Drop last facet of array
+#'
 #' @export
 dropLast <- function( mat ,drop = FALSE, keep = NULL) {
   # NEW: 2013-08-20, G. Monette
@@ -62,18 +71,21 @@ dropLast <- function( mat ,drop = FALSE, keep = NULL) {
 #'
 #' @param mat a matrix, array or table
 #' @param names_to_drop (default "Total")
-#' @drop (default FALSE) should one-element dimension be dropped as dimensions
+#' @param drop (default FALSE) should one-element dimension be dropped as dimensions
 #' @seealso tab, Tab, dropLast
 #' @export
 dropLastTotal <- function (mat, names_to_drop = "Total", drop = FALSE) {
   cl <- class(mat)
   last <- function(x) x[length(x)]
-  cutlast <- function(x) x[-length(x)]
+  cutlast <- function(x) if(length(x)>0) x[-length(x)] else x
   ind.last <- dim(mat)
   ns <- dimnames(mat)
+  # disp(ns)
   keep <- lapply(ind.last, seq_len)
   # disp(keep)
   for(i in seq_along(keep)) {
+    # disp(i)
+    # disp(keep[[i]])
     if( last(ns[[i]]) %in% names_to_drop) keep[[i]] <- cutlast(keep[[i]])
   }
   # disp(keep)
@@ -126,7 +138,7 @@ dropLastTotal <- function (mat, names_to_drop = "Total", drop = FALSE) {
 #'
 #' @export
 tab <- function(x,...) UseMethod("tab")
-#' @describeIn tab
+#' @describeIn tab method class table
 #' @export
 tab.table <- function(x,...) {
     data <- as.data.frame(x)
@@ -134,16 +146,16 @@ tab.table <- function(x,...) {
     data$Freq <- NULL
     tab.data.frame(data, ..., weights = wt)
 }
-#' @describeIn tab
+#' @describeIn tab method for matrices
 #' @export
 tab.matrix <- function(x,...) tab(as.table(x),...)
-#' @describeIn tab
+#' @describeIn tab method for arrays
 #' @export
 tab.array <- function(x,...) tab(as.table(x),...)
-#' @describeIn tab
+#' @describeIn tab method for formulas
 #' @export
 tab.formula <- function( fmla, data = sys.frame(sys.parent()), ... ) tab.data.frame(data,fmla,...)
-#' @describeIn tab
+#' @describeIn tab method for data frames
 #' @export
 tab.data.frame <-
   function (dd, fmla,
@@ -180,7 +192,7 @@ tab.data.frame <-
   do.call("tab", xx)
 }
 
-#' @describeIn tab
+#' @describeIn tab default method
 #' @export
 tab.default <- function (..., total.margins = TRUE,
                          pct = NULL, pr = NULL,
@@ -232,10 +244,10 @@ tab.default <- function (..., total.margins = TRUE,
 }
 #' Transform a frequency table into relative frequencies relative to a margin.
 #'
-#' @param x
-#' @param MARGIN
-#' @param total.margin
-#' @param all.label
+#' @param x a table
+#' @param MARGIN on which to condition
+#' @param total.margin logical whether to include a total margin (default TRUE)
+#' @param all.label label for marginal distribution
 #' @export
 acond <- function (x, MARGIN = NULL, total.margins = TRUE, all.label = "All")
 {
@@ -289,10 +301,10 @@ aprop <- acond    # older name
 #' atotal adds by default a border of sums to an array. The function FUN may be used instead of 'sum'. Additional
 #' arguments to FUN can also be given.
 #'
-#' @param arr
-#' @param FUN
-#' @param label
-#' @param \dots
+#' @param arr array for which margins need to be added
+#' @param FUN function to compute margins, default: sum 
+#' @param label for margin, default: 'Total'
+#' @param \dots additional arguments to 'FUN'
 #' @author Georges Monette
 #' @return an array with dimension dim(arr) + 1
 #' @export
@@ -454,5 +466,33 @@ tab_ <- function(..., names_to_drop = "Total") {
 pab <- tab_     # legacy
 #' @export
 Tab <- tab_    # future?
-
-
+#' Return a table as as data frame
+#' 
+#' @param data a data frame
+#' @param fmla a one-sided or two-sided formula
+#' @param \dots other arguments to \code{\link{tab}}
+#' 
+#' @details The right hand side of 'fmla' is used for the dimensions of the table. The 
+#' left-hand side, if present, is summed to generate the values in the cells of the table. If there is no
+#' left-hand side, cell frequencies are shown.   
+#' 
+#' \code{tab_df(data, fmla)} is similar in effect to \code{as.data.frame(tab_(data, fmla))} except
+#' that the former uses the name in the LHS of \code{fmla} as a variable name for counts while the latter
+#' uses 'Freq'. Also, \code{tab_df} preserved ordered factors.
+#'  
+#' @export
+tab_df <- function(data, fmla, ...){
+  if(missing(fmla)) ret <- as.data.frame( tab_(data, ...))
+  else if (length(fmla) >2 ) {
+    nam <- as.character(fmla)[2]
+    ret <- as.data.frame(tab_(data, fmla, ...))
+    ret[[nam]] <- ret$Freq
+    ret$Freq <- NULL
+  } else ret <- as.data.frame(tab_(data, fmla, ...))
+  nams.fac <- intersect(names(data)[sapply(data,is.factor)], names(ret))
+  for( nn in nams.fac) {
+    if(is.ordered(data[[nn]])) ret[[nn]] <- ordered(ret[[nn]],levels = levels(data[[nn]]))
+    else ret[[nn]] <- factor(ret[[nn]], levels = levels(data[[nn]]))
+  }
+  ret
+}
