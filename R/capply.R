@@ -194,7 +194,7 @@ capply.default <- function ( x, by, FUN , ...) {
   ret
 }
 
-# test on huge data frame
+# test on large data frame
 #
 # zh <- data.frame( a <-factor( sample(1:1000, 100000, rep = T) ), x = rnorm(100000))
 # system.time(
@@ -229,7 +229,7 @@ capply.default <- function ( x, by, FUN , ...) {
 # system.time(
 #       ret <- capply(cbind(x,a)~a, zh, with , x )  #  5.04    0.06    5.36
 # )
-
+##
 ##
 ##   cvar: V0.1 August 15, 2006
 ##   Creating contextual variables for categorical variables
