@@ -6,6 +6,15 @@
 \usage{
 atotal(arr, FUN = sum, label = "Total", ...)
 }
+\arguments{
+\item{arr}{array for which margins need to be added}
+
+\item{FUN}{function to compute margins, default: sum}
+
+\item{label}{for margin, default: 'Total'}
+
+\item{\dots}{additional arguments to 'FUN'}
+}
 \value{
 an array with dimension dim(arr) + 1
 }

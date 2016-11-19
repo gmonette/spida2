@@ -10,6 +10,8 @@ dropLastTotal(mat, names_to_drop = "Total", drop = FALSE)
 \item{mat}{a matrix, array or table}
 
 \item{names_to_drop}{(default "Total")}
+
+\item{drop}{(default FALSE) should one-element dimension be dropped as dimensions}
 }
 \seealso{
 tab, Tab, dropLast

@@ -9,6 +9,15 @@ acond(x, MARGIN = NULL, total.margins = TRUE, all.label = "All")
 
 aprop(x, MARGIN = NULL, total.margins = TRUE, all.label = "All")
 }
+\arguments{
+\item{x}{a table}
+
+\item{MARGIN}{on which to condition}
+
+\item{all.label}{label for marginal distribution}
+
+\item{total.margin}{logical whether to include a total margin (default TRUE)}
+}
 \description{
 Transform a frequency table into relative frequencies relative to a margin.
 }

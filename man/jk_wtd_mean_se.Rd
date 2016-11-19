@@ -134,10 +134,11 @@ sum(ds$w_o_s1)
 
 with(ds, wtd_mean(Income, w_o_s1))
 with(ds, jk_wtd_mean_se(Income, list(Gender,State), w_o_s1))
-#' #### Gender gap in mean salary in Utah
 
-With linear combinations, we can estimate population parameters that can't be
-estimated as weighted means. For example, the Gender gap in Utah:
+#### Gender gap in mean salary in Utah
+
+# With linear combinations, we can estimate population parameters that can't be
+# estimated as weighted means. For example, the Gender gap in Utah:
 
 coeffs <- with(ds, 
                std((State == "Utah") * (Gender == "Male") * w_o_ht)

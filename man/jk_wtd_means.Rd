@@ -2,7 +2,7 @@
 % Please edit documentation in R/survey.R
 \name{jk_wtd_means}
 \alias{jk_wtd_means}
-\title{Post-stratification jacknife estimates}
+\title{Post-stratification jacknife estimates of standard error}
 \usage{
 jk_wtd_means(x, by, w, check = TRUE, FUN = wtd_mean)
 }

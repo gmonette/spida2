@@ -3,20 +3,39 @@
 \name{tab}
 \alias{Tab}
 \alias{tab}
+\alias{tab.array}
 \alias{tab.data.frame}
 \alias{tab.default}
 \alias{tab.formula}
+\alias{tab.matrix}
+\alias{tab.table}
 \title{Table of frequencies or relative frequencies bordered with totals and
 including NAs}
 \usage{
 tab(x, ...)
+
+\method{tab}{table}(x, ...)
+
+\method{tab}{matrix}(x, ...)
+
+\method{tab}{array}(x, ...)
+
+\method{tab}{formula}(fmla, data = sys.frame(sys.parent()), ...)
+
+\method{tab}{data.frame}(dd, fmla, total.margins = TRUE, useNA = "ifany",
+  pct = NULL, pr = NULL, test = FALSE, weights = NULL, na.rm = NULL,
+  all.label = "All")
+
+\method{tab}{default}(..., total.margins = TRUE, pct = NULL, pr = NULL,
+  useNA = "ifany", test = FALSE, weights = NULL, na.rm = NULL,
+  all.label = "All")
 }
 \arguments{
-\item{\dots}{as with \code{table}, one or more objects which can be interpreted as factors (including character strings), or a list (or data frame) whose components can be so interpreted.}
+\item{fmla}{a formula whose right-hand side names the variables to be used for tabulation. The optional left-hand side specifies a variable to be used for weights.}
 
 \item{data}{a data frame in which formula are interpreted}
 
-\item{fmla}{a formula whose right-hand side names the variables to be used for tabulation. The optional left-hand side specifies a variable to be used for weights.}
+\item{total.margins}{if FALSE, generate table without margins}
 
 \item{useNA}{whether to include NA levels. The default is "ifany". Can also
 be set to "no" or "always".}
@@ -26,10 +45,10 @@ be set to "no" or "always".}
 
 \item{pr}{margins to be scaled to sum to 1. This is the vector of margin indices on which percentages are conditioned.}
 
-\item{total.margins}{if FALSE, generate table without margins}
-
 \item{weights}{(not working temporarily) instead of generating a frequency table, generate a table
 with the sum of the weights}
+
+\item{\dots}{as with \code{table}, one or more objects which can be interpreted as factors (including character strings), or a list (or data frame) whose components can be so interpreted.}
 
 \item{keep}{names of margins to keep with 'Tab', default = "All". To drop
 all margins, use default = "".}
@@ -43,6 +62,20 @@ be frequencies, relative frequencies, percentages or sums of weights.
 Generates a table of frequencies or relative frequencies or relative
 percentages
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{table}: method class table
+
+\item \code{matrix}: method for matrices
+
+\item \code{array}: method for arrays
+
+\item \code{formula}: method for formulas
+
+\item \code{data.frame}: method for data frames
+
+\item \code{default}: default method
+}}
 \examples{
 titanic <- as.data.frame(Titanic)
 head(titanic)

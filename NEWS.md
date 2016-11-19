@@ -1,5 +1,7 @@
+2016-11-17
+* Added 'Levels' function: self-named vector for 'lapply'
 2016-09-13
-* incoporated chages to tab and added new tab_df from WWCa
+* incoporated changes to tab and added new tab_df from WWCa
 2016-08-12
 * modified 'up' by adding 'agg' parameter
 * added 'gpanel.box' to work like 'gpanel.fit' to create confidence interval boxes
