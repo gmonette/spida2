@@ -5,6 +5,7 @@
 #' @param x object that can be used to name itself.
 #' @param force (default FALSE) should x replace its name if it already has one.
 #' @return x with names equal to x
+#' @seealso \code{\link{anon}}
 #' @export
 auto <- function(x, force = FALSE) {
   if(is.null(names(x)) || force) names(x) <- x
@@ -13,3 +14,4 @@ auto <- function(x, force = FALSE) {
 #' @rdname auto
 #' @export
 autonym <- auto
+#' @export

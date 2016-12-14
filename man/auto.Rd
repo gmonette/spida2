@@ -20,4 +20,7 @@ x with names equal to x
 \description{
 Uses x to name x. Useful in when applying \code{\link{lapply}} to a character vector. Should probably be called 'autonym'.
 }
+\seealso{
+\code{\link{anon}}
+}
 
