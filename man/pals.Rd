@@ -2,11 +2,21 @@
 % Please edit documentation in R/graphics.R
 \name{pals}
 \alias{pals}
-\title{Display colors n at a time}
+\title{Display selected colors n at a time}
 \usage{
-pals(pp = 30)
+pals(pattern = "", ignore = "^gray[0-9]|^grey[0-9]", n = 30,
+  ask = FALSE)
+}
+\arguments{
+\item{pattern}{match to select colors}
+
+\item{ignore}{match to ignore colors (default 'grey|gray')}
+
+\item{n}{maximum number to show in one page (default 30)}
+
+\item{ask}{(default FALSE) prompt for new page}
 }
 \description{
-Display colors n at a time
+Display selected colors n at a time
 }
 

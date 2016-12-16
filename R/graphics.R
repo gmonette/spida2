@@ -565,17 +565,28 @@ pal <- function(col=c('blue','pink'), border = "light gray", ...) {
      dimnames(ret)[[2]] <- col
      t(ret)
 }
-#' Display colors n at a time
+#' Display selected colors n at a time
 #'
-#' @param pp
+#' @param pattern match to select colors
+#' @param ignore match to ignore colors (default 'grey|gray') 
+#' @param n maximum number to show in one page (default 30)
+#' @param ask (default FALSE) prompt for new page
 #' @export
-pals <- function(pp=30){
-    n <- length(cc <- colors())
+pals <- function(pattern = '', ignore = '^gray[0-9]|^grey[0-9]', 
+                 n = 30, ask = FALSE){
+    if(is.numeric(pattern)) {
+      n <- pattern
+      pattern <- ''
+    }
+    cc <- grep(pattern, colors(), value = TRUE)
+    if( !is.null(ignore) && !(ignore == '')) {
+      cc <- grep(ignore, cc, value = TRUE, invert = TRUE)
+    }
+    N <- length(cc)
     ii <- 1
-    while( ii < n ){
-
-        pal(cc[ii:min(ii+pp,n)], ask = TRUE)
-        ii <- ii + pp + 1
+    while( ii < N ){
+        pal(cc[ii:min(ii+n,N)], ask = ask)
+        ii <- ii + n + 1
     }
 }
 
@@ -587,15 +598,33 @@ pals <- function(pp=30){
 #' @param ll
 #' @export
 change <- function(x,ll) {
-    #
-    # Modifies elements in a list
-    # Ideal for changing ... arguments in calls to panel.groups etc.
-    #
-    nams <- names(ll)
-    for ( ii in  seq_along(ll) ) {
-        x[[nams[ii]]] <- ll[[ii]]
-    }
-    x
+  #
+  # Modifies elements in a list
+  # Ideal for changing ... arguments in calls to panel.groups etc.
+  #
+  nams <- names(ll)
+  for ( ii in  seq_along(ll) ) {
+    x[[nams[ii]]] <- ll[[ii]]
+  }
+  x
+}
+#' Replace elements of x with correspondingly named elements of ll
+#'
+#' @param x list or vector some of whose elements will be replaced or appended to
+#' @param ... elements for replacement or appending
+#' @export
+change <- function(x,...) {
+  #
+  # Modifies elements in a list
+  # Ideal for changing ... arguments in calls to panel.groups etc.
+  #
+  ll <- list(...)
+  nams <- names(ll)
+  if(is.null(nams)) nams <- rep('',length(ll))
+  for ( ii in  seq_along(ll) ) {
+    x[[nams[ii]]] <- ll[[ii]]
+  }
+  x
 }
 
 #' Panel function to display subgroups within groups within panels

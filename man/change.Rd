@@ -4,9 +4,18 @@
 \alias{change}
 \title{Replace elements of x with correspondingly named elements of ll}
 \usage{
-change(x, ll)
+change(x, ...)
+
+change(x, ...)
+}
+\arguments{
+\item{x}{list or vector some of whose elements will be replaced or appended to}
+
+\item{...}{elements for replacement or appending}
 }
 \description{
+Replace elements of x with correspondingly named elements of ll
+
 Replace elements of x with correspondingly named elements of ll
 }
 

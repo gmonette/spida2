@@ -20,10 +20,10 @@
 #' by) ]}. The function \code{FUN} is applied to each cell of \code{x} defined
 #' by each value of \code{by}. The result in each cell is recycled to a vector
 #' of the same length as the cell. These vectors are then arranged to match the
-#' input \code{x}.  Thus, is the value returned within each cell is a scalar,
+#' input \code{x}.  Thus, if the value returned within each cell is a scalar,
 #' the effect of \code{capply(x, by, FUN)} is the same as \code{tapply(x, by,
 #' FUN)[ tapply(x, by) ]}.  \code{capply} extends this use of \code{tapply} by
-#' allowing the the value returned within each cell to be a vector of the same
+#' allowing the value returned within each cell to be a vector of the same
 #' length as the cell.
 #'
 #' The \code{capply.formula} method allows the use of two-sided formula of the
