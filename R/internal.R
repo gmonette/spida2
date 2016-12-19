@@ -1,4 +1,4 @@
 # #' @export
 # .onLoad <- function(x,y) {
-#   packageStartupMessage("yscs: startup message.\n")
+#   packageStartupMessage("spida2: startup message.\n")
 # }

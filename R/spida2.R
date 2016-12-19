@@ -28,7 +28,7 @@
 #' }
 #' @section Multilevel data frames:
 #' \itemize{
-#' \item \code{\link{tolong}} and  \code{\link{towide}} are 
+#' \item \code{\link{tolong}} and \code{\link{towide}} are 
 #'   interfaces to \code{\link{stats::reshape}} to facilitate
 #'   the typical uses of reshape for longitudinal data.
 #' \item \code{\link{capply}}: \code{capply(x,id,FUN)} applies the
@@ -38,6 +38,8 @@
 #' \item \code{\link{up}} and \code{\link{up_apply}} create summary
 #'   data sets consisting, by default, of within-id-invariant variables. 
 #'   Summaries of id-varying variables can also be included.
+#' \item \code{link{varLevel}}: the level of a variable with respect
+#'   to a clustering formula.
 #' }
 #' @section Splines -- parametric and non-parametric:
 #' \itemize{

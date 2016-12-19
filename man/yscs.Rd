@@ -4,8 +4,16 @@
 \name{yscs}
 \alias{yscs}
 \alias{yscs-package}
-\title{yscs: Functions used in the Statistical Consulting Service at York University}
+\title{EDIT spida2.R instead of this file
+EDIT spida2.R instead of this file
+EDIT spida2.R instead of this file
+EDIT spida2.R instead of this file
+EDIT spida2.R instead of this file
+EDIT spida2.R instead of this file}
 \description{
+yscs: Functions used in the Statistical Consulting Service at York University
+}
+\details{
 The yscs package is a collection of functions and datasets intended primarily
 for statistical consulting, with a particular emphasis on
 longitudinal and hierarchical data analysis.

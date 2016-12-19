@@ -1,3 +1,10 @@
+#' EDIT spida2.R instead of this file
+#' EDIT spida2.R instead of this file
+#' EDIT spida2.R instead of this file
+#' EDIT spida2.R instead of this file
+#' EDIT spida2.R instead of this file
+#' EDIT spida2.R instead of this file
+#' 
 #' yscs: Functions used in the Statistical Consulting Service at York University
 #'
 #' The yscs package is a collection of functions and datasets intended primarily
