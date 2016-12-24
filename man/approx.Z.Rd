@@ -7,16 +7,13 @@
 approx.Z(Z, oldtimes, newtimes)
 }
 \arguments{
-\item{Z}{%% ~~Describe \code{Z} here~~}
+\item{Z}{}
 
-\item{oldtimes}{%% ~~Describe \code{oldtimes} here~~}
+\item{oldtimes}{}
 
-\item{newtimes}{%% ~~Describe \code{newtimes} here~~}
+\item{newtimes}{}
 }
 \description{
-%% ~~ A concise (1-5 lines) description of what the function does. ~~
-}
-\details{
-%% ~~ If necessary, more details than the description above ~~
+Approximation for semi-parametric splines
 }
 

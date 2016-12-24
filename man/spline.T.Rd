@@ -7,20 +7,17 @@
 spline.T(knots, degree, smooth, lin = NULL, intercept = 0, signif = 3)
 }
 \arguments{
-\item{knots}{%% ~~Describe \code{knots} here~~}
+\item{knots}{}
 
-\item{degree}{%% ~~Describe \code{degree} here~~}
+\item{degree}{}
 
-\item{smooth}{%% ~~Describe \code{smooth} here~~}
+\item{smooth}{}
 
-\item{intercept}{%% ~~Describe \code{intercept} here~~}
+\item{intercept}{}
 
-\item{signif}{%% ~~Describe \code{signif} here~~}
+\item{signif}{}
 }
 \description{
-%% ~~ A concise (1-5 lines) description of what the function does. ~~
-}
-\details{
-%% ~~ If necessary, more details than the description above ~~
+Spline tranformation matrix
 }
 

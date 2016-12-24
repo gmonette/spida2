@@ -7,13 +7,10 @@
 Proj.1(x)
 }
 \arguments{
-\item{x}{%% ~~Describe \code{x} here~~}
+\item{x}{}
 }
 \description{
 Projection matrix into column space of a matrix. Works even if the matrix
 does not have full column rank.
-}
-\details{
-%% ~~ If necessary, more details than the description above ~~
 }
 

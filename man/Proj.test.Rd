@@ -7,14 +7,11 @@
 Proj.test(x, fun = Proj)
 }
 \arguments{
-\item{x}{%% ~~Describe \code{x} here~~}
+\item{x}{}
 
-\item{fun}{%% ~~Describe \code{fun} here~~}
+\item{fun}{}
 }
 \description{
-%% ~~ A concise (1-5 lines) description of what the function does. ~~
-}
-\details{
-%% ~~ If necessary, more details than the description above ~~
+Test accuracy of projection method.
 }
 

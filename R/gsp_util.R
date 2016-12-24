@@ -183,19 +183,10 @@ Emat <- function(  knots, degree, smooth , intercept = FALSE, signif = 3) {
   cmat
 }
 
-
-
-
-
-
 #' Orthogonal basis for column space of a matrix
 #' 
-#' %% ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param X %% ~~Describe \code{X} here~~
-#' @param coef %% ~~Describe \code{coef} here~~
+#' @param X 
+#' @param coef 
 basis  <- function( X , coef = FALSE ) {
   # returns linear independent columns
   #
@@ -220,16 +211,12 @@ basis  <- function( X , coef = FALSE ) {
 
 
 #' Spline tranformation matrix
-#' 
-#' %% ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param knots %% ~~Describe \code{knots} here~~
-#' @param degree %% ~~Describe \code{degree} here~~
-#' @param smooth %% ~~Describe \code{smooth} here~~
-#' @param intercept %% ~~Describe \code{intercept} here~~
-#' @param signif %% ~~Describe \code{signif} here~~
+#'
+#' @param knots 
+#' @param degree 
+#' @param smooth 
+#' @param intercept 
+#' @param signif 
 #' 
 #' @export
 spline.T <-
@@ -255,15 +242,11 @@ spline.T <-
 
 #' Spline estimation function
 #' 
-#' %% ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param knots %% ~~Describe \code{knots} here~~
-#' @param degree %% ~~Describe \code{degree} here~~
-#' @param smooth %% ~~Describe \code{smooth} here~~
-#' @param intercept %% ~~Describe \code{intercept} here~~
-#' @param signif %% ~~Describe \code{signif} here~~
+#' @param knots 
+#' @param degree 
+#' @param smooth 
+#' @param intercept 
+#' @param signif 
 #' 
 #' @export
 spline.E <- function( knots, degree, smooth, lin = NULL, intercept = 0, signif = 3 ) {
@@ -288,9 +271,7 @@ spline.E <- function( knots, degree, smooth, lin = NULL, intercept = 0, signif =
 #' Projection matrix into column space of a matrix. Works even if the matrix
 #' does not have full column rank.
 #' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param x %% ~~Describe \code{x} here~~
+#' @param x 
 #' @export
 Proj.1 <- function( x)  x %*% ginv(x)
 
@@ -300,9 +281,7 @@ Proj.1 <- function( x)  x %*% ginv(x)
 #' 
 #' Matrix of orthogonal projection into column space of matrix.
 #' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param x %% ~~Describe \code{x} here~~
+#' @param x 
 #' @export
 Proj <- function(x) {
   # projection matrix onto span(x)
@@ -315,12 +294,8 @@ Proj <- function(x) {
 
 #' Test accuracy of projection method.
 #' 
-#' %% ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param x %% ~~Describe \code{x} here~~
-#' @param fun %% ~~Describe \code{fun} here~~
+#' @param x 
+#' @param fun 
 #' @export
 Proj.test <- function( x, fun = Proj) {
   help = "
@@ -347,10 +322,6 @@ Proj.test <- function( x, fun = Proj) {
 
 
 #' Marked for deletion
-#' 
-#' %% ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#' %% ~~ If necessary, more details than the description above ~~
 #' 
 #' @param x 
 #' @param knots 
@@ -380,12 +351,8 @@ gspf.1 <- function( x, knots, degree= 3, smooth = pmax(pmin( degree[-1],
 }
 #' Generate a smoothing spline
 #' 
-#' %% ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param formula %% ~~Describe \code{formula} here~~
-#' @param data %% ~~Describe \code{data} here~~
+#' @param formula 
+#' @param data 
 #' 
 #' @export
 smspline <-
@@ -411,11 +378,7 @@ smspline <-
   }
 #' smspline.v from library splines with better ginverse
 #' 
-#' %% ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param time %% ~~Describe \code{time} here~~
+#' @param time 
 #' 
 #' @export
 smspline.v <-
@@ -446,13 +409,9 @@ smspline.v <-
   }
 #' Approximation for semi-parametric splines
 #' 
-#' %% ~~ A concise (1-5 lines) description of what the function does. ~~
-#' 
-#' %% ~~ If necessary, more details than the description above ~~
-#' 
-#' @param Z %% ~~Describe \code{Z} here~~
-#' @param oldtimes %% ~~Describe \code{oldtimes} here~~
-#' @param newtimes %% ~~Describe \code{newtimes} here~~
+#' @param Z 
+#' @param oldtimes 
+#' @param newtimes 
 #' 
 #' @export
 approx.Z <-

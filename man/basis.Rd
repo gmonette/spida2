@@ -7,14 +7,11 @@
 basis(X, coef = FALSE)
 }
 \arguments{
-\item{X}{%% ~~Describe \code{X} here~~}
+\item{X}{}
 
-\item{coef}{%% ~~Describe \code{coef} here~~}
+\item{coef}{}
 }
 \description{
-%% ~~ A concise (1-5 lines) description of what the function does. ~~
-}
-\details{
-%% ~~ If necessary, more details than the description above ~~
+Orthogonal basis for column space of a matrix
 }
 

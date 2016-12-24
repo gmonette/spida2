@@ -7,12 +7,9 @@
 smspline.v(time)
 }
 \arguments{
-\item{time}{%% ~~Describe \code{time} here~~}
+\item{time}{}
 }
 \description{
-%% ~~ A concise (1-5 lines) description of what the function does. ~~
-}
-\details{
-%% ~~ If necessary, more details than the description above ~~
+smspline.v from library splines with better ginverse
 }
 

@@ -19,9 +19,6 @@ gspf.1(x, knots, degree = 3, smooth = pmax(pmin(degree[-1],
 \item{intercept}{}
 }
 \description{
-%% ~~ A concise (1-5 lines) description of what the function does. ~~
-}
-\details{
-%% ~~ If necessary, more details than the description above ~~
+Marked for deletion
 }
 

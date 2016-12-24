@@ -478,6 +478,24 @@ xyplot( y + predict(fit) ~ x ,
 xyplot( predict(fit) ~ x , type = 'l')
 
 
+## Smoothing splines
+
+library(nlme)
+library(MASS)
+data(Spruce)
+Spruce$all <- 1
+range( Spruce$days)
+sp <- function(x) smsp ( x, seq( 150, 675, 5))
+spruce.fit1 <- lme(logSize ~ days, data=Spruce,
+          random=list(all= pdIdent(~sp(days) -1),
+          plot=~1, Tree=~1))
+summary(spruce.fit1)
+pred <- expand.grid( days = seq( 160, 670, 10), all = 1)
+pred$logSize <- predict( spruce.fit1, newdata = pred, level = 1)
+library( lattice )
+xyplot( logSize ~ days, pred, type = 'l')
+
+
 }
 \author{
 Monette, G. \email{georges@yorku.ca}

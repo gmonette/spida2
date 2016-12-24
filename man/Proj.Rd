@@ -7,12 +7,9 @@
 Proj(x)
 }
 \arguments{
-\item{x}{%% ~~Describe \code{x} here~~}
+\item{x}{}
 }
 \description{
 Matrix of orthogonal projection into column space of matrix.
-}
-\details{
-%% ~~ If necessary, more details than the description above ~~
 }
 
