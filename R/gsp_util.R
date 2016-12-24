@@ -266,7 +266,7 @@ spline.E <- function( knots, degree, smooth, lin = NULL, intercept = 0, signif =
 
 
 
-#' Projection matrix %% ~~function to do ... ~~
+#' Projection matrix
 #' 
 #' Projection matrix into column space of a matrix. Works even if the matrix
 #' does not have full column rank.

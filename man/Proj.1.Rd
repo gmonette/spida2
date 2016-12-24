@@ -2,7 +2,7 @@
 % Please edit documentation in R/gsp_util.R
 \name{Proj.1}
 \alias{Proj.1}
-\title{Projection matrix %% ~~function to do ... ~~}
+\title{Projection matrix}
 \usage{
 Proj.1(x)
 }
