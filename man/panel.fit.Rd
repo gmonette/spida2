@@ -72,6 +72,10 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
   library(spida2)
   library(latticeExtra)
   library(car)
+  
+  ### Show data, predicted values and confidence bands 
+  ### using a 'predict' method that produces 'se'   
+  ### -- showing predicted values only at points in the data
 
   fit <- lm(prestige ~ (income + I(income^2)) * type, Prestige,
       na.action = na.exclude)
@@ -94,13 +98,13 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
         Prestige, na.action = na.exclude)    # overfitting!
   # adding extra values of predictor to get smooth line
   Prestige$occupation <- rownames(Prestige)
-  z <- fillin(Prestige, ~education + type, xpd = 1.1)
+  z <- fillin(Prestige, ~education + type, xpd = 1.1) # fill in 'education' within 'type'
 
   dim(z)
   dim(Prestige)
   z <- cbind(z, predict(fit, newdata = z, se = TRUE))
   head(z)
-  gd(3,cex=2,lwd=2, alpha = .7)
+  gd(3, cex = 2, lwd = 2, alpha = .7)
   (p <-  xyplot( income ~ education, z, groups = type,
                  subscripts = T,
                  fit = z$fit,
@@ -109,9 +113,58 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
                  auto.key = list(space='right', lines= T)))
   p + glayer( panel.fit(...))
   p + glayer( panel.fit(...,  alpha = .1))
-  # Using spida:gd() to get a ggplot-like appearance
+  # Using spida2:gd() to get a ggplot-like appearance
   gd(3,lty=1,lwd=2)
   p + glayer( panel.fit(...,alpha = .1))
+
+  ###
+  ###  Prediction with 'wald' for fits with predict
+  ###  methods that don't produce se's, e.g. lme
+  ###
+  
+  library(nlme)
+  fit <- lme(mathach ~ (ses+I(ses^2)) * Sex * Sector, hs, random = ~ 1|school)
+  summary(fit)
+  pred <- expand.grid( ses = seq(-2,2,.1), Sex = levels(hs$Sex), Sector = levels(hs$Sector))
+  head(pred)
+  # merge pred with original data
+  hs$from <- 'data'
+  pred$from <- 'pred'
+  dm <- merge(hs, pred, all = T)
+  w <- wald(fit, getX(fit, data = dm)) # attaches data to wald.object so it can included in data frame
+  w <- as.data.frame(w)
+  head(w)
+  library(latticeExtra)
+  gd(pch = 1, alpha = .2)
+  (p <- xyplot(mathach ~ ses | Sector, w, groups = Sex,
+       auto.key = T, type = 'p',
+       fit = w$coef,
+       upper = with(w,coef+2*se),
+       lower = with(w,coef-2*se),
+       subscript = T))
+  p + glayer( gpanel.fit(...,alpha=1))
+
+  wald(fit, 'Sex')  # sig. overall effect of Sex
+  wald( fit, ':Sex') # but no evidence of interaction with ses
+  wald( fit, '\\\\^2') # nor of curvature
+
+  # but we continue for the sake of illustration
+
+  L <- Lform( fit, list( 0, 1, 2*ses, 0, Sex == 'Male', (Sex == 'Male')*2*ses), hs)
+  L
+  (ww <- wald ( fit, L ))
+  wald.dd <- as.data.frame(ww, se = 2)
+  head( wald.dd )
+
+  xyplot(coef ~ ses | Sex, wald.dd, type = 'n',
+      ylim = c(-5, 12),
+      ylab = 'increase in mathach per unit increase in ses',
+      fit = wald.dd$coef,
+      upper = wald.dd$U2,
+      lower = wald.dd$L2,
+      subscripts = T) +
+  layer(panel.fit(...))
+
 
   ###
   ###  Using panel.fit with no groups
@@ -125,8 +178,7 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
                  auto.key = list(space='right', lines= T)))
   p + layer( panel.fit(...))
 
-  # gd_(basecol = 'tomato4')  # Use 'gd_' to set parameters without groups
-  gd_(base = 'tomato4')  # Use 'gd_' to set parameters without groups
+  gd_(basecol = 'tomato4')  # Use 'gd_' to set parameters without groups
   p + layer( panel.fit(...))
   p + layer( panel.fit(...,  col = 'grey10'))
 
@@ -197,6 +249,9 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
 
   p + layer( panel.fit(...))
   p + layer( panel.fit(..., col = 'black', alpha = .1)) + layer(panel.labels(...))
+  
+  
+  
 }
 \dontrun{
 trellis.focus()
