@@ -20,4 +20,3 @@ spline.T(knots, degree, smooth, lin = NULL, intercept = 0, signif = 3)
 \description{
 Spline tranformation matrix
 }
-

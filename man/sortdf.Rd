@@ -27,4 +27,3 @@ require(magrittr)
 Prestige  \%>\% sortdf(~type+income) -> Prestige.ordered
 }
 }
-

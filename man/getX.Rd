@@ -24,4 +24,3 @@ for which the LHS variable(s) are NA. In addition, \code{getX} attaches the argu
 Extending \code{getX} to new classes merely requires a \code{\link{getData}} method. The \code{\link{formula}}
 method is also used but usually already exitsts.
 }
-

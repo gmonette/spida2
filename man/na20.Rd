@@ -9,4 +9,3 @@ na20(x)
 \description{
 Transform NAs to 0
 }
-

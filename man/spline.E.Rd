@@ -20,4 +20,3 @@ spline.E(knots, degree, smooth, lin = NULL, intercept = 0, signif = 3)
 \description{
 Spline estimation function
 }
-

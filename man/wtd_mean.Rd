@@ -22,4 +22,3 @@ Weighted mean
 Other Post-stratification survey functions: \code{\link{jk_wtd_mean_se}},
   \code{\link{jk_wtd_means}}, \code{\link{lin_comb}}
 }
-

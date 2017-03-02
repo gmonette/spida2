@@ -12,4 +12,3 @@ Equivalent of grep(..., value = TRUE)
 \seealso{
 \code{\link{grepl}}
 }
-

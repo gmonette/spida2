@@ -24,4 +24,3 @@ a <- 2
 sum( coefs * x ^ (0:(n-1))) 
 sum( PolyShift(a,n)\%*\%coefs * (x -a)^(0:(n-1)))
 }
-

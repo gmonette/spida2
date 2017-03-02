@@ -47,4 +47,3 @@ of 0, a variable that is perfectly balanced within clusters.
 \references{
 see p. 25 of Agresti (1990) Categorical Data Analysis, Wiley.
 }
-

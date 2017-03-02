@@ -19,4 +19,3 @@ zm1 <- cbind(x = 1:3, y = 2, z = 3)
 zm2 <- cbind(x = 1:4, y = 3, w = 1)
 Rbind(zm1, zm2, zd1, zd1, zd2)
 }
-

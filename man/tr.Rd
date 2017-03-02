@@ -9,4 +9,3 @@ tr(x, from, to)
 \description{
 Changes the order of arguments in \code{\link{tran}}.
 }
-

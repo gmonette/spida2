@@ -13,4 +13,3 @@ hypothesis matrix
 \description{
 Hypothesis matrix to test differencs in factor levels
 }
-

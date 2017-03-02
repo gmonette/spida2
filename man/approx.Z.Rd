@@ -16,4 +16,3 @@ approx.Z(Z, oldtimes, newtimes)
 \description{
 Approximation for semi-parametric splines
 }
-

@@ -9,4 +9,3 @@ ConjComp(X, Z = diag(nrow(X)), ip = diag(nrow(X)), tol = 1e-07)
 \description{
 Conjugate complement of span(X) in span(Z) with respect to inner product ip
 }
-

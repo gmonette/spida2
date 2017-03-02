@@ -9,4 +9,3 @@ na2t(x)
 \description{
 Change NAs to TRUE
 }
-

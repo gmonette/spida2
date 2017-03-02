@@ -70,4 +70,3 @@ surv
 \author{
 largely adapted from gsummary in Bates & Pinheiro
 }
-

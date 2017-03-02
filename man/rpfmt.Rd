@@ -30,4 +30,3 @@ works on first element of a \code{\link{wald}} list
 \examples{
 rpfmt( cbind( 'estimate' = rnorm(7), "p-values" = 10^c(-1,-2,-3,-4,-5,-6,-7)))
 }
-

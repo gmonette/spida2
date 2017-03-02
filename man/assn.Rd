@@ -36,4 +36,3 @@ require(car)
 Prestige  \%>\% sortdf(~type+income)  \%>\% assn("Prestige.ordered")  \%>\%  dim
 }
 }
-

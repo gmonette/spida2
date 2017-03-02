@@ -15,4 +15,3 @@ For a strict function, we can simply index to which will
 leave it unchanged
 which conflicts with my versions of tr, ergo this is called tran
 }
-

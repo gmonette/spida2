@@ -12,4 +12,3 @@ smspline.v(time)
 \description{
 smspline.v from library splines with better ginverse
 }
-

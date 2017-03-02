@@ -33,10 +33,9 @@ If length(dim(arr2)) == length(dim(arr1)) - 1, then arr2 is treated as if it
 dropped a dimension of size 1 in the dth dimension. 'facename' is used as
 the name of the dimnames list for this dimension.
 }
-\author{
-Georges Monette
-}
 \seealso{
 \code{\link[base]{aperm}}, to permute arrays
 }
-
+\author{
+Georges Monette
+}

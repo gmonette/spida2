@@ -9,4 +9,3 @@ na2f(x)
 \description{
 Change NAs to FALSE
 }
-

@@ -12,4 +12,3 @@ constant(x, ...)
 \description{
 Generic test for constant
 }
-

@@ -22,4 +22,3 @@ if the names are not intended to be parameter names.
 \seealso{
 \code{\link{auto}}
 }
-

@@ -154,4 +154,3 @@ A version of the wald function that produces a data frame directly, analogously 
 
 }
 }
-

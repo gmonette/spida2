@@ -20,4 +20,3 @@ Generates a hypothesis matrix to test whether a group of coefficients in a
 linear model are jointly zero, selecting the coefficients that match a
 regular expression.
 }
-

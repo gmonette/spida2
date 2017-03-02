@@ -9,4 +9,3 @@ sampler(n = 24)
 \description{
 Show available characters, colours, etc.
 }
-

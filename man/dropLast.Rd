@@ -9,4 +9,3 @@ dropLast(mat, drop = FALSE, keep = NULL)
 \description{
 Drop last facet of array
 }
-

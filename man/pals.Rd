@@ -19,4 +19,3 @@ pals(pattern = "", ignore = "^gray[0-9]|^grey[0-9]", n = 30,
 \description{
 Display selected colors n at a time
 }
-

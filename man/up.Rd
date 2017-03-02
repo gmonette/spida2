@@ -89,4 +89,3 @@ using \code{lme4}.
 \author{
 largely from gsummary in Bates & Pinheiro
 }
-

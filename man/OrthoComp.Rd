@@ -9,4 +9,3 @@ OrthoComp(X, Z, tol = 1e-07)
 \description{
 Orthogonal basis for the orthogonal complement of the column space of a matrix.
 }
-

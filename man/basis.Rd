@@ -14,4 +14,3 @@ basis(X, coef = FALSE)
 \description{
 Orthogonal basis for column space of a matrix
 }
-

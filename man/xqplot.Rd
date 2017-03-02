@@ -17,6 +17,8 @@ axis.}
 
 \item{labels}{names for each plot}
 
+\item{\dots}{additional arguments passed to 'plot' command}
+
 \item{mfrow}{number of rows and columns per page. If missing, an attempt is
 made to choose a reasonable number.}
 
@@ -35,8 +37,6 @@ made to choose a reasonable number.}
 
 \item{maxvarnamelength}{maximum length of variable name without splitting on
 two lines.}
-
-\item{\dots}{additional arguments passed to 'plot' command}
 }
 \description{
 An easy way to see a dataset's variables at a glance. Shows uniform quantile
@@ -57,4 +57,3 @@ require(car)
 xqplot(Prestige)
 xqplot(Prestige,"n") # normal quantiles
 }
-

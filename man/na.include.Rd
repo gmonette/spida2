@@ -12,4 +12,3 @@ na.include(obj)
 \description{
 From the Hmisc package, author: Frank Harrell
 }
-

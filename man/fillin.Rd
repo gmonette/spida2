@@ -20,4 +20,3 @@ using syntax: \code{~ x + g1 + g2} (the variable to fill in comes first)}
 Fills in values in gaps between observed predictor values to help produce
 a smooth graph of predicted values versus predictor values.
 }
-

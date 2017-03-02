@@ -2,8 +2,8 @@
 % Please edit documentation in R/ellipse.R
 \name{cell}
 \alias{cell}
-\alias{cell.default}
 \alias{cell.wald}
+\alias{cell.default}
 \title{Confidence ellipse}
 \usage{
 cell(x, ...)
@@ -21,13 +21,13 @@ cell(x, ...)
 \arguments{
 \item{x}{fitted object}
 
+\item{\dots}{other arguments passed to method}
+
 \item{which.coef}{(default 1:2) which parameters to estimate}
 
 \item{levels}{(default 0.95)}
 
 \item{dfn}{(default 2) degrees of freedom for Sheffe multiple test and confidence limits}
-
-\item{\dots}{other arguments passed to method}
 
 \item{Sheffe}{logical (default FALSE)}
 }

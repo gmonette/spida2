@@ -21,13 +21,13 @@ a time-varying variable in the long form
 from the added suffix for the
 correponding names in wide form. Default: '_'.}
 
+\item{\dots}{Other arguments are passed to \link{list("stats::reshape")}.}
+
 \item{invar}{additional variables treated as invariant
 within clusters
 (default: names(data)[gicc(data, data[idvar])]).
 For all variables, except \code{idvar} to be treated as time-varying,
 use \code{invar = NULL}.}
-
-\item{\dots}{Other arguments are passed to \link{list("stats::reshape")}.}
 }
 \value{
 a data frame in wide form in which each variable that varies
@@ -80,4 +80,3 @@ dl
 (dl.site.side <- towide(dl.site, c('name'), 'side'))
 }
 }
-

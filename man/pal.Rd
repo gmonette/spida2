@@ -14,4 +14,3 @@ pal(col = c("blue", "pink"), border = "light gray", ...)
 \description{
 Generate a palette of colours -- possibly superseded
 }
-

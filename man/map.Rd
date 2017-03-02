@@ -15,4 +15,3 @@ x.to   <- factor(c('a',NA,'z','b',NA),levels=c('z','a','b',NA))
 x <- c("Z","B",NA,"N","M")
 map(x.from, x.to, x)
 }
-

@@ -18,10 +18,9 @@ This is a note
 \examples{
 # coming soon
 }
-\author{
-GM
-}
 \seealso{
 \code{\link{wald}}
 }
-
+\author{
+GM
+}

@@ -2,18 +2,18 @@
 % Please edit documentation in R/wald.R
 \name{getFix}
 \alias{getFix}
+\alias{getFix.multinom}
+\alias{getFix.lm}
+\alias{getFix.glm}
+\alias{getFix.lme}
+\alias{getFix.gls}
+\alias{getFix.lmer}
+\alias{getFix.glmer}
+\alias{getFix.mer}
+\alias{getFix.zeroinfl}
+\alias{getFix.mipo}
 \alias{getFix.MCMCglmm}
 \alias{getFix.default}
-\alias{getFix.glm}
-\alias{getFix.glmer}
-\alias{getFix.gls}
-\alias{getFix.lm}
-\alias{getFix.lme}
-\alias{getFix.lmer}
-\alias{getFix.mer}
-\alias{getFix.mipo}
-\alias{getFix.multinom}
-\alias{getFix.zeroinfl}
 \title{Get information on fixed effects from a model object}
 \usage{
 getFix(fit, ...)
@@ -91,6 +91,7 @@ requires a \code{getFix} method for the new class.
 
 \item \code{default}: print message if getFix id used for a class for which a method has not been written
 }}
+
 \examples{
 library(nlme)
 fit <- lme( mathach ~ (ses + I(ses^2)) * Sex, hs, random = ~ 1 + ses| school)
@@ -101,10 +102,9 @@ mod.prestige <- lm(prestige ~ education + income, data=Prestige)
 getFix(mod.prestige)
 
 }
-\author{
-Georges Monette
-}
 \seealso{
 \code{\link{wald}}
 }
-
+\author{
+Georges Monette
+}

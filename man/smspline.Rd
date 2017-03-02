@@ -14,4 +14,3 @@ smspline(formula, data)
 \description{
 Generate a smoothing spline
 }
-

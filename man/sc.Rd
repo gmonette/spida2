@@ -22,4 +22,3 @@ in \code{\link{gsp}}.
 \seealso{
 \code{\link{wald}} \code{\link{gsp}}
 }
-

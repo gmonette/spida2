@@ -65,4 +65,3 @@ error boxes that have a reasonable appearance whether a plot uses 'groups' or no
 \author{
 Georges Monette <georges@yorku.ca>
 }
-

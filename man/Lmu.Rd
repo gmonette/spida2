@@ -9,4 +9,3 @@ Lmu(fit, nam, verbose = 0)
 \description{
 Estimate predicted response for a factor level.
 }
-

@@ -23,4 +23,3 @@ NOTE: NA counts as a distinct value
 Shows levels of each variable with respect to grouping formula
 of form ~id or nested ids ~id1/id2
 }
-

@@ -9,4 +9,3 @@ part(A, B)
 \description{
 Intersection and symmetric differences of two sets
 }
-

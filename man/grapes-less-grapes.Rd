@@ -15,4 +15,3 @@ a vector of the same mode containing the difference of \code{x} less \code{y}
 \description{
 The set difference of x less y
 }
-

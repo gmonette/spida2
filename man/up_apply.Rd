@@ -34,4 +34,3 @@ zdu
 zdu$p <- up_apply(zd, ~ a, with, sum(x)/sum(y))
 zdu
 }
-

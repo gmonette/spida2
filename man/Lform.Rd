@@ -99,4 +99,3 @@ education | type, cbind(Prestige,chat)[order(Prestige$education),], type =
 \code{\link{wald},\link{Leff}} and \code{\link{Lfx}} for a new
 improved but experimental version.
 }
-

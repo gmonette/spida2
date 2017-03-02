@@ -323,10 +323,13 @@ ellptsc <- function( ell, dir = c(0,1), radius = 1, len = 1, v = c(-1,1)) {
             v = radius * c(-1,0,1)))
 }
 
-
-
-
-
-
-
-
+#' @export
+Null <- function (M) 
+{
+  # from MASS::Null
+  tmp <- qr(M)
+  set <- if (tmp$rank == 0L) 
+    seq_len(ncol(M))
+  else -seq_len(tmp$rank)
+  qr.Q(tmp, complete = TRUE)[, set, drop = FALSE]
+}

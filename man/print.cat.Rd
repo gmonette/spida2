@@ -12,4 +12,3 @@ invisible(x)
 \description{
 Print method for 'cat' objects
 }
-

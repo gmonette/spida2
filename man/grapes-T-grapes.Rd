@@ -13,4 +13,3 @@ Pipe for magrittr that passes LHS invisibly
 data(hs)
 hs \%T\% dim  \%T\% names  \%>\% head 
 }
-

@@ -27,4 +27,3 @@ used in a function and use variables in the environment of the function.
 run('ls()')
 for(nam in c('ls','search')) print(run(nam,"()"))  # very unimaginative example
 }
-

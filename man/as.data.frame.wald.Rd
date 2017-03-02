@@ -27,4 +27,3 @@ in this package is used.
 \examples{
 # coming soon!
 }
-

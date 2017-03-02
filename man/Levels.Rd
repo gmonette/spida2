@@ -24,4 +24,3 @@ df <- do.call(rbind, coefs)
 df$school <- names(df)
 }
 }
-

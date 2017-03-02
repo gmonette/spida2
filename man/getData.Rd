@@ -2,10 +2,10 @@
 % Please edit documentation in R/wald.R
 \name{getData}
 \alias{getData}
+\alias{getData.lmer}
+\alias{getData.lme}
 \alias{getData.gls}
 \alias{getData.lm}
-\alias{getData.lme}
-\alias{getData.lmer}
 \title{Extract the model data frame for various fitting methods}
 \usage{
 getData(x, ...)

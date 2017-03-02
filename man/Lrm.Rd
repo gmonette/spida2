@@ -12,4 +12,3 @@ hypothesis matrix
 \description{
 Construct hypothesis matrix to test repeated measures factor effects
 }
-

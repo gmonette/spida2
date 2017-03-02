@@ -13,4 +13,3 @@ hypothesis matrix
 \description{
 Older version of Ldiff
 }
-

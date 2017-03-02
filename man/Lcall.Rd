@@ -12,4 +12,3 @@ a hypothesis matrix
 \description{
 Construct hypothesis matrix to test ????
 }
-

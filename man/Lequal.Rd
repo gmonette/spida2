@@ -12,4 +12,3 @@ hypothesis matrix
 \description{
 Hypothesis matrix to test equality of factor level effects
 }
-

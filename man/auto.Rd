@@ -23,4 +23,3 @@ Uses x to name x. Useful in when applying \code{\link{lapply}} to a character ve
 \seealso{
 \code{\link{anon}}
 }
-

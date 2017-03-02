@@ -14,4 +14,3 @@ getFactorNames(object, ...)
 \description{
 get the names of variables that are factors
 }
-

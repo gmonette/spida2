@@ -16,4 +16,3 @@ dropLastTotal(mat, names_to_drop = "Total", drop = FALSE)
 \seealso{
 tab, Tab, dropLast
 }
-

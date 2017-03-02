@@ -86,4 +86,3 @@ dl <- data.frame(name = rep(c('A','B','C'), c(3,3,2)),
 towide(dl, c('name'), 'site')
 
 }
-

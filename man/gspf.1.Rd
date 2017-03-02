@@ -21,4 +21,3 @@ gspf.1(x, knots, degree = 3, smooth = pmax(pmin(degree[-1],
 \description{
 Marked for deletion
 }
-

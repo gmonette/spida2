@@ -14,4 +14,3 @@ Proj.test(x, fun = Proj)
 \description{
 Test accuracy of projection method.
 }
-

@@ -36,4 +36,3 @@ anova( fit , type = 'm')
 # should be included in the model
 }
 }
-

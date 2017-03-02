@@ -55,4 +55,3 @@ tolong_2(dd, sep = '.', timevar = "type", idvar = 'patient')
 }
 
 }
-

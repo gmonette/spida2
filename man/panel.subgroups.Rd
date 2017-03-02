@@ -89,4 +89,3 @@ xyplot( prestige ~ education, combined,
 \code{link[lattice]{panel.superpose}},
 \code{link[lattice]{panel.superpose.2}}, \code{link[lattice]{panel.xyplot}}
 }
-

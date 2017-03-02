@@ -5,12 +5,12 @@
 \alias{capply.default}
 \alias{capply.formula}
 \alias{cvar}
-\alias{cvar.default}
-\alias{cvar.factor}
 \alias{cvars}
 \alias{dvar}
-\alias{dvar.default}
 \alias{dvar.factor}
+\alias{dvar.default}
+\alias{cvar.factor}
+\alias{cvar.default}
 \title{Apply a function within each cluster of multilevel data}
 \usage{
 capply(x, ...)
@@ -18,6 +18,8 @@ capply(x, ...)
 \arguments{
 \item{x}{a vector or data frame that provides the first argument of
 \code{FUN}}
+
+\item{\dots}{additional variables to be supplied to \code{FUN}}
 
 \item{by}{If \code{x} is a vector: a 'factor' of the same lenth as \code{x}
 whose levels identify clusters.  If \code{x} is a data frame, a one-sided
@@ -32,8 +34,6 @@ the number of elements in each cluster.}
 \code{\link{aggregate.formula}}. The left-hand side identifies the
 variable(s) in \code{data} to be include in a data.frame that is clusterd using
 the variables in the right-hand side of the formula.}
-
-\item{\dots}{additional variables to be supplied to \code{FUN}}
 }
 \value{
 When the result in each cell is a scalar, \code{capply} can be used
@@ -169,4 +169,3 @@ speed: e.g. \code{capply( x, as.numeric(by), FUN)}.
      summary(fit.compositional) # compositional effect of cvar(Minority)
 }
 }
-

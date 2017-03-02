@@ -21,4 +21,3 @@ aprop(x, MARGIN = NULL, total.margins = TRUE, all.label = "All")
 \description{
 Transform a frequency table into relative frequencies relative to a margin.
 }
-

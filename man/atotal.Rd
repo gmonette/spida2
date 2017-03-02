@@ -25,4 +25,3 @@ arguments to FUN can also be given.
 \author{
 Georges Monette
 }
-

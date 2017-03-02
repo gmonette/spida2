@@ -12,4 +12,3 @@ hypothesis matrix
 \description{
 Version of Ldiff used in RDC
 }
-

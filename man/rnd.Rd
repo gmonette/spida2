@@ -30,6 +30,7 @@ digits for variability is 100.123, 100.234, 100.345.
 \itemize{
 \item \code{default}: default method
 }}
+
 \examples{
 rnd(c(0.00001111111,0.000022222,0.000015), scientific = F)
 rnd(c(0.00001111111,0.000022222,0.000015)+100, scientific = F)
@@ -41,4 +42,3 @@ rnd(123.45678901)
 \seealso{
 \code{\link{pfmt}}, \code{\link{rpfmt}}
 }
-

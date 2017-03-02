@@ -12,4 +12,3 @@ Lc(fit, nam, ref = 1, verbose = 0)
 \description{
 Hypothesis matrix for lmer objects: comparisons with reference level
 }
-

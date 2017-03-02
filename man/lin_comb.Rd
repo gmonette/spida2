@@ -18,4 +18,3 @@ Linear combination of x
 Other Post-stratification survey functions: \code{\link{jk_wtd_mean_se}},
   \code{\link{jk_wtd_means}}, \code{\link{wtd_mean}}
 }
-
