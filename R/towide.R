@@ -35,13 +35,20 @@
 #' \dontrun{
 #' # Subjects A, B observed on varying occasions, measuring variables
 #' #  x and y in different locations
-#' dd <- data.frame( y.left = 1:3, y.right = 1:3, x.left= 1:3, time = c(1,2,1),
-#'                   x.right = 11:13, x.middle = 21:23, 
-#'                   subject = c('A','A','B'))
+#' dd <- data.frame( subject = c('A','A','B'),
+#'                   time = c(1,2,1), 
+#'                   y.left = 1:3, y.right = 1:3, 
+#'                   x.left= 1:3, x.right = 11:13, x.middle = 21:23 
+#'                   )
 #' dd
 #' tolong(dd, sep = '.') # uses 'time' as default name for occasions variable
+#' # Specify new 'timevar' to avoid clobbering 'time':
 #' dl <- tolong(dd, sep = '.', timevar = "location") 
 #' dl
+#' #
+#' # Back to wide format: Use 'idvar' to specify combination of 
+#' # of variable values that uniquely identifies rows in wide file:
+#' #
 #' towide(dl, idvar = c('subject','time'), timevar = 'location')
 #'
 #' # Long file with additional constants
@@ -53,6 +60,7 @@
 #'                  var1 = 1:8,
 #'                  var2 = 11:18,
 #'                  invar = rep(1:3, c(3,3,2)))
+#' dl
 #' towide(dl, c('name','sex'), 'site')
 #'
 #' # Two indexing variable: e.g. hippocampal volume: 2 sides x 3 sites
@@ -61,15 +69,18 @@
 #'                  side = rep(c('left','right'), 9),
 #'                  site = rep(rep(c('head','body','tail'),each = 2),3),
 #'                  volume = 1:18,
+#'                  grade = LETTERS[1:18],
 #'                  sex = rep(c('female','male','female'), each = 6),
 #'                  age = rep(c(25, 43, 69), each = 6))
 #' dl
 #' (dl.site <- towide(dl, c('name','side'), 'site'))
 #' (dl.site.side <- towide(dl.site, c('name'), 'side'))
-#' 
+#' dl.site.side[,sort(names(dl.site.side))]
+#'
+#' #
 #' # Switching long and wide variables
 #' # Multiple variables in 'idvar'
-#'  
+#' #  
 #' dd <- read.table(header=T,text="
 #' country    variable   1990 1991 1992 1993
 #' Canada     population   20   21   24   26
@@ -78,7 +89,7 @@
 #' Mexico     income       30   31   33   34
 #' ")
 #'  dd                 
-#'  names(dd) <- sub("^X","val__", names(dd))                 
+#'  names(dd) <- sub("^X","val__", names(dd)) # use '__' in case '_' is used elsewhere                
 #'  dd
 #'  dl <- tolong(dd, sep = '__', timevar = 'year')
 #'  dl
@@ -89,8 +100,28 @@
 #'  dw
 #'  names(dw) <- sub("^val_","", names(dw))
 #'  dw
-#'  
+#' 
+#' #
+#' #  A function to flip years and variables
+#' #
+#' flip <- function(data, rowvar = 'country', 
+#'                  colfmt = '[0-9]{4}$', 
+#'                  varname = 'variable', sep = '__') {
+#'     names(data) <- sub(
+#'          paste0("^.*(",colfmt,')'), 
+#'          paste0("value",sep,"\\1"), 
+#'          names(data))
+#'     dl <- tolong(data, sep = "__", timevar = 'year', idvar = "XXXX")
+#'     dw <- towide(dl, timevar = varname, idvar = c(rowvar, 'year'), sep = '__')
+#'     dw <- dw[, - grep("^XXXX", names(dw))]
+#'     names(dw) <- sub(paste0('value',sep), '', names(dw))
+#'     dw
+#' }     
+#' flip(dd)
+#' 
+#' #     
 #' # Mixture of time-varying and time-invariant variables
+#' #
 #' 
 #' dl <- data.frame(subject = c('A','A','A','B','B','C','C'), 
 #'                  time = c(1,2,3,1,2,1,3),
