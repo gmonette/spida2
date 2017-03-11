@@ -33,7 +33,7 @@ for each column.}
 a data frame. The value returned by readxl::read_excel
 }
 \description{
-read_excel guesses the type of each column based on
+read_excel, in the 'readxl' package, guesses the type of each column based on
 some initial number of values.  If non-numeric 
 values first occur quite far into the spread sheet, read_excel
 will misguess the type and the non-numeric values will
