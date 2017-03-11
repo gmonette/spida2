@@ -1,3 +1,5 @@
+2017-03-11
+* Added Read_excel to read xls/xlsx files as data frames using the 'readxl' package
 2016-11-17
 * Added 'Levels' function: self-named vector for 'lapply'
 2016-09-13
