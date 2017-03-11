@@ -3,7 +3,6 @@
 #' Creates a long data set from a wide data set identifying 'time'-varying
 #' variables by a separator
 #'
-#'
 #' @param data a data frame in 'wide' form.
 #' @param sep (default: '_') the separator that identifies time-varying
 #' variables separating the 'root' containing the name of the variable in the
@@ -28,6 +27,7 @@
 #' @return a data frame in long form in which each 'root' of a time-varying
 #' variables is a variable and the occasions are the values of the variable
 #' with name 'timevar'.
+#' @seealso \code{\link{tolong}} and \code{\link{towide}} for many examples using both 'towide' and 'tolong'.
 #' @examples
 #'
 #' \dontrun{
