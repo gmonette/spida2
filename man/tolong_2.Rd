@@ -46,7 +46,6 @@ Creates a long data set from a wide data set identifying 'time'-varying
 variables by a separator
 }
 \examples{
-
 \dontrun{
 dd <- data.frame( y.a = 1:3, y.b = 1:3, x.a= 1:3, time = 1:3,
                   x.b = 11:13, x.c = 21:23, id = c('a','a','b'))
@@ -54,4 +53,7 @@ tolong_2(dd, sep = '.')
 tolong_2(dd, sep = '.', timevar = "type", idvar = 'patient')
 }
 
+}
+\seealso{
+\code{\link{tolong}} and \code{\link{towide}} for many examples using both 'towide' and 'tolong'.
 }

@@ -29,7 +29,6 @@
 #' with name 'timevar'.
 #' @seealso \code{\link{tolong}} and \code{\link{towide}} for many examples using both 'towide' and 'tolong'.
 #' @examples
-#'
 #' \dontrun{
 #' dd <- data.frame( y.a = 1:3, y.b = 1:3, x.a= 1:3, time = 1:3,
 #'                   x.b = 11:13, x.c = 21:23, id = c('a','a','b'))
