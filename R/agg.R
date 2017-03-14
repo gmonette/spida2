@@ -35,23 +35,25 @@
 #' 2010   M      A employed
 #' 2011   F      B unemployed
 #' 2012   M      C employed
+#' 2010   F      B employed
+#' 2011   F      A employed
+#' 2012   M      A out_of_labor_force
 #' 2010   F      A employed
-#' 2011   F      B employed
-#' 2012   M      C out_of_labor_force
-#' 2010   F      A employed
-#' 2011   F      B employed
+#' 2011   F      C employed
 #' 2012   M      C out_of_labor_force
 #' 2010   M      A employed
-#' 2011   M      B unemployed
+#' 2011   M      A unemployed
 #' 2012   M      C employed
 #' 2010   M      A employed
-#' 2011   M      B unemployed
+#' 2011   M      C unemployed
 #' 2012   M      C employed
 #' 2010   M      A employed
 #' 2011   F      B unemployed
-#' 2012   F      C unemployed
+#' 2012   F      A unemployed
 #' ")
 #' surv
+#' agg(surv, )
+#' agg(surv, ~ year, ~ sex + region)
 #'
 #' @author largely adapted from gsummary in Bates & Pinheiro
 #' @export
@@ -75,7 +77,7 @@ agg <- function ( object, form = formula(object),
     else {
       mat <- cvar(x, sel.mf, na.rm = na.rm, ...)
       mat <- data.frame(x=mat)
-      names(mat) <- names(agg.mf[,i])
+      names(mat) <- names(agg.mf[i])
     }
     ret <- cbind(ret, mat)
   }

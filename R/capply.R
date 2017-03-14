@@ -289,7 +289,7 @@ cvar.default <- function( x, id, all , na.rm = TRUE, ... ) {
       return( ret )
     }
   } else {
-    capply( x, id, mean, na.rm = na.rm)
+    capply( x, id, mean, na.rm = na.rm, ...)
   }
 }
 #' @describeIn cvar
