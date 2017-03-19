@@ -4,7 +4,7 @@
 \alias{Read_excel}
 \title{Wrapper for read_excel in 'readxl' package}
 \usage{
-Read_excel(path, sheet = 1, col_types = NULL,
+Read_excel(path, sheet = 1, col_types = NULL, skip = 0,
   stringsAsFactors = default.stringsAsFactors(), ...)
 }
 \arguments{
@@ -12,11 +12,18 @@ Read_excel(path, sheet = 1, col_types = NULL,
 
 \item{sheet}{string or integer to identify sheet to read. Defaults to first sheet.}
 
-\item{col_types}{Either NULL to guess from the spreadsheet
+\item{col_types}{Either NULL to use guess from the spreadsheet made
+by 'read_excel'
 or a character vector containing 'blank', 'numeric',
 'date' or 'text' which is recycled to match the 
-number of columns (this behavior is different from
-that of 'read_excel' that does not recycle)}
+number of columns in the spreadsheet. 
+This behavior is different from
+that of 'read_excel' that does not recycle. 
+If \code{col_types} is equal to 'text', all variables in
+the returned data frame have class character and the user
+needs to handle conversions manually.}
+
+\item{skip}{Number of rows to skip before reading any data.}
 
 \item{stringsAsFactors}{defaults to 'default.stringsAsFactors()'}
 
@@ -26,13 +33,15 @@ X1 to Xn, or a character vector giving a name
 for each column.}
 
 \item{na}{Missing value. By default readxl converts blank cells to missing data. Set this value if you have used a sentinel value for missing values.}
-
-\item{skip}{Number of rows to skip before reading any data.}
 }
 \value{
 a data frame. The value returned by readxl::read_excel
 }
 \description{
+Facilitates reading excel file so each variable is read as a
+character without automatic coercion when it fails with 'read_excel'
+}
+\details{
 read_excel, in the 'readxl' package, guesses the type of each column based on
 some initial number of values.  If non-numeric 
 values first occur quite far into the spread sheet, read_excel
@@ -43,4 +52,65 @@ not work, since read_excel expects the length of 'col_types'
 to equal the number of columns. 'Read_excel' first
 counts the number number of columns and recycles the
 'col_types' argument so it has the right length.
+}
+\examples{
+\dontrun{
+library(spida2)
+library(readxl)  # install from CRAN if necessary
+url <- 'http://nross626.math.yorku.ca/MATH4939/2017/files/Read_excel_example.xlsx'
+fname <- 'temp_file.xlsx'
+if(!file.exists(fname)) download.file(url, fname, mode = 'wb') 
+dd1 <- Read_excel(fname)
+class(dd1)
+sapply(dd1, class)
+# Note on the POSIXct date class:
+# - adding 1 to a "POSIXct" object adds one second
+dd1$date_var
+dd1$date_var + 1
+# POSIXct objects keep track of day and time.
+# If you only need dates,
+# you can coerce a POSIXct object to a Date object:
+z <- as.Date(dd1$date_var)
+# adding 1 to a 'Date' object adds one day
+z
+z + 1
+#
+#  Reading all columns as text:
+#
+dd2 <- Read_excel(fname, col_types = 'text')
+sapply(dd2, class)
+dd2 # all characters
+# 
+# After fixing problematic variables:
+#
+# Date conversions:
+# Internally dates are stored as a numeric variable denoting 
+# the number of days from a 'origin'.  Different systems use
+# different origins. Excel, unfortunately, uses 2, either
+# '1899-12-30' or '1904-12-31'. (see https://support.microsoft.com/en-ca/help/214330/)
+# Thus, it is safest to do a manual conversion followed by
+# sanity checks to make sure the right origin was used.
+# Note that '1899-12-30' is '1899-12-31' within Excel because
+# they didn't take into account that 1900 was not a leap year
+# in the Gregorian calendar. But in converting Excel's integer
+# to a system that knows about the Gregorian calendar (such
+# the POSIX standard used in Unix and R) you need to use
+# '1899-12-30'.
+# So, assuming the xlsx file was created in Windows:
+(date_var <- as.Date( as.numeric(dd2$date_var), origin = '1899-12-30'))
+# do a sanity check. If it was created on a Mac you might have to use:
+(date_var <- as.Date( as.numeric(dd2$date_var), origin = '1903-12-31'))
+# Numeric conversions:
+(num_var <- as.numeric(dd2$num_var))
+# Create a new data frame with converted variables:
+dd_new <- with(dd2,
+       data.frame(date_var = as.Date(as.numeric(data_var), 
+                             origin = '1899-12-30'),
+                  num_var = as.numeric(num_var),
+                  char_var = as.factor(char_var))
+dd_new                   
+}
+}
+\seealso{
+\code{\link{read_excel}}
 }
