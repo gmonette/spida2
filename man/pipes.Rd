@@ -2,10 +2,10 @@
 % Please edit documentation in R/magrittr.R
 \name{pipes}
 \alias{pipes}
-\alias{\%>\%}
+\alias{\%|\%}
 \title{Pipes for magrittr that passes LHS invisibly}
 \usage{
-lhs \%>\% rhs
+lhs \%|\% rhs
 }
 \examples{
 data(hs)
