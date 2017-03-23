@@ -13,7 +13,7 @@ td(new = FALSE, col = c("#0080ff", "#ff00ff", "darkgreen", "#ff0000",
   colsets = c("plot.symbol", "plot.line", "dot.symbol", "dot.line",
   "cloud.3d", "box.dot"), ...)
 
-gd(n = 9, col = brewer.pal(n, "Set1"), lty = 1:n, lwd = 1, pch = 19,
+gd(n = 8, col = brewer.pal(n, "Dark2"), lty = 1:n, lwd = 1, pch = 19,
   cex = 1.4, font = 1, fill = "transparent", col.line = col,
   col.symbol = col, alpha = 1, alpha.line = alpha, alpha.symbol = alpha,
   len = n, h = c(0, 360) + 15, l = 65, c = 100, h.start = 0,

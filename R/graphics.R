@@ -165,8 +165,8 @@ td <- function(
 #'   pal
 #' @export
 gd <-
-  function (n=9,
-            col = brewer.pal(n,"Set1"), lty = 1:n, lwd = 1,
+  function (n=8,
+            col = brewer.pal(n,"Dark2"), lty = 1:n, lwd = 1,
             pch = 19, cex = 1.4, font = 1, fill = "transparent",
             col.line = col, col.symbol = col,
             alpha = 1, alpha.line = alpha, alpha.symbol = alpha,

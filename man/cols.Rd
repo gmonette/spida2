@@ -10,6 +10,7 @@ cols()
 A collection of colours found in various places
 }
 \examples{
+names(cols())
 pal(cols()$mycols)
 pal(cols()$tol8)
 lapply(names(cols()),function(x) pal(cols()[[x]], main = x))
