@@ -23,11 +23,25 @@ panel.labels(x, y, labels, subscripts, ...)
 
 \item{fit}{fitted values of a model, generally passed through 'layer' from a call to 'xyplot': e.g. \code{xyplot( y ~ x, data, groups = g, fit = data$yhat, lower = with(data, yhat - 2*se), upper = with(data, yhat + 2*se), subscripts = T)}}
 
+\item{lower, upper}{lower and upper limits of error bands, passed from main plotting function}
+
+\item{subscripts}{subscripts, passed from main plotting function}
+
 \item{...}{NOTE: may specify anything you don't want passed through ...}
+
+\item{group.number}{, passed from main plotting function}
+
+\item{alpha}{transparency, passed from main plotting function}
+
+\item{col}{passed from main plotting function}
 
 \item{col.symbol}{is used to control color when using 'groups'}
 
 \item{border}{default = FALSE for panel.band.}
+
+\item{font}{passed from main plotting function}
+
+\item{fontface}{passed from main plotting function}
 
 \item{labels}{default is rownames of data}
 
@@ -39,6 +53,8 @@ panel.labels(x, y, labels, subscripts, ...)
 Values falling outside conditional minima and maxima are culled. Default 200.}
 
 \item{xpd}{expansion factor to add points beyond minima and maxima. Default 1.0.}
+
+\item{dots}{passed from main plotting function}
 
 \item{labels}{to display}
 }

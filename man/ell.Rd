@@ -22,9 +22,9 @@ ell(center = rep(0, 2), shape = diag(2), radius = 1, n = 100)
 
 \item{shape}{variance of bivariate normal. Default: 2 x 2 identity}
 
-\item{radius}{(default: 1)}
+\item{radius}{of ellipse, equivalently: square root of deviance contour}
 
-\item{n}{(default: 100) number of points generated}
+\item{n}{number of points on ellipse}
 
 \item{angles}{(default (0:n)*2*pi/n) at which points are generated. The angles
 refer to the generating circle that is then transformed linearly to
@@ -32,18 +32,13 @@ form the ellipse}
 
 \item{fac}{(default: chol) method use to factor 'shape'}
 
-\item{ellipse}{Logical to indicate if the points on the ellipse should be
-returned}
+\item{ellipse}{(default: all) if TRUE generate ellipse}
 
-\item{diameters}{Logical to indicate if the points defining the ends of the
-conjugate axes of the ellipse should be returned}
+\item{diameters}{(default: all) if TRUE generate diameters}
 
-\item{box}{Logical to indicate if the points on the conjugate-axes bounding
-box should be returned}
+\item{box}{(default: all) if TRUE generate tangent box}
 
-\item{all}{Logical to request all of \code{ellipse}, \code{diameters} and
-\code{box}. If \code{FALSE}, only the components specified separately by
-\code{ellipse}, \code{diameters} and \code{box} are returned.}
+\item{all}{(default: FALSE)}
 
 \item{x, y}{data values}
 
@@ -53,6 +48,10 @@ box should be returned}
 
 \item{shape}{(default: diag(2)) 'variance' corresponding to shape of ellipse
 if taken as a concentration ellipse for a bivariate normal}
+
+\item{radius}{(default: 1)}
+
+\item{n}{(default: 100) number of points generated}
 
 \item{center}{X,Y location of the center of the ellipse}
 
@@ -70,6 +69,19 @@ confidence ellipse).}
 \item{fac}{A function defining the conjugate axes used to transform the unit
 circle into an ellipse.  The default, \code{\link{chol}}, uses the right Cholesky
 factor of \code{shape}.}
+
+\item{ellipse}{Logical to indicate if the points on the ellipse should be
+returned}
+
+\item{diameters}{Logical to indicate if the points defining the ends of the
+conjugate axes of the ellipse should be returned}
+
+\item{box}{Logical to indicate if the points on the conjugate-axes bounding
+box should be returned}
+
+\item{all}{Logical to request all of \code{ellipse}, \code{diameters} and
+\code{box}. If \code{FALSE}, only the components specified separately by
+\code{ellipse}, \code{diameters} and \code{box} are returned.}
 }
 \value{
 Returns a 2-column matrix of (X,Y) coordinates suitable for drawing

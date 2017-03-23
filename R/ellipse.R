@@ -16,10 +16,10 @@
 #'        refer to the generating circle that is then transformed linearly to
 #'        form the ellipse
 #' @param fac (default: chol) method use to factor 'shape'
-#' @ellipse (default: all) if TRUE generate ellipse
-#' @diameters (default: all) if TRUE generate diameters
-#' @box (default: all) if TRUE generate tangent box
-#' @all (default: FALSE)
+#' @param ellipse (default: all) if TRUE generate ellipse
+#' @param diameters (default: all) if TRUE generate diameters
+#' @param box (default: all) if TRUE generate tangent box
+#' @param all (default: FALSE)
 #' @describeIn ell tangents and axes
 #' @export
 ellplus <- function ( center = rep(0,2), shape = diag(2), radius = 1, n = 100,

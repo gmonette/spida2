@@ -22,16 +22,16 @@
 #' @param xpd expansion factor to add points beyond minima and maxima. Default 1.0.
 #' @param y
 #' @param fit fitted values of a model, generally passed through 'layer' from a call to 'xyplot': e.g. \code{xyplot( y ~ x, data, groups = g, fit = data$yhat, lower = with(data, yhat - 2*se), upper = with(data, yhat + 2*se), subscripts = T)}
-#' @param lower,upper
-#' @param subscripts
-#' @param dots
-#' @param col
-#' @param group.number
-#' @param alpha
+#' @param lower,upper lower and upper limits of error bands, passed from main plotting function
+#' @param subscripts subscripts, passed from main plotting function
+#' @param dots passed from main plotting function
+#' @param col passed from main plotting function
+#' @param group.number , passed from main plotting function
+#' @param alpha transparency, passed from main plotting function
 #' @param col.symbol is used to control color when using 'groups'
 #' @param border default = FALSE for panel.band.
-#' @param font
-#' @param fontface
+#' @param font passed from main plotting function
+#' @param fontface passed from main plotting function
 #' @return The 'panel.bands', 'panel.fit', and 'panel.labels' functions are
 #'         invoked for their graphical effect.
 #' @author Georges Monette <georges@@yorku.ca>

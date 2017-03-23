@@ -132,8 +132,8 @@
 #' 
 #' @param center (default: c(0,0)) 
 #' @param shape variance of bivariate normal. Default: 2 x 2 identity
-#' @radius of ellipse, equivalently: square root of deviance contour
-#' @n number of points on ellipse
+#' @param radius of ellipse, equivalently: square root of deviance contour
+#' @param n number of points on ellipse
 #' 
 #' @export
 ell <- 
