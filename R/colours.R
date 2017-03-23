@@ -5,7 +5,7 @@
 #'
 #' @examples
 #' names(cols())
-#' pal(cols()$my)
+#' pal(cols()$mycols)
 #' pal(cols()$tol8)
 #' lapply(names(cols()),function(x) pal(cols()[[x]], main = x))
 #' @export
