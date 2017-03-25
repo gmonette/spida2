@@ -6,10 +6,12 @@
 \title{Create a long file from a wide file}
 \usage{
 tolong(data, sep = "_", timevar = "time", idvar = "id",
-  ids = 1:nrow(data), expand = TRUE, safe_sep = "#\%@!", ...)
+  ids = 1:nrow(data), expand = TRUE, safe_sep = "#\%@!", reverse = F,
+  ...)
 
 long(data, sep = "_", timevar = "time", idvar = "id",
-  ids = 1:nrow(data), expand = TRUE, safe_sep = "#\%@!", ...)
+  ids = 1:nrow(data), expand = TRUE, safe_sep = "#\%@!", reverse = F,
+  ...)
 }
 \arguments{
 \item{data}{wide data frame}
@@ -30,10 +32,10 @@ if \code{idvar} exists in \code{data}.}
 
 \item{safe_sep}{temporary safe? separator}
 
-\item{...}{additional parameters are passed to \code{\link{reshape}}.}
-
 \item{reverse}{(default FALSE) if TRUE, the 'time' value precedes the 
 variable name}
+
+\item{...}{additional parameters are passed to \code{\link{reshape}}.}
 }
 \value{
 'long' file with each wide row repeated as many times as there are distinct values for the 'timevar' variable.

@@ -97,7 +97,7 @@ tolong <- function (data, sep = "_",  timevar = 'time',
     }
   }
   Flip <- function(nams, sep) {
-    expr <- paste0('^(.*)(',sep,')(.*)$')
+    expr <- paste0('^(.*)(\\Q',sep,'\\E)(.*)$')
     new <- "\\3\\2\\1"
     sub(expr,new,nams)
   }
