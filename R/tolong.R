@@ -86,7 +86,8 @@
 #' @export
 tolong <- function (data, sep = "_",  timevar = 'time',
                   idvar = 'id', ids = 1:nrow(data),
-                  expand = TRUE, safe_sep = "#%@!", ...) {
+                  expand = TRUE, safe_sep = "#%@!", 
+                  reverse = F, ...) {
   if (timevar %in% names(data)) warning(paste("Variable",timevar, "in data is replaced by a variable to mark occasions"))
   if (idvar %in% names(data)) {
     idwide <- data[[idvar]]
