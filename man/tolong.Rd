@@ -31,6 +31,9 @@ if \code{idvar} exists in \code{data}.}
 \item{safe_sep}{temporary safe? separator}
 
 \item{...}{additional parameters are passed to \code{\link{reshape}}.}
+
+\item{reverse}{(default FALSE) if TRUE, the 'time' value precedes the 
+variable name}
 }
 \value{
 'long' file with each wide row repeated as many times as there are distinct values for the 'timevar' variable.
@@ -96,6 +99,14 @@ dl <- data.frame(name = rep(LETTERS[1:3], each = 6),
 dl
 (dlsite <- towide(dl, c('name','side'), 'site'))
 (dlsite.side <- towide(dlsite, c('name'), 'side'))
+\dontrun{
+# Extracting chains from a stanfit object in the 'rstan' package
+# If 'mod' is a stanfit model
+library(rstan)
+library(spida2)
+df <- as.data.frame(extract(mod, permute = F))
+dl <- tolong(df, sep = ':', reverse = T)
+}
 }
 \seealso{
 \code{\link{towide}} for many examples using both 'towide' and 'tolong'.

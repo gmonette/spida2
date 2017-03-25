@@ -1,3 +1,5 @@
+2017-03-26
+* Added 'reverse' parameter to 'tolong' for cases where the 'time' value precedes the variable name: e.g. 'chain.1:beta', 'chain.2:beta' in rstan models
 2017-03-11
 * Added Read_excel to read xls/xlsx files as data frames using the 'readxl' package
 2016-11-17

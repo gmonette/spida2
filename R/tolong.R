@@ -24,6 +24,8 @@
 #'        if \code{idvar} exists in \code{data}.
 #' @param expand (default TRUE): if 'time' values are inconsistent, fill in missing 'time's with NAs.
 #' @param safe_sep temporary safe? separator
+#' @param reverse (default FALSE) if TRUE, the 'time' value precedes the 
+#'        variable name
 #' @param ... additional parameters are passed to \code{\link{reshape}}.
 #' @return 'long' file with each wide row repeated as many times as there are distinct values for the 'timevar' variable.
 #' @seealso \code{\link{towide}} for many examples using both 'towide' and 'tolong'.
@@ -73,6 +75,14 @@
 #' dl
 #' (dlsite <- towide(dl, c('name','side'), 'site'))
 #' (dlsite.side <- towide(dlsite, c('name'), 'side'))
+#' \dontrun{
+#' # Extracting chains from a stanfit object in the 'rstan' package
+#' # If 'mod' is a stanfit model
+#' library(rstan)
+#' library(spida2)
+#' df <- as.data.frame(extract(mod, permute = F))
+#' dl <- tolong(df, sep = ':', reverse = T)
+#' }
 #' @export
 tolong <- function (data, sep = "_",  timevar = 'time',
                   idvar = 'id', ids = 1:nrow(data),
@@ -85,6 +95,12 @@ tolong <- function (data, sep = "_",  timevar = 'time',
       data[[idvar]] <- ids
     }
   }
+  Flip <- function(nams, sep) {
+    expr <- paste0('^(.*)(',sep,')(.*)$')
+    new <- "\\3\\2\\1"
+    sub(expr,new,nams)
+  }
+  if (reverse) names(data) <- Flip(names(data), sep)
   if (expand) {
     namessafe <- sub(sep, safe_sep, names(data), fixed = TRUE)
     varnames <- grep(safe_sep, namessafe, value = TRUE, fixed = TRUE)
