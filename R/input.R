@@ -102,7 +102,9 @@ Read_excel <- function(path, sheet = 1, col_types = NULL, skip = 0,
   if(is.null(col_types)) ret <- read_excel(path, sheet = sheet, skip = skip, ...)
   else {
     col_types[col_types == 'character'] <- 'text'
+    opts <- options(warn=-1)
     num.columns <- ncol(read_excel(path, sheet = sheet, skip = skip))
+    options(opts)
     ret <- read_excel(path, sheet = sheet,
                      col_types = rep_len(col_types, num.columns),
                      skip = skip, ...)
