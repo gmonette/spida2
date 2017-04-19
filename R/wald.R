@@ -4,8 +4,8 @@
 ## The methods are readily extended to any fitting method that returns a vector
 ## of estimated parameters and an estimated variance matrix.
 ## Extensions are implemented through the 'getFix' generic function.
-
-
+##
+##
 ## see also Leff
 ## Changes:
 ## 2014 06 04: changed fit@fixef to fixef(fit) in a number of 'getFix' methods
@@ -86,6 +86,8 @@
 #' @param Llist a hypothesis matrix or a pattern to be matched or a list of
 #'        these
 #' @param clevel level for confidence intervals. No confidence intervals if clevel is NULL
+#' @param pred prediction data frame to evaluate fitted model using '
+#'        \code{getX(fit) %*% coef}
 #' @param data data frame used as 'data' attribute fot list elements returned only if
 #'        the corresonding element of \code{Llist} has a NULL data attribute
 #' @param debug (default FALSE) produce verbose information
@@ -97,18 +99,18 @@
 #'       standard errors for models for which the \code{predict} method does not
 #'       provide them.
 #' @param fixed if \code{Llist} is a character to be used a regular expression,
-#' if \code{fixed} is TRUE \code{Llist} is interpreted literally, i.e.
-#' characters that have a special meaning in regular expressions are
-#' interpreted literally.
+#'       if \code{fixed} is TRUE \code{Llist} is interpreted literally, i.e.
+#'       characters that have a special meaning in regular expressions are
+#'       interpreted literally.
 #' @param invert if \code{Llist} is a character to be used a regular
-#' expression, \code{invert == TRUE} causes the matches to be inverted so that
-#' coefficients that do not match will be selected.
+#'       expression, \code{invert == TRUE} causes the matches to be inverted so that
+#'       coefficients that do not match will be selected.
 #' @param method 'svd' (current default) or 'qr' is the method used to find the
-#' full rank version of the hypothesis matrix.  'svd' has correctly identified
-#' the rank of a large hypothesis matrix where 'qr' has failed.
+#'       full rank version of the hypothesis matrix.  'svd' has correctly identified
+#'       the rank of a large hypothesis matrix where 'qr' has failed.
 #' @param help obsolete
 #' @return An object of class \code{wald}, with the following components:
-#'     COMPLETE
+#'       COMPLETE
 #' @seealso \code{\link{Lform}}, \code{\link{xlevels}}, \code{\link{dlevels}},
 #'          \code{\link{Lfx}}, \code{\link{getX}}, \code{\link{M}},
 #'          \code{\link{Lall}},\code{\link{Lc}},\code{\link{Lequal}},
@@ -127,8 +129,8 @@
 #'   summary(fit)
 #'   pred <- expand.grid( ses = seq(-2,2,.1), Sex = levels(hs$Sex), Sector = levels(hs$Sector))
 #'   pred
-#'   w <- wald(fit, getX(fit,data=pred)) # attaches data to wald.object so it can included in data frame
-#'   w
+#'   w <- wald(fit, getX(fit,data=pred)) # attaches data to wald.object so it can be included in data frame
+#'   w <- wald(fit, pred = pred)
 #'   w <- as.data.frame(w)
 #'   head(w)
 #'   library(latticeExtra)
@@ -158,11 +160,13 @@
 #'
 #' @export
 wald <- function(fit, Llist = "", clevel = 0.95,
+                 pred = NULL,
                  data = NULL, debug = FALSE , maxrows = 25,
                  full = FALSE, fixed = FALSE,
                  invert = FALSE, method = 'svd',
                  df = NULL) {
-  if (full) return(wald(fit, model.matrix(fit), data = data))
+  if (full) return(wald(fit, getX(fit)))
+  if(!is.null(pred)) return(wald(fit, getX(fit,pred)))
   dataf <- function(x,...) {
     x <- cbind(x)
     rn <- rownames(x)

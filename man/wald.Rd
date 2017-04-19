@@ -7,9 +7,9 @@
 \alias{glh}
 \title{General Linear Hypothesis for the 'fixed' portion of a model with Wald test}
 \usage{
-wald(fit, Llist = "", clevel = 0.95, data = NULL, debug = FALSE,
-  maxrows = 25, full = FALSE, fixed = FALSE, invert = FALSE,
-  method = "svd", df = NULL)
+wald(fit, Llist = "", clevel = 0.95, pred = NULL, data = NULL,
+  debug = FALSE, maxrows = 25, full = FALSE, fixed = FALSE,
+  invert = FALSE, method = "svd", df = NULL)
 
 wald2(fit, Llist = "", clevel = 0.95, data = NULL, debug = FALSE,
   maxrows = 25, full = FALSE, fixed = FALSE, invert = FALSE,
@@ -58,7 +58,7 @@ the rank of a large hypothesis matrix where 'qr' has failed.}
 }
 \value{
 An object of class \code{wald}, with the following components:
-    COMPLETE
+      COMPLETE
 }
 \description{
 General Linear Hypothesis with Wald test for lm, glm, lme, nlme and
@@ -123,8 +123,8 @@ library(nlme)
   summary(fit)
   pred <- expand.grid( ses = seq(-2,2,.1), Sex = levels(hs$Sex), Sector = levels(hs$Sector))
   pred
-  w <- wald(fit, getX(fit,data=pred)) # attaches data to wald.object so it can included in data frame
-  w
+  w <- wald(fit, getX(fit,data=pred)) # attaches data to wald.object so it can be included in data frame
+  w <- wald(fit, pred = pred)
   w <- as.data.frame(w)
   head(w)
   library(latticeExtra)

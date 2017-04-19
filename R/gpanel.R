@@ -100,6 +100,8 @@
 #'   pred$from <- 'pred'
 #'   dm <- merge(hs, pred, all = T)
 #'   w <- wald(fit, getX(fit, data = dm)) # attaches data to wald.object so it can included in data frame
+#'   # or:
+#'   w <- wald(fit, pred = dm)  
 #'   w <- as.data.frame(w)
 #'   head(w)
 #'   library(latticeExtra)

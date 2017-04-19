@@ -1,3 +1,5 @@
+2017-04-19
+* Added 'pred' parameter to provide a prediction data frame 'wald' to produce predicted values and SEs for any fit with 'getFix' and 'getX' methods 
 2017-03-26
 * Added 'reverse' parameter to 'tolong' for cases where the 'time' value precedes the variable name: e.g. 'chain.1:beta', 'chain.2:beta' in rstan models
 2017-03-11
