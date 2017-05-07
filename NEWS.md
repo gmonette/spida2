@@ -1,5 +1,6 @@
 2017-05-05
 * Added 'name' to provide naming/renaming facility in a pipeline
+* Added 'sub_' and 'gsub_' to enhance naming/renaming in a pipeline
 2017-04-19
 * Added 'pred' parameter to provide a prediction data frame 'wald' to produce predicted values and SEs for any fit with 'getFix' and 'getX' methods 
 2017-03-26
