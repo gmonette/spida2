@@ -68,6 +68,7 @@ name <- function(x, nam = x,...) {
 #' @export
 sub_ <- function(x, pattern, replacement, ...) UseMethod("sub_")
 #' @rdname sub_
+#' @export
 sub_.default <- function(x, pattern, replacement,...) {
   replacement <- rep_len(replacement, length.out = length(pattern) )
   for(i in seq_along(pattern)){
@@ -76,6 +77,7 @@ sub_.default <- function(x, pattern, replacement,...) {
   x
 }
 #' @rdname sub_
+#' @export
 sub_.factor <- function(x, pattern, replacement, ...) {
   levels(x) <- sub_(levels(x), pattern, replacement, ...)
   x
@@ -84,6 +86,7 @@ sub_.factor <- function(x, pattern, replacement, ...) {
 #' @export
 gsub_ <- function(x, pattern, replacement, ...) UseMethod("gsub_")
 #' @rdname sub_
+#' @export
 gsub_.default <- function(x, pattern, replacement,...) {
   replacement <- rep_len(replacement, length.out = length(pattern) )
   for(i in seq_along(pattern)){
@@ -92,6 +95,7 @@ gsub_.default <- function(x, pattern, replacement,...) {
   x
 }
 #' @rdname sub_
+#' @export
 gsub_.factor <- function(x, pattern, replacement, ...) {
   levels(x) <- gsub_(levels(x),pattern,replacement, ...)
   x
