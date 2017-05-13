@@ -54,7 +54,7 @@ name <- function(x, nam = x,...) {
 #' @param replacement the 'to' regular expression
 #' @param ... other arguments for  \code{\link{sub}} or  \code{\link{gsub}}
 #' @return Value of \code{sub(pattern, replacement, x, ...)} or \code{gsub(pattern, replacement, x, ...)} 
-#' @seealso \code{\link{sub}}
+#' @seealso \code{\link{sub}} \code{\link{spida2::gsub_}}
 #' @rdname sub_
 #' @examples
 #' \dontrun{
@@ -67,7 +67,7 @@ name <- function(x, nam = x,...) {
 #' }
 #' @export
 sub_ <- function(x, pattern, replacement, ...) UseMethod("sub_")
-#' @rdname sub_
+#' @describeIn sub_ default method
 #' @export
 sub_.default <- function(x, pattern, replacement,...) {
   replacement <- rep_len(replacement, length.out = length(pattern) )
@@ -76,16 +76,41 @@ sub_.default <- function(x, pattern, replacement,...) {
   }
   x
 }
-#' @rdname sub_
+#' @describeIn sub_ method for factor objects
 #' @export
 sub_.factor <- function(x, pattern, replacement, ...) {
   levels(x) <- sub_(levels(x), pattern, replacement, ...)
   x
 }
-#' @rdname sub_
+#' Methods providing versions of sub and gsub for pipelines and factors
+#' 
+#' The first argument of sub_  and gsub_ is the object to 
+#' be modified instead of the pattern to be matched. Thus \code{sub_}
+#' and \code{gsub_} can be used as generic functions that dispatch on
+#' the class of the first argument. This allows them to recognize factors
+#' and work with the levels attribute instead of coercing the
+#' factor ?gsubto a character vector. Two consequences are that a
+#' factor, instead of a character vector, is returned, and that the
+#' original order of the levels is preserved. 
+#' 
+#' @param x object to change
+#' @param pattern the 'from' regular expression
+#' @param replacement the 'to' regular expression
+#' @param ... other arguments for  \code{\link{sub}} or  \code{\link{gsub}}
+#' @return Value of \code{sub(pattern, replacement, x, ...)} or \code{gsub(pattern, replacement, x, ...)} 
+#' @seealso \code{\link{sub}} \code{\link{gsub_}}
+#' @examples
+#' \dontrun{
+#' library(magrittr)
+#' x <- as.list(1:4)
+#' x  %>% name(letters[1:4])
+#' x  %>% name(letters[1:4]) %>% name(toupper)
+#' x  %>% name(letters[1:4]) %>% 
+#'        name(gsub_, '(.*)', 'Time_\\1')  %>% unlist
+#' }
 #' @export
 gsub_ <- function(x, pattern, replacement, ...) UseMethod("gsub_")
-#' @rdname sub_
+#' @describeIn gsub_ default method
 #' @export
 gsub_.default <- function(x, pattern, replacement,...) {
   replacement <- rep_len(replacement, length.out = length(pattern) )
@@ -94,7 +119,7 @@ gsub_.default <- function(x, pattern, replacement,...) {
   }
   x
 }
-#' @rdname sub_
+#' @describeIn gsub_ method for factors
 #' @export
 gsub_.factor <- function(x, pattern, replacement, ...) {
   levels(x) <- gsub_(levels(x),pattern,replacement, ...)
