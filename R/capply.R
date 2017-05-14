@@ -184,9 +184,24 @@ capply.formula <- function(formula, data, FUN, ...) {
   ret
 }
 #' @export
-capply.default <- function ( x, by, FUN , ...) {
+# Previously:
+# capply.default <- function ( x, by, FUN , ...) {
+#   FUN <- match.fun(FUN)
+#   if (inherits(by,'formula')) by <- model.frame( by , x , na.action = na.include)
+#   if (is.character(by)) by <- factor(by)
+#   if (is.factor(by)) by <- as.numeric(by)
+#   ret <- unsplit ( lapply ( split ( x , by ), FUN, ...), by )
+#   if ( !is.null( dim(ret)) && length(dim(ret)) ==1) ret <- c(ret)
+#   ret
+# }
+# 
+capply.default <- function ( x, by, FUN , ..., sep = '#@}(?') {
   FUN <- match.fun(FUN)
   if (inherits(by,'formula')) by <- model.frame( by , x , na.action = na.include)
+  if (is.list(by)) {
+    by <- c(by, sep = sep)
+    by <- do.call(paste, by)
+  }
   if (is.character(by)) by <- factor(by)
   if (is.factor(by)) by <- as.numeric(by)
   ret <- unsplit ( lapply ( split ( x , by ), FUN, ...), by )

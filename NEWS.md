@@ -1,3 +1,5 @@
+2017-05-12
+* capply.default rewritten to speed up when by is a list
 2017-05-05
 * Added 'name' to provide naming/renaming facility in a pipeline
 * Added 'sub_' and 'gsub_' to enhance naming/renaming in a pipeline
