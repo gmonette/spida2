@@ -25,7 +25,7 @@
 sortdf <- function(data, form) {
   xx <- as.list(model.frame(form, data, na.action=NULL))
   ord <- do.call(order, xx)
-  data[ ord,]
+  data[ ord,,drop = FALSE]
 }
 
 ## Assign in a pipeline

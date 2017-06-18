@@ -1,4 +1,6 @@
 2017-05-12
+* sortdf:  fixed so single variable data frame remains a data frame
+2017-05-12
 * capply.default rewritten to speed up when by is a list
 2017-05-05
 * Added 'name' to provide naming/renaming facility in a pipeline
