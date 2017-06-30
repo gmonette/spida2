@@ -1,3 +1,5 @@
+2017-06-30
+* Added name, sub_, gsub_, getex, getex_
 2017-05-12
 * sortdf:  fixed so single variable data frame remains a data frame
 2017-05-12
