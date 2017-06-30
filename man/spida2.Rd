@@ -13,7 +13,7 @@ longitudinal and hierarchical data analysis.
 \section{Wald tests and linear hypothesis matrices}{
 
 \itemize{
-\item \code{\link{wald}} quick Wald tests -- optionally building hypothesis matrices from regular expressions
+\item \code{\link{wald}} quick Wald tests -- optionally building hypothesis matrices from regular expressions -- with full or reduced rank
 \item \code{\link{walddf}} version of wald that returns a data frame
 \item \code{\link{as.data.frame.wald}} return a data frame from a wald object
 \item \code{\link{coef.wald}} method to extract estimated coefficients
@@ -48,9 +48,13 @@ longitudinal and hierarchical data analysis.
   function \code{FUN} to chunks of 'x' formed by levels of 'id'.
   The result has the same form as 'x' with replication within
   chunks, if needed.
-\item \code{\link{up}} and \code{\link{up_apply}} create summary
+\item \code{\link{cvar}} and \code{\link{dvar}} are designed to be used
+  in linear model formulas to generate 'centered-within-group' and 'within-group
+  deviation' variables. WIth factors, they generate mean incidence matrices.
+\item \code{\link{up}}, \code{\link{agg}} and \code{\link{up_apply}} create summary
   data sets consisting, by default, of within-id-invariant variables. 
-  Summaries of id-varying variables can also be included.
+  Summaries of id-varying variables can also be included. \code{\link{agg}} can
+  create mean incidence matrices for lower-level factors.
 \item \code{link{varLevel}}: the level of a variable with respect
   to a clustering formula.
 }
@@ -100,6 +104,15 @@ longitudinal and hierarchical data analysis.
 \item \code{\link{rnd}} round a vector to keep significant digits in variation in values
 \item \code{\link{run}} evaluate a string as a command with try
 \item \code{\link{grepv}} grep(..., value = TRUE)
+}
+}
+
+\section{String manipulatio functions}{
+
+Tools to help manipulate messy data designed to work smoothly with \code{magrittr} pipes. 
+\itemize{
+\item \code{\link{sub_}} and \code{\link{gsub_}} handle substitution in a pipeline and return a factor if the input is a factor
+\item \code{\link{name}} changes the names of an object and returns the renamed object 
 }
 }
 
