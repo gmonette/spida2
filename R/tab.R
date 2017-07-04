@@ -114,6 +114,9 @@ dropLastTotal <- function (mat, names_to_drop = "Total", drop = FALSE) {
 #' with the sum of the weights
 #' @param keep names of margins to keep with 'Tab', default = "All". To drop
 #' all margins, use default = "".
+#' @param test (default FALSE) use \code{\link{chisq.test}}
+#' @param simulate (default FALSE) simulate p-value with  \code{\link{chisq.test}}
+#' @param B (default 2000) number of replications for simulation
 #' @return An object of class 'table' of dimension equal to the number of
 #' variables, with optional margins showing totals. Elements of the matrix can
 #' be frequencies, relative frequencies, percentages or sums of weights.
@@ -123,6 +126,9 @@ dropLastTotal <- function (mat, names_to_drop = "Total", drop = FALSE) {
 #' @examples
 #' titanic <- as.data.frame(Titanic)
 #' head(titanic)
+#' 
+#' tab(titanic, Freq ~ Sex + Survived + Age , test = T)
+#' 
 #' tab(titanic, Freq ~ Sex + Age)
 #'
 #' tab(titanic, Freq ~ Sex + Survived + Age)
@@ -165,7 +171,9 @@ tab.data.frame <-
         test = FALSE,
         weights = NULL,
         na.rm = NULL,
-        all.label = "All")
+        all.label = "All", 
+        simulate = FALSE,
+        B = 2000)
 {
   # GM: 2014 08 22: modified handling of lhs to fix bug when variable in lhs
   #                 also appears in rhs
@@ -186,9 +194,11 @@ tab.data.frame <-
     weights[ is.na(weights) ] <- -Inf
   }
   #  disp(weights)
+  if(simulate ==TRUE) test <- TRUE
   xx = c(xx, list( total.margins = total.margins, useNA = useNA,
                    pct=pct, pr = pr, test=test, na.rm = na.rm,
-                   weights = weights,all.label=all.label) )
+                   weights = weights,all.label=all.label,
+                   simulate=simulate) )
   do.call("tab", xx)
 }
 
@@ -197,10 +207,12 @@ tab.data.frame <-
 tab.default <- function (..., total.margins = TRUE,
                          pct = NULL, pr = NULL,
                          useNA = "ifany",
-                         test = FALSE,
+                         test = simulate,
                          weights = NULL,
                          na.rm = NULL,
-                         all.label = "All")
+                         all.label = "All",
+                         simulate = FALSE, 
+                         B = 2000)
 {
   if(!is.null(na.rm)) useNA <- if(na.rm) "no" else "ifany"
   aa <- list(...)
@@ -228,10 +240,14 @@ tab.default <- function (..., total.margins = TRUE,
     if( length(dim(ret)) < 3) {
       test.out <- chisq.test(ret)
     } else if ( length(dim(ret)) == 3)  {
-      test.out <- apply( ret, 3:length(dim(ret)), chisq.test)
+      test.out <- apply( ret, 3:length(dim(ret)), chisq.test, 
+                         simulate.p.value = simulate,
+                         B= B)
 
     } else if ( length(dim(ret)) > 3)  {
-      test.out <- .mat2arr(apply( ret, 3:length(dim(ret)), chisq.test))
+      test.out <- .mat2arr(apply( ret, 3:length(dim(ret)), chisq.test, 
+                                  simulate.p.value = simulate,
+                                  B= B))
 
     }
   }
@@ -239,8 +255,17 @@ tab.default <- function (..., total.margins = TRUE,
   else if ( !is.null(pct)) ret <- 100* acond( ret, MARGIN = pct, all.label = all.label)
   else if (total.margins) ret = atotal(ret)
   if( test ) attr(ret,'test') <- test.out
-  if( test ) ret <- unclass(ret)   # so attributes will print
-  as.table(ret)
+  ret <- as.table(ret)
+  if( test ) class(ret) <- c('tab', class(ret))
+  ret
+}
+#' Print method for 'tab' object
+#' 
+#' @export
+print.tab <- function(x,...) {
+  NextMethod()
+  print(attr(x,'test'))
+  invisible(x)
 }
 #' Transform a frequency table into relative frequencies relative to a margin.
 #'

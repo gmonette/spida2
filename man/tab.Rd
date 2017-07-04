@@ -27,11 +27,11 @@ tab(x, ...)
 
 \method{tab}{data.frame}(dd, fmla, total.margins = TRUE, useNA = "ifany",
   pct = NULL, pr = NULL, test = FALSE, weights = NULL, na.rm = NULL,
-  all.label = "All")
+  all.label = "All", simulate = FALSE, B = 2000)
 
 \method{tab}{default}(..., total.margins = TRUE, pct = NULL, pr = NULL,
-  useNA = "ifany", test = FALSE, weights = NULL, na.rm = NULL,
-  all.label = "All")
+  useNA = "ifany", test = simulate, weights = NULL, na.rm = NULL,
+  all.label = "All", simulate = FALSE, B = 2000)
 }
 \arguments{
 \item{\dots}{as with \code{table}, one or more objects which can be interpreted as factors (including character strings), or a list (or data frame) whose components can be so interpreted.}
@@ -50,8 +50,14 @@ be set to "no" or "always".}
 
 \item{pr}{margins to be scaled to sum to 1. This is the vector of margin indices on which percentages are conditioned.}
 
+\item{test}{(default FALSE) use \code{\link{chisq.test}}}
+
 \item{weights}{(not working temporarily) instead of generating a frequency table, generate a table
 with the sum of the weights}
+
+\item{simulate}{(default FALSE) simulate p-value with  \code{\link{chisq.test}}}
+
+\item{B}{(default 2000) number of replications for simulation}
 
 \item{keep}{names of margins to keep with 'Tab', default = "All". To drop
 all margins, use default = "".}
@@ -83,6 +89,9 @@ percentages
 \examples{
 titanic <- as.data.frame(Titanic)
 head(titanic)
+
+tab(titanic, Freq ~ Sex + Survived + Age , test = T)
+
 tab(titanic, Freq ~ Sex + Age)
 
 tab(titanic, Freq ~ Sex + Survived + Age)
