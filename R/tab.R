@@ -126,22 +126,15 @@ dropLastTotal <- function (mat, names_to_drop = "Total", drop = FALSE) {
 #' @examples
 #' titanic <- as.data.frame(Titanic)
 #' head(titanic)
-#' 
 #' tab(titanic, Freq ~ Sex + Survived + Age , test = T)
-#' 
 #' tab(titanic, Freq ~ Sex + Age)
-#'
 #' tab(titanic, Freq ~ Sex + Survived + Age)
-#'
 #' round(tab(titanic, Freq ~ Sex + Survived + Age,
 #'     pct = c(1,3)),2)
-#'
 #' round(Tab(titanic, Freq ~ Sex + Survived + Age,
 #'     pct = c(1,3)),2)
-#'
 #' round(Tab(titanic, Freq ~ Sex + Survived + Age,
 #'     pct = c(1,3), keep = ""),2)
-#'
 #' @export
 tab <- function(x,...) UseMethod("tab")
 #' @describeIn tab method class table
