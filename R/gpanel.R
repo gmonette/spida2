@@ -469,3 +469,24 @@ panel.box <-
     }
   }
 
+#' Draw data ellipse
+#'
+#' This is an experiment in writing a function that can be
+#' called via layer or glayer without further complications
+#' e.g. \code{xyplot(......,labels = rownames(data)) + layer(panel.dell(...))}
+#' or  \code{xyplot(....., labels = rownames(data), subscripts = T) + glayer(panel.dell(...))}.
+#' @param x,y points to generate data ellipse
+#' @param radius default 1
+#' @param ... NOTE: may specify anything you don't want passed through ...
+#' @examples
+#' \dontrun{
+#' library(latticeExtra)
+#' xyplot(mathach ~ ses, hs) + layer(panel.dell(..., col='red',lwd=2))
+#' xyplot(mathach ~ ses | school, hs) + layer(panel.dell(...))
+#' xyplot(mathach ~ ses , hs, groups = school) + glayer(panel.dell(...,lwd=2))
+#' }
+#' @export
+panel.dell <-
+  function (x, y,  radius = 1, subscripts, type = 'l',...) {
+    panel.lines(dell(x, y, radius = radius), type = 'l', ...)
+  }

@@ -1,3 +1,5 @@
+2017-07-10
+* Added getFix.stanfit and modified wald to pass 'pars' parameter
 2017-06-30
 * Added name, sub_, gsub_, getex, getex_
 2017-05-12

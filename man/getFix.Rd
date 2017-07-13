@@ -13,6 +13,7 @@
 \alias{getFix.zeroinfl}
 \alias{getFix.mipo}
 \alias{getFix.MCMCglmm}
+\alias{getFix.stanfit}
 \alias{getFix.default}
 \title{Get information on fixed effects from a model object}
 \usage{
@@ -39,6 +40,8 @@ getFix(fit, ...)
 \method{getFix}{mipo}(fit, ...)
 
 \method{getFix}{MCMCglmm}(fit, ...)
+
+\method{getFix}{stanfit}(fit, pars, include = TRUE, ...)
 
 \method{getFix}{default}(fit, ...)
 }
@@ -88,6 +91,8 @@ requires a \code{getFix} method for the new class.
 \item \code{mipo}: method for mipo objects in the mice package
 
 \item \code{MCMCglmm}: method for MCMCglmm objects in the MCMCglmm package
+
+\item \code{stanfit}: method for `stanfit` objects in the `rstan` package
 
 \item \code{default}: print message if getFix id used for a class for which a method has not been written
 }}

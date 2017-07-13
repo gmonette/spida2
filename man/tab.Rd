@@ -89,22 +89,15 @@ percentages
 \examples{
 titanic <- as.data.frame(Titanic)
 head(titanic)
-
 tab(titanic, Freq ~ Sex + Survived + Age , test = T)
-
 tab(titanic, Freq ~ Sex + Age)
-
 tab(titanic, Freq ~ Sex + Survived + Age)
-
 round(tab(titanic, Freq ~ Sex + Survived + Age,
     pct = c(1,3)),2)
-
 round(Tab(titanic, Freq ~ Sex + Survived + Age,
     pct = c(1,3)),2)
-
 round(Tab(titanic, Freq ~ Sex + Survived + Age,
     pct = c(1,3), keep = ""),2)
-
 }
 \seealso{
 \code{\link{tab_}} (synonym: Tab) to drop "Total" margins.

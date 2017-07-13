@@ -9,7 +9,7 @@
 \usage{
 wald(fit, Llist = "", clevel = 0.95, pred = NULL, data = NULL,
   debug = FALSE, maxrows = 25, full = FALSE, fixed = FALSE,
-  invert = FALSE, method = "svd", df = NULL)
+  invert = FALSE, method = "svd", df = NULL, pars = NULL, ...)
 
 wald2(fit, Llist = "", clevel = 0.95, data = NULL, debug = FALSE,
   maxrows = 25, full = FALSE, fixed = FALSE, invert = FALSE,
@@ -54,6 +54,10 @@ coefficients that do not match will be selected.}
 full rank version of the hypothesis matrix.  'svd' has correctly identified
 the rank of a large hypothesis matrix where 'qr' has failed.}
 
+\item{pars}{passed to \code{\link{rstan::extract}} method for stanfit objects.}
+
+\item{include}{passed to \code{\link{rstan::extract}} method for stanfit objects.#'}
+
 \item{help}{obsolete}
 }
 \value{
@@ -88,21 +92,12 @@ matrix
 There are number of functions to help construct hypothesis matrices. See in
 particular \code{\link{Lfx}}.
 
-# To extend the 'wald' function to a new class of objects, one needs to
-write a 'getFix' # method to extract estimated coefficients, their estimated
-covariance matrix, and the # denominator degrees of freedom for each
-estimated coefficient. The getFix method for # glm objects is:
-
-getFix.glm <- function(fit,...) { ss <- summary(fit) ret <- list() ret$fixed
-<- coef(fit) ret$vcov <- vcov(fit) ret$df <- rep(ss$df.residual,
-length(ret$fixed)) ret }
-
-# and for 'mipo' objects in the packages 'mice':
-
-getFix.mipo <- function( fit, ...){ # # pooled multiple imputation object in
-mice # 'wald' will use the minimal df for components with non-zero weights #
--- this is probably too conservative and should be improved # ret <- list()
-ret$fixed <- fit$qbar ret$vcov <- fit$t ret$df <- fit$df ret }
+To extend the 'wald' function to a new class of objects, one needs to
+write a 'getFix' method to extract estimated coefficients, their estimated
+covariance matrix, and the denominator degrees of freedom for each
+estimated coefficient. See the examples below for 
+a \code{\link{gefFix}} method for a \code{\link{glm}} object
+and for 'mipo' objects in the packages 'mice':
 }
 \section{Functions}{
 \itemize{
@@ -152,6 +147,29 @@ require(lattice)
 xyplot( coef + U2 + L2 ~ ses | Sex, wald.dd,
  main= 'Increase in predicted mathach per unit increase in ses')
 
+# Example of a getFix method for a glm oject:
+
+getFix.glm <- function(fit,...) { 
+  ss <- summary(fit) 
+  ret <- list() 
+  ret$fixed <- coef(fit) 
+  ret$vcov <- vcov(fit) 
+  ret$df <- rep(ss$df.residual,length(ret$fixed)) 
+  ret
+} 
+
+# Example of a getFix method for a mipo object in the mice package:
+
+getFix.mipo <- function( fit, ...){ 
+  # pooled multiple imputation object in mice 
+  # 'wald' will use the minimal df for components with non-zero weights 
+  #  -- this is probably too conservative and should be improved 
+  ret <- list()
+  ret$fixed <- fit$qbar 
+  ret$vcov <- fit$t 
+  ret$df <- fit$df 
+  ret 
+}
 }
 \references{
 REFERENCES HERE

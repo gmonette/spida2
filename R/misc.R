@@ -14,3 +14,7 @@ na2t <- function(x) {
   x[is.na(x)] <- TRUE
   x
 }
+#' Pipe from magrittr
+#' 
+#' @export
+"%>%" <- magrittr::`%>%`
