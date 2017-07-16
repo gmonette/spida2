@@ -175,187 +175,6 @@
 #'   ret 
 #' }
 #' @export
-wald <- function(fit, Llist = "", clevel = 0.95,
-                 pred = NULL,
-                 data = NULL, debug = FALSE , maxrows = 25,
-                 full = FALSE, fixed = FALSE,
-                 invert = FALSE, method = 'svd',
-                 df = NULL) {
-  if (full) return(wald(fit, getX(fit)))
-  if(!is.null(pred)) return(wald(fit, getX(fit,pred)))
-  dataf <- function(x,...) {
-    x <- cbind(x)
-    rn <- rownames(x)
-    if(length(unique(rn)) < length(rn)) rownames(x) <- NULL
-      data.frame(x, ...)
-  }
-  as.dataf <- function(x, ...) {
-    x <- cbind(x)
-    rn <- rownames(x)
-    if(length(unique(rn)) < length(rn)) rownames(x) <- NULL
-    as.data.frame(x, ...)
-  }
-  unique.rownames <- function(x) {
-    ret <- c(tapply(1:length(x), x, function(xx) {
-                    if(length(xx) == 1) ""
-                    else 1:length(xx)
-                })) [tapply(1:length(x), x)]
-    ret <- paste(x, ret, sep="")
-    ret
-  }
-  if(is.character(Llist) ) Llist <- structure(list(Llist), names=Llist)
-  if(!is.list(Llist)) Llist <- list(Llist)
-
-  ret <- list()
-  fix <- getFix(fit)
-  beta <- fix$fixed
-  vc <- fix$vcov
-
-  dfs <- if(is.null(df) ) fix$df else df + 0*fix$df
-  for (ii in 1:length(Llist)) {
-    ret[[ii]] <- list()
-    Larg <- Llist[[ii]]
-    # Create hypothesis matrix: L
-    L <- NULL
-    if(is.character(Larg)) {
-      L <- Lmat(fit,Larg, fixed = fixed, invert = invert)
-    } else {
-      if(is.numeric(Larg)) {   # indices for coefficients to test
-        if(is.null(dim(Larg))) {
-          if(debug) disp(dim(Larg))
-          if((length(Larg) < length(beta)) && (all(Larg>0)||all(Larg<0)) ) {
-            L <- diag(length(beta))[Larg,]
-            dimnames(L) <- list( names(beta)[Larg], names(beta))
-          } else L <- rbind( Larg )
-        }
-        else L <- Larg
-      }
-    }
-    if (debug) {
-      disp(Larg)
-      disp(L)
-    }
-    # get data attribute, if any, in case it gets dropped
-    Ldata <- attr( L , 'data')
-
-    ## identify rows of L that are not estimable because they depend on betas that are NA
-    Lna <- L[, is.na(beta), drop = FALSE]
-    narows <- apply(Lna,1, function(x) sum(abs(x))) > 0
-
-    L <- L[, !is.na(beta),drop = FALSE]
-    ## restore the data attribute
-    attr(L,'data') <- Ldata
-    beta <- beta[ !is.na(beta) ]
-
-   ## Anova
-    if( method == 'qr' ) {
-      qqr <- qr(t(na.omit(L)))
-      # Qqr <- Q(t(L))
-      L.rank <- qqr$rank
-      # L.rank <- attr(Qqr,'rank')
-      # L.miss <- attr(Qqr,'miss')
-      if(debug)disp( t( qr.Q(qqr)))
-      L.full <- t(qr.Q(qqr))[ 1:L.rank,,drop=FALSE]
-      #L.full <- t(Qqr[!L.miss,])[ 1:L.rank,,drop=F]
-    } else if ( method == 'svd' ) {
-      if(debug) disp(L)
-#              if(debug)disp( t(na.omit(t(L))))
-#              sv <- svd( t(na.omit(t(L))) , nu = 0 )
-      sv <- svd( na.omit(L) , nu = 0 )
-
-      if(debug)disp( sv )
-      tol.fac <- max( dim(L) ) * max( sv$d )
-      if(debug)disp( tol.fac )
-      if ( tol.fac > 1e6 ) warning( "Poorly conditioned L matrix, calculated numDF may be incorrect")
-      tol <- tol.fac * .Machine$double.eps
-      if(debug)disp( tol )
-      L.rank <- sum( sv$d > tol )
-      if(debug)disp( L.rank )
-      if(debug)disp( t(sv$v))
-      L.full <- t(sv$v)[seq_len(L.rank),,drop = FALSE]
-    } else stop("method not implemented: choose 'svd' or 'qr'")
-
-    # from package(corpcor)
-    # Note that the definition tol= max(dim(m))*max(D)*.Machine$double.eps
-    # is exactly compatible with the conventions used in "Octave" or "Matlab".
-
-    if (debug && method == "qr") {
-      disp(qqr)
-      disp(dim(L.full))
-      disp(dim(vc))
-      disp(vc)
-    }
-    if (debug) disp(L.full)
-    if (debug) disp(vc)
-
-    vv <-  L.full %*% vc %*% t(L.full)
-    eta.hat <- L.full %*% beta
-    Fstat <- (t(eta.hat) %*% qr.solve(vv,eta.hat,tol=1e-10)) / L.rank
-    included.effects <- apply(L,2,function(x) sum(abs(x),na.rm=TRUE)) != 0
-    denDF <- min( dfs[included.effects])
-    numDF <- L.rank
-    ret[[ii]]$anova <- list(numDF = numDF, denDF = denDF,
-                         "F-value" = Fstat,
-                         "p-value" = pf(Fstat, numDF, denDF, lower.tail = FALSE))
-    ## Estimate
-
-    etahat <- L %*% beta
-
-    # NAs if not estimable:
-
-    etahat[narows] <- NA
-    if( nrow(L) <= maxrows ) {
-      etavar <- L %*% vc %*% t(L)
-      etasd <- sqrt( diag( etavar ))
-    } else {
-      etavar <- NULL
-      etasd <- sqrt( apply( L * (L%*%vc), 1, sum))
-    }
-
-    denDF <- apply( L , 1 , function(x,dfs) min( dfs[x!=0]), dfs = dfs)
-
-    aod <- cbind(
-      Estimate=c(etahat),
-      Std.Error = etasd,
-      DF = denDF,
-      "t-value" = c(etahat/etasd),
-      "p-value" = 2*pt(abs(etahat/etasd), denDF, lower.tail =FALSE))
-    colnames(aod)[ncol(aod)] <- 'p-value'
-    if (debug ) disp(aod)
-    if ( !is.null(clevel) ) {
-      #print(aod)
-      #print(aod[,'DF'])
-      #print(aod[,'etasd'])
-      hw <- qt(1 - (1-clevel)/2, aod[,'DF']) * aod[,'Std.Error']
-      #print(hw)
-      aod <- cbind( aod, LL = aod[,"Estimate"] - hw, UL = aod[,"Estimate"] + hw)
-      #print(aod)
-      if (debug ) disp(colnames(aod))
-        labs <- paste(c("Lower","Upper"), format(clevel))
-        colnames(aod) [ ncol(aod) + c(-1,0)] <- labs
-    }
-    if (debug ) disp(rownames(aod))
-    aod <- as.dataf(aod)
-
-    rownames(aod) <- rownames(as.dataf(L))
-    labs(aod) <- names(dimnames(L))[1]
-    ret[[ii]]$estimate <- aod
-    ret[[ii]]$coef <- c(etahat)
-    ret[[ii]]$vcov <- etavar
-    ret[[ii]]$L <- L
-    ret[[ii]]$se <- etasd
-    ret[[ii]]$L.full <- L.full
-    ret[[ii]]$L.rank <- L.rank
-    if( debug ) disp(attr(Larg,'data'))
-    data.attr <- attr(Larg,'data')
-    if(is.null(data.attr) && !(is.null(data))) data.attr <- data
-    ret[[ii]]$data <- data.attr
-  }
-  names(ret) <- names(Llist)
-  attr(ret,"class") <- "wald"
-  ret
-}
-# New version with support for stanfit
 wald <- 
   function(fit, Llist = "", clevel = 0.95,
            pred = NULL,
@@ -363,6 +182,7 @@ wald <-
            full = FALSE, fixed = FALSE,
            invert = FALSE, method = 'svd',
            df = NULL, pars = NULL,...) {
+    # New version with support for stanfit
     if (full) return(wald(fit, getX(fit)))
     if(!is.null(pred)) return(wald(fit, getX(fit,pred)))
     dataf <- function(x,...) {
@@ -385,15 +205,23 @@ wald <-
       ret <- paste(x, ret, sep="")
       ret
     }
-    if(is.character(Llist) ) Llist <- structure(list(Llist), names=Llist)
-    if(!is.list(Llist)) Llist <- list(Llist)
-    
-    ret <- list()
-    fix <- if(is.null(pars)) getFix(fit) else getFix(fit,pars=pars,...)
+    if(inherits(fit, 'stanfit')) {
+      fix <- if(is.null(pars)) getFix(fit) else getFix(fit,pars=pars,...)
+      if(!is.matrix(Llist)) stop(
+        paste('Sorry: wald needs Llist to be a n x',
+              length(fix$fixed),'matrix for this stanfit object'))
+    } else {
+      fix <- getFix(fit)
+    }
     beta <- fix$fixed
     vc <- fix$vcov
     
     dfs <- if(is.null(df) ) fix$df else df + 0*fix$df
+
+    if(is.character(Llist) ) Llist <- structure(list(Llist), names=Llist)
+    if(!is.list(Llist)) Llist <- list(Llist)
+    
+    ret <- list()
     for (ii in 1:length(Llist)) {
       ret[[ii]] <- list()
       Larg <- Llist[[ii]]
