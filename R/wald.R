@@ -80,7 +80,7 @@
 #' @param pred prediction data frame to evaluate fitted model using '
 #'        \code{getX(fit) %*% coef}
 #' @param data data frame used as 'data' attribute fot list elements returned only if
-#'        the corresonding element of \code{Llist} has a NULL data attribute
+#'        the corresponding element of \code{Llist} has a NULL data attribute
 #' @param debug (default FALSE) produce verbose information
 #' @param maxrows maximum number of rows of hypothesis matrix for which a full
 #'        variance-covariance matrix is returned
@@ -89,6 +89,10 @@
 #'       the fixed portion of the model. This is designed to allow the calculation of
 #'       standard errors for models for which the \code{predict} method does not
 #'       provide them.
+#' @param pred (default NULL) a data frame to use to create a model matrix. 
+#'       This is an alternative to `full` when the model matrix needs to
+#'       be based on data frame other than the data frame used for 
+#'       fitting the model.
 #' @param fixed if \code{Llist} is a character to be used a regular expression,
 #'       if \code{fixed} is TRUE \code{Llist} is interpreted literally, i.e.
 #'       characters that have a special meaning in regular expressions are

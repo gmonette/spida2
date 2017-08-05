@@ -17,7 +17,7 @@ these}
 \item{clevel}{level for confidence intervals. No confidence intervals if clevel is NULL}
 
 \item{data}{data frame used as 'data' attribute fot list elements returned only if
-the corresonding element of \code{Llist} has a NULL data attribute}
+the corresponding element of \code{Llist} has a NULL data attribute}
 
 \item{debug}{(default FALSE) produce verbose information}
 

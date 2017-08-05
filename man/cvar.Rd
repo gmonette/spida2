@@ -2,9 +2,24 @@
 % Please edit documentation in R/capply.R
 \name{cvar}
 \alias{cvar}
+\alias{cvar.factor}
+\alias{cvar.default}
+\alias{dvar}
+\alias{dvar.factor}
+\alias{dvar.default}
 \title{Create a contextual variable for regression}
 \usage{
 cvar(x, id, all, na.rm, ...)
+
+\method{cvar}{factor}(x, id, all = FALSE, na.rm = TRUE, ...)
+
+\method{cvar}{default}(x, id, all, na.rm = TRUE, ...)
+
+dvar(x, id, all, na.rm, ...)
+
+\method{dvar}{factor}(x, id, all = FALSE, na.rm = TRUE, ...)
+
+\method{dvar}{default}(x, id, all, na.rm = TRUE, ...)
 }
 \arguments{
 \item{x}{variable to be centered or residualized within groups. If x is a

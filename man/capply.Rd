@@ -11,9 +11,15 @@
 \alias{dvar.default}
 \alias{cvar.factor}
 \alias{cvar.default}
+\alias{capply.formula}
+\alias{capply.default}
 \title{Apply a function within each cluster of multilevel data}
 \usage{
 capply(x, ...)
+
+\method{capply}{formula}(formula, data, FUN, ...)
+
+\method{capply}{default}(x, by, FUN, ..., sep = "#@}(?")
 }
 \arguments{
 \item{x}{a vector or data frame that provides the first argument of
@@ -21,14 +27,14 @@ capply(x, ...)
 
 \item{\dots}{additional variables to be supplied to \code{FUN}}
 
+\item{FUN}{a function to be applied to \code{x} within each cluster.
+\code{FUN} can return a single value, or a vector whose length is equal to
+the number of elements in each cluster.}
+
 \item{by}{If \code{x} is a vector: a 'factor' of the same lenth as \code{x}
 whose levels identify clusters.  If \code{x} is a data frame, a one-sided
 formula that identifies the variable(s) within \code{x} to be used to
 clusters.}
-
-\item{FUN}{a function to be applied to \code{x} within each cluster.
-\code{FUN} can return a single value, or a vector whose length is equal to
-the number of elements in each cluster.}
 
 \item{fmla}{in \code{capply.formula}, fmla is a two-sided formula as in
 \code{\link{aggregate.formula}}. The left-hand side identifies the

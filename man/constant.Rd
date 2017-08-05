@@ -2,13 +2,36 @@
 % Please edit documentation in R/up.R
 \name{constant}
 \alias{constant}
+\alias{constant.default}
+\alias{constant.data.frame}
 \title{Generic test for constant}
 \usage{
 constant(x, ...)
+
+\method{constant}{default}(x, na.rm = FALSE, ...)
+
+\method{constant}{data.frame}(x, id, all = FALSE, ...)
 }
 \arguments{
-\item{na.rm}{(default FALSE)}
+\item{x}{vector or data frame}
+
+\item{\dots}{other arguments}
+
+\item{na.rm}{(default FALSE) logical value indicating whether `NA` values should be ignored}
+
+\item{id}{vector or list of vectors used to define clusters within which
+to check whether `x` is constant}
+
+\item{all}{if TRUE, report whether constant overall instead of checking
+within subgroups created by `id`}
 }
 \description{
 Generic test for constant
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{default}: Default methods
+
+\item \code{data.frame}: method for class 'data.frame'
+}}
+

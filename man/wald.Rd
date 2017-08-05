@@ -27,8 +27,13 @@ these}
 
 \item{clevel}{level for confidence intervals. No confidence intervals if clevel is NULL}
 
+\item{pred}{(default NULL) a data frame to use to create a model matrix. 
+This is an alternative to `full` when the model matrix needs to
+be based on data frame other than the data frame used for 
+fitting the model.}
+
 \item{data}{data frame used as 'data' attribute fot list elements returned only if
-the corresonding element of \code{Llist} has a NULL data attribute}
+the corresponding element of \code{Llist} has a NULL data attribute}
 
 \item{debug}{(default FALSE) produce verbose information}
 

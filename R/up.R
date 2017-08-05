@@ -3,21 +3,24 @@
 ##
 #' Generic test for constant
 #'
-#' @param x
-#' @param na.rm (default FALSE)
-#' @param \dots
+#' @param x vector or data frame
+#' @param na.rm (default FALSE) logical value indicating whether `NA` values should be ignored 
+#' @param \dots other arguments
 #' @export
 constant <- function(x,...) UseMethod("constant")
-#' @describeIn constant
+
+#' @describeIn constant Default methods
 #' @export
 constant.default <- function(x, na.rm = FALSE,...) {
   if (na.rm) x <- na.omit(x)
   length(unique(x)) <= 1
 }
-#' @param id
-#' @param all
-#' @param \dots
-#' @describeIn constant
+
+#' @param id vector or list of vectors used to define clusters within which
+#'           to check whether `x` is constant
+#' @param all if TRUE, report whether constant overall instead of checking
+#'        within subgroups created by `id`
+#' @describeIn constant method for class 'data.frame'
 #' @export
 constant.data.frame <- function( x, id  , all = FALSE , ...) {
   ## Description:    (G. Monette, June 13, 2005)
@@ -58,8 +61,8 @@ constant.data.frame <- function( x, id  , all = FALSE , ...) {
 #' ... etc.
 #'
 #' NOTE: NA counts as a distinct value
-#' @param x
-#' @param form formula to identify clusters
+#' @param x data frame
+#' @param form formula (evaluated in `x`) to identify clusters
 #' @param \dots extra arguments to \code{\link{constant}} function
 #' @export
 varLevel <- function(x, form, ...) {
@@ -96,8 +99,8 @@ varLevel <- function(x, form, ...) {
 #'
 #' @param object a data frame to be aggregated.
 #' @param form a one-sided formula identifying the variable(s) in \code{object}
-#' that identifies clusters. e.g. ~ school/Sex to get a summary within each Sex
-#' of each school.
+#'        that identifies clusters. e.g. ~ school/Sex to get a summary within each Sex
+#'        of each school.
 #' @param agg (NEW: Aug 2016) a one-sided formula identifying variables to be aggregated,
 #'        i.e. variables that vary withing cluster and that need to be aggregated 
 #'        (within-cluster mean for numeric variables and within-cluster incidence
@@ -119,6 +122,7 @@ varLevel <- function(x, form, ...) {
 #' @param \dots additional arguments to \code{tapply} when summarizing
 #' numerical variables. e.g. \code{na.rm = TRUE}
 #' @return a data frame with one row per value of the variable in \code{form}
+#' 
 #' @examples
 #'     data(hs)
 #'     dim( hs )
@@ -146,7 +150,7 @@ varLevel <- function(x, form, ...) {
 #'             panel.lmline( x, y, ...)
 #'         } )
 #'
-#' @author largely from gsummary in Bates & Pinheiro
+#' @author adapted from gsummary in 'nlme' by Bates & Pinheiro
 #' @export
 up <- function ( object, form = formula(object),
            agg = NULL, sep.agg = "_",
@@ -275,7 +279,6 @@ up <- function ( object, form = formula(object),
   }
   value
 }
-
 
 #' na.include action
 #'

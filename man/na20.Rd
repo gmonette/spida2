@@ -6,6 +6,9 @@
 \usage{
 na20(x)
 }
+\arguments{
+\item{x}{vector, possibly with NA}
+}
 \description{
 Transform NAs to 0
 }

@@ -7,7 +7,9 @@
 varLevel(x, form, ...)
 }
 \arguments{
-\item{form}{formula to identify clusters}
+\item{x}{data frame}
+
+\item{form}{formula (evaluated in `x`) to identify clusters}
 
 \item{\dots}{extra arguments to \code{\link{constant}} function}
 }

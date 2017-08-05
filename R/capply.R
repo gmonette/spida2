@@ -149,7 +149,7 @@
 #' }
 #' @export
 capply <- function ( x ,... ) UseMethod("capply")
-#' @describeIn capply
+#' @rdname capply
 #' @export
 capply.formula <- function(formula, data, FUN, ...) {
   # the first portion of this code is from stats:::aggregate.formula
@@ -183,6 +183,7 @@ capply.formula <- function(formula, data, FUN, ...) {
   else ret <- capply.default(mf[1L], mf[-1L], FUN = FUN, ...)
   ret
 }
+#' @rdname capply
 #' @export
 # Previously:
 # capply.default <- function ( x, by, FUN , ...) {
@@ -284,7 +285,7 @@ capply.default <- function ( x, by, FUN , ..., sep = '#@}(?') {
 #' }
 #' @export
 cvar <- function( x, id , all, na.rm , ... ) UseMethod("cvar")
-#' @describeIn cvar
+#' @rdname cvar
 #' @export
 cvar.factor <- function(x, id, all = FALSE, na.rm = TRUE, ... ) {
   if(all) mat <- contrasts(x, contrasts = FALSE) [ x,]
@@ -293,7 +294,7 @@ cvar.factor <- function(x, id, all = FALSE, na.rm = TRUE, ... ) {
   colnames(ret) <- colnames(mat)
   ret
 }
-#' @describeIn cvar
+#' @rdname cvar
 #' @export
 cvar.default <- function( x, id, all , na.rm = TRUE, ... ) {
   if ( is.matrix (x) ) {
@@ -307,7 +308,7 @@ cvar.default <- function( x, id, all , na.rm = TRUE, ... ) {
     capply( x, id, mean, na.rm = na.rm, ...)
   }
 }
-#' @describeIn cvar
+#' @rdname cvar
 #' @export
 dvar <- function( x, id , all , na.rm , ... ) {
   help = "
@@ -316,7 +317,7 @@ dvar <- function( x, id , all , na.rm , ... ) {
   "
   UseMethod("dvar")
 }
-#' @describeIn cvar
+#' @rdname cvar
 #' @export
 dvar.factor <- function( x, id, all = FALSE, na.rm = TRUE, ... ) {
   if(all) mat <- contrasts( x, contrasts= FALSE) [ x,]
@@ -325,7 +326,7 @@ dvar.factor <- function( x, id, all = FALSE, na.rm = TRUE, ... ) {
   colnames(ret) <- colnames(mat)
   ret
 }
-#' @describeIn cvar
+#' @rdname cvar
 #' @export
 dvar.default <- function( x, id, all, na.rm = TRUE, ... ) {
   if ( is.matrix (x) ) {
@@ -356,12 +357,9 @@ cvars <- function(  x, by, ...) {
 
 #' Transform NAs to 0
 #'
-#' @param x
+#' @param x vector, possibly with NA
 #' @export
 na20 <- function(x) {
   x[is.na(x)] <- 0
   x
 }
-
-
-
