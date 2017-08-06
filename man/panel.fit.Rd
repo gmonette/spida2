@@ -45,6 +45,8 @@ panel.labels(x, y, labels, subscripts, ...)
 
 \item{labels}{default is rownames of data}
 
+\item{X, y}{arguments passed by 'layer'. Not used.}
+
 \item{data}{data frame to be used to add additional values of numeric variable}
 
 \item{form}{formula evaluated in data. The first term defines the variable with values to be filled in and the remaining terms define the variables to be used for grouping determining the minima and maxima within which values are added.}
@@ -81,7 +83,7 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
 
 \item \code{panel.band}: identical to panel.fit but kept for backward compatibility
 
-\item \code{panel.labels}: 
+\item \code{panel.labels}: add labels
 }}
 
 \examples{

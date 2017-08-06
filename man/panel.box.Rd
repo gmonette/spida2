@@ -10,6 +10,8 @@ panel.box(x, y, se, lower = y - se, upper = y + se, width = if
   col.line, col.symbol, border = F, font, fontface)
 }
 \arguments{
+\item{x, y}{arguments passed by 'layer'}
+
 \item{col.symbol}{is used to control color when using 'groups'}
 
 \item{border}{default = FALSE for panel.band.}

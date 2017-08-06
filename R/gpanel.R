@@ -15,15 +15,15 @@
 #' With 'layer' and 'glayer' in 'latticeExtra', these functions can be used to easily generate fitted values and
 #' confidence or prediction bands that have a reasonable appearance whether a plot uses 'groups' or not.
 #'
+#' @param X,y arguments passed by 'layer'. Not used. 
+#' @param fit fitted values of a model, generally passed through 'layer' from a call to 'xyplot': e.g. \code{xyplot( y ~ x, data, groups = g, fit = data$yhat, lower = with(data, yhat - 2*se), upper = with(data, yhat + 2*se), subscripts = T)}
+#' @param lower,upper lower and upper limits of error bands, passed from main plotting function
+#' @param subscripts subscripts, passed from main plotting function
 #' @param data data frame to be used to add additional values of numeric variable
 #' @param form formula evaluated in data. The first term defines the variable with values to be filled in and the remaining terms define the variables to be used for grouping determining the minima and maxima within which values are added.
 #' @param n the number of values to be added between the global mininum and maximum.
 #'        Values falling outside conditional minima and maxima are culled. Default 200.
 #' @param xpd expansion factor to add points beyond minima and maxima. Default 1.0.
-#' @param y
-#' @param fit fitted values of a model, generally passed through 'layer' from a call to 'xyplot': e.g. \code{xyplot( y ~ x, data, groups = g, fit = data$yhat, lower = with(data, yhat - 2*se), upper = with(data, yhat + 2*se), subscripts = T)}
-#' @param lower,upper lower and upper limits of error bands, passed from main plotting function
-#' @param subscripts subscripts, passed from main plotting function
 #' @param dots passed from main plotting function
 #' @param col passed from main plotting function
 #' @param group.number , passed from main plotting function
@@ -280,8 +280,7 @@ panel.band <- panel.fit
 #' trellis.unfocus()
 #' }
 #' @param labels to display
-#' @describeIn panel.fit
-#'
+#' @describeIn panel.fit add labels
 # NOTE: Also include names of anything you DON'T want passed.
 #
 #' @export
@@ -385,10 +384,10 @@ fillin <- function(data, form, n = 200, xpd = 1.0) {
 #' With 'layer' and 'glayer' in 'latticeExtra', these functions can be used to easily generate fitted values and
 #' error boxes that have a reasonable appearance whether a plot uses 'groups' or not.
 #
+#' @param x,y arguments passed by 'layer'
 #' @param data data frame to be used to add additional values of numeric variable
 #' @param form formula evaluated in data. The first term defines the variable with values to be filled in and the remaining terms define the variables to be used for grouping determining the minima and maxima within which values are added.
 #' @param xpd expansion factor to add points beyond minima and maxima. Default 1.0.
-#' @param y
 #' @param fit fitted values of a model, generally passed through 'layer' from a call to 'xyplot': e.g. \code{xyplot( y ~ x, data, groups = g, fit = data$yhat, lower = with(data, yhat - 2*se), upper = with(data, yhat + 2*se), subscripts = T)}
 #' @param lower,upper
 #' @param subscripts

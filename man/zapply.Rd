@@ -11,9 +11,12 @@
 \alias{dvar.default}
 \alias{cvar.factor}
 \alias{cvar.default}
+\alias{zzaply}
 \title{Apply a function within each cluster of multilevel data}
 \usage{
 zapply(x, ...)
+
+zzaply(x, ...)
 }
 \arguments{
 \item{x}{a vector or data frame that provides the first argument of
@@ -34,6 +37,8 @@ the number of elements in each cluster.}
 \code{\link{aggregate.formula}}. The left-hand side identifies the
 variable(s) in \code{data} to be include in a data.frame that is clusterd using
 the variables in the right-hand side of the formula.}
+
+\item{x}{vector in zzapply}
 }
 \value{
 When the result in each cell is a scalar, \code{zapply} can be used
@@ -94,6 +99,8 @@ group of values given by a unique combination of the levels of certain
 variables and, in contrast with \code{tapply}, return within each cell a
 vector of the same length as the cell, which are then ordered to match the
 corresponding positions of the cells in the input.
+
+Double zap function to be documented in zapply
 }
 \details{
 \code{zapply} is very similar to \code{\link[stats]{ave}} in \code{package:stats}. They
