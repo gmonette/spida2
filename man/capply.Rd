@@ -43,9 +43,9 @@ the variables in the right-hand side of the formula.}
 }
 \value{
 When the result in each cell is a scalar, \code{capply} can be used
-to for multilevel analysis to produce 'contextual variables' computed within
-subgroups of the data and expanded to a constant over elements of each
-subgroup.
+     to for multilevel analysis to produce 'contextual variables' computed within
+     subgroups of the data and expanded to a constant over elements of each
+     subgroup.
 
 \code{capply( x , by, FUN , ...)} where \code{x} is a vector
 
@@ -124,6 +124,13 @@ the left-hand side are used to create a data frame that is given as a first
 argument to \code{FUN}. If there is a single variable on the left-hand side
 then that variable can be treated as a vector by \code{FUN}.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{formula}: method for class 'formula'
+
+\item \code{default}: default method
+}}
+
 \note{
 \code{capply} tends to be slow when there are many cells and \code{by}
 is a factor. This may be due to the need to process all factor levels for

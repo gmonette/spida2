@@ -15,3 +15,6 @@ a vector of the same mode containing the union of \code{x} less \code{y}
 \description{
 The union of x and y
 }
+\seealso{
+\code{\link{\%and\%}} and \code{\link{\%less\%}}
+}

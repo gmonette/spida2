@@ -1,7 +1,3 @@
-###
-### capply
-###
-
 #' Apply a function within each cluster of multilevel data
 #'
 #' Apply a function to each cell of a ragged array, that is to each (non-empty)
@@ -34,24 +30,25 @@
 #'
 #' @aliases capply capply.default capply.formula cvar cvars dvar dvar.factor
 #' dvar.default cvar.factor cvar.default
+#' 
 #' @param x a vector or data frame that provides the first argument of
-#' \code{FUN}
+#'      \code{FUN}
 #' @param by If \code{x} is a vector: a 'factor' of the same lenth as \code{x}
-#' whose levels identify clusters.  If \code{x} is a data frame, a one-sided
-#' formula that identifies the variable(s) within \code{x} to be used to
-#' clusters.
+#'      whose levels identify clusters.  If \code{x} is a data frame, a one-sided
+#'      formula that identifies the variable(s) within \code{x} to be used to
+#'      clusters.
 #' @param FUN a function to be applied to \code{x} within each cluster.
-#' \code{FUN} can return a single value, or a vector whose length is equal to
-#' the number of elements in each cluster.
+#'      \code{FUN} can return a single value, or a vector whose length is equal to
+#'      the number of elements in each cluster.
 #' @param fmla in \code{capply.formula}, fmla is a two-sided formula as in
-#' \code{\link{aggregate.formula}}. The left-hand side identifies the
-#' variable(s) in \code{data} to be include in a data.frame that is clusterd using
-#' the variables in the right-hand side of the formula.
+#'      \code{\link{aggregate.formula}}. The left-hand side identifies the
+#'      variable(s) in \code{data} to be include in a data.frame that is clusterd using
+#'      the variables in the right-hand side of the formula.
 #' @param \dots additional variables to be supplied to \code{FUN}
 #' @return When the result in each cell is a scalar, \code{capply} can be used
-#' to for multilevel analysis to produce 'contextual variables' computed within
-#' subgroups of the data and expanded to a constant over elements of each
-#' subgroup.
+#'      to for multilevel analysis to produce 'contextual variables' computed within
+#'      subgroups of the data and expanded to a constant over elements of each
+#'      subgroup.
 #'
 #' \code{capply( x , by, FUN , ...)} where \code{x} is a vector
 #'
@@ -149,7 +146,7 @@
 #' }
 #' @export
 capply <- function ( x ,... ) UseMethod("capply")
-#' @rdname capply
+#' @describeIn capply method for class 'formula'
 #' @export
 capply.formula <- function(formula, data, FUN, ...) {
   # the first portion of this code is from stats:::aggregate.formula
@@ -183,8 +180,9 @@ capply.formula <- function(formula, data, FUN, ...) {
   else ret <- capply.default(mf[1L], mf[-1L], FUN = FUN, ...)
   ret
 }
-#' @rdname capply
+#' @describeIn capply default method
 #' @export
+capply.default <- function ( x, by, FUN , ..., sep = '#@}(?') {
 # Previously:
 # capply.default <- function ( x, by, FUN , ...) {
 #   FUN <- match.fun(FUN)
@@ -196,7 +194,6 @@ capply.formula <- function(formula, data, FUN, ...) {
 #   ret
 # }
 # 
-capply.default <- function ( x, by, FUN , ..., sep = '#@}(?') {
   FUN <- match.fun(FUN)
   if (inherits(by,'formula')) by <- model.frame( by , x , na.action = na.include)
   if (is.list(by)) {
@@ -208,158 +205,4 @@ capply.default <- function ( x, by, FUN , ..., sep = '#@}(?') {
   ret <- unsplit ( lapply ( split ( x , by ), FUN, ...), by )
   if ( !is.null( dim(ret)) && length(dim(ret)) ==1) ret <- c(ret)
   ret
-}
-
-# test on large data frame
-#
-# zh <- data.frame( a <-factor( sample(1:1000, 100000, rep = T) ), x = rnorm(100000))
-# system.time(
-#       ret <- capply( zh, ~a, with, x )  #     1.11    0.01    1.35
-# )
-# system.time(
-#       ret <- capply( zh, ~as.character(a), with, x )  #  1.32    0.02    1.54
-# )
-# system.time(
-#       ret <- capply( zh, ~as.vector(a), with, x )  #  1.38    0.00    1.49
-# )
-# system.time(
-#       ret <- capply(x~a, zh, with , x )  # 1.09    0.05    1.26
-# )
-# system.time(
-#       ret <- capply(cbind(x,a)~a, zh, with , x )  #  1.22    0.04    1.45
-# )
-#
-# zh <- data.frame( a = factor(1:10000), x = 1:10000)
-# system.time(
-#       ret <- capply( zh, ~a, with, x )  #     9.37    0.14    9.64
-# )
-# system.time(
-#       ret <- capply( zh, ~as.character(a), with, x )  #   10.44    0.06   10.60
-# )
-# system.time(
-#       ret <- capply( zh, ~as.vector(a), with, x )  #   11.77    0.13   12.11
-# )
-# system.time(
-#       ret <- capply(x~a, zh, with , x )  # 4.36    0.07    4.63
-# )
-# system.time(
-#       ret <- capply(cbind(x,a)~a, zh, with , x )  #  5.04    0.06    5.36
-# )
-##
-##
-##   cvar: V0.1 August 15, 2006
-##   Creating contextual variables for categorical variables
-##
-##   cvar is designed to create contextual variables
-##   for factors, as well as for numerical variables.
-##   If a factor has g levels, convar will create a
-##   matrix with g-1 columns each of which is the within group
-##   mean value of the correponding column of the "contrast"
-##   matrix for the factor.
-##
-#' Create a contextual variable for regression
-#'
-#' cvar and dvar are designed to be used in regression formulas to
-#' create a contextual mean of a cluster-varying variable and
-#' a 'centered-within-groups' version.
-#'
-#' @param x variable to be centered or residualized within groups. If x is a
-#' factor, cvar and dvar return matrices whose columns are named consistently
-#' with the names of coding variables for factors.
-#' @param id identifies clusters
-#' @param all (default FALSE) if TRUE cvar.factor returns the columns means of
-#' an incidence matrix including the first level. Otherwise, the first level is
-#' dropped for use in a linear model.
-#' @param na.rm (default TRUE) whether to drop missing values
-#' @export
-#' @examples
-#' \dontrun{
-#' dd <- data.frame(x= 1:100, id = rep( LETTERS[1:10], each = 10))
-#' dd$a <- factor(sample( c('a','b','c'), 100, replace = T))
-#' dd$y <- dd$x + rep(rnorm(10), each = 10) + rnorm(100) + as.numeric(dd$a)
-#' library(nlme)
-#' fit <- lme( y ~ x + cvar(x,id), dd, random = ~ 1 + dvar(x,id) | id)
-#' anova( fit , type = 'm')
-#' # The output of 'anova' can be used to test whether a contextual variable
-#' # should be included in the model
-#' }
-#' @export
-cvar <- function( x, id , all, na.rm , ... ) UseMethod("cvar")
-#' @rdname cvar
-#' @export
-cvar.factor <- function(x, id, all = FALSE, na.rm = TRUE, ... ) {
-  if(all) mat <- contrasts(x, contrasts = FALSE) [ x,]
-  else mat <- contrasts(x) [x, ]
-  ret <- cvar(mat, id, na.rm = na.rm, ...)
-  colnames(ret) <- colnames(mat)
-  ret
-}
-#' @rdname cvar
-#' @export
-cvar.default <- function( x, id, all , na.rm = TRUE, ... ) {
-  if ( is.matrix (x) ) {
-    if ( dim(x)[2] == 1) return( cvar( x[,], id, na.rm = na.rm, ...))
-    else {
-      ret <-  cbind( cvar(x[,1], id, na.rm = na.rm, ...), cvar(x[,-1],id, na.rm = na.rm, ...))
-      colnames(ret) <- colnames(x)
-      return( ret )
-    }
-  } else {
-    capply( x, id, mean, na.rm = na.rm, ...)
-  }
-}
-#' @rdname cvar
-#' @export
-dvar <- function( x, id , all , na.rm , ... ) {
-  help = "
-  dvar: produces group mean centering: x - cvar(x, id)
-  See 'cvar'
-  "
-  UseMethod("dvar")
-}
-#' @rdname cvar
-#' @export
-dvar.factor <- function( x, id, all = FALSE, na.rm = TRUE, ... ) {
-  if(all) mat <- contrasts( x, contrasts= FALSE) [ x,]
-  else mat  <- contrasts( x ) [ x,]
-  ret <- mat - cvar(mat, id, all = all, na.rm = na.rm, ...)
-  colnames(ret) <- colnames(mat)
-  ret
-}
-#' @rdname cvar
-#' @export
-dvar.default <- function( x, id, all, na.rm = TRUE, ... ) {
-  if ( is.matrix (x) ) {
-    if ( dim(x)[2] == 1) return( dvar( x[,], id, na.rm = na.rm,...))
-    else {
-      ret <-  cbind( dvar(x[,1], id, na.rm = na.rm, ...), dvar(x[,-1], id, na.rm = na.rm, ...))
-      colnames(ret) <- colnames(x)
-      return( ret )
-    }
-  } else {
-    x - capply( x, id, mean, na.rm = na.rm)
-  }
-}
-
-# ##
-# ##  sum
-# ##
-#' @export
-cvars <- function(  x, by, ...) {
-   if ( length(x) == 1 && x == 1) {
-     n <- nrow(as.data.frame(by))
-     capply( rep(1,n), by, sum)
-   } else {
-     capply( x, by, sum, ...)
-   }
-}
-
-
-#' Transform NAs to 0
-#'
-#' @param x vector, possibly with NA
-#' @export
-na20 <- function(x) {
-  x[is.na(x)] <- 0
-  x
 }

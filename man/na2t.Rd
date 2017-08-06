@@ -6,6 +6,9 @@
 \usage{
 na2t(x)
 }
+\arguments{
+\item{x}{vector, possibly with NAs}
+}
 \description{
 Change NAs to TRUE
 }

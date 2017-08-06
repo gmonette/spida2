@@ -1,6 +1,6 @@
 #' Change NAs to FALSE
 #' 
-#' @param x
+#' @param x vector, possibly with NAs
 #' @export
 na2f <- function(x) {
   x[is.na(x)] <- FALSE
@@ -8,7 +8,7 @@ na2f <- function(x) {
 }
 #' Change NAs to TRUE
 #' 
-#' @param x
+#' @param x vector, possibly with NAs
 #' @export
 na2t <- function(x) {
   x[is.na(x)] <- TRUE
@@ -18,3 +18,12 @@ na2t <- function(x) {
 #' 
 #' @export
 "%>%" <- magrittr::`%>%`
+
+#' Transform NAs to 0
+#'
+#' @param x vector, possibly with NAs
+#' @export
+na20 <- function(x) {
+  x[is.na(x)] <- 0
+  x
+}

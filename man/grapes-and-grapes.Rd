@@ -15,3 +15,6 @@ a vector of the same mode containing the intersection of \code{x} less \code{y}
 \description{
 The intersection of x and y
 }
+\seealso{
+\code{\link{\%less\%}} and \code{\link{\%or\%}}
+}
