@@ -21,6 +21,8 @@ panel.labels(x, y, labels, subscripts, ...)
 \arguments{
 \item{x, y}{position of labels, usually supplied through panel call}
 
+\item{y}{normally passed by 'layer' or 'glayer'. Used only in 'panel.labels'.}
+
 \item{fit}{fitted values of a model, generally passed through 'layer' from a call to 'xyplot': e.g. \code{xyplot( y ~ x, data, groups = g, fit = data$yhat, lower = with(data, yhat - 2*se), upper = with(data, yhat + 2*se), subscripts = T)}}
 
 \item{lower, upper}{lower and upper limits of error bands, passed from main plotting function}
@@ -45,7 +47,7 @@ panel.labels(x, y, labels, subscripts, ...)
 
 \item{labels}{default is rownames of data}
 
-\item{X, y}{arguments passed by 'layer'. Not used.}
+\item{X}{argument, passed by 'layer' or 'glayer'}
 
 \item{data}{data frame to be used to add additional values of numeric variable}
 

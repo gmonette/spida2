@@ -15,7 +15,8 @@
 #' With 'layer' and 'glayer' in 'latticeExtra', these functions can be used to easily generate fitted values and
 #' confidence or prediction bands that have a reasonable appearance whether a plot uses 'groups' or not.
 #'
-#' @param X,y arguments passed by 'layer'. Not used. 
+#' @param X argument, passed by 'layer' or 'glayer'
+#' @param y normally passed by 'layer' or 'glayer'. Used only in 'panel.labels'. 
 #' @param fit fitted values of a model, generally passed through 'layer' from a call to 'xyplot': e.g. \code{xyplot( y ~ x, data, groups = g, fit = data$yhat, lower = with(data, yhat - 2*se), upper = with(data, yhat + 2*se), subscripts = T)}
 #' @param lower,upper lower and upper limits of error bands, passed from main plotting function
 #' @param subscripts subscripts, passed from main plotting function
