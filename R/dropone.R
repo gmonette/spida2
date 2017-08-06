@@ -35,5 +35,5 @@ dropone <- function(fit, form = NULL,
   })
   ret <- do.call(rbind,ret)
   colnames(ret) <- paste0('b_',colnames(ret))
-  cbind(dframe, ret)
+  cbind(ret,dframe)
 }
