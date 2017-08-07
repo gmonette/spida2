@@ -2,9 +2,15 @@
 % Please edit documentation in R/strings.R
 \name{name}
 \alias{name}
+\alias{col_name}
+\alias{row_name}
 \title{Modify the name of an object and return the renamed object}
 \usage{
 name(x, nam = x, ...)
+
+col_name(x, nam = x, ...)
+
+row_name(x, nam = x, ...)
 }
 \arguments{
 \item{x}{object to named with a 'names' attribute}

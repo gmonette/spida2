@@ -40,14 +40,14 @@ name <- function(x, nam = x,...) {
   names(x) <- nam
   x
 }
-#' @describeIn name change column names
+#' @rdname name
 #' @export
 col_name <- function(x, nam = x,...) {
   if(is.function(nam)) nam <- nam(colnames(x),...)
   colnames(x) <- nam
   x
 }
-#' @describeIn name change row names
+#' @rdname name
 #' @export
 row_name <- function(x, nam = x,...) {
   if(is.function(nam)) nam <- nam(rownames(x),...)
