@@ -40,6 +40,21 @@ name <- function(x, nam = x,...) {
   names(x) <- nam
   x
 }
+#' @describeIn name change column names
+#' @export
+col_name <- function(x, nam = x,...) {
+  if(is.function(nam)) nam <- nam(colnames(x),...)
+  colnames(x) <- nam
+  x
+}
+#' @describeIn name change row names
+#' @export
+row_name <- function(x, nam = x,...) {
+  if(is.function(nam)) nam <- nam(rownames(x),...)
+  rownames(x) <- nam
+  x
+}
+#' 
 #' Methods providing versions of sub and gsub for pipelines and factors
 #' 
 #' The first argument of sub_  and gsub_ is the object to 
