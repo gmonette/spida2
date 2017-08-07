@@ -18,9 +18,12 @@ autonym <- auto
 #' Modify the name of an object and return the renamed object
 #' 
 #' This function is well suited to modifying the name of an object in a pipeline.
-#' It can be thought of as the verb corresponding to the noun 'names'.
-#'
-#' @param x object to named with a 'names' attribute
+#' It can be thought of as the verb corresponding to the noun 'names'. 
+#' Convenient functions to modify names using regular expressions are
+#' \code{\link{spida2::sub_}} and \code{\link{spida2::gsub_}}
+#' 
+#' @param x object to be named or renamed with a 'names', 'colnames' 
+#'        or 'rownames' attribute
 #' @param nam vector of names or a function
 #' @param ... additional arguments to used by \code{nam} if it is a function
 #' @return x with a modified name. If \code{nam} is a function then the names attribute
