@@ -100,7 +100,8 @@ round(Tab(titanic, Freq ~ Sex + Survived + Age,
     pct = c(1,3), keep = ""),2)
 }
 \seealso{
-\code{\link{tab_}} (synonym: Tab) to drop "Total" margins.
+\code{\link{tab_}} to drop "Total" margins and
+\code{\link{tab__}} to drop "Total" and "All" margins.
 }
 \author{
 Georges Monette

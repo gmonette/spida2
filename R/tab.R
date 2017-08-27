@@ -121,7 +121,8 @@ dropLastTotal <- function (mat, names_to_drop = "Total", drop = FALSE) {
 #' variables, with optional margins showing totals. Elements of the matrix can
 #' be frequencies, relative frequencies, percentages or sums of weights.
 #' @aliases tab tab.formula tab.data.frame tab.default Tab
-#' @seealso \code{\link{tab_}} (synonym: Tab) to drop "Total" margins.
+#' @seealso \code{\link{tab_}} to drop "Total" margins and
+#' \code{\link{tab__}} to drop "Total" and "All" margins.
 #' @author Georges Monette
 #' @examples
 #' titanic <- as.data.frame(Titanic)
@@ -477,7 +478,29 @@ tab_ <- function(..., names_to_drop = "Total") {
   #       when pct or pr arguments are not given
   as.table(dropLastTotal(
     tab(..., total.margins = FALSE),
-        names_to_drop = names_to_drop))
+    names_to_drop = names_to_drop))
+}
+#' tab without marginal totals and 'All'
+#'
+#' Version of \code{\link{tab}}, with the option to drop selected margins without
+#' necessarily dropping
+#' the marginal average proportions denoted by "All".
+#'
+#' @param \dots arguments to the \code{\link{tab}} function.
+#' @param names_to_drop (default "Total") names of margins to drop
+#' @aliases Tab pab
+#' @seealso \code{\link{tab}}
+#' @export
+tab__ <- function(..., names_to_drop = c("All","Total")) {
+  # New version of Tab that handles pct and pr
+  # To keep the "All" and not the "Total" rows,
+  # specify keep = "All"
+  # BUGS: would be more efficient if it
+  #       called tab(...,total.margins=FALSE)
+  #       when pct or pr arguments are not given
+  as.table(dropLastTotal(
+    tab(..., total.margins = FALSE),
+    names_to_drop = names_to_drop))
 }
 
 #' @export
