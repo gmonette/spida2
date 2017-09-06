@@ -22,7 +22,7 @@
 #' Prestige  %>% sortdf(~type+income) -> Prestige.ordered
 #' }
 #' @export
-sortdf <- function(data, form) {
+sortdf <- function(data, form = formula(data)) {
   xx <- as.list(model.frame(form, data, na.action=NULL))
   ord <- do.call(order, xx)
   data[ ord,,drop = FALSE]
