@@ -217,7 +217,8 @@ gd <- function (n=8, pal = "Dark2",
     arglist$n <- NULL
     if(length(arglist) > 0 && 
        pmax(sapply(arglist,length)) == 1 &&
-       missing(superpose)) superpose <- FALSE
+       missing(superpose) &&
+       missing(n)) superpose <- FALSE
 
     aargs <- list(...)
     
