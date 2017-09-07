@@ -62,74 +62,75 @@ NULL
 #' gd_(col='blue')  # set main color to 'blue'
 #' @describeIn td
 #' @export
-td <- function(
-    new = FALSE,
-    col=c("#0080ff",   "#ff00ff",   "darkgreen", "#ff0000" ,  "orange" ,   "#00ff00",   "brown" ),
-    lty=1:7, lwd=1,
-	pch = 1:7, cex = 0.8, font = 1,
-	long = FALSE,
-#    record = FALSE, # not supported in RStudio
-    basecol = NULL,
-	  colsets = c('plot.symbol','plot.line','dot.symbol',
-			'dot.line','cloud.3d','box.dot'),
-    ...) {
-
-        # Modified for R: Oct. 10, 2004
-	#
-	# reset superpose.symbol and superpose.line so they have consistent length
-	# equal to the max of input parameters:
-	#			sps: cex, col, font, pch
-	#			spl: lty, col, lwd
-	# or to len
-	#  This allows distinctive line styles, for example for 12 objects by using
-	#  good lty's:     1,4,8,6,3,5,7
-	#  and good col's: 1,8,6,3,4,5,2
-	#
-  require(lattice)
-  aargs <- list(...)
-  if ( long ) {
-    col <- c(3,5,4,6,8,2)   # drop yellow
-    len <- 42 # generates 42 unique combinations of pch/lty and col
-  }
-  if(new) trellis.device(theme = col.whitebg, record = record, new = new)
-                                        # NOTE: fixed panel.superpose so lty argument
-                                        # is passed to points for type = 'b'
-  len <- max(len,length(col),length(lty),length(lwd),length(pch),length(cex),length(font))
-  spl <- trellis.par.get("superpose.line")
-  spl$alpha <- rep(alpha.line, length = len)
-  spl$lty <- rep(lty,length=len)
-  spl$col <- rep(col.line,length=len)
-  spl$lwd <- rep(lwd,length=len)
-  trellis.par.set("superpose.line",spl)
-  sps <- trellis.par.get("superpose.symbol")
-  sps$alpha <- rep( alpha.symbol, length = len)
-  sps$pch <- rep(pch, length=len)
-  sps$col <- rep(col.symbol, length=len)
-  sps$cex <- rep(cex, length=len)
-  sps$font <- rep(font, length=len)
-  sps$fill <- rep(fill, length=len)
-
-  trellis.par.set("superpose.symbol",sps)
-  list(superpose.symbol = sps, superpose.line = spl)
-  if ( !is.null(basecol)) {
-    for ( ii in colsets ) {
-      tt <- trellis.par.get(ii)
-      tt$col <- basecol
-      trellis.par.set(ii,tt)
-    }
-  }
-  if ( length(aargs)){
-    tpg <- trellis.par.get()
-    for ( nn in names(aargs)){
-      for(mm in names(aargs[[nn]])){
-        tpg[[nn]][[mm]] <- aargs[[nn]][[mm]]
-      }
-    }
-    trellis.par.set(theme = tpg)
-  }
-  ret <- trellis.par.get()
-  invisible(ret[grep('superpose',names(ret))])
-}
+td <- function(...) gd(..., gglike = FALSE)
+# td <- function(
+#     new = FALSE,
+#     col=c("#0080ff",   "#ff00ff",   "darkgreen", "#ff0000" ,  "orange" ,   "#00ff00",   "brown" ),
+#     lty=1:7, lwd=1,
+# 	pch = 1:7, cex = 0.8, font = 1,
+# 	long = FALSE,
+# #    record = FALSE, # not supported in RStudio
+#     basecol = NULL,
+# 	  colsets = c('plot.symbol','plot.line','dot.symbol',
+# 			'dot.line','cloud.3d','box.dot'),
+#     ...) {
+# 
+#         # Modified for R: Oct. 10, 2004
+# 	#
+# 	# reset superpose.symbol and superpose.line so they have consistent length
+# 	# equal to the max of input parameters:
+# 	#			sps: cex, col, font, pch
+# 	#			spl: lty, col, lwd
+# 	# or to len
+# 	#  This allows distinctive line styles, for example for 12 objects by using
+# 	#  good lty's:     1,4,8,6,3,5,7
+# 	#  and good col's: 1,8,6,3,4,5,2
+# 	#
+#   require(lattice)
+#   aargs <- list(...)
+#   if ( long ) {
+#     col <- c(3,5,4,6,8,2)   # drop yellow
+#     len <- 42 # generates 42 unique combinations of pch/lty and col
+#   }
+#   if(new) trellis.device(theme = col.whitebg, record = record, new = new)
+#                                         # NOTE: fixed panel.superpose so lty argument
+#                                         # is passed to points for type = 'b'
+#   len <- max(len,length(col),length(lty),length(lwd),length(pch),length(cex),length(font))
+#   spl <- trellis.par.get("superpose.line")
+#   spl$alpha <- rep(alpha.line, length = len)
+#   spl$lty <- rep(lty,length=len)
+#   spl$col <- rep(col.line,length=len)
+#   spl$lwd <- rep(lwd,length=len)
+#   trellis.par.set("superpose.line",spl)
+#   sps <- trellis.par.get("superpose.symbol")
+#   sps$alpha <- rep( alpha.symbol, length = len)
+#   sps$pch <- rep(pch, length=len)
+#   sps$col <- rep(col.symbol, length=len)
+#   sps$cex <- rep(cex, length=len)
+#   sps$font <- rep(font, length=len)
+#   sps$fill <- rep(fill, length=len)
+# 
+#   trellis.par.set("superpose.symbol",sps)
+#   list(superpose.symbol = sps, superpose.line = spl)
+#   if ( !is.null(basecol)) {
+#     for ( ii in colsets ) {
+#       tt <- trellis.par.get(ii)
+#       tt$col <- basecol
+#       trellis.par.set(ii,tt)
+#     }
+#   }
+#   if ( length(aargs)){
+#     tpg <- trellis.par.get()
+#     for ( nn in names(aargs)){
+#       for(mm in names(aargs[[nn]])){
+#         tpg[[nn]][[mm]] <- aargs[[nn]][[mm]]
+#       }
+#     }
+#     trellis.par.set(theme = tpg)
+#   }
+#   ret <- trellis.par.get()
+#   invisible(ret[grep('superpose',names(ret))])
+# }
 #' @describeIn td uses a ggplot-like theme
 #' @param n number of groups for which to set colors, line types, etc. using RColorBrewer.
 #' @examples
@@ -148,6 +149,14 @@ td <- function(
 #' # OR using the utility function:
 #' gd_(col = 'red', lwd = 2)
 #' #
+#' # To set colors for lattice::barchart:
+#' library(lattice)
+#' gd(superpose.polygon = list(col=brewer.pal(4,'Paired'), border='black'))
+#' barchart(Titanic, 
+#'     auto.key=list(title = 'survived',
+#'                   space = 'right',
+#'                   reverse.rows = T), 
+#'     horizontal = F)
 #' #  For a complete list of elements that can be changed:
 #' names(trellis.par.get())
 #' # For a list of colors
@@ -164,23 +173,23 @@ td <- function(
 #'   rgb  %>%
 #'   pal
 #' @export
-gd <-
-  function (n=8,
-            col = brewer.pal(n,"Dark2"), lty = 1:n, lwd = 1,
+gd <- function (n=8, pal = "Dark2",
+            col = brewer.pal(n, pal), lty = 1:n, lwd = 1,
             pch = 19, cex = 1.4, font = 1, fill = "transparent",
             col.line = col, col.symbol = col,
             alpha = 1, alpha.line = alpha, alpha.symbol = alpha,
             len = n,
             # arguments to ggplot2like:
-            h = c(0,360) + 15, l =65, c = 100, h.start = 0, direction = 1,
+            h = c(0,360) + 15, l = 65, c = 100, h.start = 0, direction = 1,
             low = "#3B4FB8", high = "#B71B1A", space = "rgb",
             # trellis par set parameters for basecol:
             basecol = NULL,
             colsets = c("plot.symbol","plot.line", "dot.symbol",
                         "dot.line", "cloud.3d", "box.dot"),
-            # set ggplot2 like environment even if not first call
             superpose = TRUE,
+            # set ggplot2 like environment even if not first call
             gginit = FALSE,
+            gglike = TRUE,
             # other arguments of form:
             #      plot.symbol = list( col = 'red', pch = 4)
             ...)
@@ -201,19 +210,32 @@ gd <-
     library(lattice)
     library(latticeExtra)
     library(RColorBrewer)
-    aargs <- list(...)
+    
+    # If there are arguments other than n
+    # AND all are of length no greater than 1, superpose is FALSE
+    arglist <- as.list(match.call())[-1]
+    arglist$n <- NULL
+    if(length(arglist) > 0 && 
+       pmax(sapply(arglist,length)) == 1 &&
+       missing(superpose)) superpose <- FALSE
 
+    aargs <- list(...)
+    
     # ggplot2
-    if(is.null(lattice.options('gginit')[[1]]) | gginit == TRUE){
-      lattice.options(gginit=TRUE)
-      trellis.par.set(ggplot2like(n = n,h = h,l = l,c = c,
-                                  h.start = h.start, direction = direction,
-                                  low = low , high = high , space = space))
-      lattice.options(ggplot2like.opts())
+    if(gglike) {
+      if(is.null(lattice.options('gginit')[[1]]) | gginit == TRUE){
+        lattice.options(gginit=TRUE)
+        trellis.par.set(ggplot2like(n = n,h = h,l = l,c = c,
+                                    h.start = h.start, direction = direction,
+                                    low = low , high = high , space = space))
+        lattice.options(ggplot2like.opts())
+        aargs$superpose.polygon <- list(col=col,border='black')
+        aargs$plot.polygon <- list(col=col[1],border='black')
+      }
     }
     len <- max(len, length(col), length(lty), length(lwd), length(pch),
                length(cex), length(font))
-    if (superpose ) {
+    if (superpose) {
       spl <- trellis.par.get("superpose.line")
       spl$alpha <- rep(alpha.line, length = len)
       spl$lty <- rep(lty, length = len)

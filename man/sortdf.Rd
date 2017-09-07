@@ -4,7 +4,7 @@
 \alias{sortdf}
 \title{Order the rows of a data frame}
 \usage{
-sortdf(data, form)
+sortdf(data, form = formula(data))
 }
 \arguments{
 \item{data}{a data frame}
