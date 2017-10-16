@@ -9,8 +9,10 @@
 #' of other variables (means for numeric variables and blocks of variables
 #' corresponding to incidence matrices for factors.
 #' Adapted
-#' from \code{gsummary} in the \code{nlme} package and from \code{up} in
+#' from \code{gsummary} in the \code{nlme} package and from \code{\link{up}} in
 #' the \code{spida2} package.
+#' 
+#' The function of 'agg' have been incorporated into the \code{\link{up}} function.
 #'
 #' @param object a data frame to be aggregated.
 #' @param form a one-sided formula or a list or data frame identifying the variable(s) in \code{object}

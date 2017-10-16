@@ -38,8 +38,11 @@ contains variables that are invariant in each cluster and, optionally, summaries
 of other variables (means for numeric variables and blocks of variables
 corresponding to incidence matrices for factors.
 Adapted
-from \code{gsummary} in the \code{nlme} package and from \code{up} in
+from \code{gsummary} in the \code{nlme} package and from \code{\link{up}} in
 the \code{spida2} package.
+}
+\details{
+The function of 'agg' have been incorporated into the \code{\link{up}} function.
 }
 \examples{
 # a labor force survey with individual level data
