@@ -3,6 +3,7 @@
 ##
 ## panel.fit incorporating panel.band
 ## panel.text
+## panel.errorbars
 ##
 ## designed to work easily with 'layer' and 'glayer' in latticeExtra
 ## Added: 2014 09 18
@@ -33,7 +34,7 @@
 #' @param border default = FALSE for panel.band.
 #' @param font passed from main plotting function
 #' @param fontface passed from main plotting function
-#' @return The 'panel.bands', 'panel.fit', and 'panel.labels' functions are
+#' @return The 'panel.bands', 'panel.fit', 'panel.errorbars', and 'panel.labels' functions are
 #'         invoked for their graphical effect.
 #' @author Georges Monette <georges@@yorku.ca>
 #' @examples
@@ -264,6 +265,48 @@ gpanel.fit <- panel.fit
 #' @describeIn panel.fit identical to panel.fit but kept for backward compatibility
 #' @export
 panel.band <- panel.fit
+
+
+#' @describeIn panel.fit similar to panel.fit but draws error bars instead of bands
+#' @export
+panel.errorbars <-
+  function(x, y, fit, lower, upper,
+           subscripts, ..., type, group.number, alpha, col, col.line, col.symbol, border = F, font, fontface)
+  {
+    if( !missing(fit)) {
+      if( missing(col) ) col <- 'blue'
+      if( !missing(group.number)) {
+        col <- col.line
+      }
+      if( !missing(subscripts) ) {
+        fit <- fit[subscripts]
+      }
+      dd <- data.frame( x=x, fit = fit)
+      dd <- dd[order(dd$x),]
+      panel.xyplot( dd$x, dd$fit, ..., col = col, type = 'p')
+    }
+    if( !missing(lower)){
+      if( missing(alpha) || alpha == 1) alpha <- .3
+      if( missing(col) ) col <- 'blue'
+      if( !missing(group.number)) {
+        col <- col.symbol
+      }
+      if( !missing(subscripts) ) {
+        upper <- upper[subscripts]
+        lower <- lower[subscripts]
+      }
+      dd <- data.frame( x=x, lower = lower, upper = upper)
+      dd <- dd[order(dd$x),]
+      panel.arrows(dd$x, dd$lower, dd$x, dd$upper, 
+                   length = .25, angle = 90, code = 3,
+                   ...)
+      # panel.polygon( c(dd$x, rev(dd$x)),c(dd$upper, rev(dd$lower)),
+      #                border = border, col = col, alpha = alpha,...)
+      
+    }
+    #  panel.polygon(c(dd$x, rev(dd$x)), c(dd$upper, rev(dd$lower)), col = col, alpha = alpha, ...)
+  }
+
 #' panel.labels: shows all labels
 #'
 #' This is an experiment in writing a function that can be

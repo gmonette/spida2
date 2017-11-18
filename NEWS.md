@@ -1,3 +1,5 @@
+2017-11-19
+* Added panel.errorbars
 2017-07-10
 * Added getFix.stanfit and modified wald to pass 'pars' parameter
 2017-06-30

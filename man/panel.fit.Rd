@@ -4,6 +4,7 @@
 \alias{panel.fit}
 \alias{gpanel.fit}
 \alias{panel.band}
+\alias{panel.errorbars}
 \alias{panel.labels}
 \title{Panel functions for predicted values and SE bands}
 \usage{
@@ -15,6 +16,9 @@ gpanel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number, alpha,
 
 panel.band(x, y, fit, lower, upper, subscripts, ..., type, group.number, alpha,
   col, col.line, col.symbol, border = F, font, fontface)
+
+panel.errorbars(x, y, fit, lower, upper, subscripts, ..., type, group.number,
+  alpha, col, col.line, col.symbol, border = F, font, fontface)
 
 panel.labels(x, y, labels, subscripts, ...)
 }
@@ -63,7 +67,7 @@ Values falling outside conditional minima and maxima are culled. Default 200.}
 \item{labels}{to display}
 }
 \value{
-The 'panel.bands', 'panel.fit', and 'panel.labels' functions are
+The 'panel.bands', 'panel.fit', 'panel.errorbars', and 'panel.labels' functions are
         invoked for their graphical effect.
 }
 \description{
@@ -84,6 +88,8 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
 \item \code{gpanel.fit}: to be used with 'layer' -- but, actually, identical to 'glayer'
 
 \item \code{panel.band}: identical to panel.fit but kept for backward compatibility
+
+\item \code{panel.errorbars}: similar to panel.fit but draws error bars instead of bands
 
 \item \code{panel.labels}: add labels
 }}
