@@ -265,12 +265,12 @@ gpanel.fit <- panel.fit
 #' @describeIn panel.fit identical to panel.fit but kept for backward compatibility
 #' @export
 panel.band <- panel.fit
-
-
+#' @param angle (default 90) of crossbar in `panel.errorbars`
+#' @param length (default .2) of crossbar in `panel.errorbars`
 #' @describeIn panel.fit similar to panel.fit but draws error bars instead of bands
 #' @export
 panel.errorbars <-
-  function(x, y, fit, lower, upper,
+  function(x, y, fit, lower, upper, length = .2, angle = 90,
            subscripts, ..., type, group.number, alpha, col, col.line, col.symbol, border = F, font, fontface)
   {
     if( !missing(fit)) {
@@ -331,7 +331,6 @@ panel.errorbars <-
 panel.labels <-
   function (x, y, labels , subscripts, ...)
   {
-
     if(!missing(subscripts)) {
       labels <- labels[subscripts]
     }

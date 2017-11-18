@@ -17,8 +17,9 @@ gpanel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number, alpha,
 panel.band(x, y, fit, lower, upper, subscripts, ..., type, group.number, alpha,
   col, col.line, col.symbol, border = F, font, fontface)
 
-panel.errorbars(x, y, fit, lower, upper, subscripts, ..., type, group.number,
-  alpha, col, col.line, col.symbol, border = F, font, fontface)
+panel.errorbars(x, y, fit, lower, upper, length = 0.2, angle = 90,
+  subscripts, ..., type, group.number, alpha, col, col.line, col.symbol,
+  border = F, font, fontface)
 
 panel.labels(x, y, labels, subscripts, ...)
 }
@@ -48,6 +49,10 @@ panel.labels(x, y, labels, subscripts, ...)
 \item{font}{passed from main plotting function}
 
 \item{fontface}{passed from main plotting function}
+
+\item{length}{(default .2) of crossbar in `panel.errorbars`}
+
+\item{angle}{(default 90) of crossbar in `panel.errorbars`}
 
 \item{labels}{default is rownames of data}
 
