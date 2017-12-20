@@ -27,3 +27,14 @@ na20 <- function(x) {
   x[is.na(x)] <- 0
   x
 }
+#' Directory or filename of active R script
+#' 
+#' @param dir (default: TRUE) return the directory of the current R script, otherwise the full file name
+#' 
+#' @export
+here <- function(dir = TRUE) {
+  path <- rstudioapi::getActiveDocumentContext()$path
+  if(dir) path <- dirname(path)
+  path
+}
+

@@ -1,3 +1,5 @@
+29170-12-20
+* Added here: get current directory of R script in R Studio
 2017-11-19
 * Added panel.errorbars
 2017-07-10
