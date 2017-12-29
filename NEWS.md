@@ -1,4 +1,6 @@
-29170-12-20
+2017-12-28
+* Added yscale.components.log100real to draw real labels on right side for logged variable
+2017-12-20
 * Added here: get current directory of R script in R Studio
 2017-11-19
 * Added panel.errorbars
