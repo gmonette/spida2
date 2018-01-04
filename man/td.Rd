@@ -120,3 +120,8 @@ colors()  \%>\%  grepv('blue', .)  \%>\%
 \author{
 Georges Monette
 }
+\concept{
+lattice
+
+lattice
+}

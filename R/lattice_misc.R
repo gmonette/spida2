@@ -7,7 +7,7 @@
 #' real values corresponding to 100 x log values in graph. The function has no 
 #' parameters and is intended to be supplied as an argument to the 
 #' `yscale.components` parameter in `xyplot``
-#' @concepts lattice
+#' @concept lattice
 #' @examples
 #' \dontrun{
 #' library(car)

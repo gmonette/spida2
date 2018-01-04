@@ -55,6 +55,7 @@ NULL
 #' for the cex, col, lty, lwd, alpha, pch parameters in plot.line and
 #' plot.symbol.
 #' @author Georges Monette
+#' @concept lattice
 #' @examples
 #' td( lty = 1:7)   # sets line types for 7 groups
 #' gd(7)            # sets line types for 7 groups using colors from RColorBrewer
@@ -172,6 +173,7 @@ td <- function(...) gd(..., gglike = FALSE)
 #'   divide_by(255)  %>%
 #'   rgb  %>%
 #'   pal
+#' @concept lattice
 #' @export
 gd <- function (n=8, pal = "Dark2",
             col = brewer.pal(n, pal), lty = 1:n, lwd = 1,
@@ -522,6 +524,8 @@ xqplot <- function(x,
 #' Show available characters, colours, etc.
 #'
 #' @param n
+#' @concept lattice
+#' @seealso \code{\link{lattice::show.settings}}
 #' @export
 sampler <-
     function( n=24 ) {

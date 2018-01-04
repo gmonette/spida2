@@ -9,3 +9,9 @@ sampler(n = 24)
 \description{
 Show available characters, colours, etc.
 }
+\seealso{
+\code{\link{lattice::show.settings}}
+}
+\concept{
+lattice
+}
