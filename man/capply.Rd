@@ -19,7 +19,7 @@ capply(x, ...)
 
 \method{capply}{formula}(formula, data, FUN, ...)
 
-\method{capply}{default}(x, by, FUN, ..., sep = "#@}(?")
+\method{capply}{default}(x, by, FUN, ..., sep = "#^#")
 }
 \arguments{
 \item{x}{a vector or data frame that provides the first argument of

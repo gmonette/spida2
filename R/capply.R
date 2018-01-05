@@ -182,7 +182,7 @@ capply.formula <- function(formula, data, FUN, ...) {
 }
 #' @describeIn capply default method
 #' @export
-capply.default <- function ( x, by, FUN , ..., sep = '#@}(?') {
+capply.default <- function ( x, by, FUN , ..., sep = '#^#') {
 # Previously:
 # capply.default <- function ( x, by, FUN , ...) {
 #   FUN <- match.fun(FUN)
