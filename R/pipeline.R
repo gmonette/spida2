@@ -11,7 +11,8 @@
 #' evaluated in the data frame. Convenient in a pipeline.
 #'
 #' @param data a data frame
-#' @param form a formula identifying variables to be used in sorting
+#' @param form a formula identifying variables to be used in sorting or an
+#' object that can be used directly in \code{data[order(form,,drop=FALSE)]}.
 #' @return The formula is evaluated using \code{model.frame} and the
 #' result is used as the argument of \code{order} which, in turn is used to
 #' order the data frame. The ordered data frame is returned.
@@ -23,7 +24,7 @@
 #' }
 #' @export
 sortdf <- function(data, form = formula(data)) {
-  xx <- as.list(model.frame(form, data, na.action=NULL))
+  if(is.fomula(form)) xx <- as.list(model.frame(form, data, na.action=NULL))
   ord <- do.call(order, xx)
   data[ ord,,drop = FALSE]
 }

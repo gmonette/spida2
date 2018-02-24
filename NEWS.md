@@ -1,3 +1,5 @@
+2018-02-23
+* The 'form' argument in 'sortdf' does not have to be a formula 
 2017-12-28
 * Added yscale.components.log100real to draw real labels on right side for logged variable
 2017-12-20
