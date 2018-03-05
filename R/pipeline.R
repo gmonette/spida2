@@ -24,7 +24,7 @@
 #' }
 #' @export
 sortdf <- function(data, form = formula(data)) {
-  if(is.fomula(form)) xx <- as.list(model.frame(form, data, na.action=NULL))
+  if(inherits(form, 'formula')) xx <- as.list(model.frame(form, data, na.action=NULL))
   ord <- do.call(order, xx)
   data[ ord,,drop = FALSE]
 }

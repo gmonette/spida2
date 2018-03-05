@@ -1,3 +1,5 @@
+2018-03-05
+* Fixed a bug in 'towide'
 2018-02-23
 * The 'form' argument in 'sortdf' does not have to be a formula 
 2017-12-28

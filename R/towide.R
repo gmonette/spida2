@@ -150,6 +150,34 @@
 #' }
 #' @export
 towide <- function(data,
+           idvar = 'id',
+           timevar = 'time',
+           sep = '_',
+           add.invariants = TRUE,
+           ...) {
+    invars <- function( data, idvar) {
+      # identify invariant variables
+      ret <- sapply(data, function(x) {
+        max(capply(x,data[,idvar], function(y) length(unique(y))))
+      }
+      )
+      ret <- ret == 1
+      ret
+    }
+    
+    if(add.invariants) invars <- names(data)[invars(data, idvar)]
+    dinv <- data[,invars]
+    dinv <- dinv[!duplicated(dinv[idvar]),]
+    dl <- data[,c(idvar, names(data) %less% invars)]
+    dw <- stats::reshape(dl, direction = 'wide',
+                         idvar = idvar,
+                         timevar = timevar, 
+                         sep = sep, 
+                         ...)
+    merge(dw, dinv, by = idvar)
+  }
+
+towide_old <- function(data,
                    idvar = 'id',
                    timevar = 'time',
                    sep = '_',
