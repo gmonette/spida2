@@ -1567,6 +1567,12 @@ getX <- function(fit, data = getData(fit)) {
   f <- formula(fit)
   if(length(f) == 3) f <- f[-2]
   ret <- model.matrix(f, data = data)
+  isnarow <- apply(as.data.frame(data), 1, function(x) any(is.na(x)))
+  if(any(isnarow)) {
+    ret2 <- matrix(NA, nrow(data), ncol(ret))
+    ret2[!isnarow,] <- ret
+    ret <- ret2
+  }
   attr(ret,'data') <- data #include data as attribute
   ret
 }
