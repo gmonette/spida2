@@ -10,14 +10,14 @@
 #' zm2 <- cbind(x = 1:4, y = 3, w = 1)
 #' Rbind(zm1, zm2, zd1, zd1, zd2)
 #' @export
-Rbind <- function(...) {
+Rbind <- function(..., verbose = FALSE) {
   nam <- '.unique.'
   x <- list(...)
   x <- lapply(x, as.data.frame)
   nams <- unique(unlist(sapply(x, names)))
   print(nams)
   while( nam %in% nams) nam <- paste0(nam,".")
-  print(nam)
+  if(verbose) print(nam)
   x <- lapply(seq_along(x), function(ii) {
     x[[ii]][[nam]] <- ii
     x[[ii]]
