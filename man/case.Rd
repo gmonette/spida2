@@ -22,7 +22,7 @@ to a vector whose value is returned where the name of the
 argument matches a value of \code{.select.}. 
 
 The vectors in \dots are combined into a matrix with
-\code{\link{cbind}} and the names are of the arguments
+\code{\link{cbind}} and the names of the arguments
 are used as values of \code{.select.} to select which
 vector value is returned.  See the examples. 
 
