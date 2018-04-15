@@ -75,13 +75,12 @@ here <- function(dir = TRUE) {
 #'    'England' = tr(xvar, c('yes','no'), c(1,0)),
 #'    'France'  = tr(xvar, c('oui','non'), c(1,0)),
 #'    'Germany' = tr(xvar, c('nein','ja'), c(0,1)),
-#'    xvar)#' 
+#'    xvar) 
 #' case(location,
 #'    'England' = tr(xvar, c('yes','no'), c(1,0)),
 #'    'France'  = tr(xvar, c('oui','non'), c(1,0)),
 #'    'Germany' = tr(xvar, c('nein','ja'), c(0,1)),
 #'    'no match')
-#' 
 #' @export
 case <- function(select, ...) {
   nas <- is.na(select)
@@ -97,5 +96,5 @@ case <- function(select, ...) {
   what <- do.call(cbind, replace)
   what[cbind(1:nrow(what), which)]
 }
-
+#' 
 

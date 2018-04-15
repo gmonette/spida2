@@ -4,7 +4,7 @@
 \alias{Rbind}
 \title{Stack data frames vertically}
 \usage{
-Rbind(...)
+Rbind(..., verbose = FALSE)
 }
 \arguments{
 \item{\dots}{data frames or objects that can be coerced to data frames}

@@ -9,7 +9,8 @@ sortdf(data, form = formula(data))
 \arguments{
 \item{data}{a data frame}
 
-\item{form}{a formula identifying variables to be used in sorting}
+\item{form}{a formula identifying variables to be used in sorting or an
+object that can be used directly in \code{data[order(form,,drop=FALSE)]}.}
 }
 \value{
 The formula is evaluated using \code{model.frame} and the
