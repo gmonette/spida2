@@ -42,20 +42,26 @@ here <- function(dir = TRUE) {
 #' Avoids nested ifelse statements when the action depends on
 #' the value of a variable
 #' 
-#' @param select a variable whose values determine the 
-#'        vector to be used
-#' @param \dots named arguments. Each arguments evaluates
-#' to a vector.
+#' @param .select. a variable whose values determine the 
+#'        argument to be used
+#' @param \dots named arguments and one possibly unnamed argument. 
 #' 
-#' @details The vectors are combined into a matrix with
-#' \code{\link{cbind}}. The names are of the arguments
-#' are used as values of \code{condition} to select which
+#' 
+#' @details 
+#' Each argument in \dots evaluates
+#' to a vector whose value is returned where the name of the 
+#' argument matches a value of \code{.select.}. 
+#' 
+#' The vectors in \dots are combined into a matrix with
+#' \code{\link{cbind}} and the names are of the arguments
+#' are used as values of \code{.select.} to select which
 #' vector value is returned.  See the examples. 
 #' 
 #' If there is an unnamed argument, its value is used
-#' as a default value when there isn't a match. 
+#' as a value in \code{.select.} is not matched by
+#' an argument name.
 #' 
-#' See also \code{\link{dplyr::case_when}} (IMPROVE)  
+#' See an alternative: \code{\link{dplyr::case_when}}
 #'
 #' @examples
 #' x <- c(letters[1:4],NA)
@@ -82,14 +88,14 @@ here <- function(dir = TRUE) {
 #'    'Germany' = tr(xvar, c('nein','ja'), c(0,1)),
 #'    'no match')
 #' @export
-case <- function(select, ...) {
-  nas <- is.na(select)
+case <- function(.select., ...) {
+  nas <- is.na(.select.)
   replace <- list(...)
   levels <- names(replace)
   # if "" is in levels, i.e. if there is an unnamed argument
   # then this is the default for non-matches
   # otherwise non-matches return NA
-  which <- match(as.character(select), levels)
+  which <- match(as.character(.select.), levels)
   if(length(default <- grep("^$", levels))) which[is.na(which)] <- default
   # But NAs in select nevertheless return NAs
   which[nas] <- NA

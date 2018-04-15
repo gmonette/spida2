@@ -4,29 +4,33 @@
 \alias{case}
 \title{Vectorized ifelse with multiple conditions}
 \usage{
-case(select, ...)
+case(.select., ...)
 }
 \arguments{
-\item{select}{a variable whose values determine the 
-vector to be used}
+\item{.select.}{a variable whose values determine the 
+argument to be used}
 
-\item{\dots}{named arguments. Each arguments evaluates
-to a vector.}
+\item{\dots}{named arguments and one possibly unnamed argument.}
 }
 \description{
 Avoids nested ifelse statements when the action depends on
 the value of a variable
 }
 \details{
-The vectors are combined into a matrix with
-\code{\link{cbind}}. The names are of the arguments
-are used as values of \code{condition} to select which
+Each argument in \dots evaluates
+to a vector whose value is returned where the name of the 
+argument matches a value of \code{.select.}. 
+
+The vectors in \dots are combined into a matrix with
+\code{\link{cbind}} and the names are of the arguments
+are used as values of \code{.select.} to select which
 vector value is returned.  See the examples. 
 
 If there is an unnamed argument, its value is used
-as a default value when there isn't a match. 
+as a value in \code{.select.} is not matched by
+an argument name.
 
-See also \code{\link{dplyr::case_when}} (IMPROVE)
+See an alternative: \code{\link{dplyr::case_when}}
 }
 \examples{
 x <- c(letters[1:4],NA)
