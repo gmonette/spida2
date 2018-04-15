@@ -37,4 +37,65 @@ here <- function(dir = TRUE) {
   if(dir) path <- dirname(path)
   path
 }
+#' Vectorized ifelse with multiple conditions
+#' 
+#' Avoids nested ifelse statements when the action depends on
+#' the value of a variable
+#' 
+#' @param select a variable whose values determine the 
+#'        vector to be used
+#' @param \dots named arguments. Each arguments evaluates
+#' to a vector.
+#' 
+#' @details The vectors are combined into a matrix with
+#' \code{\link{cbind}}. The names are of the arguments
+#' are used as values of \code{condition} to select which
+#' vector value is returned.  See the examples. 
+#' 
+#' If there is an unnamed argument, its value is used
+#' as a default value when there isn't a match. 
+#' 
+#' See also \code{\link{dplyr::case_when}} (IMPROVE)  
+#'
+#' @examples
+#' x <- c(letters[1:4],NA)
+#' case(x, a = 'was an a', b = 'was a b', z = 'was a z')
+#' case(x, a = 'was an a', x) # x is returned as default
+#' # numerical 'select' is coerced to character
+#' case(1:4, '1' = 'was a 1', '2' = 'was a 2')
+#' 
+#' location <- c('England','England','France','France',
+#'      'Germany','Spain')
+#' xvar <- c('yes','no','non','oui','nein','si')
+#' case(location,
+#'    'England' = tr(xvar, c('yes','no'), c(1,0)),
+#'    'France'  = tr(xvar, c('oui','non'), c(1,0)),
+#'    'Germany' = tr(xvar, c('nein','ja'), c(0,1)))
+#' case(location,
+#'    'England' = tr(xvar, c('yes','no'), c(1,0)),
+#'    'France'  = tr(xvar, c('oui','non'), c(1,0)),
+#'    'Germany' = tr(xvar, c('nein','ja'), c(0,1)),
+#'    xvar)#' 
+#' case(location,
+#'    'England' = tr(xvar, c('yes','no'), c(1,0)),
+#'    'France'  = tr(xvar, c('oui','non'), c(1,0)),
+#'    'Germany' = tr(xvar, c('nein','ja'), c(0,1)),
+#'    'no match')
+#' 
+#' @export
+case <- function(select, ...) {
+  nas <- is.na(select)
+  replace <- list(...)
+  levels <- names(replace)
+  # if "" is in levels, i.e. if there is an unnamed argument
+  # then this is the default for non-matches
+  # otherwise non-matches return NA
+  which <- match(as.character(select), levels)
+  if(length(default <- grep("^$", levels))) which[is.na(which)] <- default
+  # But NAs in select nevertheless return NAs
+  which[nas] <- NA
+  what <- do.call(cbind, replace)
+  what[cbind(1:nrow(what), which)]
+}
+
 
