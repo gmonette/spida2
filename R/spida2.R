@@ -4,6 +4,13 @@
 #' for statistical consulting, with a particular emphasis on
 #' longitudinal and hierarchical data analysis.
 #'
+#' @section New functions:
+#' \itemize{
+#' \item \code{\link{getR}}, \code{\link{getG}} and \code{\link{getV}} return R, G and V matrices for \code{\link{lme}} objects.
+#' \item \code{\link{pdInd}} constructs a pdClass for a G matrix with patterns of zero covariances. See
+#' a vignette at \url{../vignettes/pdInd.html}
+#' }
+#' 
 #' @section Wald tests and linear hypothesis matrices:
 #' \itemize{
 #' \item \code{\link{wald}} Wald tests with L matrices optionally created with regular expressions. Uses SVD to handle linear dependencies in rows of L

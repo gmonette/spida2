@@ -4,7 +4,7 @@ Title: Collection of tools developed for the Summer Programme in Data Analysis 2
 Version: 0.1.1
 Date: 2015-12-31
 Author: Georges Monette, John Fox, Michael Friendly, Heather Krause
-Maintainer: Georges Monette <georges+yscs@yorku.ca>
+Maintainer: Georges Monette <georges+spida2@yorku.ca>
 Description: Collection of utility functions for linear and mixed models
     including wald: Wald test with functions to generate hypothesis matrices gsp:
     general spline with any degree and smoothness with additional function 'sc' to
@@ -14,3 +14,6 @@ Description: Collection of utility functions for linear and mixed models
 License: GPL (>= 2)
 LazyData: TRUE
 RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
