@@ -8,7 +8,8 @@
 #' \itemize{
 #' \item \code{\link{getR}}, \code{\link{getG}} and \code{\link{getV}} return R, G and V matrices for \code{\link{lme}} objects.
 #' \item \code{\link{pdInd}} constructs a pdClass for a G matrix with patterns of zero covariances. See
-#' a vignette at \url{../vignettes/pdInd.html}
+#' a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.pdf}{pdInd: G matrix with pattern of zeros} or 
+#' an \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{html version} 
 #' }
 #' 
 #' @section Wald tests and linear hypothesis matrices:

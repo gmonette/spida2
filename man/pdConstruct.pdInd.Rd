@@ -5,16 +5,14 @@
 \title{Construct pdInd object}
 \usage{
 pdConstruct.pdInd(object, value = numeric(0), form = formula(object),
-  nam = Names(object), data = sys.parent(), cov = NULL, zero = NULL,
-  ...)
+  nam = Names(object), data = sys.parent(), cov = NULL, ...)
 }
 \arguments{
 \item{object}{an object inheriting from the class \code{pdInd}, representing
 a positive definite matrix with zero covariances except in the first row and
 column.}
 
-\item{value}{an option initialization value, which can be any of the
-following ...}
+\item{value}{an optional initialization value}
 
 \item{form}{an optional one-sided linear formula specifying the row/column
 names for the matrix represented by \code{object}.}
@@ -28,12 +26,10 @@ in \code{value} and \code{form}. ...}
 \item{cov}{optional position in lower triangle of covariances that are
 estimated and, thus, possibly non-zero. The default is that the covariances
 in the first column are estimated and possibly non-zero.}
-
-\item{zero}{optional way of specifying covariances constrained to be equal
-to zero. Only the lower triangular portion of the \code{zero} is used. The
-elements that are equal to 0 corresponds to the pattern of elements that are
-constrained to zero in the covariance matrix.}
 }
 \description{
-This function is a constructor for a \link{list("pdInd")} object.
+This function is an alternative constructor for the pdMat class 
+associated with object and is mostly used internally in other functions. 
+See the documentation on the principal constructor function 
+\code{\link{pdInd}}.
 }

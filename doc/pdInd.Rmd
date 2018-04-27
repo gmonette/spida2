@@ -1,19 +1,19 @@
 ---
-title: "pdInd: G matrix with pattern of zeros"
+title: "pdInd: G matrix with patterns of zeros"
 author: "Georges Monette"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{pdInd: G matrix with pattern of zeros}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-```{r eval=FALSE,echo=FALSE}
-  pdf_document: 
-    toc: true
+output: 
+  pdf_document: default
   html_document:
     toc: true
     toc_float: true
+---
+```{r eval=FALSE,echo=FALSE}
+rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pdInd: G matrix with patterns of zeros}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ```
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -25,12 +25,12 @@ knitr::opts_chunk$set(
   library(nlme)
 ```
 `pdInd` is a constructor for `pdClasses` that define G matrices to model
-the variance of random effects for models in the \pkg{nlme} package.
+the variance of random effects for models in the `nlme` package.
 
 Mixed models in which many predictors have random slopes often fail to converge 
 in part because of the large number of parameters in the full covariance (G)
 matrix for random effects. One way of fitting a more parsimonious model that
-includes random slopes is to use \code{\link{pdDiag}} with zeros off the
+includes random slopes is to use `pdDiag` with zeros off the
 diagonal. However, this also forces zero covariances between random slopes and
 and the random intercept, resulting in a model that is not equivariant
 with respect to location transformations of the predictors with random 
@@ -38,7 +38,7 @@ slopes. The alternative remedy of omitting random slopes for some
 predictors can lead to biased estimates and incorrect standard errors of 
 regression coefficients.
 
-The default covariance pattern for \code{pdInd} produces a G matrix with
+The default covariance pattern for `pdInd` produces a G matrix with
 zero covariances except in the first row and column. If the first random
 effect is the intercept, the resulting model assumes independence between random
 slopes without imposing minimality of variance over the possibly
@@ -46,7 +46,7 @@ arbitrary origin. This imposition is
 the reason that having all covariances equal to zero results in a
 model that fails to be equivariant under location transformations.
 
-The optional \code{cov} parameter can be used to allow selected non-zero
+The optional `cov` parameter can be used to allow selected non-zero
 covariance between random slopes.   
 
 For example, if two variables, X1 and X2 have random effects, the 

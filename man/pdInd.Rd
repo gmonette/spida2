@@ -2,15 +2,13 @@
 % Please edit documentation in R/pdInd.R
 \name{pdInd}
 \alias{pdInd}
-\title{Constuctor for Positive-Definite Matrix With Zero Covariances Between
-Predictor Random Effects}
+\title{Construct pdInd object}
 \usage{
 pdInd(value = numeric(0), form = NULL, nam = NULL, data = sys.parent(),
-  cov = NULL, zero = NULL)
+  cov = NULL)
 }
 \arguments{
-\item{value}{an optional initialization value, which can be any of the
-following ...}
+\item{value}{an optional initialization value}
 
 \item{form}{an optional one-sided linear formula specifying the row/column
 names for the matrix represented by \code{object}.}
@@ -25,25 +23,37 @@ in \code{value} and \code{form}. ...}
 estimated and, thus, possibly non-zero. The default is that the covariances
 in the first column are estimated and possibly non-zero.}
 
-\item{zero}{optional way of specifying covariances constrained to be equal
-to zero. Only the lower triangular portion of the \code{zero} is used. The
-elements that are equal to 0 corresponds to the pattern of elements that are
-constrained to zero in the covariance matrix.}
+\item{object}{an object inheriting from the class \code{pdInd}, representing
+a positive definite matrix with zero covariances except in the first row and
+column.}
 }
 \description{
-This function is a constructor for the \code{pdInd} class, representing a
-positive-definite matrix with zero covariances except possibly in the first
-row and column. If the matrix associated with \code{object} is of dimension
-$n$, it is represented by $n + (n-1)$ unrestricted parameters representing a
-lower-triangular log-Cholesky decomposition. The first $n$ parameters are
-the logs of the diagonal elements of the matrix and the last $n-1$
-components are the $n-1$ remaining elements of the lower-triangular
-decomposition corresponding the to the possibly non-zero covariances in the
-first row.
+This function is a constructor for the \code{pdInd} class used to
+represent a positive-definite random effects variance matrix 
+with some specified patterns of zero covariances.
 }
-\section{CAUTION}{
+\details{
+Mixed models in which many predictors have random slopes often fail to converge 
+in part because of the large number of parameters in the full covariance (G)
+matrix for random effects. One way of fitting a more parsimonious model that
+includes random slopes is to use \code{\link{pdDiag}} with zeros off the
+diagonal. However, this also forces zero covariances between random slopes and
+and the random intercept, resulting in a model that is not equivariant
+with respect to location transformations of the predictors with random 
+slopes. The alternative remedy of omitting random slopes for some 
+predictors can lead to biased estimates and incorrect standard errors of 
+regression coefficients.
 
-cov and zero do not work. Until fixed, \code{pdInd} only creates the
-default covariance pattern in which the only non-zero covariances are those with the first element.
+The default covariance pattern for \code{pdInd} produces a G matrix with
+zero covariances except in the first row and column. If the first random
+effect is the intercept, the resulting model assumes independence between random
+slopes without imposing minimality of variance over the possibly
+arbitrary origin. This imposition is
+the reason that having all covariances equal to zero results in a
+model that fails to be equivariant under location transformations.
+
+The optional \code{cov} parameter can be used to allow selected non-zero
+covariance between random slopes.   
+and biased eIt is often desirable to fit a parsimonious model with more than one
+variable with a random slope.
 }
-
