@@ -2,7 +2,8 @@
 #' 
 #' The spida2 package is a collection of functions and datasets intended primarily
 #' for statistical consulting, with a particular emphasis on
-#' longitudinal and hierarchical data analysis.
+#' longitudinal and hierarchical data analysis. Some documents related to this 
+#' package can be found at \url{http://blackwell.math.yorku.ca/R/spida2/doc}
 #'
 #' @section New functions:
 #' \itemize{
