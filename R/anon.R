@@ -7,7 +7,7 @@
 #' 
 #' @param x object that may have names
 #' @return x without names
-#' @seealso \code{\link{auto}}
+#' @seealso \code{\link[spida2]{auto}}
 #' @export
 #' @rdname anon
 anon <- function(x) {

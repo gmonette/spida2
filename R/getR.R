@@ -3,24 +3,24 @@
 
 #' Extract R, G or V matrix in a mixed or GLS model
 #' 
-#' These functions call \code{\link{getVarCov}} in the 
+#' These functions call \code{\link[nlme]{getVarCov}} in the 
 #' \pkg{nlme} package. They are intended to have names and functions
 #' that are easy to remember.
 #' 
-#' @param fit model created with \code{\link{lme}} or 
-#' \code{\link{gls}}
+#' @param fit model created with \code{\link[nlme]{lme}} or 
+#' \code{\link[nlme]{gls}}
 #' @param individuals for \code{getR} or \code{getV} with
-#'    \code{\link{lme}} objects, select the clusters for which
+#'    \code{\link[nlme]{lme}} objects, select the clusters for which
 #'    variances are returned. If not specified, the variance of the
 #'    first cluster is returned.
-#' @return For \code{\link{lme}} objects, \code{getG} returns
+#' @return For \code{\link[nlme]{lme}} objects, \code{getG} returns
 #'    the between-cluster variance of random effects, \code{getV},
 #'    and \code{getR} returns a list with the within-cluster marginal
 #'    variance and the within-cluster conditional variance respectively
 #'    for the the clusters listed in \code{individuals}. If 
 #'    \code{individuals} is missing, the variance of the first
 #'    cluster is returned. ISSUE: For 
-#'    \code{\link{gls}} objects all functions return the same thing but
+#'    \code{\link[nlme]{gls}} objects all functions return the same thing but
 #'    uninformatively if correlation is clustered and if weights
 #'    produce differenct variances in the corresponding positions in 
 #'    different clusters. 

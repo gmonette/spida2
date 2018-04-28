@@ -32,7 +32,7 @@ rpfmt.default <- function(x, digits = 3, pdigits = 5) {
   ret
 }
 #' @rdname rpfmt
-#' @details works on first element of a \code{\link{wald}} list
+#' @details works on first element of a \code{\link[spida2]{wald}} list
 #' @export
 rpfmt.wald <- function(w, ...) {
   w <- w[[1]][[2]]

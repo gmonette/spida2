@@ -313,7 +313,7 @@ panel.errorbars <-
 #' called via layer or glayer without further complications
 #' e.g. \code{xyplot(......,labels = rownames(data)) + layer(panel.labels(...))}
 #' or  \code{xyplot(....., labels = rownames(data), subscripts = T) + glayer(panel.labels(...))}.
-#' For selected labels see the examples with \code{\link{trellis.focus}} and \code{\link{panel.identify}}
+#' For selected labels see the examples with \code{\link[lattice]{trellis.focus}} and \code{\link[lattice]{panel.identify}}
 #' @param x,y position of labels, usually supplied through panel call
 #' @param labels default is rownames of data
 #' @param ... NOTE: may specify anything you don't want passed through ...

@@ -9,7 +9,7 @@
 #'        that defines clusters to be dropped one at a time. If NULL, the 
 #'        default, each row is dropped successively.
 #' @param FUN function used to extract coefficients. Default:
-#'        \code{\link{fixef}} for class 'lme' and 
+#'        \code{\link[spida2]{fixef}} for class 'lme' and 
 #'        \code{\link{coef}} otherwise. 
 #' @param data  data frame in which to evaluate the refitted object. Default:
 #'        'getData(fit)'.

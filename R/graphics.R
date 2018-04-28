@@ -525,7 +525,7 @@ xqplot <- function(x,
 #'
 #' @param n
 #' @concept lattice
-#' @seealso \code{\link{lattice::show.settings}}
+#' @seealso \code{\link[lattice]{lattice::show.settings}}
 #' @export
 sampler <-
     function( n=24 ) {

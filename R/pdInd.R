@@ -7,7 +7,7 @@
 #' Mixed models in which many predictors have random slopes often fail to converge 
 #' in part because of the large number of parameters in the full covariance (G)
 #' matrix for random effects. One way of fitting a more parsimonious model that
-#' includes random slopes is to use \code{\link{pdDiag}} with zeros off the
+#' includes random slopes is to use \code{\link[nlme]{pdDiag}} with zeros off the
 #' diagonal. However, this also forces zero covariances between random slopes and
 #' and the random intercept, resulting in a model that is not equivariant
 #' with respect to location transformations of the predictors with random 
@@ -56,7 +56,7 @@ pdInd <-
 #' This function is an alternative constructor for the pdMat class 
 #' associated with object and is mostly used internally in other functions. 
 #' See the documentation on the principal constructor function 
-#' \code{\link{pdInd}}. 
+#' \code{\link[spida2]{pdInd}}. 
 #' 
 #' @param object an object inheriting from the class \code{pdInd}, representing
 #' a positive definite matrix with zero covariances except in the first row and

@@ -11,7 +11,7 @@
 #' @param x an object to be rounded and formatted
 #' @param digits significant digits for variation in x
 #' @param ... passed on to \code{\link{format}} function
-#' @seealso \code{\link{pfmt}}, \code{\link{rpfmt}}
+#' @seealso \code{\link[spida2{pfmt}}, \code{\link[spida2{rpfmt}}
 #' @examples
 #' rnd(c(0.00001111111,0.000022222,0.000015), scientific = F)
 #' rnd(c(0.00001111111,0.000022222,0.000015)+100, scientific = F)

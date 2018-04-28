@@ -8,7 +8,7 @@
 #' @param lag (default 1) 
 #' @param at alternative to 'lag': evaluate x at a particular value of 'idx'
 #' @param check (default TRUE) check for unique values of idx within each cluster
-#' @seealso \code{\link{LagI}}, \code{\link{DiffI}}, \code{\link{Diff}}, 
+#' @seealso \code{\link[spida2]{LagI}}, \code{\link[spida2]{DiffI}}, \code{\link[spida2]{Diff}}, 
 #' @return return the value of 'x' in the position 'idx - lag' in the same cluster
 #' @export
 Lag <- function(x, id = rep(1, length(x)), idx = 1:length(x), lag=1, at = NULL, check = T) {
@@ -32,7 +32,7 @@ Lag <- function(x, id = rep(1, length(x)), idx = 1:length(x), lag=1, at = NULL, 
 #' @param lag (default 1) 
 #' @param at alternative to 'lag': evaluate x at a particular value of 'idx'
 #' @param check (default TRUE) check for unique values of idx within each cluster
-#' @seealso \code{\link{LagI}}, \code{\link{DiffI}}, \code{\link{Diff}}, 
+#' @seealso \code{\link[spida2]{LagI}}, \code{\link[spida2]{DiffI}}, \code{\link[spida2]{Diff}}, 
 #' @return return the value of x - x in the position 'idx - lag' in the same cluster
 #' @export
 Diff <- function(xx,...) xx - Lag(xx,...)
@@ -46,7 +46,7 @@ Diff <- function(xx,...) xx - Lag(xx,...)
 #' @param lag (default 1) 
 #' @param delta (default .01) 
 #' @param check (default TRUE) check for unique values of idx within each cluster
-#' @seealso \code{\link{LagI}}, \code{\link{DiffI}}, \code{\link{Diff}}, 
+#' @seealso \code{\link[spida2]{LagI}}, \code{\link[spida2]{DiffI}}, \code{\link[spida2]{Diff}}, 
 #' @return return the value of 'x' in the position 'idx - lag' in the same cluster
 #'         calculated by intrapolation.
 #' @export
@@ -95,7 +95,7 @@ LagI <- function(x,id,time,lag=1,delta=.01,check=T) {
 #' @param lag (default 1) 
 #' @param at alternative to 'lag': evaluate x at a particular value of 'idx'
 #' @param check (default TRUE) check for unique values of idx within each cluster
-#' @seealso \code{\link{LagI}}, \code{\link{DiffI}}, \code{\link{Diff}}, 
+#' @seealso \code{\link[spida2]{LagI}}, \code{\link[spida2]{DiffI}}, \code{\link[spida2]{Diff}}, 
 #' @return return the value of  x minus x in the position 'idx - lag' in the same cluster 
 #'         using intrapolation
 #' @export

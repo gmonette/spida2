@@ -203,12 +203,12 @@ Lfx <-
 
 #' Method to generate hypothesis matrices from formulas
 #'
-#' Interprets a formula to generate the corresponding portion of a hypothesis matrix. See examples in \code{\link{Lfx}}. Creates an 'M' object with methods to generate coefficients to estimate interaction terms and comparisons of factor levels.
+#' Interprets a formula to generate the corresponding portion of a hypothesis matrix. See examples in \code{\link[spida2]{Lfx}}. Creates an 'M' object with methods to generate coefficients to estimate interaction terms and comparisons of factor levels.
 #'
 #' @param form formula
 #' @param ... other arguments
 #' @param keep.intercept (default: FALSE) if TRUE generate a column for the intercept term
-#' @seealso \code{\link{Lfx}}
+#' @seealso \code{\link[spida2]{Lfx}}
 #' @export
 M <- function(x,...) UseMethod("M")
 
