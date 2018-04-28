@@ -1,28 +1,23 @@
 ---
-title: "pdInd: G matrix with patterns of zeros"
+title: "pdInd: G matrix with pattern of zeros"
 author: "Georges Monette"
 date: "`r Sys.Date()`"
 output: 
-  pdf_document: default
+  pdf_document: 
+    toc: true
   html_document:
     toc: true
     toc_float: true
 ---
-```{r eval=FALSE,echo=FALSE}
-rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{pdInd: G matrix with patterns of zeros}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+```{r eval = FALSE, echo = FALSE}
 ```
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = FALSE,
   comment = "  "
 )
-  library(gnew)
-  library(spida2)
-  library(nlme)
+library(spida2)
+library(nlme)
 ```
 `pdInd` is a constructor for `pdClasses` that define G matrices to model
 the variance of random effects for models in the `nlme` package.
@@ -125,9 +120,6 @@ above it is not necessarily preserved.
 (fac <- cbind( c(1,0,0,0,0), c(1,2,0,0,0), c(0,1,3,0,0), c(1,0,0,4,0), c(0,1,0, -1, 5) ))
 fac %*% t(fac)
 ```
-
-
-
 But patterns of zeros above non-diagonal blocks are not necessarily preserved.
 
 The `cov` parameter allows the user to specify a pattern of zeros in the upper
@@ -135,13 +127,12 @@ triangle of the upper-triangular 'R' factor of the the G matrix. As observed abo
 in some cases this will result in the same pattern in the G matrix. Even if the
 pattern in the R factor does not create a similar pattern in the G matrix,
 the model for the G matrix will nevertheless have the number of additional 
-parameters for covariance as given by the `TRUE` entries in the upper diagonal of the
-`cov` matrix.
+parameters for covariance as given by the `TRUE` entries in the upper diagonal of the `cov` matrix.
 
 # Predictor transformations to improve convergence
 
-We will show how to use `chol(getG(fit))` to suggest transformations of predictors
-that appear in random effects model to help improve the convergence of mixed models fits.
+We will show how to use `lchol(getG(fit))` to suggest transformations of predictors
+that appear in random effects models to help improve the convergence of mixed models fits.
 
 We conjecture that the condition number of the Hessian matrix for the parameters
 in the G matrix may be approximately the square of the condition number for
@@ -149,7 +140,7 @@ the G matrix. Thus a condition number for G in the vicinity of
 $10^7$ 
 would effectively result in singularity of the Hessian.
 
-Rescaling and relocating the predictors with random slopes can greatly
+Rescaling and relocating the predictors with random slopes can
 improve ill-conditioning of the G matrix.
 
 Let
@@ -161,8 +152,9 @@ $$\mathbf{Z}'_i \mathbf{u}_i$$
 Consider a location-scale tranformation of the variables in $\mathbf{Z}$. It has
 the form 
 $\mathbf{Z^*} = T\mathbf{Z}$ 
-where $T$ is upper triangular with the form
-$$ T = \begin{bmatrix} 1 & a_1 \;a_2 \; \cdots \; a_k \\ 0 & B \end{bmatrix}$$
+where $T$ is lower triangular with the form
+$$ T = \begin{bmatrix} 1 & 0 \\
+  \begin{matrix} a_1 \\ a_2 \\ \vdots \\ a_k \end{matrix}  & B \end{bmatrix}$$
 with $B$ a diagonal matrix containing scaling coefficients, $b_1, b_2, ..., b_k$, so that
 $$Z^*_i = a_i + b_i Z_i$$
 If $G = Var(\mathbf{u})$ then 
@@ -171,11 +163,10 @@ where
 $G^* = \operatorname{Var}(\mathbf{u^*})$ with 
 $$\mathbf{Z}_i' \mathbf{u}_i = {\mathbf{Z}^{*}_i}' \mathbf{u}^*_i$$
 
-Thefore if we factor
-$$G =T'T$$
-the upper triangular matrix 
+Therefore, if we factor
+$$G =T'T$$ with $T$ lower-triangular,
 $\frac{1}{t_{11}}T$ provides a transformation of $\mathbf{Z}$ that
-minimizes the condition number of $G^*$. In R, this is simply `getG(fit) %>% chol %>% {./.[1,1]}`.
+minimizes the condition number of $G^*$. In R, using `spida2::lchol` this is simply `getG(fit) %>% lchol %>% {./.[1,1]}`.
 
 # Improving convergence -- IN PROGRESS
 
