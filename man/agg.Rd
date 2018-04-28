@@ -38,7 +38,7 @@ contains variables that are invariant in each cluster and, optionally, summaries
 of other variables (means for numeric variables and blocks of variables
 corresponding to incidence matrices for factors.
 Adapted
-from \code{gsummary} in the \code{nlme} package and from \code{\link{up}} in
+from \code{\link[nlme]{gsummary}} in the \code{nlme} package and from \code{\link{up}} in
 the \code{spida2} package.
 }
 \details{

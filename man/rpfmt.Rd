@@ -25,7 +25,7 @@ values and the second has p-values and formats them into a single column
 with p-values in parentheses
 }
 \details{
-works on first element of a \code{\link{wald}} list
+works on first element of a \code{\link[spida2]{wald}} list
 }
 \examples{
 rpfmt( cbind( 'estimate' = rnorm(7), "p-values" = 10^c(-1,-2,-3,-4,-5,-6,-7)))

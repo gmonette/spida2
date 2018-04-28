@@ -36,7 +36,7 @@ with some specified patterns of zero covariances.
 Mixed models in which many predictors have random slopes often fail to converge 
 in part because of the large number of parameters in the full covariance (G)
 matrix for random effects. One way of fitting a more parsimonious model that
-includes random slopes is to use \code{\link{pdDiag}} with zeros off the
+includes random slopes is to use \code{\link[nlme]{pdDiag}} with zeros off the
 diagonal. However, this also forces zero covariances between random slopes and
 and the random intercept, resulting in a model that is not equivariant
 with respect to location transformations of the predictors with random 

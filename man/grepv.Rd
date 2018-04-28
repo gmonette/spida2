@@ -10,5 +10,5 @@ grepv(...)
 Equivalent of grep(..., value = TRUE)
 }
 \seealso{
-\code{\link{grepl}}
+\code{\link[spida2]{grepl}}
 }

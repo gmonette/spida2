@@ -16,5 +16,5 @@ a vector of the same mode containing the difference of \code{x} less \code{y}
 The set difference of x less y
 }
 \seealso{
-\code{\link{\%and\%}} and \code{\link{\%or\%}}
+\code{\link[spida2]{\%and\%}} and \code{\link[spida2]{\%or\%}}
 }

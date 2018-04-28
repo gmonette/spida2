@@ -20,5 +20,5 @@ Useful is a list has names but will be passed as the argument list to \code{\lin
 if the names are not intended to be parameter names.
 }
 \seealso{
-\code{\link{auto}}
+\code{\link[spida2]{auto}}
 }

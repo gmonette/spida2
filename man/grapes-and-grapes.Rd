@@ -16,5 +16,5 @@ a vector of the same mode containing the intersection of \code{x} less \code{y}
 The intersection of x and y
 }
 \seealso{
-\code{\link{\%less\%}} and \code{\link{\%or\%}}
+\code{\link[spida2]{\%less\%}} and \code{\link[spida2]{\%or\%}}
 }

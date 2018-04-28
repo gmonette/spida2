@@ -40,5 +40,5 @@ rnd(123)
 rnd(123.45678901)
 }
 \seealso{
-\code{\link{pfmt}}, \code{\link{rpfmt}}
+\code{\link[spida2]{pfmt}}, \code{\link[spida2]{rpfmt}}
 }

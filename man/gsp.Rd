@@ -69,7 +69,7 @@ effects portion of a call to \code{lme}.
 These functions implement a general polynomial spline with possibly different degrees
 in each interval and different orders of smoothness at each knot,
 including the possibility of allowing a discontinuity at a knot. The
-function \code{\link{sc}} helps in the construction of linear hypothesis matrices
+function \code{\link[spida2]{sc}} helps in the construction of linear hypothesis matrices
 to estimate and test levels and derivatives of splines at arbitrary points
 and the saltus of derivatives that have discontinuities at knots.
 }
@@ -502,7 +502,7 @@ xyplot( logSize ~ days, pred, type = 'l')
 %% ~put references to the literature/web site here ~
 }
 \seealso{
-\code{\link{wald}} \code{\link{sc}}
+\code{\link[spida2]{wald}} \code{\link[spida2]{sc}}
 }
 \author{
 Monette, G. \email{georges@yorku.ca}

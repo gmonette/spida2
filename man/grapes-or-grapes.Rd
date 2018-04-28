@@ -16,5 +16,5 @@ a vector of the same mode containing the union of \code{x} less \code{y}
 The union of x and y
 }
 \seealso{
-\code{\link{\%and\%}} and \code{\link{\%less\%}}
+\code{\link[spida2]{\%and\%}} and \code{\link[spida2]{\%less\%}}
 }

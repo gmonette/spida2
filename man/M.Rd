@@ -41,7 +41,7 @@ M(x, ...)
 \item{keep.intercept}{(default: FALSE) if TRUE generate a column for the intercept term}
 }
 \description{
-Interprets a formula to generate the corresponding portion of a hypothesis matrix. See examples in \code{\link{Lfx}}. Creates an 'M' object with methods to generate coefficients to estimate interaction terms and comparisons of factor levels.
+Interprets a formula to generate the corresponding portion of a hypothesis matrix. See examples in \code{\link[spida2]{Lfx}}. Creates an 'M' object with methods to generate coefficients to estimate interaction terms and comparisons of factor levels.
 }
 \section{Methods (by class)}{
 \itemize{
@@ -65,5 +65,5 @@ Interprets a formula to generate the corresponding portion of a hypothesis matri
 }}
 
 \seealso{
-\code{\link{Lfx}}
+\code{\link[spida2]{Lfx}}
 }

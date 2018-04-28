@@ -10,7 +10,7 @@ sampler(n = 24)
 Show available characters, colours, etc.
 }
 \seealso{
-\code{\link{lattice::show.settings}}
+\code{\link[lattice]{lattice::show.settings}}
 }
 \concept{
 lattice

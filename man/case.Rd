@@ -30,7 +30,7 @@ If there is an unnamed argument, its value is used
 as a value in \code{.select.} is not matched by
 an argument name.
 
-See an alternative: \code{\link{dplyr::case_when}}
+See an alternative: \code{\link[dplyr]{case_when}}
 }
 \examples{
 x <- c(letters[1:4],NA)

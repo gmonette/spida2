@@ -13,8 +13,9 @@ longitudinal and hierarchical data analysis.
 \section{New functions}{
 
 \itemize{
-\item \code{\link{getR}}, \code{\link{getG}} and \code{\link{getV}} return R, G and V matrices for \code{\link{lme}} objects.
-\item \code{\link{pdInd}} constructs a pdClass for a G matrix with patterns of zero covariances. See
+\item \code{\link[spida2]{lchol}} returns lower-triangular L so that G = L'L.
+\item \code{\link[spida2]{getR}}, \code{\link[spida2]{getG}} and \code{\link[spida2]{getV}} return R, G and V matrices for \code{\link[nlme]{lme}} objects.
+\item \code{\link[spida2]{pdInd}} constructs a pdClass for a G matrix with patterns of zero covariances. See
 a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.pdf}{pdInd: G matrix with pattern of zeros} or 
 an \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{html version} 
 }
@@ -23,49 +24,49 @@ an \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{html version}
 \section{Wald tests and linear hypothesis matrices}{
 
 \itemize{
-\item \code{\link{wald}} Wald tests with L matrices optionally created with regular expressions. Uses SVD to handle linear dependencies in rows of L
-\item \code{\link{walddf}} version of wald that returns a data frame
-\item \code{\link{as.data.frame.wald}} return a data frame from a wald object
-\item \code{\link{coef.wald}} method to extract estimated coefficients
-\item \code{\link{print.wald}} printing method
-\item \code{\link{Lfx}}  creates hypothesis matrices for derivatives and differences. Add example for factor differences
-\item \code{\link{M}} constructor for M objects to generate portions of design and hypothesis matrices. Used with  \code{\link{Lfx}}
-\item \code{\link{rpfmt}} format estimated values and p-values from a wald test
-\item \code{\link{Lall}} for lmer objects
-\item \code{\link{Lc}} for lmer objects
-\item \code{\link{Lmu}} for lmer objects
+\item \code{\link[spida2]{wald}} Wald tests with L matrices optionally created with regular expressions. Uses SVD to handle linear dependencies in rows of L
+\item \code{\link[spida2]{walddf}} version of wald that returns a data frame
+\item \code{\link[spida2]{as.data.frame.wald}} return a data frame from a wald object
+\item \code{\link[spida2]{coef.wald}} method to extract estimated coefficients
+\item \code{\link[spida2]{print.wald}} printing method
+\item \code{\link[spida2]{Lfx}}  creates hypothesis matrices for derivatives and differences. Add example for factor differences
+\item \code{\link[spida2]{M}} constructor for M objects to generate portions of design and hypothesis matrices. Used with  \code{\link[spida2]{Lfx}}
+\item \code{\link[spida2]{rpfmt}} format estimated values and p-values from a wald test
+\item \code{\link[spida2]{Lall}} for lmer objects
+\item \code{\link[spida2]{Lc}} for lmer objects
+\item \code{\link[spida2]{Lmu}} for lmer objects
 }
 }
 
 \section{Utilities for fitted objects}{
 
 \itemize{
-\item \code{\link{getData}} get data frame from a fitted object
-\item \code{\link{getFix}} get fixed effects from a fitted object
-\item \code{\link{getX}} get X matrix from fitted object
-\item \code{\link{gpanel.fit}} plot fitted values and confidence band
-\item \code{\link{Vcov}} get estimated variance covariance of fixed effects from a fitted object
+\item \code{\link[spida2]{getData}} get data frame from a fitted object
+\item \code{\link[spida2]{getFix}} get fixed effects from a fitted object
+\item \code{\link[spida2]{getX}} get X matrix from fitted object
+\item \code{\link[spida2]{gpanel.fit}} plot fitted values and confidence band
+\item \code{\link[spida2]{Vcov}} get estimated variance covariance of fixed effects from a fitted object
 }
 }
 
 \section{Multilevel data frames}{
 
 \itemize{
-\item \code{\link{capply}}: \code{capply(x,id,FUN)} applies the
+\item \code{\link[spida2]{capply}}: \code{capply(x,id,FUN)} applies the
   function \code{FUN} to chunks of 'x' formed by levels of 'id'.
   The result has the same form as 'x' with replication within
   chunks, if needed.
-\item \code{\link{up}}, \code{\link{agg}} and \code{\link{up_apply}} create summary
+\item \code{\link{up}}, \code{\link[spida2]{agg}} and \code{\link[spida2]{up_apply}} create summary
   data sets consisting, by default, of within-id-invariant variables. 
-  Summaries of id-varying variables can also be included. \code{\link{agg}} can
+  Summaries of id-varying variables can also be included. \code{\link[spida2]{agg}} can
   create mean incidence matrices for lower-level factors.
-\item \code{\link{cvar}} and \code{\link{dvar}} are designed to be used
+\item \code{\link[spida2]{cvar}} and \code{\link[spida2]{dvar}} are designed to be used
   in linear model formulas to generate 'centered-within-group' and 'within-group
   deviation' variables. WIth factors, they generate mean incidence matrices.
-\item \code{link{varLevel}} and \item \code{link{gicc}}: the level of a variable with respect
+\item \code{link[spida2]{varLevel}} and \item \code{link[spida2]{gicc}}: the level of a variable with respect
   to a clustering formula and the 'generalized' intra-class correlation coefficient.
-\item \code{\link{tolong}} and \code{\link{towide}} are 
-  interfaces to \code{\link{stats::reshape}} to facilitate
+\item \code{\link[spida2]{tolong}} and \code{\link[spida2]{towide}} are 
+  interfaces to \code{\link[stats]{reshape}} to facilitate
   the typical uses of reshape for longitudinal data.
 }
 }
@@ -73,26 +74,26 @@ an \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{html version}
 \section{Splines -- parametric and non-parametric}{
 
 \itemize{
-\item \code{\link{gsp}} creates a function for a generalized 
+\item \code{\link[spida2]{gsp}} creates a function for a generalized 
       spline that can
       be included in a linear model formula. 
-\item \code{\link{sc}} creates a spline contrast matrix for 
+\item \code{\link[spida2]{sc}} creates a spline contrast matrix for 
       general spline hypotheses. The matrix can be included
-      in hypothesis matrices for the \code{\link{wald}} function.
-\item \code{\link{smsp}} creates a matrix for a smoothing spline.
+      in hypothesis matrices for the \code{\link[spida2]{wald}} function.
+\item \code{\link[spida2]{smsp}} creates a matrix for a smoothing spline.
 }
 }
 
 \section{Datasets}{
 
 \itemize{
-\item \code{\link{hsfull}} Classical data set on high school math achievement and ses. See Bryk and Raudenbush and many other sources.
-\item \code{\link{iq}} Recovery after traumatic brain injury
-\item \code{\link{Drugs}} Longitudinal data on drugs and schizophrenia symptoms. Illustrates role of control variables with non-random assignment. 
-\item \code{\link{Indonesia}} Xerophthalmia.
-\item \code{\link{migraines}} Longitudinal data on migraine treatment and weather
-\item \code{\link{coffee}} Artifical data on coffee, heart damage and stress. Illustrates Simpson's Paradox with continuous predictors.
-\item \code{\link{hw}} Artifical data on height, weight and health. Illustrates suppression.
+\item \code{\link[spida2]{hsfull}} Classical data set on high school math achievement and ses. See Bryk and Raudenbush and many other sources.
+\item \code{\link[spida2]{iq}} Recovery after traumatic brain injury
+\item \code{\link[spida2]{Drugs}} Longitudinal data on drugs and schizophrenia symptoms. Illustrates role of control variables with non-random assignment. 
+\item \code{\link[spida2]{Indonesia}} Xerophthalmia.
+\item \code{\link[spida2]{migraines}} Longitudinal data on migraine treatment and weather
+\item \code{\link[spida2]{coffee}} Artifical data on coffee, heart damage and stress. Illustrates Simpson's Paradox with continuous predictors.
+\item \code{\link[spida2]{hw}} Artifical data on height, weight and health. Illustrates suppression.
 }
 }
 

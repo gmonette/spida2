@@ -26,5 +26,5 @@ return the value of x - x in the position 'idx - lag' in the same cluster
 Diff within clusters based on a time vector with possibly unequal intervals
 }
 \seealso{
-\code{\link{LagI}}, \code{\link{DiffI}}, \code{\link{Diff}},
+\code{\link[spida2]{LagI}}, \code{\link[spida2]{DiffI}}, \code{\link[spida2]{Diff}},
 }
