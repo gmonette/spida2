@@ -10,8 +10,7 @@
 #' \item \code{\link[spida2]{lchol}} returns lower-triangular L so that G = L'L.
 #' \item \code{\link[spida2]{getR}}, \code{\link[spida2]{getG}} and \code{\link[spida2]{getV}} return R, G and V matrices for \code{\link[nlme]{lme}} objects.
 #' \item \code{\link[spida2]{pdInd}} constructs a pdClass for a G matrix with patterns of zero covariances. See
-#' a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.pdf}{pdInd: G matrix with pattern of zeros} or 
-#' an \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{html version} 
+#' a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{pdInd: G matrix with pattern of zeros}.
 #' }
 #' 
 #' @section Wald tests and linear hypothesis matrices:
