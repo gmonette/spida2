@@ -101,6 +101,28 @@ dl <- data.frame(name = rep(LETTERS[1:3], each = 6),
 dl
 (dlsite <- towide(dl, c('name','side'), 'site'))
 (dlsite.side <- towide(dlsite, c('name'), 'side'))
+#
+# Flipping a data frame
+#
+z <- data.frame(vname = 
+   rep(c('v1','v2','v3'), each = 4),
+   country = rep(c('Angola','Benin','Chad','Denmark'), 3),
+   code = rep(c('ANG','BEN','CHA','DEN'),3),
+   val__2011 = 2011 + seq(.01,.12,.01),
+   val__2012 = 2012 + seq(.01,.12,.01),
+   val__2013 = 2013 + seq(.01,.12,.01),
+   val__2014 = 2014 + seq(.01,.12,.01),
+   val__2015 = 2015 + seq(.01,.12,.01)
+)
+z
+z \%>\% 
+  tolong(sep= '__') 
+
+z \%>\% 
+  tolong(sep= '__', timevar = 'year') \%>\% 
+  .[!grepl('^id$',names(.))] \%>\% 
+  towide(timevar = 'vname', idvar = c('code','year'))
+
 \dontrun{
 # Extracting chains from a stanfit object in the 'rstan' package
 # If 'mod' is a stanfit model

@@ -28,7 +28,7 @@
 #' @return
 #' \item{finaltable }{A table of class dataframe containing number of missing
 #' values in variable and missing pattern}
-#' @author Waqas Ahmed Malik, with small modifications
+#' @author Waqas Ahmed Malik, with small modifications.
 #' @keywords missing values plot
 #' @examples
 #' \dontrun{
