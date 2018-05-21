@@ -163,7 +163,40 @@ dl
 dw <- towide(dl, idvar = 'subject', timevar = c('date'))
 dl2 <- tolong(dw, sep = '_')
 sortdf(dl2, ~ subject/time)
-
+#
+# Variables in long form
+#
+# This illustrates what how towide works when some variables 
+# invariant wrt the key and others vary. Here the key is
+# c('country','year'). The key-variant variables are value
+# and rownum. The invariant variable is country.code
+# 
+dd <- read.table(header=TRUE, text = "
+country   year   variable    value country.code  rownum  
+Canada     2001    atemp       20   CAN           1
+Canada     2002    atemp       23   CAN           2
+US         2001    atemp       23   USA           3
+US         2002    atemp       23   USA           4
+Canada     2001    wind       120   CAN           5
+Canada     2002    wind       123   CAN           6
+US         2001    wind       123   USA           7
+US         2002    wind       123   USA           8
+Canada     2001    rain       220   CAN           9
+Canada     2002    rain       223   CAN           10
+US         2001    rain       223   USA           11
+US         2002    rain       223   USA           12
+")
+(dw <- towide(dd, idvar = c('country','year'), timevar = 'variable'))
+#
+# to keep only the variable name as a name
+#
+names(dw) <- sub('^value_','', names(dw))
+dw
+#
+# to get rid of other time varying variable
+#
+dw <- dw[, - grep('_', names(dw))]
+dw
 }
 }
 \seealso{

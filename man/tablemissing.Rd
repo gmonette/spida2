@@ -52,7 +52,7 @@ tablemissing(zz, sortby = "variable")
 }
 }
 \author{
-Waqas Ahmed Malik, with small modifications
+Waqas Ahmed Malik, with small modifications.
 }
 \keyword{missing}
 \keyword{plot}
