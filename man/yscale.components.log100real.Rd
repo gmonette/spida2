@@ -28,6 +28,4 @@ log100 <- function(x) 100*log(x)
 )
 }
 }
-\concept{
-lattice
-}
+\concept{lattice}

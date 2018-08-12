@@ -4,8 +4,8 @@
 \alias{dropone}
 \title{Drop each row or cluster from a fitted object}
 \usage{
-dropone(fit, form = NULL, FUN = if (inherits(fit, "lme")) fixef else coef,
-  data = getData(fit), ...)
+dropone(fit, form = NULL, FUN = if (inherits(fit, "lme")) fixef else
+  coef, data = getData(fit), ...)
 }
 \arguments{
 \item{fit}{a fitted object with an \code{\link{update}} method

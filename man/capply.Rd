@@ -11,8 +11,6 @@
 \alias{dvar.default}
 \alias{cvar.factor}
 \alias{cvar.default}
-\alias{capply.formula}
-\alias{capply.default}
 \title{Apply a function within each cluster of multilevel data}
 \usage{
 capply(x, ...)

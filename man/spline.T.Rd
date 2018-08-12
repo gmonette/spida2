@@ -4,7 +4,8 @@
 \alias{spline.T}
 \title{Spline tranformation matrix}
 \usage{
-spline.T(knots, degree, smooth, lin = NULL, intercept = 0, signif = 3)
+spline.T(knots, degree, smooth, lin = NULL, intercept = 0,
+  signif = 3)
 }
 \arguments{
 \item{knots}{}

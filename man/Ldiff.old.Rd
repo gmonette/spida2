@@ -4,8 +4,8 @@
 \alias{Ldiff.old}
 \title{Older version of Ldiff}
 \usage{
-Ldiff.old(fit, pat, levnames = c(reflevel, substring(rownames(L), cut + 1)),
-  reflevel = "<ref>", cut = nchar(pat))
+Ldiff.old(fit, pat, levnames = c(reflevel, substring(rownames(L), cut +
+  1)), reflevel = "<ref>", cut = nchar(pat))
 }
 \value{
 hypothesis matrix

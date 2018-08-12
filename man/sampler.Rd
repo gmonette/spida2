@@ -12,6 +12,4 @@ Show available characters, colours, etc.
 \seealso{
 \code{\link[lattice]{lattice::show.settings}}
 }
-\concept{
-lattice
-}
+\concept{lattice}

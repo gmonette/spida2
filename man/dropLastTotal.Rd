@@ -13,6 +13,9 @@ dropLastTotal(mat, names_to_drop = "Total", drop = FALSE)
 
 \item{drop}{(default FALSE) should one-element dimension be dropped as dimensions}
 }
+\description{
+Drop last elements of an array if it is a "Total"
+}
 \seealso{
 tab, Tab, dropLast
 }

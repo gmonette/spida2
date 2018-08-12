@@ -2,20 +2,20 @@
 % Please edit documentation in R/graphics.R
 \name{td}
 \alias{td}
-\alias{td}
 \alias{gd}
 \alias{gd_}
 \title{Set lattice parameters for multiple groups}
 \usage{
 td(...)
 
-gd(n = 8, pal = "Dark2", col = brewer.pal(n, pal), lty = 1:n, lwd = 1,
-  pch = 19, cex = 1.4, font = 1, fill = "transparent", col.line = col,
-  col.symbol = col, alpha = 1, alpha.line = alpha, alpha.symbol = alpha,
-  len = n, h = c(0, 360) + 15, l = 65, c = 100, h.start = 0,
-  direction = 1, low = "#3B4FB8", high = "#B71B1A", space = "rgb",
-  basecol = NULL, colsets = c("plot.symbol", "plot.line", "dot.symbol",
-  "dot.line", "cloud.3d", "box.dot"), superpose = TRUE, gginit = FALSE,
+gd(n = 8, pal = "Dark2", col = brewer.pal(n, pal), lty = 1:n,
+  lwd = 1, pch = 19, cex = 1.4, font = 1, fill = "transparent",
+  col.line = col, col.symbol = col, alpha = 1, alpha.line = alpha,
+  alpha.symbol = alpha, len = n, h = c(0, 360) + 15, l = 65,
+  c = 100, h.start = 0, direction = 1, low = "#3B4FB8",
+  high = "#B71B1A", space = "rgb", basecol = NULL,
+  colsets = c("plot.symbol", "plot.line", "dot.symbol", "dot.line",
+  "cloud.3d", "box.dot"), superpose = TRUE, gginit = FALSE,
   gglike = TRUE, ...)
 
 gd_(...)
@@ -120,8 +120,4 @@ colors()  \%>\%  grepv('blue', .)  \%>\%
 \author{
 Georges Monette
 }
-\concept{
-lattice
-
-lattice
-}
+\concept{lattice}

@@ -4,9 +4,6 @@
 \alias{cvar}
 \alias{cvar.factor}
 \alias{cvar.default}
-\alias{cvar}
-\alias{cvar.factor}
-\alias{cvar.default}
 \alias{dvar}
 \title{Create a contextual variable for regression}
 \usage{

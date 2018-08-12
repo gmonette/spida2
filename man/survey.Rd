@@ -20,11 +20,7 @@ jk_lin_comb_se(x, by, w, check = TRUE)
 \item{w}{vector of weights, e.g. Horvitz-Thomson weights or renormed version. Default: 1}
 }
 \description{
-Functions for post-stratification adjustments in surveys
-
 ### Functions for linear combinations
-
-Post-stratification Jacknife estimate of SE for a linear combination
 }
 \details{
 Standardize a vector of weights
@@ -34,3 +30,4 @@ Standardize a vector of weights
      combinations, \code{\link{jk_wtd_mean_se}} for a jacknife estimate of the SE of a weighted mean
      and \code{\link{jk_lin_comb_se}} for a jacknife estimate of the SE of a linear combination.
 }
+\concept{post-stratification functions}

@@ -9,9 +9,6 @@
 \alias{tab.table}
 \alias{tab.matrix}
 \alias{tab.array}
-\alias{tab.formula}
-\alias{tab.data.frame}
-\alias{tab.default}
 \title{Table of frequencies or relative frequencies bordered with totals and
 including NAs}
 \usage{
@@ -25,13 +22,14 @@ tab(x, ...)
 
 \method{tab}{formula}(fmla, data = sys.frame(sys.parent()), ...)
 
-\method{tab}{data.frame}(dd, fmla, total.margins = TRUE, useNA = "ifany",
-  pct = NULL, pr = NULL, test = FALSE, weights = NULL, na.rm = NULL,
-  all.label = "All", simulate = FALSE, B = 2000)
+\method{tab}{data.frame}(dd, fmla, total.margins = TRUE,
+  useNA = "ifany", pct = NULL, pr = NULL, test = FALSE,
+  weights = NULL, na.rm = NULL, all.label = "All",
+  simulate = FALSE, B = 2000)
 
-\method{tab}{default}(..., total.margins = TRUE, pct = NULL, pr = NULL,
-  useNA = "ifany", test = simulate, weights = NULL, na.rm = NULL,
-  all.label = "All", simulate = FALSE, B = 2000)
+\method{tab}{default}(..., total.margins = TRUE, pct = NULL,
+  pr = NULL, useNA = "ifany", test = simulate, weights = NULL,
+  na.rm = NULL, all.label = "All", simulate = FALSE, B = 2000)
 }
 \arguments{
 \item{\dots}{as with \code{table}, one or more objects which can be interpreted as factors (including character strings), or a list (or data frame) whose components can be so interpreted.}

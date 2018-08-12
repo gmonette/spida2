@@ -30,3 +30,4 @@ jacknife estimate dropping an observation within a stratum.
 Other Post-stratification survey functions: \code{\link{jk_wtd_mean_se}},
   \code{\link{lin_comb}}, \code{\link{wtd_mean}}
 }
+\concept{Post-stratification survey functions}

@@ -237,3 +237,4 @@ round(dssum, 3)
 Other Post-stratification survey functions: \code{\link{jk_wtd_means}},
   \code{\link{lin_comb}}, \code{\link{wtd_mean}}
 }
+\concept{Post-stratification survey functions}

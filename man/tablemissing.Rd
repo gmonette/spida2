@@ -4,9 +4,9 @@
 \alias{tablemissing}
 \title{Tabulate and visualize missing values}
 \usage{
-tablemissing(x, sortby = "variable", bot = 6, mar = c(bot, 1, 1.5, 1),
-  adj = c(0, -0.1), xpd = TRUE, srt = -60, cex = 0.8, zoom = FALSE,
-  ...)
+tablemissing(x, sortby = "variable", bot = 6, mar = c(bot, 1, 1.5,
+  1), adj = c(0, -0.1), xpd = TRUE, srt = -60, cex = 0.8,
+  zoom = FALSE, ...)
 }
 \arguments{
 \item{x}{the dataset to be examined. It should be of class matrix or

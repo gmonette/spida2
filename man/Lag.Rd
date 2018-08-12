@@ -4,8 +4,8 @@
 \alias{Lag}
 \title{Contextual lag with intrapolation}
 \usage{
-Lag(x, id = rep(1, length(x)), idx = 1:length(x), lag = 1, at = NULL,
-  check = T)
+Lag(x, id = rep(1, length(x)), idx = 1:length(x), lag = 1,
+  at = NULL, check = T)
 }
 \arguments{
 \item{x}{vector to be lagged}

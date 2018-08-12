@@ -8,14 +8,14 @@
 \alias{panel.labels}
 \title{Panel functions for predicted values and SE bands}
 \usage{
-panel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number, alpha,
-  col, col.line, col.symbol, border = F, font, fontface)
+panel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number,
+  alpha, col, col.line, col.symbol, border = F, font, fontface)
 
-gpanel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number, alpha,
-  col, col.line, col.symbol, border = F, font, fontface)
+gpanel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number,
+  alpha, col, col.line, col.symbol, border = F, font, fontface)
 
-panel.band(x, y, fit, lower, upper, subscripts, ..., type, group.number, alpha,
-  col, col.line, col.symbol, border = F, font, fontface)
+panel.band(x, y, fit, lower, upper, subscripts, ..., type, group.number,
+  alpha, col, col.line, col.symbol, border = F, font, fontface)
 
 panel.errorbars(x, y, fit, lower, upper, length = 0.2, angle = 90,
   subscripts, ..., type, group.number, alpha, col, col.line, col.symbol,

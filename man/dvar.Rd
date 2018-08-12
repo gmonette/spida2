@@ -4,8 +4,6 @@
 \alias{dvar}
 \alias{dvar.factor}
 \alias{dvar.default}
-\alias{dvar.factor}
-\alias{dvar.default}
 \title{Create a centered-within-groups variable for regression}
 \usage{
 dvar(x, id, all, na.rm, ...)

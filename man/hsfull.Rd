@@ -46,9 +46,6 @@ which seems to be a good number of clusters for presentations in class.
 Raudenbush, Stephen and Bryk, Anthony (2002),
             Hierarchical Linear Models: Applications and Data Analysis Methods, Sage (chapter 4).
 }
-\concept{
-hierarchical data
-
-observational data
-}
+\concept{hierarchical data}
+\concept{observational data}
 \keyword{datasets}

@@ -6,8 +6,9 @@
 \usage{
 xqplot(x, ptype = "quantile", labels = dimnames(x)[[2]], ...,
   mfrow = findmfrow(ncol(x)), ask = prod(mfrow) < ncol(x) &&
-  dev.interactive(), mcex = 0.8, maxlab = 12, debug = F, mar = c(5, 2,
-  3, 1), text.cex.factor = 1, left.labs = F, maxvarnamelength = 20)
+  dev.interactive(), mcex = 0.8, maxlab = 12, debug = F, mar = c(5,
+  2, 3, 1), text.cex.factor = 1, left.labs = F, class = TRUE,
+  maxvarnamelength = 20)
 }
 \arguments{
 \item{x}{a data frame or list of variables to plot}
@@ -34,6 +35,8 @@ made to choose a reasonable number.}
 \item{text.cex.factor}{character expansion factor for barchart labels}
 
 \item{left.labs}{determines placement of barchart labels}
+
+\item{class}{show class of object, default: TRUE}
 
 \item{maxvarnamelength}{maximum length of variable name without splitting on
 two lines.}

@@ -4,8 +4,8 @@
 \alias{panel.subgroups}
 \title{Panel function to display subgroups within groups within panels}
 \usage{
-panel.subgroups(x, y, subscripts, subgroups, subgroups.type = c("p", "l"),
-  type, panel.subgroups = panel.xyplot, ...)
+panel.subgroups(x, y, subscripts, subgroups, subgroups.type = c("p",
+  "l"), type, panel.subgroups = panel.xyplot, ...)
 }
 \arguments{
 \item{x, y}{coordinates of the points to be displayed}

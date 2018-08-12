@@ -4,14 +4,13 @@
 \alias{ell}
 \alias{ellplus}
 \alias{dellplus}
-\alias{ell}
 \title{Ellipses in 2D}
 \usage{
 ell(center = rep(0, 2), shape = diag(2), radius = 1, n = 100)
 
 ellplus(center = rep(0, 2), shape = diag(2), radius = 1, n = 100,
-  angles = (0:n) * 2 * pi/n, fac = chol, ellipse = all, diameters = all,
-  box = all, all = FALSE)
+  angles = (0:n) * 2 * pi/n, fac = chol, ellipse = all,
+  diameters = all, box = all, all = FALSE)
 
 dellplus(x, y, ...)
 

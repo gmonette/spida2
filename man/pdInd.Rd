@@ -4,8 +4,8 @@
 \alias{pdInd}
 \title{Construct pdInd object}
 \usage{
-pdInd(value = numeric(0), form = NULL, nam = NULL, data = sys.parent(),
-  cov = NULL)
+pdInd(value = numeric(0), form = NULL, nam = NULL,
+  data = sys.parent(), cov = NULL)
 }
 \arguments{
 \item{value}{an optional initialization value}

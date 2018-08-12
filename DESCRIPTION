@@ -13,7 +13,7 @@ Description: Collection of utility functions for linear and mixed models
     of subgroups in xyplot), multresp
 License: GPL (>= 2)
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

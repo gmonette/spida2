@@ -2,7 +2,6 @@
 % Please edit documentation in R/graphics.R
 \name{change}
 \alias{change}
-\alias{change}
 \title{Replace elements of x with correspondingly named elements of ll}
 \usage{
 change(x, ...)
