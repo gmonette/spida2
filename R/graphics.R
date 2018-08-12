@@ -340,6 +340,7 @@ gd_ <- function(...) gd(superpose = FALSE, ...)
 #' @param mar size of margins
 #' @param text.cex.factor character expansion factor for barchart labels
 #' @param left.labs determines placement of barchart labels
+#' @param class show class of object, default: TRUE
 #' @param maxvarnamelength maximum length of variable name without splitting on
 #' two lines.
 #' @note Bugs:
@@ -364,6 +365,7 @@ xqplot <- function(x,
                     mar = c(5,2,3,1),
                     text.cex.factor = 1 ,
                     left.labs = F,
+                   class = TRUE,
                     maxvarnamelength = 20)
 {
   ## Adapted from myplot.data.frame for R by G. Monette, Oct. 25, 2004
@@ -515,6 +517,7 @@ xqplot <- function(x,
         line.offset <- 0.2
     }
     mtext(vlab, 3, line.offset , cex = mcex)
+    if(class) mtext(paste(class(vv), collapse = ', '), 3, 0.2, cex = .7*mcex)
   }
   # par(opt)
   if(debug) { disp(par()) }
