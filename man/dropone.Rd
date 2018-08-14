@@ -24,5 +24,8 @@ default, each row is dropped successively.}
 }
 \description{
 Drop each row or each cluster in a fitted object and 
-collect the resulting linear estimates in a matrix.
+collect the resulting linear estimates. Return 
+the drop one estimates along with variable from original
+data that are invariant within clusters, as well as the maximum
+value of DFBETAS for each cluster dropped.
 }
