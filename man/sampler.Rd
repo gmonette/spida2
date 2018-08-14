@@ -4,7 +4,10 @@
 \alias{sampler}
 \title{Show available characters, colours, etc.}
 \usage{
-sampler(n = 24)
+sampler(n = 24, all = FALSE)
+}
+\arguments{
+\item{all}{default: FALSE}
 }
 \description{
 Show available characters, colours, etc.
