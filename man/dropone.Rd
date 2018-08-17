@@ -2,10 +2,14 @@
 % Please edit documentation in R/dropone.R
 \name{dropone}
 \alias{dropone}
+\alias{parDropone}
 \title{Drop each row or cluster from a fitted object}
 \usage{
 dropone(fit, form = NULL, FUN = if (inherits(fit, "lme")) fixef else
   coef, data = getData(fit), ...)
+
+parDropone(fit, form = NULL, FUN = if (inherits(fit, "lme")) fixef else
+  coef, data = getData(fit), mc.cores = detectCores(), ...)
 }
 \arguments{
 \item{fit}{a fitted object with an \code{\link{update}} method
@@ -21,6 +25,8 @@ default, each row is dropped successively.}
 
 \item{data}{data frame in which to evaluate the refitted object. Default:
 'getData(fit)'.}
+
+\item{mc.cores}{number of cores to use. Default: \code{parallel::detectCores()} \eqn{\exp^n}}
 }
 \description{
 Drop each row or each cluster in a fitted object and 
@@ -29,3 +35,8 @@ the drop one estimates along with variable from original
 data that are invariant within clusters, as well as the maximum
 value of DFBETAS for each cluster dropped.
 }
+\section{Functions}{
+\itemize{
+\item \code{parDropone}: parallel computing version of dropone using the parallel package
+}}
+

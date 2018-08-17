@@ -48,3 +48,38 @@ function (fit, form = NULL, FUN = if (inherits(fit, "lme")) fixef else coef,
     ret$max_dfbetas <- max_dfbetas
     ret
 }
+#' @describeIn dropone parallel computing version of dropone using the parallel package
+#' @param mc.cores number of cores to use. Default: \code{parallel::detectCores()} \eqn{\exp^n}
+#' @export
+parDropone <-
+function (fit, form = NULL, FUN = if (inherits(fit, "lme")) fixef else coef, 
+    data = getData(fit), mc.cores = detectCores(), ...) 
+{
+    library(parallel)
+    if (is.null(form)) {
+        by <- factor(1:nrow(data))
+        data$by <- by
+        dframe <- data
+    }
+    else {
+        by <- model.frame(form, data)
+        by <- do.call(paste, c(by, sep = "/"))
+        data$by <- factor(by)
+        dframe <- up(data, form)
+    }
+    values <- dframe$by
+    names(values) <- values
+    ret <- mclapply(cl, values, function(v) {
+        ret <- try(update(fit, data = data[by != v, , drop = FALSE], 
+            ...))
+        if (class(ret) == "try-error") 
+            NA
+        else FUN(ret)
+    }, mc.cores = mc.cores)
+    ret <- do.call(rbind, ret)
+    max_dfbetas <- apply(scale(ret), 1, function(x) max(abs(x), na.rm = T))
+    colnames(ret) <- paste0("b_", colnames(ret))
+    ret <- cbind(ret, dframe)
+    ret$max_dfbetas <- max_dfbetas
+    ret
+}
