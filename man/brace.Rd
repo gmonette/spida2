@@ -4,7 +4,8 @@
 \alias{brace}
 \title{Draw a brace}
 \usage{
-brace(x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2)
+brace(x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2,
+  tip = FALSE)
 }
 \arguments{
 \item{x1, }{y1, x1, y2 endpoints of brace}
@@ -12,6 +13,11 @@ brace(x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2)
 \item{right}{(default TRUE) direction in which brace points}
 
 \item{rad}{(default 0.2) radius of curl of brace}
+
+\item{tip}{the tip of the brace (default FALSE)}
+}
+\value{
+the coordinates of the point of the brace, invisibly
 }
 \description{
 Draw a brace
@@ -19,7 +25,10 @@ Draw a brace
 \examples{
 plot(c(0,10), c(0,10), type = 'n')
 lines(brace(0, 0, 0, 5), lwd = 2)
-text(1.2,2.5,"size", adj = 0)
+text(brace(0, 0, 0, 5, tip = T),"size", adj = c(-.1,.3))
+lines(brace(2, 0, 8, 5, right = F), lwd = 2)
+text(brace_(2, 0, 8, 5, right = F), 'tip')
+text(brace_(2, 0, 8, 5, right = F), 'tip', adj = c(.5,-.3), col = 'red')
 plot(c(0,10),c(0,1))
 brace(5,0,5,1) \%>\% lines
 lapply(1:10, function(x) {
@@ -28,6 +37,5 @@ lapply(1:10, function(x) {
 })
 }
 \author{
-Georges Monette
+Georges Monette, Michael Friendly
 }
-\concept{lattice}

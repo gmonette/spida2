@@ -3,12 +3,16 @@
 #' @param x1, y1, x1, y2 endpoints of brace
 #' @param right (default TRUE) direction in which brace points
 #' @param rad (default 0.2) radius of curl of brace
-#' @author Georges Monette
-#' @concept lattice
+#' @param tip the tip of the brace (default FALSE)
+#' @author Georges Monette, Michael Friendly
+#' @return the coordinates of the point of the brace, invisibly
 #' @examples
 #' plot(c(0,10), c(0,10), type = 'n')
 #' lines(brace(0, 0, 0, 5), lwd = 2)
-#' text(1.2,2.5,"size", adj = 0)
+#' text(brace(0, 0, 0, 5, tip = T),"size", adj = c(-.1,.3))
+#' lines(brace(2, 0, 8, 5, right = F), lwd = 2)
+#' text(brace_(2, 0, 8, 5, right = F), 'tip')
+#' text(brace_(2, 0, 8, 5, right = F), 'tip', adj = c(.5,-.3), col = 'red')
 #' plot(c(0,10),c(0,1))
 #' brace(5,0,5,1) %>% lines
 #' lapply(1:10, function(x) {
@@ -16,7 +20,7 @@
 #'    lines(brace(x,0,x-.2*x,.1*x,F),col = 'red')
 #' })
 #' @export
-brace <- function (x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2)
+brace <- function (x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2, tip = FALSE)
 {
 #   uin only in Splus
 #    uin <- par("uin")
@@ -51,5 +55,8 @@ brace <- function (x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2)
         bra <- scale * bra %*% rot(-alpha)
         bra <- bra %*% diag(c(1/ux, 1/uy))
         bra <- t(t(bra) + c(x1, y1))
-        bra
+        if(tip) bra[nrow(bra)/2,,drop = FALSE] else bra
 }
+#' @describeIN brace default tip = TRUE
+#' @export
+brace_ <- function(...) brace(..., tip = TRUE)
