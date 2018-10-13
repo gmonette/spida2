@@ -1,4 +1,3 @@
-
 #' Draw a brace
 #'
 #' @param x1, y1, x1, y2 endpoints of brace
@@ -10,6 +9,12 @@
 #' plot(c(0,10), c(0,10), type = 'n')
 #' lines(brace(0, 0, 0, 5), lwd = 2)
 #' text(1.2,2.5,"size", adj = 0)
+#' plot(c(0,10),c(0,1))
+#' brace(5,0,5,1) %>% lines
+#' lapply(1:10, function(x) {
+#'    lines(brace(x,0,x,.1*x,F))
+#'    lines(brace(x,0,x-.2*x,.1*x,F),col = 'red')
+#' })
 #' @export
 brace <- function (x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2)
 {

@@ -1,3 +1,5 @@
+2018-10-13
+* added brace
 2018-04-12
 * added verbose argument to Rbind
 2018-03-18
