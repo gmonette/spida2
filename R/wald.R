@@ -784,7 +784,7 @@ walddf <- function(fit, Llist = "", clevel = 0.95,
               full = FALSE, fixed = FALSE,
               invert = FALSE, method = 'svd',
               df = NULL)
-  ret <- yscs:::as.data.frame.wald(obj,
+  ret <- as.data.frame.wald(obj,
               se = se, digits = digits,
               sep = sep)
   ret

@@ -107,5 +107,4 @@
 #' @docType package
 #' @name spida2
 #' @alias spida
-#' @alias yscs
 NULL
