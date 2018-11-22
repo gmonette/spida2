@@ -1,3 +1,5 @@
+2018-11-21
+* added freq argument to 'up' to summarize factor using frequencies. Useful to create data grouped by predictor variables with frequencies for levels of response variable for binomial glm with goodness of fit test 
 2018-10-13
 * added brace
 2018-04-12

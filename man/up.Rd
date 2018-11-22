@@ -5,9 +5,9 @@
 \title{Create a data frame at a higher level of aggregation}
 \usage{
 up(object, form = formula(object), agg = NULL, sep.agg = "_",
-  all = FALSE, sep = "/", na.rm = TRUE, FUN = function(x) mean(x,
-  na.rm = na.rm), omitGroupingFactor = FALSE, groups,
-  invariantsOnly = !all, ...)
+  freq = NULL, sep.freq = "_", all = FALSE, sep = "/",
+  na.rm = TRUE, FUN = function(x) mean(x, na.rm = na.rm),
+  omitGroupingFactor = FALSE, groups, invariantsOnly = !all, ...)
 }
 \arguments{
 \item{object}{a data frame to be aggregated.}
@@ -23,6 +23,15 @@ proportions for factors). Default: NULL}
 
 \item{sep.agg}{(NEW: Aug 2016) separator between factor names and factor
 level for within-cluster incidence proportions. Default: '_'}
+
+\item{freq}{(NEW: Nov 2018) a one-sided formula identifying character variables to
+be represented according the frequencies of their levels,
+i.e. variables that vary withing cluster and that need to be aggregated 
+(within-cluster sum for numeric variables and within-cluster frequencies
+for factors). Default: NULL}
+
+\item{sep.freq}{(NEW: Nove 2018) separator between factor names and factor
+level for within-cluster incidence frequencies. Default: '_'}
 
 \item{all}{if TRUE, include summaries of variables that vary within
 clusters, otherwise keep only cluster-invariant variables and variables
@@ -73,7 +82,10 @@ using \code{lme4}.
 
     up( cbind( hs, model.matrix( ~ Sex -1 , hs)), ~ school, all = T)
 
-
+    # Similar using 'agg'
+    
+    up(hs, ~school, agg = ~ Sex)
+    
     ## To plot a summary between-cluster panel along with within-cluster panels:
 
     hsu <- up( hs, ~ school, all = TRUE)
@@ -85,8 +97,17 @@ using \code{lme4}.
             panel.xyplot( x, y, ...)
             panel.lmline( x, y, ...)
         } )
-
+        
+    ## To create a data frame grouped by predictors with frequency variables for each
+    ## level of a response variable for analysis with a binomial glm with goodness of fit
+    ## based on the deviance
+    
+    hsa <- up( hs, ~school, freq = ~ Sex)
+    head(hsa)
+    fit <- glm(cbind(Sex_Female, Sex_Male) ~ Sector, hsa, family = binomial)
+    summary(fit) # the residual deviance provides a goodness of fit test
+    
 }
 \author{
-adapted from gsummary in 'nlme' by Bates & Pinheiro
+adapted by G. Monette from gsummary in 'nlme' by Bates & Pinheiro
 }

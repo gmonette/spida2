@@ -34,6 +34,8 @@ dropped for use in a linear model.}
 
 \item{na.rm}{(default TRUE) whether to drop missing values}
 
+\item{FUN}{(default mean) function to be applied to create contextual values}
+
 \item{x}{variable to be centered or residualized within groups. If x is a
 factor, cvar and dvar return matrices whose columns are named consistently
 with the names of coding variables for factors.}

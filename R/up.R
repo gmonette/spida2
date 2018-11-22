@@ -107,6 +107,13 @@ varLevel <- function(x, form, ...) {
 #'        proportions for factors). Default: NULL 
 #' @param sep.agg (NEW: Aug 2016) separator between factor names and factor
 #'        level for within-cluster incidence proportions. Default: '_'        
+#' @param freq (NEW: Nov 2018) a one-sided formula identifying character variables to
+#'        be represented according the frequencies of their levels,
+#'        i.e. variables that vary withing cluster and that need to be aggregated 
+#'        (within-cluster sum for numeric variables and within-cluster frequencies
+#'        for factors). Default: NULL 
+#' @param sep.freq (NEW: Nove 2018) separator between factor names and factor
+#'        level for within-cluster incidence frequencies. Default: '_'        
 #' @param all if TRUE, include summaries of variables that vary within
 #'        clusters, otherwise keep only cluster-invariant variables and variables
 #'        listed in 'agg'
@@ -137,7 +144,10 @@ varLevel <- function(x, form, ...) {
 #'
 #'     up( cbind( hs, model.matrix( ~ Sex -1 , hs)), ~ school, all = T)
 #'
-#'
+#'     # Similar using 'agg'
+#'     
+#'     up(hs, ~school, agg = ~ Sex)
+#'     
 #'     ## To plot a summary between-cluster panel along with within-cluster panels:
 #'
 #'     hsu <- up( hs, ~ school, all = TRUE)
@@ -149,11 +159,21 @@ varLevel <- function(x, form, ...) {
 #'             panel.xyplot( x, y, ...)
 #'             panel.lmline( x, y, ...)
 #'         } )
-#'
-#' @author adapted from gsummary in 'nlme' by Bates & Pinheiro
+#'         
+#'     ## To create a data frame grouped by predictors with frequency variables for each
+#'     ## level of a response variable for analysis with a binomial glm with goodness of fit
+#'     ## based on the deviance
+#'     
+#'     hsa <- up( hs, ~school, freq = ~ Sex)
+#'     head(hsa)
+#'     fit <- glm(cbind(Sex_Female, Sex_Male) ~ Sector, hsa, family = binomial)
+#'     summary(fit) # the residual deviance provides a goodness of fit test
+#'     
+#' @author adapted by G. Monette from gsummary in 'nlme' by Bates & Pinheiro
 #' @export
 up <- function ( object, form = formula(object),
            agg = NULL, sep.agg = "_",
+           freq = NULL, sep.freq = "_",
            all = FALSE, sep = "/",
            na.rm = TRUE,
            FUN = function(x) mean(x, na.rm = na.rm),
@@ -188,12 +208,31 @@ up <- function ( object, form = formula(object),
     #ret <- object
     for (i in seq_along(agg.mf)) {
       x <- agg.mf[[i]]
+      if(is.character(x)) x <- factor(x)
       if(is.factor(x)) {
         mat <- cvar(x, sel.mf, all = T, na.rm = na.rm)
         colnames(mat) <- paste0(names(agg.mf[i]),sep.agg,colnames(mat))
       }
       else {
         mat <- cvar(x, sel.mf, na.rm = na.rm, ...)
+        mat <- data.frame(x=mat)
+        names(mat) <- names(agg.mf[i])
+      }
+      object <- cbind(object, mat)
+    }
+  }
+  if(!is.null(freq)) {
+  freq.mf <- model.frame(freq, object, na.action = na.include)
+    for (i in seq_along(freq.mf)) {
+      x <- freq.mf[[i]]
+      if(is.character(x)) x <- factor(x)
+      x <- freq.mf[[i]]
+      if(is.factor(x)) {
+        mat <- cvar(x, sel.mf, all = T, FUN = sum, na.rm = na.rm)
+        colnames(mat) <- paste0(names(freq.mf[i]),sep.freq,colnames(mat))
+      }
+      else {
+        mat <- cvar(x, sel.mf, FUN = sum, na.rm = na.rm, ...)
         mat <- data.frame(x=mat)
         names(mat) <- names(agg.mf[i])
       }

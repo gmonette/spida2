@@ -1,8 +1,8 @@
 Package: spida2
 Type: Package
-Title: Collection of tools developed for the Summer Programme in Data Analysis 200-2012
-Version: 0.1.1
-Date: 2015-12-31
+Title: Collection of tools developed for the Summer Programme in Data Analysis 2000-2012
+Version: 0.1.2
+Date: 2018-11-21
 Author: Georges Monette, John Fox, Michael Friendly, Heather Krause
 Maintainer: Georges Monette <georges+spida2@yorku.ca>
 Description: Collection of utility functions for linear and mixed models

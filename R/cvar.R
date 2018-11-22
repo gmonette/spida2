@@ -10,6 +10,8 @@
 ##   mean value of the correponding column of the "contrast"
 ##   matrix for the factor.
 ##
+##   Modified 2018-11-21: added freq argument to up to summarize factor using frequencies
+##
 #' Create a contextual variable for regression
 #'
 #' cvar and  See also \code{\link{dvar}} are 
@@ -24,6 +26,7 @@
 #' @param all (default FALSE) if TRUE cvar.factor returns the columns means of
 #' an incidence matrix including the first level. Otherwise, the first level is
 #' dropped for use in a linear model.
+#' @param FUN (default mean) function to be applied to create contextual values
 #' @param na.rm (default TRUE) whether to drop missing values
 #' @examples
 #' \dontrun{
@@ -37,28 +40,28 @@
 #' # should be included in the model
 #' }
 #' @export
-cvar <- function( x, id , all, na.rm , ... ) UseMethod("cvar")
+cvar <- function( x, id , all, na.rm , FUN = mean, ... ) UseMethod("cvar")
 #' @describeIn cvar method for class 'factor'
 #' @export
-cvar.factor <- function(x, id, all = FALSE, na.rm = TRUE, ... ) {
+cvar.factor <- function(x, id, all = FALSE, na.rm = TRUE, FUN = mean, ... ) {
   if(all) mat <- contrasts(x, contrasts = FALSE) [ x,]
   else mat <- contrasts(x) [x, ]
-  ret <- cvar(mat, id, na.rm = na.rm, ...)
+  ret <- cvar(mat, id, na.rm = na.rm, FUN = FUN, ...)
   colnames(ret) <- colnames(mat)
   ret
 }
 #' @describeIn cvar default method
 #' @export
-cvar.default <- function( x, id, all , na.rm = TRUE, ... ) {
+cvar.default <- function( x, id, all , na.rm = TRUE, FUN = mean, ... ) {
   if ( is.matrix (x) ) {
-    if ( dim(x)[2] == 1) return( cvar( x[,], id, na.rm = na.rm, ...))
+    if ( dim(x)[2] == 1) return( cvar( x[,], id, na.rm = na.rm, FUN = FUN, ...))
     else {
-      ret <-  cbind( cvar(x[,1], id, na.rm = na.rm, ...), cvar(x[,-1],id, na.rm = na.rm, ...))
+      ret <-  cbind( cvar(x[,1], id, na.rm = na.rm, FUN = FUN, ...), cvar(x[,-1],id, na.rm = na.rm, FUN = FUN, ...))
       colnames(ret) <- colnames(x)
       return( ret )
     }
   } else {
-    capply( x, id, mean, na.rm = na.rm, ...)
+    capply( x, id, FUN = FUN , na.rm = na.rm, ...)
   }
 }
 #' Create a centered-within-groups variable for regression
