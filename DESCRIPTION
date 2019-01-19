@@ -11,6 +11,7 @@ Description: Collection of utility functions for linear and mixed models
     contruct linear hypotheses, capply: create contextual variables. Also: cvar,
     dvar, up, xapply Misc: vif.lme, xqplot, tab, panel.subgroups (additional level
     of subgroups in xyplot), multresp
+BugReports: https://github.com/gmonette/spida2/issues
 License: GPL (>= 2)
 LazyData: TRUE
 RoxygenNote: 6.1.1
@@ -18,4 +19,5 @@ Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
 Imports: 
-    magrittr
+    magrittr,
+    car
