@@ -16,8 +16,9 @@ na2t <- function(x) {
 }
 #' Pipe from magrittr
 #' 
-# @export
-# "%>%" <- magrittr::`%>%`
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
 
 #' Transform NAs to 0
 #'
