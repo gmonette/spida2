@@ -1,8 +1,8 @@
 ###
 ### modified 12/23/2018 2:51 PM 
 ### - uses svd instead of qr
-###
-
+### Might need differen tolerances for span(X) in orthog complement of span(Z)
+### - analyze as Type I, Type II problem 
 #' Conjugate complement of span(X) in span(Z) with respect to inner product ip
 #' 
 #' Generates a matrix that is a basis for the conjugate complement, i.e. the orthogonal complement
@@ -49,9 +49,9 @@ ConjComp2 <- function(X, Z = NULL, ip = NULL, tol = .Machine$double.eps, full.ra
   sv <- svd(D, nu = nrow(D), nv = 0)
   d <- c(sv$d, rep(0, nrow(D) - length(sv$d)))
   d <- d/d[1]
-  disp(d)
+  # disp(d)
   a <- sv$u[, d < tol, drop = FALSE]
-  disp(a)
+  # disp(a)
   if(ncol(a) == 0) return(matrix(0, nrow(a), 1))
   if(full.rank) {
     sv <- svd(Z %*% a, nv = 0)
@@ -62,6 +62,7 @@ ConjComp2 <- function(X, Z = NULL, ip = NULL, tol = .Machine$double.eps, full.ra
   if(is.null(Z)) a
   else Z %*% a
 }
+if(FALSE) {
 ConjComp2(diag(3))
 
 ConjComp2(X,Z, tol = 1e-17)
@@ -94,7 +95,7 @@ install.packages('rbenchmark')
 system.time(replicate(10000, ConjComp(X,Z)))
 system.time(replicate(10000, ConjComp2(X,Z)))
 system.time(replicate(10000, ConjComp2(X,Z, full.rank = T)))
-
+}
 
 #' @describeIn ConjComp Orthogonal complement of space(X) in span(Z)
 #' @export
@@ -120,7 +121,7 @@ oProj <-
 function(X,...) {
   diag(nrow(X)) - Proj(X,...)
 }
-
+if(FALSE){
 ############
 #############
 
@@ -131,7 +132,7 @@ c("tolNorm2", "qr.R", "qr",
 rk <- function(m, tol =10*.Machine$double.eps) sum(diag(Proj(m, tol = tol)))
 rk(Hilbert(18), tol = .001*.Machine$double.eps)
 rk(Hilbert(11))
-
+}
 #' X <- cbind(c(1,1,1,1,1), c(2,-1,-1,0,0), c(3,0,0,1,1))
 #' X
 #' Z <- cbind(diag(5)[,1:3], c(1,1,1,0,0))
@@ -140,7 +141,7 @@ rk(Hilbert(11))
 #' rk(Z)
 #' rk.int(X,Z)
 #' rk.union(X,Z)
-
+if(FALSE){
 X
 Z
 rk(X)
@@ -150,3 +151,4 @@ X %*% cancor(X,Z,F,F)$xcoef
 ConjComp2(X,Z)
 
 svd(t(X) %*% Z)
+}

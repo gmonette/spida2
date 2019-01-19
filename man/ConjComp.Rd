@@ -2,10 +2,45 @@
 % Please edit documentation in R/ConjComp.R
 \name{ConjComp}
 \alias{ConjComp}
+\alias{ConjComp2}
+\alias{OrthoComp}
+\alias{Proj}
+\alias{oProj}
 \title{Conjugate complement of span(X) in span(Z) with respect to inner product ip}
 \usage{
 ConjComp(X, Z = diag(nrow(X)), ip = diag(nrow(X)), tol = 1e-07)
+
+ConjComp2(X, Z = NULL, ip = NULL, tol = .Machine$double.eps,
+  full.rank = FALSE)
+
+OrthoComp(X, Z, tol = 1e-07)
+
+Proj(x)
+
+oProj(X, ...)
+}
+\arguments{
+\item{X}{matrix generating space whose complement is needed}
+
+\item{Z}{matrix generating space within which complement is neeeded}
+
+\item{ip}{inner-product matrix}
+
+\item{tol}{tolerance, default: 1e-07}
 }
 \description{
-Conjugate complement of span(X) in span(Z) with respect to inner product ip
+Generates a matrix that is a basis for the conjugate complement, i.e. the orthogonal complement
+with respect to a norm given by an inner-product matrix so that the norm may be more general
+than the default euclidean norm.
 }
+\section{Functions}{
+\itemize{
+\item \code{ConjComp2}: based on svd
+
+\item \code{OrthoComp}: Orthogonal complement of space(X) in span(Z)
+
+\item \code{Proj}: Orthogonal complement of space(X) in span(Z)
+
+\item \code{oProj}: Projection into orthogonal complement of span(X)
+}}
+

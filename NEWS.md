@@ -5,7 +5,7 @@
 2018-04-12
 * added verbose argument to Rbind
 2018-03-18
-* getX returns a row of NAs if a variable in data is NA
+* getX returns a row of NAs if gspa variable in data is NA
 2018-03-05
 * Fixed a bug in 'towide'
 2018-02-23
