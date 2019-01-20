@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{na20}
 \alias{na20}
-\title{Transform NAs to 0}
+\title{Pipe from magrittr}
 \usage{
 na20(x)
 }

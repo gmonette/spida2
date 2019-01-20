@@ -15,10 +15,11 @@ na2t <- function(x) {
   x
 }
 #' Pipe from magrittr
-#' 
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
+#'
+# Removed because of conflict with pipe defined in tidyverse
+# @importFrom magrittr %>%
+# @export
+# magrittr::`%>%`
 
 #' Transform NAs to 0
 #'
