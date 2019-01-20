@@ -15,7 +15,6 @@ constant.default <- function(x, na.rm = FALSE,...) {
   if (na.rm) x <- na.omit(x)
   length(unique(x)) <= 1
 }
-
 #' @param id vector or list of vectors used to define clusters within which
 #'           to check whether `x` is constant
 #' @param all if TRUE, report whether constant overall instead of checking
