@@ -1578,6 +1578,33 @@ getX <- function(fit, data = getData(fit)) {
   attr(ret,'data') <- data #include data as attribute
   ret
 }
+#' Pairwise differences of rows of a matrix
+#' 
+#' Returns all pairwise difference of rows of a matrix with
+#' rownames formed with the corresponding rownames of the original 
+#' matrix. The main application is to estimate differences between
+#' treatment levels given a linear hypothesis matrix, L, in which 
+#' each row estimates a function of model parameter given
+#' a level of a categorical variable. \code{rowdiffs} provides 
+#' an analog to differentiation
+#' (see \code{\link{Lfx}}) for categorical variables.
+#' 
+#' @param L a matrix
+#' @export
+rowdiffs <- function(L) {
+  nam <- rownames(L)
+  n <- nrow(L)
+  zm <- matrix(1:n,nrow=n,ncol=n)
+  plus <- zm[ col(zm) < row(zm)]
+  minus <- rep(1:(n-1), (n-1):1)
+  Lp <- L[plus,]
+  rownames(Lp) <- nam[plus]
+  Lm <- L[minus,]
+  rownames(Lm) <- nam[minus]
+  Lret <- Lp - Lm
+  rownames(Lret) <- paste(rownames(Lp),'-',rownames(Lm))
+  Lret
+}
 # if(FALSE){ #TESTS:
 #   library(nlme)
 #   fit <- lme(mathach ~ ses * Sex * Sector, hs, random = ~ 1|school)
