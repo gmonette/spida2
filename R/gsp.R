@@ -487,33 +487,49 @@
 #' 
 #'
 #' @export
-gsp <- function( x , knots, degree = 3 , 
-                 smooth = pmax(pmin( degree[-1], degree[ - length(degree)]) - 1,0 ), 
-                 lin = NULL, periodic = FALSE, intercept = 0, signif = 3) {
-  if ( periodic  ) {
-    maxd <- max(degree)
-    #disp(maxd)
-    maxk <- max(knots)
-    #disp(maxk)
-    mid <- matrix(0,maxd+1,(maxd+1)*(length(knots)-1))
-    const.per <- do.call(cbind,list( diag(maxd+1),
-                                     mid, -PolyShift(maxk,maxd+1)))
-    #disp(const.per)
-    lin <- rbind(lin,const.per)
-    #disp(lin)
-  }
-  degree = rep( degree, length = length(knots) + 1)
-  smooth = rep( smooth, length = length(knots))
-  spline.attr <-   list( knots = knots, degree = degree,
-                         smooth = smooth, lin = lin, intercept = intercept, signif = signif)
-  if (is.null(x)) return ( spline.attr)
-  if( periodic ) x <- x %% maxk
-  ret = Xf ( x, knots, max(degree), signif = signif) %*%
-    spline.E( knots, degree, smooth, lin = lin, intercept = intercept, signif = signif)
-  attr(ret, "spline.attr") <- spline.attr
-  ret
+gsp <- function (x, knots, degree = 3, smooth = pmax(pmin(degree[-1], 
+                                                   degree[-length(degree)]) - 1, 0), lin = NULL, periodic = FALSE, 
+          intercept = 0, signif = 3) 
+{
+    if (periodic) {
+        maxd <- max(degree)
+        maxk <- max(knots)
+        mid <- matrix(0, maxd + 1, (maxd + 1) * (length(knots) - 
+                                                     1))
+        const.per <- do.call(cbind, list(diag(maxd + 1), mid, 
+                                         -PolyShift(maxk, maxd + 1)))
+        lin <- rbind(lin, const.per)
+    }
+    degree = rep(degree, length = length(knots) + 1)
+    smooth = rep(smooth, length = length(knots))
+    spline.attr <- list(knots = knots, degree = degree, smooth = smooth, 
+                        lin = lin, intercept = intercept, signif = signif)
+    if (is.null(x)) 
+        return(spline.attr)
+    if (periodic) 
+        x <- x%%maxk
+    ret = Xf(x, knots, max(degree), signif = signif) %*% spline.E(knots, 
+                                                                  degree, smooth, lin = lin, intercept = intercept, signif = signif)
+    attr(ret, "spline.attr") <- spline.attr
+    class(ret) <- "gsp"
+    ret
 }
-#' Hypothesis matrix fpr gemeral regression splines
+
+print.gsp <- function(x, strip.attributes=TRUE, ...){
+    nms <- colnames(x)
+    ncol <- ncol(x)
+    xx <- x
+    if (strip.attributes) {
+        attributes(xx) <- NULL
+        xx <- matrix(xx, ncol=ncol)
+        colnames(xx) <- nms
+    }
+    else (xx <- unclass(xx))
+    print(zapsmall(xx), ...)
+    invisible(x)
+}
+
+#' Hypothesis matrix fpr general regression splines
 #' 
 #' This function helps to build hypothesis matrices for general splines. See examples
 #' in \code{\link[spida2]{gsp}}.
