@@ -3,7 +3,7 @@ Type: Package
 Title: Collection of tools developed for the Summer Programme in Data Analysis 2000-2012
 Version: 0.1.2
 Date: 2018-11-21
-Author: Georges Monette, John Fox, Michael Friendly, Heather Krause
+Author: Georges Monette, John Fox, Michael Friendly, Heather Krause, Kevin Terry Joseph
 Maintainer: Georges Monette <georges+spida2@yorku.ca>
 Description: Collection of utility functions for linear and mixed models
     including wald: Wald test with functions to generate hypothesis matrices gsp:
