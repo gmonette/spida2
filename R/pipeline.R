@@ -11,7 +11,7 @@
 #' evaluated in the data frame. Convenient in a pipeline.
 #'
 #' @param data a data frame
-#' @param form a formula identifying variables to be used in sorting or an
+#' @param form a variable, list of variables, or a formula identifying variables to be used in sorting or an
 #' object that can be used directly in \code{data[order(form,,drop=FALSE)]}.
 #' @return The formula is evaluated using \code{model.frame} and the
 #' result is used as the argument of \code{order} which, in turn is used to
@@ -23,12 +23,15 @@
 #' Prestige  %>% sortdf(~type+income) -> Prestige.ordered
 #' }
 #' @export
-sortdf <- function(data, form = formula(data)) {
-  if(inherits(form, 'formula')) xx <- as.list(model.frame(form, data, na.action=NULL))
-  ord <- do.call(order, xx)
-  data[ ord,,drop = FALSE]
+sortdf <-
+function (data, form = formula(data)) 
+{
+  if (inherits(form, "formula")) 
+    form <- as.list(model.frame(form, data, na.action = NULL))
+  else if(!is.list(form)) form <- list(form)
+  ord <- do.call(order, form)
+  data[ord, , drop = FALSE]
 }
-
 ## Assign in a pipeline
 
 #' Assign in a pipeline

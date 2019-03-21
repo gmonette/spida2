@@ -2,7 +2,7 @@
 % Please edit documentation in R/gsp.R
 \name{sc}
 \alias{sc}
-\title{Hypothesis matrix fpr gemeral regression splines}
+\title{Hypothesis matrix fpr general regression splines}
 \usage{
 sc(sp, x, D = 0, type = 1)
 }

@@ -1,6 +1,9 @@
 ##
 ##
 ##  General polynomial splines: August 8, 2008
+##
+##  Modified GM 2019_02_22: added smoothness as list
+##
 ##  Revised June 16, 2010 to incorporate degree 0 polynomials
 ##    and constraining evaluation of spline to 0 with 'intercept'
 ##   
@@ -15,7 +18,7 @@
 ##  Added 'periodic' argument to gsp
 ##
 ##
-#' General regression splines with variable degrees and smoothness, smoothing
+#' General regression splines with variable degrees and ness, smoothing
 #' splines
 #' 
 #' These functions implement a general polynomial spline with possibly different degrees
@@ -92,19 +95,19 @@
 #' uses
 #' Xmat to form 'full' matrix with blocks determined by knots intervals
 #' 
-#' \code{Cmat = function( knots, degree, smooth, intercept = 0, signif = 3)}
+#' \code{Cmat = function( knots, degree, smoothness, intercept = 0, signif = 3)}
 #' linear constraints
 #' 
-#' \code{Emat = function( knots, degree, smooth , intercept = FALSE, signif = 3)}
+#' \code{Emat = function( knots, degree, smoothness , intercept = FALSE, signif = 3)}
 #' estimates - not necessarily a basis
 #' 
 #' \code{basis = function( X , coef = FALSE )} selects linear independent subset of
 #' columns of X
 #' 
-#' \code{spline.T = function( knots, degree, smooth, intercept = 0, signif = 3 )}
+#' \code{spline.T = function( knots, degree, smoothness, intercept = 0, signif = 3 )}
 #' full transformation of Xf to spline basis and constraints
 #' 
-#' \code{spline.E = function( knots, degree, smooth, intercept = 0, signif = 3 )}
+#' \code{spline.E = function( knots, degree, smoothness, intercept = 0, signif = 3 )}
 #' transformation for spline basis (first r columns of spline.T)
 #' 
 #' @aliases gsp smsp Xf Xmat qs lsp Cmat PolyShift
@@ -115,9 +118,24 @@
 #' corresponds to a constant in the interval. If the spline should evaluate to
 #' 0 in the interval, use the \code{intercept} argument to specify some value
 #' in the interval at which the spline must evaluate to 0.
-#' @param smooth vector with the degree of smoothness at each knot (0 =
-#' continuity, 1 = smooth with continuous first derivative, 2 = continuous
-#' second derivative, etc. The value -1 allows a discontinuity at the knot.
+#' @param smoothness vector with the degree of smoothness at each knot (0 =
+#' continuity, 1 = smoothness with continuous first derivative, 2 = continuous
+#' second derivative, etc. The value -1 allows a discontinuity at the knot. 
+#' A scalar is recycled so its length equals the
+#' number of knots. Alternatively, 
+#' a list of length equal to the number of knots. Each element of the list is a 
+#' vector of the orders of derivatives which are required to be smooth. THis allows
+#' non-sequential constraints, e.g. to have the same first and second derivative
+#' on either side of a knot but a possible discontinuity and change in
+#' higher-order derivatives, the vector would be c(1,2). Note that if a list is used,
+#' all elements must provide all desired constraints. That is the list argument corresponding
+#' to `smoothness = c(1,2,-1)` is `smoothness=list(0:1, 0:2, -1)`. The default is
+#' 1 less than the minimum of adjoining degrees at 
+#' 
+#' 
+#' 
+#' 
+#' 
 #' @param intercept value(s) of x at which the spline has value 0, i.e. the
 #' value(s) of x for which yhat is estimated by the intercept term in the
 #' model. The default is 0. If NULL, the spline is not constrained to evaluate
@@ -162,7 +180,7 @@
 #'           G = rep( c('male','female'), c(50,50)))
 #' # define a function generating the spline
 #' sp <- function(x) gsp( x, knots = c(10,25,40), degree = c(1,2,2,1),
-#'           smooth = c(1,1,1))
+#'           smoothness = c(1,1,1))
 #' 
 #' fit <- lm( y ~ sp(age)*G, simd)
 #' 
@@ -191,7 +209,7 @@
 #' 
 #' sp <- function(x) gsp( x, knots = c(10,25,40), 
 #'           degree = c(1,2,2,1), 
-#'           smooth = c(1,1,1))
+#'           smoothness = c(1,1,1))
 #' 
 #' fit <- lm( y ~ sp(age)*G, simd) 
 #' xyplot( predict(fit) ~ age , simd, groups = G, type = "l") 
@@ -245,7 +263,7 @@
 #' 
 #' per.sp <- function(x) gsp( x %% 1, knots = 1, 
 #'                   degree = c(3, 3), 
-#'                   smooth = 1,
+#'                   smoothness = 1,
 #'                   lin = cbind( diag(4), - PolyShift(1,4))) 
 #' fit <- lm( y ~ per.sp(x))
 #' summary(fit) 
@@ -265,7 +283,7 @@
 #' 
 #' per.sp <- function(x) gsp( x %% 1, knots = c(.333,.666,1), 
 #'             degree = 3,
-#'             smooth = 1, 
+#'             smoothness = 1, 
 #'             lin = cbind( diag(4),0*diag(4),0*diag(4), - PolyShift(1,4))) 
 #' fit <- lm( y ~ per.sp(x)) 
 #' summary(fit) 
@@ -408,7 +426,7 @@
 #' 
 #' sp <- function(x) gsp( x, knots = c(10,25,40), 
 #'           degree = c(1,2,2,1), 
-#'           smooth = c(1,1,1))
+#'           smoothness = c(1,1,1))
 #' 
 #' fit <- lm( y ~ sp(age)*G, simd) 
 #' xyplot( predict(fit) ~ age , simd, groups = G,type = "l") 
@@ -438,7 +456,7 @@
 #' per.sp <- function(x) gsp( x %% 1, 
 #'                     knots = 1, 
 #'                     degree = c(3, 3), 
-#'                     smooth = 1,
+#'                     smoothness = 1,
 #'                     lin = cbind( diag(4), - PolyShift(1,4))) 
 #' fit <- lm( y ~ per.sp(x))
 #' summary(fit) 
@@ -459,7 +477,7 @@
 #' 
 #' per.sp <- function(x) gsp( x %% 1, knots = c(.333,.666,1), 
 #'                 degree = 3,
-#'                 smooth = 1, 
+#'                 smoothness = 1, 
 #'                 lin = cbind( diag(4),0*diag(4),0*diag(4), - PolyShift(1,4)))
 #' fit <- lm( y ~ per.sp(x)) 
 #' summary(fit) 
@@ -487,29 +505,28 @@
 #' 
 #'
 #' @export
-gsp <- function (x, knots, degree = 3, smooth = pmax(pmin(degree[-1], 
-                                                   degree[-length(degree)]) - 1, 0), lin = NULL, periodic = FALSE, 
-          intercept = 0, signif = 3) 
+gsp <- function (x, knots, degree = 3, 
+				 smoothness = pmax(pmin(degree[-1], degree[-length(degree)]) - 1, -1), 
+				 lin = NULL, periodic = FALSE, intercept = 0, signif = 3) 
 {
     if (periodic) {
         maxd <- max(degree)
         maxk <- max(knots)
-        mid <- matrix(0, maxd + 1, (maxd + 1) * (length(knots) - 
-                                                     1))
+        mid <- matrix(0, maxd + 1, (maxd + 1) * (length(knots) -  1))
         const.per <- do.call(cbind, list(diag(maxd + 1), mid, 
                                          -PolyShift(maxk, maxd + 1)))
         lin <- rbind(lin, const.per)
     }
     degree = rep(degree, length = length(knots) + 1)
-    smooth = rep(smooth, length = length(knots))
-    spline.attr <- list(knots = knots, degree = degree, smooth = smooth, 
+    smoothness = rep(smoothness, length = length(knots))
+    spline.attr <- list(knots = knots, degree = degree, smoothness = smoothness, 
                         lin = lin, intercept = intercept, signif = signif)
     if (is.null(x)) 
         return(spline.attr)
     if (periodic) 
         x <- x%%maxk
     ret = Xf(x, knots, max(degree), signif = signif) %*% spline.E(knots, 
-                                                                  degree, smooth, lin = lin, intercept = intercept, signif = signif)
+                                                                  degree, smoothness, lin = lin, intercept = intercept, signif = signif)
     attr(ret, "spline.attr") <- spline.attr
     class(ret) <- "gsp"
     ret
@@ -560,7 +577,7 @@ sc <-
               cbind( nam0,nam1,nam2) [ cbind( seq_along(type), type+1)],
               ifelse( type != 2, nam, '0'))
     mod = raw %*% spline.E(
-      a$knots, a$degree, a$smooth,
+      a$knots, a$degree, a$smoothness,
       lin = a$lin,
       intercept = a$intercept,
       signif = a$signif)
