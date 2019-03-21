@@ -1,3 +1,6 @@
+2019-03-21
+* added gspline, a new approach to gsp (in progress)
+* modified sortdf so 'form' can be a variable of list, not just a formula
 2018-11-21
 * added freq argument to 'up' to summarize factor using frequencies. Useful to create data grouped by predictor variables with frequencies for levels of response variable for binomial glm with goodness of fit test 
 2018-10-13
