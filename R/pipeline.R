@@ -42,7 +42,7 @@ function (data, form = formula(data))
 #'
 #' @param value to be assigned
 #' @param x name of the object to be assigned
-#' @param pos where the object is to be assigned. Default is \code{pos=0} which
+#' @param pos where the object is to be assigned. Default is \code{pos=1} which
 #' saves in the global environment
 #' @param ...  other arguments are passed to \code{assign}
 #' @return The formula is evaluated using \code{model.frame} and the
@@ -58,4 +58,4 @@ function (data, form = formula(data))
 #' Prestige  %>% sortdf(~type+income)  %>% assn("Prestige.ordered")  %>%  dim
 #' }
 #' @export
-assn <- function(value, x, pos = 0, ...) assign(x = x, value = value, pos = pos, ...)
+assn <- function(value, x, pos = 1, ...) assign(x = x, value = value, pos = pos, ...)

@@ -4,14 +4,14 @@
 \alias{assn}
 \title{Assign in a pipeline}
 \usage{
-assn(value, x, pos = 0, ...)
+assn(value, x, pos = 1, ...)
 }
 \arguments{
 \item{value}{to be assigned}
 
 \item{x}{name of the object to be assigned}
 
-\item{pos}{where the object is to be assigned. Default is \code{pos=0} which
+\item{pos}{where the object is to be assigned. Default is \code{pos=1} which
 saves in the global environment}
 
 \item{...}{other arguments are passed to \code{assign}}

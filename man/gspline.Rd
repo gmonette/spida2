@@ -3,6 +3,7 @@
 \name{gspline}
 \alias{gspline}
 \alias{print.gspline}
+\alias{print.gspline_matrix}
 \title{TODO: 
 - add periodic splines
     - Dmat constraints for last knot need to loop to 0
@@ -22,6 +23,8 @@ gspline(knots, degree = 3, smoothness = pmax(pmin(degree[-1],
   debug = FALSE)
 
 \method{print}{gspline}(x, ...)
+
+\method{print}{gspline_matrix}(x, ...)
 }
 \arguments{
 \item{knots}{vector of knots}
@@ -56,10 +59,16 @@ below for examples of a spline that is 0 outside of its boundary knots.}
 the parameters in the
 'full' parametrization that should be estimated by estimated coefficients of the spline.}
 
-\item{periodic}{(not yet implemented) if TRUE generates a period spline on the base interval
-[0,max(knots)]. A constraint is generated so that the coefficients generate
-the same values to the right of max(knots) as they do to the right of 0.
-Note that all knots should be strictly positive.}
+\item{periodic}{if TRUE a periodic spline is generated on the base interval
+[0,max(knots)]. A constraint is generated so that the coefficients generate, in effect,
+the same fitted values and derivatives to the right of max(knots) as they do to the right of 0.
+Note that all knots must be strictly positive. Since the knot at 0 corresponds to the
+knot at 'max(knots)', the knot at 0 must not be explicitly specified. Note also that the
+degree in the interval to the right of 'max(knots)' must be equal to that in the 
+interval to the left of 'min(knots)'. If these are specified to be equal,
+\code{gspline} uses the maximum for both intervalsl.
+The continuity contraints associated
+with the last knot are, in effect, continuity constraints at 0.}
 
 \item{x}{(parameter of the closure created by \code{gspline}) value(s) where the
 spline is evaluated. This is the only parameter used when generating portions of

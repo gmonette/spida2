@@ -124,10 +124,16 @@
 #' model. The default is 0. If NULL, the spline is not constrained to evaluate
 #' to 0 for any x. This will usually result in a model matrix that that is
 #' collinear with an intercept term.
-#' @param periodic (not yet implemented) if TRUE generates a period spline on the base interval
-#' [0,max(knots)]. A constraint is generated so that the coefficients generate
-#' the same values to the right of max(knots) as they do to the right of 0.
-#' Note that all knots should be strictly positive.
+#' @param periodic if TRUE a periodic spline is generated on the base interval
+#' [0,max(knots)]. A constraint is generated so that the coefficients generate, in effect,
+#' the same fitted values and derivatives to the right of max(knots) as they do to the right of 0.
+#' Note that all knots must be strictly positive. Since the knot at 0 corresponds to the
+#' knot at 'max(knots)', the knot at 0 must not be explicitly specified. Note also that the
+#' degree in the interval to the right of 'max(knots)' must be equal to that in the 
+#' interval to the left of 'min(knots)'. If these are specified to be equal,
+#' \code{gspline} uses the maximum for both intervalsl.
+#' The continuity contraints associated
+#' with the last knot are, in effect, continuity constraints at 0.
 #' @param constraints provides a vector or matrix specifying additional linear contraints on the
 #' 'full' parametrization consisting of blocks of polynomials of degree equal
 #' to max(degree) in each of the length(knots)+1 intervals of the spline. See
@@ -366,7 +372,7 @@ gspline <- function(
     # with possible pivoting
     q <- qr(X, tol = tol)
     sel <- q$pivot[seq_len(q$rank)]
-    ret <- X[, sel]
+    ret <- X[, sel, drop = FALSE]
     colnames(ret) <- colnames(X)[sel]
     ret
   }
@@ -375,7 +381,7 @@ gspline <- function(
                    degree,
                    D = 0,
                    signif = 3) {
-    # Return rows of design matrix if D = 0
+    # Returns rows of design matrix if D = 0
     # or linear hypothesis matrix for D-th derivative
     if (length(D) < length(x))
       D = rep(D, length.out = length(x))
@@ -393,7 +399,7 @@ gspline <- function(
       coeffvec <- coeffvec * expvec
       expvec <- ifelse(expvec > 0, expvec - 1, 0)
     }
-    X = coeffmat[D + 1,] * xmat ^ expmat[D + 1,]
+    X = coeffmat[D + 1,,drop = FALSE] * xmat ^ expmat[D + 1,, drop = FALSE]
     
     xlab = signif(x, signif)
     rownames(X) = ifelse(D == 0,
@@ -420,41 +426,70 @@ gspline <- function(
       # With right = FALSE, it is included in the higher
       # interval. This is needed when building 
       # derivative constraints at the knot
-      if(periodic) x <- x %% max(knots)
+      if(periodic) {
+        period <- max(knots)
+        xx <- x %% period
+        if(right) xx[xx==0] <- period
+        x <- xx
+        knots <- knots[-length(knots)]
+      }
       xmat = Xmat (x, degree, D , signif)
       k = sort(knots)
       g = cut(x, c(-Inf, k, Inf), right = right)
-      do.call('cbind',
-              lapply(seq_along(levels(g)), function(i)
-                (g == levels(g)[i]) *  xmat))
+      ret <- do.call('cbind',
+                     lapply(seq_along(levels(g)), function(i)
+                       (g == levels(g)[i]) *  xmat))
+      if(periodic) rownames(ret) <- 
+        sub(')',paste0(' mod ',period,')'), rownames(ret))
+      ret
     }
+  
   # 
   # Value and derivatives at 0
   #
   # And all discontinuities at knots
   #
-  Dmat <- function(knots, degree, signif = 3) {
+  Dmat <- function(knots, degree, periodic = FALSE, signif = 3) {
     dm <- max(degree)
-    cmat <- Xf(0, knots, dm, D=0:dm)
-############# add for periodic knot ------
-    # left of max knot constrained to right of 0
-    for (i in seq_along(knots)) {
-      k = knots[i]
-      dmat  =Xf(k, knots, dm, D = seq(0,dm) , F ) -   
-        Xf(k, knots, dm, D = seq(0,dm) , T )
-      rownames( dmat ) = paste( "C(",signif(k, signif),").",
-                                seq(0,dm), sep = '')
-      cmat = rbind( cmat,  dmat)
+    cmat <- Xf(0, knots, dm, D=0:dm, periodic = periodic)
+    n_knots <- length(knots)
+    for (i in seq_len(n_knots - 1) ) {
+      k <- knots[i]
+      dmat <- Xf(k, knots, dm, D = seq(0,dm), F, periodic = periodic) -   
+        Xf(k, knots, dm, D = seq(0,dm), T, periodic = periodic)
+      rownames( dmat ) <- paste( "C(",signif(k, signif),").",
+                                 seq(0,dm), sep = '')
+      cmat <- rbind( cmat,  dmat)
+    }
+    k <- knots[length(knots)]
+    if(periodic) {
+      dmat <- Xf(0, knots, dm, D = seq(0,dm) , F ,periodic = periodic) -   
+        Xf(k, knots, dm, D = seq(0,dm) , T ,periodic = periodic)
+      rownames( dmat ) <- paste( "C(0 mod ",signif(k, signif),").",
+                                 seq(0,dm), sep = '')
+      cmat <- rbind(cmat, dmat)
+    } else {
+      dmat <- Xf(k, knots, dm, D = seq(0,dm) , F ,periodic = periodic) -
+        Xf(k, knots, dm, D = seq(0,dm) , T ,periodic = periodic)
+      rownames( dmat ) <- paste( "C(",signif(k, signif),").",
+                                 seq(0,dm), sep = '')
+      cmat <- rbind(cmat, dmat)
     }
     cmat
   }
+  
   # 
   # Parameters to constrain
   #
   # TODO: Change so degree can be a list
   #
-  Pcon <- function(knots, degree) {
+  Pcon <- function(knots, degree, periodic) {
     degree <- rep( degree, length.out = length(knots) + 1)
+    if(periodic) {
+      if(degree[length(degree)] != degree[1]) warning("For periodic splines, the degree of the last and first intervals should match")
+      knots <- knots[-length(knots)]
+      degree <- degree[-length(degree)]
+    }
     dm <- max(degree)
     cmat <- NULL
     for ( i in seq_along(degree)) {
@@ -468,12 +503,12 @@ gspline <- function(
     }
     cmat
   }
-  
   #
   # Parse knots, degree and smoothness to create 
   # constraint and estimation matrices:
   # - Identify rows of Dmat that are used for contraints
   #   and rows used for estimates
+  
   
   if(periodic) {
     if(min(knots) <= 0) stop('For a periodic spline all knots must be positive')
@@ -492,46 +527,52 @@ gspline <- function(
   Dmat_smoothness_indices <- Dmat_smoothness_indices[unlist(smoothness) > -1] 
   
   # Build constraints
-  constraint_mat <- Dmat(knots, degree)[Dmat_smoothness_indices, ] 
-  constraint_mat <- rbind(constraint_mat, Pcon(knots, degree))
+  constraint_mat <- Dmat(knots, degree, periodic = periodic)[Dmat_smoothness_indices, ,drop = F] 
+  constraint_mat <- rbind(constraint_mat, Pcon(knots, degree, periodic = periodic))
   if(!is.null(constraints)) 
     constraint_mat <- rbind(constraint_mat, constraints)
   if(!is.null(intercept)) {
     constraint_mat <- 
-      rbind(constraint_mat, Xf(intercept, knots, max_degree))
+      rbind(constraint_mat, Xf(intercept, knots, max_degree, periodic = periodic))
     Dmat_smoothness_indices <- c(1,Dmat_smoothness_indices)
   }
-  constraint_mat <- t(basis(t(constraint_mat)))
+  Cmat <- t(basis(t(constraint_mat)))
   
   estimate_mat <- 
     rbind(estimates,
-          Dmat(knots, degree)[-Dmat_smoothness_indices, ])
+          Dmat(knots, degree, periodic = periodic)[-Dmat_smoothness_indices, ,drop = FALSE])
   # the following is necessary in case some of the derivatives
   # estimated at 0 have been coerced to 0 by other constraints
   estimate_mat <- t(basis(t(rbind(constraint_mat, estimate_mat))))
-  estimate_mat <- estimate_mat[-seq_len(nrow(constraint_mat)),]
+  estimate_mat <- estimate_mat[-seq_len(nrow(constraint_mat)),,drop = FALSE]
+  
+  Emat <- estimate_mat
   
   A <- rbind(constraint_mat, estimate_mat)
   if(debug) svs <- svd(A,nu=0,nv=0)
   G <- solve( rbind(constraint_mat, estimate_mat), 
-              diag(ncol(constraint_mat))[,-seq_len(nrow(constraint_mat))])
+              diag(ncol(constraint_mat))[,-seq_len(nrow(constraint_mat)), drop = FALSE])
   colnames(G) <- rownames(estimate_mat)
   # 
   # create closure
   #
   ret <- function(x, D = NULL, limit = 1) {
-    if(is.null(D)) return(Xf(x, knots, max_degree) %*% G) # model matrix
+    if(is.null(D)) return(Xf(x, knots, max_degree, periodic = periodic) %*% G) # model matrix
     # Hypothesis matrix
     D <- rep(D, length.out = length(x))
     limit <- rep(limit, length.out = length(x))
     left <- Xf(x, 
                knots = knots, 
                degree = max_degree, 
-               D = D, right = TRUE)
+               D = D,
+               periodic = periodic,
+               right = TRUE)
     right <- Xf(x, 
                 knots = knots, 
                 degree = max_degree, 
-                D = D, right = FALSE)
+                D = D, 
+                periodic = periodic,
+                right = FALSE)
     cleft <- c(1,0,-1)[ match(limit, c(-1,1,0)) ]
     cright <- c(0,1,1)[ match(limit, c(-1,1,0)) ]
     # disp((right - left) %*% G)
@@ -564,7 +605,7 @@ gspline <- function(
              nam_jump,
              ifelse(continuous, nam,
                     ifelse(limit == 1, nam_right, nam_left)))
-    hyp_mat
+    class(hyp_mat) <- c('gspline_matrix', class(hyp_mat))
     
   }
   class(ret) <- 'gspline'
@@ -575,11 +616,14 @@ gspline <- function(
 #' @export
 print.gspline <- function(x,...) {
   cat('Spline function created by gspline\n')
-  cat('A matrix:\n')
-  print(environment(x)$A)
-  invisible(x)
+  print(Filter(Negate(is.function),  sapply(ls(environment(x)), get, environment(x))))
 }
-
+#' @rdname gspline
+#' @export
+print.gspline_matrix <- function(x, ...) {
+  x <- zapsmall(x)
+  NextMethod()
+}
 
 if(FALSE) {
   sp <- gspline(c(-1,0,1),3,2)
@@ -591,5 +635,87 @@ if(FALSE) {
   sp(seq(-1,2),1)
   sp(c(0,0,0,0),c(0,1,2,3))
   sp(c(0,0,0,0),c(0,1,2,3), limit = -1)
-
+  
+  # test periodic splines
+  zd <- data.frame(x=-10:10)
+  zd <- within(zd, y <- x + abs(x) + .01*rnorm(x))
+  sp0 <- gspline(0,1,0)
+  fit <- lm(y ~ sp0(x), zd)
+  summary(fit)
+  print(sp)
+  
+  # problem?: parameters estimate from left, not right
+  
+  zd <- within(zd, yd <- x + abs(x) + I(x > 0) + .01 * rnorm(x))
+  spd <- gspline(0,1, -1)
+  fit <- lm(yd ~ spd(x), zd)
+  summary(fit)
+  spd(c(0,0,0,0,0,0), D=c(0,0,0,1,1,1), limit = c(-1,0,1,-1,0,1)) %>%
+  {Lmat <- .}
+  wald(fit, cbind(0,Lmat))
+  plot(yd ~ x, zd)
+  print(sp)
+  
+  # both level and slope are limits from the left: 
+  # probably should leave that way because it's easier
+  # to add change than to go back
+  
+  # TODO: need to add limit directions on G matrix
+  
+  load("../data/Unemp.RData", verbose = T)
+  plot(unemployment ~ date, data=Unemp, type="b")   
+  dim(Unemp)
+  dd <- Unemp
+  dd$y <- dd$unemployment
+  dd$x <- 1:nrow(dd)
+  f1 <- function(x) cbind(Sin=sin(2*pi*x/12),Cos=cos(2*pi*x/12))  # fundamental
+  f2 <- function(x) structure(f1(x/2), names = c('Sin2','Cos2'))
+  f3 <- function(x) structure(f1(x/3), names = c('Sin3','Cos3'))
+  f4 <- function(x) structure(f1(x/4), names = c('Sin4','Cos4'))
+  per <- gspline(c(3,6,9,12),c(1,2,2,2,1),0, periodic = TRUE)
+  per2 <- gspline(c(3,6,9,12),2,1, periodic = TRUE)
+  per3 <- gspline(c(3,6,9,12),3,2, periodic = TRUE)
+  per4 <- gspline(c(3,6,9,12),4,3, periodic = TRUE)
+  perstep <- gspline(c(3,6,9,12),0,-1, periodic = TRUE)
+  
+  per
+  fits <- list(
+    hetero = lm(y ~ per(x), dd),
+    quad = lm(y ~ per2(x), dd),
+    cubic =  lm(y ~ per3(x), dd),
+    quartic = lm(y ~ per4(x), dd),
+    step = lm(y ~ perstep(x), dd),
+    f1 = lm(y ~ f1(x), dd),
+    f2 = lm(y ~ f1(x) + f2(x), dd),
+    f3 = lm(y ~ f1(x) + f2(x) + f3(x), dd),
+    f4 = lm(y ~ f1(x) + f2(x) + f3(x) + f4(x), dd)
+  )
+  fits %>% lapply(summary)
+  fits %>% sapply(AIC)
+  pred <- list(x=seq(0,24,.01))
+  plot(c(0,24),c(6.5,8.5), type = 'n')
+  fits %>% lapply(function(f) lines(pred$x,predict(f, newdata = pred)))
+  sp <- gspline(nrow(dd)*1:7/8,2,1)
+  sp3 <- gspline(nrow(dd)*1:7/8,3,2)
+  fit <- lm(y ~ per3(x) +sp(x), dd)
+  fit3 <- lm(y ~ per3(x) +sp3(x), dd)
+  fit4 <- lm(y ~ per3(x) +sp3(x), dd)
+  with(dd, {
+    plot(date,y, pch = '.',cex = 2)
+    lines(date, predict(fit))
+    lines(date, predict(fit3), col = 'red')
+  }
+  )
+  pred <- data.frame(x=seq(1,24,.01))
+  with(pred, {
+    plot(c(1,24), c(9,11), xlab = 'month', ylab = 'unemployment', type = 'n')
+    lines(x, predict(fit, newdata = pred))
+  })
+  AIC(fit,fit3)
+  library(effects)
+  allEffects(fit)
+  dd$month <- dd$x %% 12
+  fit <- lm(y ~ sp3(x) + per3(month), dd)
+  summary(fit)
+  plot(allEffects(fit))
 }

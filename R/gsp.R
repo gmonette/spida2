@@ -546,7 +546,7 @@ print.gsp <- function(x, strip.attributes=TRUE, ...){
     invisible(x)
 }
 
-#' Hypothesis matrix fpr general regression splines
+#' Hypothesis matrix for general regression splines
 #' 
 #' This function helps to build hypothesis matrices for general splines. See examples
 #' in \code{\link[spida2]{gsp}}.

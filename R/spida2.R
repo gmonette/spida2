@@ -71,8 +71,9 @@
 #' \item \code{\link[spida2]{Drugs}} Longitudinal data on drugs and schizophrenia symptoms. Illustrates role of control variables with non-random assignment. 
 #' \item \code{\link[spida2]{Indonesia}} Xerophthalmia.
 #' \item \code{\link[spida2]{migraines}} Longitudinal data on migraine treatment and weather
-#' \item \code{\link[spida2]{coffee}} Artifical data on coffee, heart damage and stress. Illustrates Simpson's Paradox with continuous predictors.
-#' \item \code{\link[spida2]{hw}} Artifical data on height, weight and health. Illustrates suppression.
+#' \item \code{\link[spida2]{coffee}} Artificial data on coffee, heart damage and stress. Illustrates Simpson's Paradox with continuous predictors.
+#' \item \code{\link[spida2]{hw}} Artificial data on height, weight and health. Illustrates suppression.
+#' \item \code{\link[spida2]{Unemp}} U.S. monthly unemployment from January 1995 to February 2019.
 #' }
 #' @section Graphics
 #' \itemize {

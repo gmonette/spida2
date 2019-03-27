@@ -1,7 +1,7 @@
 \name{coffee}
 \Rdversion{1.1}
 \alias{coffee}
-\concept{artifical data}
+\concept{artificial data}
 \concept{causal inference}
 \concept{spida 2009}
 \concept{measurement error}

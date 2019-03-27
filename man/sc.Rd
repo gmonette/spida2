@@ -2,7 +2,7 @@
 % Please edit documentation in R/gsp.R
 \name{sc}
 \alias{sc}
-\title{Hypothesis matrix fpr general regression splines}
+\title{Hypothesis matrix for general regression splines}
 \usage{
 sc(sp, x, D = 0, type = 1)
 }
