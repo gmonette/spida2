@@ -4,18 +4,7 @@
 \alias{gspline}
 \alias{print.gspline}
 \alias{print.gspline_matrix}
-\title{TODO: 
-- add periodic splines
-    - Dmat constraints for last knot need to loop to 0
-    - Add '+' for Di(0) estimates if discontinuous 
-      (already done for L matrix, perhaps need to add for D estimate in Dmat)
-    - print.gspline method to refer to environment
-        - consider attaching attributes to model.matrix returned by sp
-    - cut down help page, send to vignette
-    - ask Jodi re example
-    - update theory with periodic stuff
-    - 
-General parametric regression splines with variable degrees and smoothness}
+\title{General parametric regression splines with variable degrees and smoothness}
 \usage{
 gspline(knots, degree = 3, smoothness = pmax(pmin(degree[-1],
   degree[-length(degree)]) - 1, 0), intercept = 0, constraints = NULL,
