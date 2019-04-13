@@ -17,205 +17,6 @@
 ##  are also explictitly added to the environment 
 ##  of the spline function created by gspline,
 ##
-Cmat <-
-function( knots, degree, smoothness, lin = NULL, intercept = 0, signif = 3) {
-  # GM 2013-06-13
-  #	add lin: contraints, 
-  # generates constraint matrix
-  # GM: 2019_02_22: added facility to input smoothness as a list 
-  #    for smoothness constraints that don't have the form 0:smoothness[[i]]
-	
-  dm = max(degree)
-  
-  # intercept
-  
-  cmat = NULL
-  if( !is.null(intercept))  cmat = rbind( cmat, "Intercept" =
-                                            Xf( intercept, knots, dm, D=0 ))
-  # continuity constraints
- 
-  for ( i in seq_along(knots) ) {
-    k <- knots[i]
-    sm <- smoothness[[i]]
-    if ( max(sm) > -1 ) {  # sm = -1 corresponds to discontinuity
-	    if(!is.list(smoothness)) sm <- 0:sm
-      
-      dmat <- Xf( k, knots, dm, D = sm, F ) -   
-      	Xf( k, knots, dm, D = sm, T )
-      rownames( dmat ) <- paste( "C(",signif(k, signif),").",
-                                sm, sep = '')
-      cmat <- rbind( cmat,  dmat)
-    }
-  }
-  
-  # reduced degree constraints
-  
-  degree <- rep( degree, length.out = length(knots) + 1)
-  for ( i in seq_along( degree)) {
-    di <- degree[i]
-    
-    if ( dm > di ) {
-      dmat <- diag( (length(knots) + 1) * (dm +1)) [  (i - 1)*(dm + 1) +
-                                                       1 + seq( di+1,dm), , drop = F]
-      rownames( dmat ) = paste( "I.", i,".",seq(di+1,dm),sep = '')
-      cmat = rbind( cmat, dmat)
-    }
-  }
-  
-  # add additional linear constraints
-  
-  if( ! is.null(lin)) cmat <- rbind(cmat,lin) # GM:2013-06-13
-  rk = qr(cmat)$rank
-  spline.rank = ncol(cmat) - rk
-  attr(cmat,"ranks") = c(npar.full = ncol(cmat), C.n = nrow(cmat),
-                         C.rank = rk , spline.rank = spline.rank )
-  attr(cmat,"d") = svd(cmat) $ d
-  cmat
-  
-}
-
-basis  <- function(X, tol = 1e-9) {
-  # returns linear independent columns
-  # with possible pivoting
-  q <- qr(X, tol = tol)
-  sel <- q$pivot[seq_len(q$rank)]
-  ret <- X[, sel, drop = FALSE]
-  colnames(ret) <- colnames(X)[sel]
-  ret
-}
-
-Xmat <-	function(x,
-                 degree,
-                 D = 0,
-                 signif = 3) {
-  # Returns rows of design matrix if D = 0
-  # or linear hypothesis matrix for D-th derivative
-  if (length(D) < length(x))
-    D = rep(D, length.out = length(x))
-  if (length(x) < length(D))
-    x = rep(x, length.out = length(D))
-  xmat = matrix(x, nrow = length(x), ncol = degree + 1)
-  expvec <- 0:degree
-  coeffvec <- rep(1, degree + 1)
-  expmat <- NULL
-  coeffmat <- NULL
-
-  for (i in 0:max(D)) {
-    expmat <- rbind(expmat, expvec)
-    coeffmat <- rbind(coeffmat, coeffvec)
-    coeffvec <- coeffvec * expvec
-    expvec <- ifelse(expvec > 0, expvec - 1, 0)
-  }
-  X = coeffmat[D + 1,,drop = FALSE] * xmat ^ expmat[D + 1,, drop = FALSE]
-
-  xlab = signif(x, signif)
-  rownames(X) = ifelse(D == 0,
-                       paste('f(', xlab , ')', sep = ''),
-                       paste("D", D, "(", xlab, ")", sep = ""))
-  colnames(X) = paste("X", 0:(ncol(X) - 1), sep = "")
-  class(X) <- c('gspline_matrix',class(X))
-  X
-}
-Xf <-
-  function(x,
-           knots,
-           degree = 3,
-           D = 0,
-           right = TRUE,
-           periodic = FALSE,
-           signif = 3) {
-    # Returns block diagonal matrix (if x ordered)
-    # with design matrix or linear hypothesis matrix
-    # for the 'full' model with contrained parameters.
-    #
-    # With the default, right == TRUE,
-    # if x is at a knot then it is included in
-    # in the lower interval.
-    # With right = FALSE, it is included in the higher
-    # interval. This is needed when building
-    # derivative constraints at the knot
-    if(periodic) {
-      period <- max(knots)
-      xx <- x %% period
-      if(right) xx[xx==0] <- period
-      x <- xx
-      knots <- knots[-length(knots)]
-    }
-    xmat = Xmat (x, degree, D , signif)
-    k = sort(knots)
-    g = cut(x, c(-Inf, k, Inf), right = right)
-    ret <- do.call('cbind',
-                   lapply(seq_along(levels(g)), function(i)
-                     (g == levels(g)[i]) *  xmat))
-    if(periodic) rownames(ret) <-
-      sub(')',paste0(' mod ',period,')'), rownames(ret))
-  class(ret) <- c('gspline_matrix',class(ret))
-
-        ret
-  }
-
-#
-# Value and derivatives at 0
-#
-# And all discontinuities at knots
-#
-Dmat <- function(knots, degree, periodic = FALSE, signif = 3) {
-  dm <- max(degree)
-  cmat <- Xf(0, knots, dm, D=0:dm, periodic = periodic)
-  n_knots <- length(knots)
-  for (i in seq_len(n_knots - 1) ) {
-    k <- knots[i]
-    dmat <- Xf(k, knots, dm, D = seq(0,dm), F, periodic = periodic) -
-      Xf(k, knots, dm, D = seq(0,dm), T, periodic = periodic)
-    rownames( dmat ) <- paste( "C(",signif(k, signif),").",
-                               seq(0,dm), sep = '')
-    cmat <- rbind( cmat,  dmat)
-  }
-  k <- knots[length(knots)]
-  if(periodic) {
-    dmat <- Xf(0, knots, dm, D = seq(0,dm) , F ,periodic = periodic) -
-      Xf(k, knots, dm, D = seq(0,dm) , T ,periodic = periodic)
-    rownames( dmat ) <- paste( "C(0 mod ",signif(k, signif),").",
-                               seq(0,dm), sep = '')
-    cmat <- rbind(cmat, dmat)
-  } else {
-    dmat <- Xf(k, knots, dm, D = seq(0,dm) , F ,periodic = periodic) -
-      Xf(k, knots, dm, D = seq(0,dm) , T ,periodic = periodic)
-    rownames( dmat ) <- paste( "C(",signif(k, signif),").",
-                               seq(0,dm), sep = '')
-    cmat <- rbind(cmat, dmat)
-  }
-  class(cmat) <- c('gspline_matrix',class(cmat))
-  
-  cmat
-}
-
-#
-# Parameters to constrain
-#
-# TODO: Change so degree can be a list
-#
-Pcon <- function(knots, degree, periodic) {
-  degree <- rep( degree, length.out = length(knots) + 1)
-  if(periodic) {
-    if(degree[length(degree)] != degree[1]) warning("For periodic splines, the degree of the last and first intervals should match")
-    knots <- knots[-length(knots)]
-    degree <- degree[-length(degree)]
-  }
-  dm <- max(degree)
-  cmat <- NULL
-  for ( i in seq_along(degree)) {
-    di <- degree[i]
-    if ( dm > di ) {
-      dmat <- diag( (length(knots) + 1) * (dm +1)) [
-        (i - 1)*(dm + 1) + 1 + seq( di+1,dm), , drop = F]
-      rownames( dmat ) = paste( "I.", i,".",seq(di+1,dm),sep = '')
-      cmat = rbind( cmat, dmat)
-    }
-  }
-  if(!is.null(cmat)) class(cmat) <- c('gspline_matrix',class(cmat))
-  cmat
-}
 
 #' General parametric regression splines with variable degrees and smoothness
 #' 
@@ -580,13 +381,198 @@ gspline <- function(
     colnames(ret) <- colnames(X)[sel]
     ret
   }
+  Cmat <-
+    function( knots, degree, smoothness, lin = NULL, intercept = 0, signif = 3) {
+      # GM 2013-06-13
+      #	add lin: contraints, 
+      # generates constraint matrix
+      # GM: 2019_02_22: added facility to input smoothness as a list 
+      #    for smoothness constraints that don't have the form 0:smoothness[[i]]
+      
+      dm = max(degree)
+      
+      # intercept
+      
+      cmat = NULL
+      if( !is.null(intercept))  cmat = rbind( cmat, "Intercept" =
+                                                Xf( intercept, knots, dm, D=0 ))
+      # continuity constraints
+      
+      for ( i in seq_along(knots) ) {
+        k <- knots[i]
+        sm <- smoothness[[i]]
+        if ( max(sm) > -1 ) {  # sm = -1 corresponds to discontinuity
+          if(!is.list(smoothness)) sm <- 0:sm
+          
+          dmat <- Xf( k, knots, dm, D = sm, F ) -   
+            Xf( k, knots, dm, D = sm, T )
+          rownames( dmat ) <- paste( "C(",signif(k, signif),").",
+                                     sm, sep = '')
+          cmat <- rbind( cmat,  dmat)
+        }
+      }
+      
+      # reduced degree constraints
+      
+      degree <- rep( degree, length.out = length(knots) + 1)
+      for ( i in seq_along( degree)) {
+        di <- degree[i]
+        
+        if ( dm > di ) {
+          dmat <- diag( (length(knots) + 1) * (dm +1)) [  (i - 1)*(dm + 1) +
+                                                            1 + seq( di+1,dm), , drop = F]
+          rownames( dmat ) = paste( "I.", i,".",seq(di+1,dm),sep = '')
+          cmat = rbind( cmat, dmat)
+        }
+      }
+      
+      # add additional linear constraints
+      
+      if( ! is.null(lin)) cmat <- rbind(cmat,lin) # GM:2013-06-13
+      rk = qr(cmat)$rank
+      spline.rank = ncol(cmat) - rk
+      attr(cmat,"ranks") = c(npar.full = ncol(cmat), C.n = nrow(cmat),
+                             C.rank = rk , spline.rank = spline.rank )
+      attr(cmat,"d") = svd(cmat) $ d
+      cmat
+      
+    }
   
-  # Xmat <- spida2:::Xmat
-  # Xf <- spida2:::Xmat 
-  # Dmat <- spida2:::Dmat
-  # Pcon <- spida2:::Pcon
-
-    #
+  
+  Xmat <-	function(x,
+                   degree,
+                   D = 0,
+                   signif = 3) {
+    # Returns rows of design matrix if D = 0
+    # or linear hypothesis matrix for D-th derivative
+    if (length(D) < length(x))
+      D = rep(D, length.out = length(x))
+    if (length(x) < length(D))
+      x = rep(x, length.out = length(D))
+    xmat = matrix(x, nrow = length(x), ncol = degree + 1)
+    expvec <- 0:degree
+    coeffvec <- rep(1, degree + 1)
+    expmat <- NULL
+    coeffmat <- NULL
+    
+    for (i in 0:max(D)) {
+      expmat <- rbind(expmat, expvec)
+      coeffmat <- rbind(coeffmat, coeffvec)
+      coeffvec <- coeffvec * expvec
+      expvec <- ifelse(expvec > 0, expvec - 1, 0)
+    }
+    X = coeffmat[D + 1,,drop = FALSE] * xmat ^ expmat[D + 1,, drop = FALSE]
+    
+    xlab = signif(x, signif)
+    rownames(X) = ifelse(D == 0,
+                         paste('f(', xlab , ')', sep = ''),
+                         paste("D", D, "(", xlab, ")", sep = ""))
+    colnames(X) = paste("X", 0:(ncol(X) - 1), sep = "")
+    class(X) <- c('gspline_matrix',class(X))
+    X
+  }
+  Xf <-
+    function(x,
+             knots,
+             degree = 3,
+             D = 0,
+             right = TRUE,
+             periodic = FALSE,
+             signif = 3) {
+      # Returns block diagonal matrix (if x ordered)
+      # with design matrix or linear hypothesis matrix
+      # for the 'full' model with contrained parameters.
+      #
+      # With the default, right == TRUE,
+      # if x is at a knot then it is included in
+      # in the lower interval.
+      # With right = FALSE, it is included in the higher
+      # interval. This is needed when building
+      # derivative constraints at the knot
+      if(periodic) {
+        period <- max(knots)
+        xx <- x %% period
+        if(right) xx[xx==0] <- period
+        x <- xx
+        knots <- knots[-length(knots)]
+      }
+      xmat = Xmat (x, degree, D , signif)
+      k = sort(knots)
+      g = cut(x, c(-Inf, k, Inf), right = right)
+      ret <- do.call('cbind',
+                     lapply(seq_along(levels(g)), function(i)
+                       (g == levels(g)[i]) *  xmat))
+      if(periodic) rownames(ret) <-
+        sub(')',paste0('/',period,')'), rownames(ret))
+      class(ret) <- c('gspline_matrix',class(ret))
+      
+      ret
+    }
+  
+  #
+  # Value and derivatives at 0
+  #
+  # And all discontinuities at knots
+  #
+  Dmat <- function(knots, degree, periodic = FALSE, signif = 3) {
+    dm <- max(degree)
+    cmat <- Xf(0, knots, dm, D=0:dm, periodic = periodic)
+    n_knots <- length(knots)
+    for (i in seq_len(n_knots - 1) ) {
+      k <- knots[i]
+      dmat <- Xf(k, knots, dm, D = seq(0,dm), F, periodic = periodic) -
+        Xf(k, knots, dm, D = seq(0,dm), T, periodic = periodic)
+      rownames( dmat ) <- paste( "C(",signif(k, signif),").",
+                                 seq(0,dm), sep = '')
+      cmat <- rbind( cmat,  dmat)
+    }
+    k <- knots[length(knots)]
+    if(periodic) {
+      dmat <- Xf(0, knots, dm, D = seq(0,dm) , F ,periodic = periodic) -
+        Xf(k, knots, dm, D = seq(0,dm) , T ,periodic = periodic)
+      rownames( dmat ) <- paste( "C(0 mod ",signif(k, signif),").",
+                                 seq(0,dm), sep = '')
+      cmat <- rbind(cmat, dmat)
+    } else {
+      dmat <- Xf(k, knots, dm, D = seq(0,dm) , F ,periodic = periodic) -
+        Xf(k, knots, dm, D = seq(0,dm) , T ,periodic = periodic)
+      rownames( dmat ) <- paste( "C(",signif(k, signif),").",
+                                 seq(0,dm), sep = '')
+      cmat <- rbind(cmat, dmat)
+    }
+    class(cmat) <- c('gspline_matrix',class(cmat))
+    
+    cmat
+  }
+  
+  #
+  # Parameters to constrain
+  #
+  # TODO: Change so degree can be a list
+  #
+  Pcon <- function(knots, degree, periodic) {
+    degree <- rep( degree, length.out = length(knots) + 1)
+    if(periodic) {
+      if(degree[length(degree)] != degree[1]) warning("For periodic splines, the degree of the last and first intervals should match")
+      knots <- knots[-length(knots)]
+      degree <- degree[-length(degree)]
+    }
+    dm <- max(degree)
+    cmat <- NULL
+    for ( i in seq_along(degree)) {
+      di <- degree[i]
+      if ( dm > di ) {
+        dmat <- diag( (length(knots) + 1) * (dm +1)) [
+          (i - 1)*(dm + 1) + 1 + seq( di+1,dm), , drop = F]
+        rownames( dmat ) = paste( "I.", i,".",seq(di+1,dm),sep = '')
+        cmat = rbind( cmat, dmat)
+      }
+    }
+    if(!is.null(cmat)) class(cmat) <- c('gspline_matrix',class(cmat))
+    cmat
+  }
+  
+  #
   # Parse knots, degree and smoothness to create 
   # constraint and estimation matrices:
   # - Identify rows of Dmat that are used for contraints
@@ -640,66 +626,69 @@ gspline <- function(
   # create closure
   #
   ret <- function(x, D = NULL, limit = 1) {
-    if(is.null(D)) return(Xf(x, knots, max_degree, periodic = periodic) %*% G) # model matrix
-    # Hypothesis matrix
-    D <- rep(D, length.out = length(x))
-    limit <- rep(limit, length.out = length(x))
-    left <- Xf(x, 
-               knots = knots, 
-               degree = max_degree, 
-               D = D,
-               periodic = periodic,
-               right = TRUE)
-    right <- Xf(x, 
-                knots = knots, 
-                degree = max_degree, 
-                D = D, 
-                periodic = periodic,
-                right = FALSE)
-    cleft <- c(1,0,-1)[ match(limit, c(-1,1,0)) ]
-    cright <- c(0,1,1)[ match(limit, c(-1,1,0)) ]
-    # disp((right - left) %*% G)
-    continuous <- apply((right - left) %*% G, 1, function(x) all(abs(x) < tolerance))
-    # disp(continuous)
-    raw <- left * cleft + right * cright
-    hyp_mat <- raw %*% G
-    nam <- rownames(hyp_mat)
-    nam <- sub("^f","g", nam)
-    nam_left <- sub("\\)","-)", nam)
-    nam_right <- sub("\\)","+)", nam)
-    nam_jump <- paste0(nam_right ,"-", nam_left)
-    # 
-    # If we're testing for a jump and the derivative is 
-    # continuous we should show the identity of the 
-    # jump tested.
-    # 
-    # If we're testing for a derivative at a knot
-    # and the derivative is continuous, we should
-    # indicate that by removing the direction indicator
-    #
-    # So:
-    # If we're testing a jump we use the full name of 
-    # the linear combination even if it happens to be 
-    # at a point of continuity
-    # Otherwise, used the directional notation only
-    # if the tested derivative is discontinuous
-    rownames(hyp_mat) <-
-      ifelse(limit == 0,
-             nam_jump,
-             ifelse(continuous, nam,
-                    ifelse(limit == 1, nam_right, nam_left)))
-    class(hyp_mat) <- c('gspline_matrix', class(hyp_mat))
-    hyp_mat
+    if(is.null(D)) {
+      ret <- Xf(x, knots, max_degree, periodic = periodic) %*% G # model matrix
+    } else {
+      # Hypothesis matrix
+      D <- rep(D, length.out = length(x))
+      limit <- rep(limit, length.out = length(x))
+      left <- Xf(x, 
+                 knots = knots, 
+                 degree = max_degree, 
+                 D = D,
+                 periodic = periodic,
+                 right = TRUE)
+      right <- Xf(x, 
+                  knots = knots, 
+                  degree = max_degree, 
+                  D = D, 
+                  periodic = periodic,
+                  right = FALSE)
+      cleft <- c(1,0,-1)[ match(limit, c(-1,1,0)) ]
+      cright <- c(0,1,1)[ match(limit, c(-1,1,0)) ]
+      # disp((right - left) %*% G)
+      continuous <- apply((right - left) %*% G, 1, function(x) all(abs(x) < tolerance))
+      # disp(continuous)
+      raw <- left * cleft + right * cright
+      ret <- raw %*% G
+      nam <- rownames(ret)
+      nam <- sub("^f","g", nam)
+      nam_left <- sub("\\)","-)", nam)
+      nam_right <- sub("\\)","+)", nam)
+      nam_jump <- paste0(nam_right ,"-", nam_left)
+      # 
+      # If we're testing for a jump and the derivative is 
+      # continuous we should show the identity of the 
+      # jump tested.
+      # 
+      # If we're testing for a derivative at a knot
+      # and the derivative is continuous, we should
+      # indicate that by removing the direction indicator
+      #
+      # So:
+      # If we're testing a jump we use the full name of 
+      # the linear combination even if it happens to be 
+      # at a point of continuity
+      # Otherwise, used the directional notation only
+      # if the tested derivative is discontinuous
+      rownames(ret) <-
+        ifelse(limit == 0,
+               nam_jump,
+               ifelse(continuous, nam,
+                      ifelse(limit == 1, nam_right, nam_left)))
+    }
+    class(ret) <- c('gspline_matrix', class(ret))
+    ret
   }
-  # ret <- function(x, D = NULL, limit = 1) {
-  #   cat('\nTrying this again\n')
-  # }
-
-  gsp <- new.env()
-  gsp$Xf <- Xf
-  gsp$G <- G
-  gsp$Xmat <- Xmat
-  environment(ret) <- gsp
+  # gsp <- new.env()
+  # gsp$knots <- knots
+  # gsp$degree <- degree
+  # gsp$smoothness <- smoothness
+  # gsp$periodic <- periodic
+  # gsp$Xf <- Xf
+  # gsp$G <- G
+  # gsp$Xmat <- Xmat
+  # environment(ret) <- gsp
   class(ret) <- c('gspline', class(ret))
   ret
 }
