@@ -180,44 +180,28 @@
 #' summary(fitg)
 #' 
 #' ## Linear hypotheses
-#' L <- list( "Overall test of slopes at 20" = rbind(
+#' L <- list("Overall test of slopes at 20" = rbind(
 #'       "Female slope at age 20" =  c( F20 <- cbind( 0 , sp(20, D = 1), 0 , 0 * sp(20, D = 1))),
 #'       "Male slope at age 20" =  c( M20 <- cbind( 0 , sp(20, D = 1), 0 , 1 * sp(20, D = 1))),
 #'       "Difference" = c(M20 - F20))
 #'       )
-#' wald( fit, L)
+#' wald(fit, L)
 #' 
 #' ## Right and left second derivatives at knots and saltus (jump)
 #' 
-#' L <- list( "Second derivatives and saltus for female curve at knot at 25" =
+#' L <- list("Second derivatives and saltus for female curve at knot at 25" =
 #'           cbind( 0, sp(c(25,25,25), D = 2, limit =c(-1,1,0)), 0,0,0,0))
 #' L
-#' wald( fit, L )
-#' 
-#' # output:
-#' #
-#' # Call:
-#' # lm(formula = y ~ sp(age) * G, data = simd)
-#' # 
-#' # Residuals:
-#' #     Min      1Q  Median      3Q     Max 
-#' # -3.1111 -0.9429  0.0774  0.6633  3.6171 
-#' # 
-#' # Coefficients:
-#' #   Estimate Std. Error t value Pr(>|t|)
-#' # (Intercept)           0.522681   0.623071   0.839    0.404
-#' # sp(age)D1(0)         -0.060361   0.056802  -1.063    0.291
-#' # sp(age)C(10).2        0.009013   0.007116   1.267    0.208
-#' # sp(age)C(25).2       -0.015459   0.013263  -1.166    0.247
-#' # Gmale                -0.092681   0.881156  -0.105    0.916
-#' # sp(age)D1(0):Gmale    0.042878   0.080331   0.534    0.595
-#' # sp(age)C(10).2:Gmale -0.006703   0.010063  -0.666    0.507
-#' # sp(age)C(25).2:Gmale  0.007650   0.018757   0.408    0.684
-#' #
-#' # Residual standard error: 1.261 on 92 degrees of freedom
-#' # Multiple R-squared:  0.05212,	Adjusted R-squared:  -0.02 
-#' # F-statistic: 0.7227 on 7 and 92 DF,  p-value: 0.653
-#' # ---
+#' wald(fit, L)
+#'  
+#' ##                                                            
+#' ## Second derivatives and saltus for female curve at knot at 25
+#' ##   numDF denDF  F.value p.value
+#' ##       2    92 2.289052 0.10711
+#' ##                Estimate Std.Error DF   t-value p-value Lower 0.95 Upper 0.95
+#' ## D2|25-         0.004942  0.006258 92  0.789720 0.43172  -0.007487   0.017372
+#' ## D2|25+        -0.010879  0.006011 92 -1.809958 0.07357  -0.022817   0.001059
+#' ## D2|25+-D2|25- -0.015822  0.011665 92 -1.356298 0.17832  -0.038990   0.007347
 #' 
 #' L0 <- list( 
 #'     "hat" = rbind( 
@@ -280,22 +264,21 @@
 #' # example: 
 #' 
 #' sp <- gspline(c(3,7), c(2,3,2), c(1,1)) 
-#' zapsmall(sp(0:10, c(1,1)))
+#' sp(0:10, c(1,1))
 #' 
 #' ## Output:
-#' ##
-#' ##        D1(0) D2(0) C(3).2 C(3).3 C(7).2
-#' ## D1(0)      1     0      0    0.0      0
-#' ## D1(1)      1     1      0    0.0      0
-#' ## D1(2)      1     2      0    0.0      0
-#' ## D1(3+)     1     3      0    0.0      0
-#' ## D1(4)      1     4      1    0.5      0
-#' ## D1(5)      1     5      2    2.0      0
-#' ## D1(6)      1     6      3    4.5      0
-#' ## D1(7+)     1     7      4    8.0      0
-#' ## D1(8)      1     8      5   12.0      1
-#' ## D1(9)      1     9      6   16.0      2
-#' ## D1(10)     1    10      7   20.0      3
+#' ##       D1|0 D2|0 C2|3 C3|3 C2|7
+#' ## D1|0     1    0    0  0.0    0
+#' ## D1|1     1    1    0  0.0    0
+#' ## D1|2     1    2    0  0.0    0
+#' ## D1|3     1    3    0  0.0    0
+#' ## D1|4     1    4    1  0.5    0
+#' ## D1|5     1    5    2  2.0    0
+#' ## D1|6     1    6    3  4.5    0
+#' ## D1|7     1    7    4  8.0    0
+#' ## D1|8     1    8    5 12.0    1
+#' ## D1|9     1    9    6 16.0    2
+#' ## D1|10    1   10    7 20.0    3
 #' 
 #' # The coefficient for the first regressor is the first derivative at x = 0;
 #' # for the second regressor, the second derivative at 0; the third, the saltus
@@ -308,7 +291,7 @@
 #'                     y = seq(0,10,.5)^2 + rnorm(21)) 
 #' fit <- lm( y ~ sp( x ), zd) 
 #' summary(fit) 
-#' Ls <-cbind( 0, sp(c(1,2,3,3,3,5,7,7,7,8), 
+#' Ls <- cbind(0, sp(c(1,2,3,3,3,5,7,7,7,8), 
 #'               D = 2, limit =c(-1,-1,-1,1,0,-1,-1,1,0,-1))) 
 #' zapsmall(Ls )
 #' #
@@ -317,36 +300,20 @@
 #' # is the second derivative at 1. 
 #' ##
 #' ## Output:
-#' #                 D1(0) D2(0) C(3).2 C(3).3
-#' # D2(1)         0     0     1      0      0
-#' # D2(2)         0     0     1      0      0
-#' # D2(3-)        0     0     1      0      0
-#' # D2(3+)        0     0     1      1      0
-#' # D2(3+)-D2(3-) 0     0     0      1      0
-#' # D2(5)         0     0     1      1      2
-#' # D2(7-)        0     0     1      1      4
-#' # D2(7+)        0     0     1      1      4
-#' # D2(7+)-D2(7-) 0     0     0      0      0
-#' # D2(8)         0     0     1      1      4
+#' ##
+#' ##               D1|0 D2|0 C2|3 C3|3
+#' ## D2|1        0    0    1    0    0
+#' ## D2|2        0    0    1    0    0
+#' ## D2|3-       0    0    1    0    0
+#' ## D2|3+       0    0    1    1    0
+#' ## D2|3+-D2|3- 0    0    0    1    0
+#' ## D2|5        0    0    1    1    2
+#' ## D2|7        0    0    1    1    4
+#' ## D2|7        0    0    1    1    4
+#' ## D2|7+-D2|7- 0    0    0    0    0
+#' ## D2|8        0    0    1    1    4
 #' 
 #' wald( fit, list( 'second derivatives' = Ls))
-#' 
-#' ## Output:
-#' ##
-#' ##                   numDF denDF  F.value p.value
-#' ## third derivatives     1    15 2.184522 0.16009
-#' ##
-#' ##           ?     Estimate Std.Error  DF   t-value p-value Lower 0.95 Upper 0.95
-#' ## D3(1)          0.000000  0.000000  15  2.408694 0.02932   0.000000   0.000000
-#' ## D3(2)          0.000000  0.000000  15  2.408694 0.02932   0.000000   0.000000
-#' ## D3(3-)         0.000000  0.000000  15  2.408694 0.02932   0.000000   0.000000
-#' ## D3(3+)        -0.535959  0.362621  15 -1.478013 0.16009  -1.308867   0.236950
-#' ## D3(3+)-D3(3-) -0.535959  0.362621  15 -1.478013 0.16009  -1.308867   0.236950
-#' ## D3(5)         -0.535959  0.362621  15 -1.478013 0.16009  -1.308867   0.236950
-#' ## D3(7-)        -0.535959  0.362621  15 -1.478013 0.16009  -1.308867   0.236950
-#' ## D3(7+)         0.000000  0.000000 Inf       NaN     NaN   0.000000   0.000000
-#' ## D3(7+)-D3(7-)  0.535959  0.362621  15  1.478013 0.16009  -0.236950   1.308867
-#' ## D3(8)          0.000000  0.000000 Inf       NaN     NaN   0.000000   0.000000
 #' 
 #' # Note that some coefficients that are 0 by design may lead to invalid degrees
 #' # of freedom and t-values.

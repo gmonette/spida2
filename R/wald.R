@@ -277,7 +277,7 @@ wald <-
         if(debug) disp(L)
         #              if(debug)disp( t(na.omit(t(L))))
         #              sv <- svd( t(na.omit(t(L))) , nu = 0 )
-        sv <- svd( na.omit(L) , nu = 0 )
+        sv <- svd(na.omit(L) , nu = 0 )
         
         if(debug)disp( sv )
         tol.fac <- max( dim(L) ) * max( sv$d )
@@ -586,7 +586,7 @@ wald2 <- function(fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , maxr
 #' @examples
 #' # coming soon
 #' @export
-print.wald <- function(x,round = 6, pround = 5,...) {
+print.wald <- function(x, round = 6, pround = 5,...) {
   pformat <- function(x, digits = pround) {
       x <- format(xx <- round(x,digits))
       x[ as.double(xx) == 0 ] <- paste(c("<.",rep('0',digits-1),'1'),collapse="")
@@ -602,19 +602,17 @@ print.wald <- function(x,round = 6, pround = 5,...) {
     ta <- tt$anova
 
     ta[["p-value"]] <- pformat(ta[["p-value"]])
-    print(as.data.frame(ta,row.names=nn))
+    print(as.data.frame(ta, row.names = nn))
     te <- tt$estimate
-    rowlab <- attr(te,"labs")
-
-    te[,'p-value'] <- pformat( te[,'p-value'])
+     te[,'p-value'] <- pformat( te[,'p-value'])
     if ( !is.null(round)) {
        for ( ii in 1:length(te)) {
            te[[ii]] <- rnd(te[[ii]],digits=round)
        }
     }
-    labs(te) <- rowlab
-    print(te,digits=round,...)
-    cat("\n")
+    temat <- as.matrix(te)
+    rownames(temat) <- rownames(tt$L)
+    print(temat, quote = F, justify = 'right')
   }
   invisible(x)
 }
