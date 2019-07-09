@@ -61,8 +61,8 @@
 #' 
 #' @format A data set with 290 rows an two variables:
 #'   \describe{
-#'     \item{\code{date} from 1995-01-01 to 2019-02-01}
-#'     \item{\code{unemployment}} rate in the U.S.
+#'     \item{\code{date}}{from 1995-01-01 to 2019-02-01}
+#'     \item{\code{unemployment}}{rate in the U.S.}
 #'   }
 #' @keywords datasets
 "Unemp"
