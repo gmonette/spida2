@@ -1,3 +1,5 @@
+2019_07_09
+* added llapply to provide list names and items to function argument in lapply
 # spida2 version 0.2.1 2019_07_09
 2019-04-17
 * modified print.wald to handle repeated row names
