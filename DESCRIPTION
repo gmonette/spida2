@@ -3,7 +3,10 @@ Type: Package
 Title: Collection of tools developed for the Summer Programme in Data Analysis 2000-2012
 Version: 0.1.2
 Date: 2018-11-21
-Author: Georges Monette, John Fox, Michael Friendly, Heather Krause
+Author: Georges Monette [aut, cre], 
+  John Fox [aut], 
+  Michael Friendly [aut], 
+  Heather Krause [aut]
 Maintainer: Georges Monette <georges+spida2@yorku.ca>
 Description: Collection of utility functions for linear and mixed models
     including wald: Wald test with functions to generate hypothesis matrices gsp:
@@ -12,8 +15,11 @@ Description: Collection of utility functions for linear and mixed models
     dvar, up, xapply Misc: vif.lme, xqplot, tab, panel.subgroups (additional level
     of subgroups in xyplot), multresp
 License: GPL (>= 2)
-LazyData: TRUE
+VignetteBuilder: knitr, rmarkdown
+LazyLoad: yes
+LazyData: yes
 RoxygenNote: 6.1.1
+Imports: stats, nlme, lattice, latticeExtra, lme4
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr
