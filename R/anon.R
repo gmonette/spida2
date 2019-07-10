@@ -7,6 +7,7 @@
 #' 
 #' @param x object that may have names
 #' @return x without names
+#' @seealso \code{\link[spida2]{name}}
 #' @seealso \code{\link[spida2]{auto}}
 #' @export
 #' @rdname anon
@@ -28,11 +29,11 @@ anon <- function(x) {
 test1 <- function(x, y) {
   x + y
 }
-#' test2 to see how to combine different function
+#' test2 to see how to combine different function -- won't see this
 #' 
-#' test2 second paragraph
+#' test2 second paragraph -- goes in description
 #' 
-#' test2 third paragraph
+#' test2 third paragraph -- goes in details
 #' 
 #' @param x the x parameter of test2
 #' @param y the y parameter of test2

@@ -14,8 +14,8 @@ na2t <- function(x) {
   x[is.na(x)] <- TRUE
   x
 }
-#' Pipe from magrittr
-#'
+# Pipe from magrittr
+#
 # Removed because of conflict with pipe defined in tidyverse
 # @importFrom magrittr %>%
 # @export
@@ -128,4 +128,3 @@ lchol <- function(x) {
   ret <- chol(xret)
   ret[rind,][,rind]
 }
-
