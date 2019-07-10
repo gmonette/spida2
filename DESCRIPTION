@@ -19,6 +19,8 @@ LazyLoad: yes
 LazyData: yes
 RoxygenNote: 6.1.1
 Imports: stats, nlme, lattice, latticeExtra, lme4
-Suggests: knitr,
-    rmarkdown
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 2.1.0)
 VignetteBuilder: knitr, rmarkdown
