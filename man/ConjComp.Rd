@@ -6,6 +6,18 @@
 \usage{
 ConjComp(X, Z = diag(nrow(X)), ip = diag(nrow(X)), tol = 1e-07)
 }
+\arguments{
+\item{X}{matrix defining space whose complement is computed.
+Not necessarily of full column rank}
+
+\item{Z}{matrix defining space within which complement is computed.
+Should be of full column rank. Default: \code{diag( nrow(X))}}
+
+\item{ip}{positive definite matrix defining inner product with respect to which
+complement is computed. Default: \code{diag( nrow(X))}}
+
+\item{tol}{tolerance (default 1e-07)}
+}
 \description{
 Conjugate complement of span(X) in span(Z) with respect to inner product ip
 }

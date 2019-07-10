@@ -4,7 +4,16 @@
 \alias{OrthoComp}
 \title{Orthogonal basis for the orthogonal complement of the column space of a matrix.}
 \usage{
-OrthoComp(X, Z, tol = 1e-07)
+OrthoComp(X, Z = diag(nrow(X)), tol = 1e-07)
+}
+\arguments{
+\item{X}{matrix defining space whose orthogonal complement is computed.
+Not necessarily of full column rank}
+
+\item{Z}{matrix defining space within which orthogonal complement is computed.
+Should be of full column rank. Default: \code{diag( nrow(X))}}
+
+\item{tol}{tolerance (default 1e-07)}
 }
 \description{
 Orthogonal basis for the orthogonal complement of the column space of a matrix.

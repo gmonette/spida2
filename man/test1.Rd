@@ -23,12 +23,12 @@ test2(x, y, z)
 \description{
 test1 second paragraph
 
-test2 second paragraph
+test2 second paragraph -- goes in description
 }
 \details{
 test1 third paragraph
 
-test2 third paragraph
+test2 third paragraph -- goes in details
 }
 \section{test1}{
 
