@@ -7,7 +7,7 @@ Author: Georges Monette [aut, cre],
   John Fox [aut], 
   Michael Friendly [aut], 
   Heather Krause [aut]
-Maintainer: Georges Monette <georges+spida2@yorku.ca>
+Maintainer: Georges Monette <georges@yorku.ca>
 Description: Collection of utility functions for linear and mixed models
     including wald: Wald test with functions to generate hypothesis matrices gsp:
     general spline with any degree and smoothness with additional function 'sc' to
@@ -18,6 +18,7 @@ License: GPL (>= 2)
 LazyLoad: yes
 LazyData: yes
 RoxygenNote: 6.1.1
+Encoding: UTF-8
 Imports: stats, nlme, lattice, latticeExtra, lme4
 Suggests: 
     knitr,
