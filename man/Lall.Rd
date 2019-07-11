@@ -6,6 +6,11 @@
 \usage{
 Lall(fit, nam)
 }
+\arguments{
+\item{fit}{model}
+
+\item{pat}{FIXME}
+}
 \value{
 hypothesis matrix
 }

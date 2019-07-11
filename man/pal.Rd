@@ -10,6 +10,8 @@ pal(col = c("blue", "pink"), border = "light gray", ...)
 \item{col}{colors to show}
 
 \item{border}{(default 'light gray')}
+
+\item{\dots}{FIXME}
 }
 \description{
 Generate a palette of colours -- possibly superseded

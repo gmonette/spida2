@@ -2,7 +2,7 @@
 #'
 #' Equivalent of grep(..., value = TRUE)
 #'
-#' @param \dots
-#' @seealso \code{\link[spida2]{grepl}}
+#' @param \dots arguments to \code{\link{grep}}
+#' @seealso \code{\link{grepl}}
 #' @export
 grepv <- function(...) grep( ..., value = TRUE)

@@ -6,6 +6,11 @@
 \usage{
 Lcall(fit, factors = getFactorNames(fit), debug = F)
 }
+\arguments{
+\item{fit}{model}
+
+\item{factors}{FIXME}
+}
 \value{
 a hypothesis matrix
 }

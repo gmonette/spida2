@@ -6,6 +6,11 @@
 \usage{
 \method{print}{cat}(object, ...)
 }
+\arguments{
+\item{\dots}{unused arguments}
+
+\item{x}{a cat object to be printed with \code{\link{cat}}}
+}
 \value{
 invisible(x)
 }

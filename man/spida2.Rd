@@ -98,3 +98,42 @@ a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{pdIn
 }
 }
 
+\section{Graphics}{
+
+\itemize{
+\item \code{\link[spida2]{gd}} and \code{\link[spida2]{td}} easy interface to set
+      graphical parameters for lattice and graphics. \code{gd} sets
+      parameters to make graphs look like ggplot2 graphics. 
+\item \code{\link[spida2]{panel.fit}} add fitted values and error bands with \code{\link[latticeExtra]{layer}} or \code{\link[latticeExtra]{glayer}}
+\item \code{\link[spida2]{panel.dell}} add data ellipse \code{\link[latticeExtra]{layer}} or \code{\link[latticeExtra]{glayer}}
+}
+}
+
+\section{Miscellaneous utility functions}{
+
+\itemize{
+\item \code{\link[spida2]{sortdf}} sort rows of a data frame -- useful in a magrittr pipeline
+\item \code{\link[spida2]{assn}} assign -- useful in a magrittr pipeline
+\item \code{\link[spida2]{disp}} utility to display value of a variable -- useful for debugging
+\item \code{\link[spida2]{getFactorNames}} get names of variables that are factors in a data frame
+\item \code{\link[spida2]{\%less\%}} synonym for \code{\link{setdiff}} as well as
+      \code{\link[spida2]{\%and\%}} and \code{\link[spida2]{\%or\%}}
+\item \code{\link[spida2]{labs}} assign, extract and print labels for various objects
+\item \code{\link[spida2]{pch}} generate plotting character mnemonically
+\item \code{\link[spida2]{pfmt}} format p-values
+\item \code{\link[spida2]{print.cat}}
+\item \code{\link[spida2]{rnd}} round a vector to keep significant digits in variation in values
+\item \code{\link[spida2]{run}} evaluate a string as a command with try
+\item \code{\link[spida2]{grepv}} grep(..., value = TRUE)
+}
+}
+
+\section{String manipulation functions}{
+
+Function designed to work smoothly with pipes in \pkg{magrittr}:
+\itemize{
+\item \code{\link[spida2]{sub_}} and \code{\link[spida2]{gsub_}} handle substitution in a pipeline and return a factor if the input is a factor. 
+\item \code{\link[spida2]{name}} changes the names of an object and returns the renamed object 
+}
+}
+

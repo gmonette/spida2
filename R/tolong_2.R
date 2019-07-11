@@ -23,7 +23,7 @@
 #' is created with values equal to the row number in the wide frame.
 #' @param safe_sep is used to create unique variable name combinations when
 #' expanding time-varying variables to have consistent occasion names.
-#' @param ... Other arguments are passed to \link{list("stats::reshape")}.
+#' @param ... Other arguments are passed to \code{\link[stats]{reshape}}.
 #' @return a data frame in long form in which each 'root' of a time-varying
 #' variables is a variable and the occasions are the values of the variable
 #' with name 'timevar'.

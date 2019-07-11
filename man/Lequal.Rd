@@ -6,6 +6,11 @@
 \usage{
 Lequal(fit, pat)
 }
+\arguments{
+\item{fit}{model}
+
+\item{pat}{FIXME}
+}
 \value{
 hypothesis matrix
 }

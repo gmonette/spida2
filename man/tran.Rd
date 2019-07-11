@@ -2,9 +2,21 @@
 % Please edit documentation in R/tran.R
 \name{tran}
 \alias{tran}
+\alias{tr}
 \title{Translate elements of a vector}
 \usage{
 tran(from, to, x, tofactor = is.factor(x))
+
+tr(x, from, to)
+}
+\arguments{
+\item{from}{numerical, logical or character vector of values or factor levels to change}
+
+\item{to}{vector of corresponding values to change into}
+
+\item{x}{numeric, logical, character vector or factor to modify}
+
+\item{tofactor}{if TRUE, value will be a factor, default: \code{is.factor(x)}}
 }
 \description{
 This should return something like 'to' whenever all of 'x'
@@ -14,4 +26,20 @@ either to change those to NAs or to leave them as is.
 For a strict function, we can simply index to which will
 leave it unchanged
 which conflicts with my versions of tr, ergo this is called tran
+
+\code{tr} changes the order of arguments in \code{tran}.
+}
+\examples{
+tran(FALSE, TRUE, c(FALSE, TRUE, NA))
+tran(c(FALSE, NA), c(TRUE, FALSE), c(FALSE, TRUE, NA))
+tran(c(FALSE, NA), c(TRUE, FALSE), c(FALSE, TRUE, NA)) \%>\% mode
+# numeric
+tran(c(1,2), c(11,12), 1:5)
+tran(NA, 99, c(1:5, NA))
+tran(NA, 99, c(1:5, NA)) \%>\% mode
+# mixed
+tran(c(1,2,10), c('a','b', 'z'), 1:5)
+# factor
+tran(letters, 1:26, factor(c('a','b','z')) )
+tran('a', 1, factor(c('a','b','z')) )
 }

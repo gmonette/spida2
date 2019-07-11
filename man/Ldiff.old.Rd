@@ -7,6 +7,17 @@
 Ldiff.old(fit, pat, levnames = c(reflevel, substring(rownames(L), cut +
   1)), reflevel = "<ref>", cut = nchar(pat))
 }
+\arguments{
+\item{fit}{model}
+
+\item{pat}{pattern to match in names of coefficients}
+
+\item{levnames}{level names}
+
+\item{reflevel}{name for reference level}
+
+\item{cut}{number of characters in pattern to retain for labelling}
+}
 \value{
 hypothesis matrix
 }

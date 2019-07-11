@@ -11,8 +11,6 @@
 #' \code{\link{reshape}} does not work if long variable names and time values are not fully crossed, e.g \code{x_1, x_2, x_3, y_1, y_2}. By default \code{long}
 #' creates additional variables with "NAs" so the set of variables given to \code{\link{reshape}} is fully crossed, e.g. adding a variable \code{y_3 <- NA}.
 #'
-#' \code{\link{to_long}} and \code{\link{long}} are synonyms for compatibility with the 'spida' package.
-#'
 #' @param data wide data frame
 #' @param sep (default '_') single character separator between long names and 'time' value.
 #'        Variable names with this separator are transformed to long variables.

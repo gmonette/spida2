@@ -6,6 +6,7 @@
 \alias{panel.band}
 \alias{panel.errorbars}
 \alias{panel.labels}
+\alias{fillin}
 \title{Panel functions for predicted values and SE bands}
 \usage{
 panel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number,
@@ -22,6 +23,8 @@ panel.errorbars(x, y, fit, lower, upper, length = 0.2, angle = 90,
   border = F, font, fontface)
 
 panel.labels(x, y, labels, subscripts, ...)
+
+fillin(data, form, n = 200, xpd = 1)
 }
 \arguments{
 \item{x, y}{position of labels, usually supplied through panel call}
@@ -56,8 +59,6 @@ panel.labels(x, y, labels, subscripts, ...)
 
 \item{labels}{default is rownames of data}
 
-\item{X}{argument, passed by 'layer' or 'glayer'}
-
 \item{data}{data frame to be used to add additional values of numeric variable}
 
 \item{form}{formula evaluated in data. The first term defines the variable with values to be filled in and the remaining terms define the variables to be used for grouping determining the minima and maxima within which values are added.}
@@ -67,9 +68,20 @@ Values falling outside conditional minima and maxima are culled. Default 200.}
 
 \item{xpd}{expansion factor to add points beyond minima and maxima. Default 1.0.}
 
+\item{X}{argument, passed by 'layer' or 'glayer'}
+
 \item{dots}{passed from main plotting function}
 
 \item{labels}{to display}
+
+\item{data}{data frame with values of x that need filling in}
+
+\item{n}{number of additional points over range of predictor (default 200)}
+
+\item{form}{formula idenfying variable x to fill in and grouping variables, g1, g2, etc.
+using syntax: \code{~ x + g1 + g2} (the variable to fill in comes first)}
+
+\item{xpd}{expansion beyond range of predictor (default 1.0, i.e. no expansion)}
 }
 \value{
 The 'panel.bands', 'panel.fit', 'panel.errorbars', and 'panel.labels' functions are
@@ -83,6 +95,9 @@ called via layer or glayer without further complications
 e.g. \code{xyplot(......,labels = rownames(data)) + layer(panel.labels(...))}
 or  \code{xyplot(....., labels = rownames(data), subscripts = T) + glayer(panel.labels(...))}.
 For selected labels see the examples with \code{\link[lattice]{trellis.focus}} and \code{\link[lattice]{panel.identify}}
+
+Fills in values in gaps between observed predictor values to help produce
+a smooth graph of predicted values versus predictor values.
 }
 \details{
 With 'layer' and 'glayer' in 'latticeExtra', these functions can be used to easily generate fitted values and
@@ -97,6 +112,8 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
 \item \code{panel.errorbars}: similar to panel.fit but draws error bars instead of bands
 
 \item \code{panel.labels}: add labels
+
+\item \code{fillin}: fill in values to produce smoother fitted curve
 }}
 
 \examples{

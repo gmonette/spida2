@@ -52,8 +52,6 @@ be temporarily substituted.
 
 \code{\link{reshape}} does not work if long variable names and time values are not fully crossed, e.g \code{x_1, x_2, x_3, y_1, y_2}. By default \code{long}
 creates additional variables with "NAs" so the set of variables given to \code{\link{reshape}} is fully crossed, e.g. adding a variable \code{y_3 <- NA}.
-
-\code{\link{to_long}} and \code{\link{long}} are synonyms for compatibility with the 'spida' package.
 }
 \examples{
 z <- data.frame(id =letters[1:10], id2= 11:20, v_L = 1:10, v_R = 11:20)

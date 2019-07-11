@@ -6,6 +6,13 @@
 \usage{
 Lrm(fit, nam, vals = 1:nrow(L.mu))
 }
+\arguments{
+\item{fit}{model}
+
+\item{nam}{name of categorical effect}
+
+\item{vals}{select rows of mean estimation matrix FIXME}
+}
 \value{
 hypothesis matrix
 }

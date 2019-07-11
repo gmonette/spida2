@@ -6,8 +6,17 @@
 \usage{
 \method{print}{wald}(x, round = 6, pround = 5, ...)
 }
+\arguments{
+\item{x}{wald object}
+
+\item{round}{FIXME}
+
+\item{pround}{FIXME}
+
+\item{\dots}{FIXME}
+}
 \value{
-called for
+called for  FIXME
 }
 \description{
 Print method for wald objects
@@ -16,7 +25,7 @@ Print method for wald objects
 This is a note
 }
 \examples{
-# coming soon
+# coming soon FIXME
 }
 \seealso{
 \code{\link{wald}}

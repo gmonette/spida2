@@ -6,6 +6,9 @@
 \usage{
 .mat2arr(x)
 }
+\arguments{
+\item{x}{matrix}
+}
 \description{
 Transform a matrix of test results for display
 }

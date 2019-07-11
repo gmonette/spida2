@@ -72,14 +72,14 @@
 #' write a 'getFix' method to extract estimated coefficients, their estimated
 #' covariance matrix, and the denominator degrees of freedom for each
 #' estimated coefficient. See the examples below for 
-#' a \code{\link{gefFix}} method for a \code{\link{glm}} object
+#' a \code{\link{getFix}} method for a \code{\link{glm}} object
 #' and for 'mipo' objects in the packages 'mice':
 #'
 #' @param fit a model for which a \code{getFix} method exists.
 #' @param Llist a hypothesis matrix or a pattern to be matched or a list of
 #'        these
 #' @param clevel level for confidence intervals. No confidence intervals if clevel is NULL
-#' @param pred prediction data frame to evaluate fitted model using '
+#' @param pred prediction data frame to evaluate fitted model using
 #'        \code{getX(fit) %*% coef}
 #' @param data data frame used as 'data' attribute fot list elements returned only if
 #'        the corresponding element of \code{Llist} has a NULL data attribute
@@ -105,16 +105,16 @@
 #' @param method 'svd' (current default) or 'qr' is the method used to find the
 #'       full rank version of the hypothesis matrix.  'svd' has correctly identified
 #'       the rank of a large hypothesis matrix where 'qr' has failed.
-#' @param pars passed to \code{\link{rstan::extract}} method for stanfit objects.
-#' @param include passed to \code{\link{rstan::extract}} method for stanfit objects.#' 
+#' @param pars passed to \code{\link[rstan]{extract}} method for stanfit objects.
+#' @param include passed to \code{\link[rstan]{extract}} method for stanfit objects.#' 
 #' @param help obsolete
 #' @return An object of class \code{wald}, with the following components:
 #'       COMPLETE
-#' @seealso \code{\link{Lform}}, \code{\link{xlevels}}, \code{\link{dlevels}},
+#' @seealso \code{\link{Lform}}, ,
 #'          \code{\link{Lfx}}, \code{\link{getX}}, \code{\link{M}},
 #'          \code{\link{Lall}},\code{\link{Lc}},\code{\link{Lequal}},
 #'          \code{\link{Ldiff}},\code{\link{Lmu}},\code{\link{Lmat}},\code{\link{Lrm}},
-#'          \code{\link{Leff}}, \code{\link{as.data.frame.wald}}. To extend to new
+#'          \code{\link{as.data.frame.wald}}. To extend to new
 #'          models see \code{\link{getFix}}. To generate hypothesis matrices for general
 #'          splines see \code{\link{gsp}} and \code{\link{sc}}.
 #' @references REFERENCES HERE
@@ -386,8 +386,7 @@ model.matrix(~ ses * Sex * Sector,data=pred)
 
 #' @describeIn wald experimental version with RHS?
 #' @export
-wald2 <- function(fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , maxrows = 25,
-                 full = FALSE, fixed = FALSE, invert = FALSE, method = 'svd',df = NULL, RHS = 0) {
+wald2 <- function(fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , maxrows = 25, full = FALSE, fixed = FALSE, invert = FALSE, method = 'svd',df = NULL, RHS = 0) {
 #' GM: 2015 08 11:  to do:
 #'  Experimental version of wald with RHS
 #' NEEDS to be restructured with
@@ -575,16 +574,16 @@ wald2 <- function(fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , maxr
 }
 #' Print method for wald objects
 #'
-#' @param x
-#' @param round
-#' @param pround
-#' @param \dots
-#' @return called for
+#' @param x wald object
+#' @param round FIXME
+#' @param pround FIXME
+#' @param \dots FIXME
+#' @return called for  FIXME
 #' @note This is a note
 #' @author GM
 #' @seealso \code{\link{wald}}
 #' @examples
-#' # coming soon
+#' # coming soon FIXME
 #' @export
 print.wald <- function(x, round = 6, pround = 5,...) {
   pformat <- function(x, digits = pround) {
@@ -1004,7 +1003,7 @@ getFix.default <- function(fit, ...) stop(paste("Write a 'getFix' method for cla
 
 #' Generic 'vcov' extended to objects with a \code{getFix} method
 #'
-#' @param fit
+#' @param fit model with \code{\link{getFix}} method
 #' @return estimated variance covariance matrix of fixed effects
 #' @author GM
 #' @export
@@ -1085,8 +1084,8 @@ getFactorNames.default <- function(object,...) getFactorNames( getData(object))
 
 #' Print method for 'cat' objects
 #'
-#' @param x
-#' @param \dots
+#' @param x a cat object to be printed with \code{\link{cat}}
+#' @param \dots unused arguments
 #' @return invisible(x)
 #' @export
 print.cat <- function(object,...) {
@@ -1267,11 +1266,11 @@ Lmat <- function(fit, pattern, fixed = FALSE, invert = FALSE, debug = FALSE) {
 }
 #' Older version of Ldiff
 #'
-#' @param fit
-#' @param pat
-#' @param levnames
-#' @param reflevel
-#' @param cut
+#' @param fit model
+#' @param pat pattern to match in names of coefficients
+#' @param levnames level names
+#' @param reflevel name for reference level
+#' @param cut number of characters in pattern to retain for labelling
 #' @return hypothesis matrix
 #' @export
 Ldiff.old <- function(fit, pat, levnames = c(reflevel,substring(rownames(L),cut+1)),
@@ -1291,9 +1290,9 @@ Ldiff.old <- function(fit, pat, levnames = c(reflevel,substring(rownames(L),cut+
 }
 #' Version of Ldiff used in RDC
 #'
-#' @param fit
-#' @param nam
-#' @param ref
+#' @param fit model
+#' @param nam name of effect
+#' @param ref unused
 #' @return hypothesis matrix
 #' @export
 Ldiff.rdc <- function( fit, nam , ref = "no longer used") {
@@ -1313,12 +1312,12 @@ Ldiff.rdc <- function( fit, nam , ref = "no longer used") {
 
 #' Hypothesis matrix to test differencs in factor levels
 #'
-#' @param fit
-#' @param pat
-#' @param levnames
-#' @param reflevel
-#' @param cut
-#' @param verbose
+#' @param fit model
+#' @param pat pattern to match for categorical effect
+#' @param levnames level names 
+#' @param reflevel name for reference level
+#' @param cut number of characters to retain for label
+#' @param verbose default FALSE
 #' @return hypothesis matrix
 #' @export
 Ldiff <- function( fit, pat, levnames = c(reflevel,substring(rownames(L),cut+1)),
@@ -1352,9 +1351,9 @@ Ldiff <- function( fit, pat, levnames = c(reflevel,substring(rownames(L),cut+1))
 
 #' Estimate predicted response for a factor level.
 #'
-#' @param fit
-#' @param nam
-#' @param verbose
+#' @param fit model
+#' @param nam name of categorical effect
+#' @param verbose default 0
 #' @export
 Lmu <- function(fit, nam, verbose = 0) {
        ## "Works only if 'nam' is a factor and a main effect and model has Intercept")
@@ -1383,10 +1382,10 @@ Lmu <- function(fit, nam, verbose = 0) {
 
 #' Hypothesis matrix for lmer objects: comparisons with reference level
 #'
-#' @param fit
-#' @param nam
-#' @param ref
-#' @param verbose
+#' @param fit model
+#' @param nam name of categorical factor
+#' @param ref FIXME
+#' @param verbose default 0
 #'
 #' @export
 Lc <- function(fit, nam, ref = 1, verbose = 0) {
@@ -1408,9 +1407,9 @@ Lc <- function(fit, nam, ref = 1, verbose = 0) {
 
 #' Construct hypothesis matrix to test repeated measures factor effects
 #'
-#' @param fit
-#' @param nam
-#' @param vals
+#' @param fit model
+#' @param nam name of categorical effect
+#' @param vals select rows of mean estimation matrix FIXME
 #' @return hypothesis matrix
 #' @export
 Lrm <- function(fit, nam, vals = 1:nrow(L.mu)) {
@@ -1434,8 +1433,8 @@ Lrm <- function(fit, nam, vals = 1:nrow(L.mu)) {
 
 #' Construct hypothesis matrix to test ????
 #'
-#' @param fit
-#' @param factors
+#' @param fit model 
+#' @param factors FIXME
 #' @return a hypothesis matrix
 #' @export
 Lcall <- function( fit , factors = getFactorNames(fit), debug = F){
@@ -1470,8 +1469,8 @@ Lcall <- function( fit , factors = getFactorNames(fit), debug = F){
 
 #' Hypothesis matrix to test equality of factor level effects
 #'
-#' @param fit
-#' @param pat
+#' @param fit model
+#' @param pat FIXME
 #' @return hypothesis matrix
 #' @export
 Lequal <- function(fit, pat) {
@@ -1502,8 +1501,8 @@ Lequal <- function(fit, pat) {
 
 #' Hypothesis matrix to test for lmer objects
 #'
-#' @param fit
-#' @param pat
+#' @param fit model
+#' @param pat FIXME
 #' @return hypothesis matrix
 #' @export
 Lall <- function( fit , nam ) {

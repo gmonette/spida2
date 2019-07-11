@@ -34,7 +34,7 @@ is created with values equal to the row number in the wide frame.}
 \item{safe_sep}{is used to create unique variable name combinations when
 expanding time-varying variables to have consistent occasion names.}
 
-\item{...}{Other arguments are passed to \link{list("stats::reshape")}.}
+\item{...}{Other arguments are passed to \code{\link[stats]{reshape}}.}
 }
 \value{
 a data frame in long form in which each 'root' of a time-varying

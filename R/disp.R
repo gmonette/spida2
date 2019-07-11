@@ -5,11 +5,6 @@
 #' @param x value to print
 #' @param head (default: deparse(substitute(x))) heading preceding printed value
 #' @export
-disp <- function(x, head = deparse(substitute(x)))
-{
-  cat("\n::: ", head, " :::\n")
-  print(x)
-}
 disp<-function(x, head = deparse(substitute(x)))
 {
   cat("::: ", head, " :::\n")

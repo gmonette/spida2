@@ -7,7 +7,13 @@
 Lc(fit, nam, ref = 1, verbose = 0)
 }
 \arguments{
-\item{verbose}{}
+\item{fit}{model}
+
+\item{nam}{name of categorical factor}
+
+\item{ref}{FIXME}
+
+\item{verbose}{default 0}
 }
 \description{
 Hypothesis matrix for lmer objects: comparisons with reference level

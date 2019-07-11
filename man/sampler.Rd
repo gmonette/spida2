@@ -7,6 +7,8 @@
 sampler(n = 24, all = FALSE)
 }
 \arguments{
+\item{n}{FIXME}
+
 \item{all}{default: FALSE}
 }
 \description{

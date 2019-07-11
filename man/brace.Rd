@@ -2,10 +2,13 @@
 % Please edit documentation in R/brace.R
 \name{brace}
 \alias{brace}
+\alias{brace_}
 \title{Draw a brace}
 \usage{
 brace(x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2,
   tip = FALSE)
+
+brace_(...)
 }
 \arguments{
 \item{x1, }{y1, x1, y2 endpoints of brace}
@@ -22,6 +25,11 @@ the coordinates of the point of the brace, invisibly
 \description{
 Draw a brace
 }
+\section{Functions}{
+\itemize{
+\item \code{brace_}: default tip = TRUE
+}}
+
 \examples{
 plot(c(0,10), c(0,10), type = 'n')
 lines(brace(0, 0, 0, 5), lwd = 2)

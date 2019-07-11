@@ -7,6 +7,19 @@
 Ldiff(fit, pat, levnames = c(reflevel, substring(rownames(L), cut + 1)),
   reflevel = "<ref>", cut = nchar(pat), verbose = F)
 }
+\arguments{
+\item{fit}{model}
+
+\item{pat}{pattern to match for categorical effect}
+
+\item{levnames}{level names}
+
+\item{reflevel}{name for reference level}
+
+\item{cut}{number of characters to retain for label}
+
+\item{verbose}{default FALSE}
+}
 \value{
 hypothesis matrix
 }

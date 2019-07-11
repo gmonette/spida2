@@ -25,7 +25,7 @@
 #' (default: names(data)[gicc(data, data[idvar])]).
 #' For all variables, except \code{idvar} to be treated as time-varying,
 #' use \code{invar = NULL}.
-#' @param \dots Other arguments are passed to \link{list("stats::reshape")}.
+#' @param \dots Other arguments are passed to \code{\link[stats]{reshape}}.
 #' @seealso \code{\link{tolong}}
 #' @return a data frame in wide form in which each variable that varies
 #' within levels of 'idvar' is turned into as many variables as there are

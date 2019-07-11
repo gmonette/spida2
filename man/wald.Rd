@@ -59,9 +59,9 @@ coefficients that do not match will be selected.}
 full rank version of the hypothesis matrix.  'svd' has correctly identified
 the rank of a large hypothesis matrix where 'qr' has failed.}
 
-\item{pars}{passed to \code{\link{rstan::extract}} method for stanfit objects.}
+\item{pars}{passed to \code{\link[rstan]{extract}} method for stanfit objects.}
 
-\item{include}{passed to \code{\link{rstan::extract}} method for stanfit objects.#'}
+\item{include}{passed to \code{\link[rstan]{extract}} method for stanfit objects.#'}
 
 \item{help}{obsolete}
 }
@@ -101,7 +101,7 @@ To extend the 'wald' function to a new class of objects, one needs to
 write a 'getFix' method to extract estimated coefficients, their estimated
 covariance matrix, and the denominator degrees of freedom for each
 estimated coefficient. See the examples below for 
-a \code{\link{gefFix}} method for a \code{\link{glm}} object
+a \code{\link{getFix}} method for a \code{\link{glm}} object
 and for 'mipo' objects in the packages 'mice':
 }
 \section{Functions}{
@@ -180,11 +180,11 @@ getFix.mipo <- function( fit, ...){
 REFERENCES HERE
 }
 \seealso{
-\code{\link{Lform}}, \code{\link{xlevels}}, \code{\link{dlevels}},
+\code{\link{Lform}}, ,
          \code{\link{Lfx}}, \code{\link{getX}}, \code{\link{M}},
          \code{\link{Lall}},\code{\link{Lc}},\code{\link{Lequal}},
          \code{\link{Ldiff}},\code{\link{Lmu}},\code{\link{Lmat}},\code{\link{Lrm}},
-         \code{\link{Leff}}, \code{\link{as.data.frame.wald}}. To extend to new
+         \code{\link{as.data.frame.wald}}. To extend to new
          models see \code{\link{getFix}}. To generate hypothesis matrices for general
          splines see \code{\link{gsp}} and \code{\link{sc}}.
 }

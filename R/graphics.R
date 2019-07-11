@@ -26,20 +26,20 @@ NULL
 #' ggplot2-like appearance. Default is n = 4
 #' @param new If new = TRUE, open a new window, otherwise modify the existing
 #' active window, if there is one.
-#' @param col
-#' @param lty
-#' @param lwd
-#' @param pch
-#' @param cex
+#' @param col FIXME
+#' @param lty FIXME
+#' @param lwd FIXME
+#' @param pch FIXME
+#' @param cex FIXME
 #' for each level of the groups variable
-#' @param font
-#' @param fill
-#' @param col.line
+#' @param font FIXME
+#' @param fill FIXME
+#' @param col.line FIXME
 #' not given
-#' @param col.symbol
+#' @param col.symbol FIXME
 #' 'groups' not given
-#' @param alpha
-#' @param alpha.line
+#' @param alpha FIXME
+#' @param alpha.line FIXME
 #' @param alpha.symbol graphical parameters for superpose.line and
 #' superpose.symbol
 #' @param len extend the length of parameters by recycling to length 'len'
@@ -48,9 +48,9 @@ NULL
 #' @param record If TRUE, set history to 'recording'. Caution: this can use a
 #' lot of memory in .GlobalEnv.  Consider adding selected graphs to memory with
 #' the 'Insert' key instead.
-#' @param basecol
-#' @param colsets
-#' @param \dots
+#' @param basecol FIXME
+#' @param colsets FIXME
+#' @param \dots FIXME
 #' parameter: e.g. \code{plot.symbol=list(cex=2,col='red')}. Particular useful
 #' for the cex, col, lty, lwd, alpha, pch parameters in plot.line and
 #' plot.symbol.
@@ -61,7 +61,7 @@ NULL
 #' gd(7)            # sets line types for 7 groups using colors from RColorBrewer
 #' td( plot.symbol = list(col = 'red', pch = 17))
 #' gd_(col='blue')  # set main color to 'blue'
-#' @describeIn td
+#' @describeIn gd without ggplot2-like theme
 #' @export
 td <- function(...) gd(..., gglike = FALSE)
 # td <- function(
@@ -332,7 +332,7 @@ gd_ <- function(...) gd(superpose = FALSE, ...)
 #' @param \dots additional arguments passed to 'plot' command
 #' @param mfrow number of rows and columns per page. If missing, an attempt is
 #' made to choose a reasonable number.
-#' @param ask
+#' @param ask FIXME
 #' @param mcex character expansion factor for marginal text
 #' \code{mcex}
 #' @param maxlab maximum number of categories to label in barcharts
@@ -605,7 +605,7 @@ xqplot <- function(x,
 
 #' Show available characters, colours, etc.
 #'
-#' @param n
+#' @param n FIXME
 #' @param all default: FALSE
 #' @concept lattice
 #' @seealso \code{\link[lattice]{lattice::show.settings}}
@@ -659,7 +659,7 @@ if(all) {
 #'
 #' @param col colors to show
 #' @param border (default 'light gray')
-#' @param \dots
+#' @param \dots FIXME
 #' @export
 pal <- function(col=c('blue','pink'), border = "light gray", ...) {
      n <- length(col)
@@ -705,8 +705,8 @@ pals <- function(pattern = '', ignore = '^gray[0-9]|^grey[0-9]',
 
 #' Replace elements of x with correspondingly named elements of ll
 #'
-#' @param x
-#' @param ll
+#' @param x FIXME
+#' @param ll FIXME
 #' @export
 change <- function(x,ll) {
   #
@@ -759,7 +759,7 @@ change <- function(x,...) {
 #' data$subvar
 #' @param subgroups.type plotting type, typically 'p' or 'l', for each level of
 #' the variable passed through the \code{subgroups} argument
-#' @param type
+#' @param type FIXME
 #' @param panel.subgroups function use to plot data within in each group
 #' referring to the levels of the variable passed by \code{subgroups}.  Define
 #' a \code{panel.subgroups} argument in the call to \code{xyplot} and it will

@@ -6,6 +6,9 @@
 \usage{
 part(A, B)
 }
+\arguments{
+\item{A, B}{vectors to be coerced to character}
+}
 \description{
 Intersection and symmetric differences of two sets
 }

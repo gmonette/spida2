@@ -6,9 +6,12 @@
 \usage{
 grepv(...)
 }
+\arguments{
+\item{\dots}{arguments to \code{\link{grep}}}
+}
 \description{
 Equivalent of grep(..., value = TRUE)
 }
 \seealso{
-\code{\link[spida2]{grepl}}
+\code{\link{grepl}}
 }

@@ -58,8 +58,8 @@
 #' generated as separate single terms or with an expression that evaluates to a
 #' suitable matrix.
 #' @param data the data frame in which expressions are evaluated.
-#' @param wrap
-#' @param debug
+#' @param wrap if TRUE return expression wrapped in \code{with(data, ...)}, default FALSE
+#' @param debug if TRUE provide verbose output, default FALSE
 #' @param formula as an argument of \code{M}, a one-sided formula defining a
 #' main effect or an interaction term involving factors.
 #' @param expr as an argument of \code{M}, an expression that can be evaluated

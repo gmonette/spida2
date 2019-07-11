@@ -27,7 +27,7 @@ within clusters are kept in output even if not included in 'idvar'
 For all variables, except \code{idvar} to be treated as time-varying,
 use \code{invar = NULL}.}
 
-\item{\dots}{Other arguments are passed to \link{list("stats::reshape")}.}
+\item{\dots}{Other arguments are passed to \code{\link[stats]{reshape}}.}
 }
 \value{
 a data frame in wide form in which each variable that varies

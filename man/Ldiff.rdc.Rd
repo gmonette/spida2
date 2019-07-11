@@ -6,6 +6,13 @@
 \usage{
 Ldiff.rdc(fit, nam, ref = "no longer used")
 }
+\arguments{
+\item{fit}{model}
+
+\item{nam}{name of effect}
+
+\item{ref}{unused}
+}
 \value{
 hypothesis matrix
 }

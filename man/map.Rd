@@ -4,14 +4,27 @@
 \alias{map}
 \title{Apply a mapping to a vector}
 \usage{
-map(from, to, x)
+map(from, to, x, ...)
+}
+\arguments{
+\item{from}{vector of values to be matched against}
+
+\item{to}{vector from which selected values are returned}
+
+\item{x}{vector of values to be matched}
 }
 \description{
-A mnemonic for \code{to[match(x, from)]}. Compare with the more elaborate \code{\link[yscs]{tran}}.
+A mnemonic for \code{to[match(x, from)]}. 
+Compare with the more elaborate \code{\link{tr}} or \code{\link{tran}}.
 }
 \examples{
 x.from <- c('A',"FromNA",'Z','B',"N")
 x.to   <- factor(c('a',NA,'z','b',NA),levels=c('z','a','b',NA))
 x <- c("Z","B",NA,"N","M")
 map(x.from, x.to, x)
+}
+\seealso{
+tran
+
+tr
 }

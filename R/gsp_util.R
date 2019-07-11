@@ -2,19 +2,27 @@
 ##
 ##  General polynomial splines: August 8, 2008
 ##  Revised June 16, 2010 to incorporate degree 0 polynomials
-##    and constraining evaluation of spline to 0 with 'intercept'
+##    and constraining evaluation of spline to 0 with intercept
 ##   
 ##  Modified: June 15, 2013 - GM
 ##  Added specified linear contraints to gsp and 
 ##  to sc expressed
 ##  in terms of full polynomial parametrization
 ##  
-##  Added 'PolyShift' function to specify constraints for
+##  Added PolyShift function to specify constraints for
 ##  a periodic spline. See example in the manual page.
 ##
-##  Added 'periodic' argument to gsp
+##  Added periodic argument to gsp
 ##
 ##
+#' 
+#' Generate X matrix estimate Dth derivative of polynomial at x
+#' 
+#' @param x vector of values where derivative evaluated
+#' @param degree of polynomial
+#' @param order of derivative
+#' @param signif significant digits for labelling
+#' 
 #' @export
 Xmat <- function( x, degree, D = 0, signif = 3) {
   
@@ -323,12 +331,12 @@ Proj.test <- function( x, fun = Proj) {
 
 #' Marked for deletion
 #' 
-#' @param x 
-#' @param knots 
-#' @param degree 
-#' @param smooth 
-#' @param intercept 
-#' @param signif
+#' @param x FIXME
+#' @param knots  FIXME
+#' @param degree  FIXME
+#' @param smooth  FIXME
+#' @param intercept  FIXME
+#' @param signif FIXME
 #' @export
 gspf.1 <- function( x, knots, degree= 3, smooth = pmax(pmin( degree[-1],
                                                              degree[ - length(degree)]) - 1,0 ), intercept = 0, signif = 3) {
@@ -445,8 +453,14 @@ smsp <- function( x, knots ) {
 #' Transformation of polynomial coefficients to change origin
 #'  
 #' Useful to equate polynomial coefficients for a periodic spline
-#' @param x 
-#' @param n
+#' 
+#' If \code{coef} is a vector of coefficients for a polynomial of the
+#' form \code{ coef[1] + coef[2]*x + coef[3]*x^2 + coef[4]*x^3 }, then
+#' \code{coef_tr <- PolyShift(a, 4) %*% coef} is a vector of coefficients
+#' for the same polynomial centered at \code{a}, i.e.
+#' \code{ coef_tr[1] + coef_tr[2]*(x-a) + coef_tr[3]*(x-a)^2 + coef_tr[4]*(x-a)^3 }, 
+#' @param a center for transformed polynomial 
+#' @param n number of coefficients
 #' @examples
 #' coefs <- c(3,2,4)
 #' x <- 3
@@ -455,9 +469,9 @@ smsp <- function( x, knots ) {
 #' sum( coefs * x ^ (0:(n-1))) 
 #' sum( PolyShift(a,n)%*%coefs * (x -a)^(0:(n-1)))
 #' @export
-PolyShift <- function( x, n) {
+PolyShift <- function(a, n) {
   ret <- matrix(0,n,n)
-  pow <- x^(col(ret) - row(ret))
-  ret[col(ret)>=row(ret)] <- unlist( sapply(0:(n-1),function(x) choose(x,0:x)))
+  pow <- a^(col(ret) - row(ret))
+  ret[col(ret)>=row(ret)] <- unlist( sapply(0:(n-1),function(x) choose(a,0:a)))
   ret*pow
 }

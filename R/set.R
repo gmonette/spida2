@@ -4,8 +4,7 @@
 
 #' Intersection and symmetric differences of two sets
 #'
-#' @param A
-#' @param B
+#' @param A,B vectors to be coerced to character
 #' @export
 part <- function( A, B) {
   # partitions of two sets

@@ -24,6 +24,8 @@ axis.}
 \item{mfrow}{number of rows and columns per page. If missing, an attempt is
 made to choose a reasonable number.}
 
+\item{ask}{FIXME}
+
 \item{mcex}{character expansion factor for marginal text
 \code{mcex}}
 

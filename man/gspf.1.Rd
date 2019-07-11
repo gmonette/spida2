@@ -8,15 +8,17 @@ gspf.1(x, knots, degree = 3, smooth = pmax(pmin(degree[-1],
   degree[-length(degree)]) - 1, 0), intercept = 0, signif = 3)
 }
 \arguments{
-\item{x}{}
+\item{x}{FIXME}
 
-\item{knots}{}
+\item{knots}{FIXME}
 
-\item{degree}{}
+\item{degree}{FIXME}
 
-\item{smooth}{}
+\item{smooth}{FIXME}
 
-\item{intercept}{}
+\item{intercept}{FIXME}
+
+\item{signif}{FIXME}
 }
 \description{
 Marked for deletion

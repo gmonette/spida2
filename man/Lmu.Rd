@@ -6,6 +6,13 @@
 \usage{
 Lmu(fit, nam, verbose = 0)
 }
+\arguments{
+\item{fit}{model}
+
+\item{nam}{name of categorical effect}
+
+\item{verbose}{default 0}
+}
 \description{
 Estimate predicted response for a factor level.
 }

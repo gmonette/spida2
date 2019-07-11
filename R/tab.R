@@ -16,13 +16,6 @@
 ###
 ###    Incorporate testing from package rdc
 ####
-disp <- function(x, head = deparse(substitute(x)))
-{
-  cat("::: ", head, " :::\n")
-  print(x)
-  cat("======================\n")
-  invisible(x)
-}
 # Changes:
 # 2014:
 #   October 16: added tab.table, tab.matrix, tab.array
@@ -34,6 +27,8 @@ disp <- function(x, head = deparse(substitute(x)))
 #'
 #' Transform a matrix of test results for display
 #' 
+#' @param x matrix
+#' @export
 .mat2arr <- function(x) {
       ret <- as.list(x)
       dim(ret) <- NULL
@@ -46,22 +41,42 @@ disp <- function(x, head = deparse(substitute(x)))
       names(ret) <- nams
       ret
 }
-#' Drop last facet of array
+#' Drop last facets of array
+#' 
+#' Primarily used to strips totals from a table bordered by totals 
+#' by dropping the last facet. 
+#' The 
 #'
+#' @param arr array
+#' @param drop drop parameter in subsetting, default FALSE
+#' @param keep names of facets to be kept, default NULL
+#' 
+#' @examples
+#' (arr <- array(1:24,2:4))
+#' arr %>% dropLast
+#' arr %>% dropLast(drop = TRUE)
+#' tab(iris, ~ Species)
+#' tab(iris, ~ Species) %>% dropLast 
+#' tab(iris, ~ Species + I(Sepal.Length > 5)) %>% dropLast 
+#' # row percentages:
+#' tab(iris, ~ Species + I(Sepal.Length > 5), pct= 1)
+#' tab(iris, ~ Species + I(Sepal.Length > 5), pct= 1) %>% dropLast
+#' tab(iris, ~ Species + I(Sepal.Length > 5), pct= 1) %>% dropLast(keep = "All")
 #' @export
-dropLast <- function( mat ,drop = FALSE, keep = NULL) {
+dropLast <- function(arr, drop = FALSE, keep = NULL) {
   # NEW: 2013-08-20, G. Monette
   # utility function to drop totals from tab
-  ind.last <- dim(mat)
+  ind.last <- dim(arr)
   ind.keep <- as.list(- ind.last) # drop last index of each dim unless name in keep
   last <- function(x) x[length(x)]
-  names.last <- sapply( dimnames(mat), last)
-  if ( !is.null(keep)) {
+  names.last <- sapply( dimnames(arr), last)
+  disp(names.last)
+  if (!is.null(keep)) {
     no.drop <- names.last %in% keep
     ind.keep[no.drop] <- lapply( ind.last[no.drop], seq_len)
   }
-  call <- c(list(mat),ind.keep,drop=drop)
-  # print(call)
+  call <- c(list(arr), ind.keep, drop = drop)
+  disp(call)
   do.call( `[`,call)
 }
 #' Drop last elements of an array if it is a "Total"

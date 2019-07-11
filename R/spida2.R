@@ -75,8 +75,8 @@
 #' \item \code{\link[spida2]{hw}} Artificial data on height, weight and health. Illustrates suppression.
 #' \item \code{\link[spida2]{Unemp}} U.S. monthly unemployment from January 1995 to February 2019.
 #' }
-#' @section Graphics
-#' \itemize {
+#' @section Graphics:
+#' \itemize{
 #' \item \code{\link[spida2]{gd}} and \code{\link[spida2]{td}} easy interface to set
 #'       graphical parameters for lattice and graphics. \code{gd} sets
 #'       parameters to make graphs look like ggplot2 graphics. 
@@ -100,12 +100,11 @@
 #' \item \code{\link[spida2]{grepv}} grep(..., value = TRUE)
 #' }
 #' @section String manipulation functions:
-#' Tools to help manipulate messy data designed to work smoothly with \code{magrittr} pipes. 
+#' Function designed to work smoothly with pipes in \pkg{magrittr}:
 #' \itemize{
-#' \item \code{\link[spida2]{sub_}} and \code{\link[spida2]{gsub_}} handle substitution in a pipeline and return a factor if the input is a factor
+#' \item \code{\link[spida2]{sub_}} and \code{\link[spida2]{gsub_}} handle substitution in a pipeline and return a factor if the input is a factor. 
 #' \item \code{\link[spida2]{name}} changes the names of an object and returns the renamed object 
 #' }
 #' @docType package
 #' @name spida2
-#' @alias spida
 NULL

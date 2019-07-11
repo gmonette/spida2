@@ -6,10 +6,12 @@
  
 Useful to equate polynomial coefficients for a periodic spline}
 \usage{
-PolyShift(x, n)
+PolyShift(a, n)
 }
 \arguments{
-\item{x}{}
+\item{a}{center for transformed polynomial}
+
+\item{n}{number of coefficients}
 }
 \description{
 Transformation of polynomial coefficients to change origin

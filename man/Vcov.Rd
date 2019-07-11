@@ -9,6 +9,9 @@ Vcov(fit)
 
 Vcor(fit)
 }
+\arguments{
+\item{fit}{model with \code{\link{getFix}} method}
+}
 \value{
 estimated variance covariance matrix of fixed effects
 }
