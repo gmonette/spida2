@@ -94,10 +94,10 @@ getG <- function(fit,...) UseMethod('getG')
 #' @describeIn getG default method
 #' @export
 getG.default <- function(fit,...) "Unknown class"
-#' @describeIn getG lme method
+#' @rdname getG
 #' @export
 getG.lme <- function(fit,...) getVarCov(fit,...)
-#' @describeIn getG gls method
+#' @rdname getG
 #' @export
 getG.gls <- function(fit,...) getVarCov(fit,...)
 #' @rdname getG
