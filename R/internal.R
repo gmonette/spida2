@@ -1,4 +1,4 @@
 
 .onLoad <- function(x,y) {
-  packageStartupMessage("spida2: testing startup message.\n")
+  packageStartupMessage("spida2: development branch.\n")
 }
