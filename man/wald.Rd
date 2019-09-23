@@ -180,7 +180,7 @@ getFix.mipo <- function( fit, ...){
 REFERENCES HERE
 }
 \seealso{
-\code{\link{Lform}}, ,
+\code{\link{Lform}},
          \code{\link{Lfx}}, \code{\link{getX}}, \code{\link{M}},
          \code{\link{Lall}},\code{\link{Lc}},\code{\link{Lequal}},
          \code{\link{Ldiff}},\code{\link{Lmu}},\code{\link{Lmat}},\code{\link{Lrm}},

@@ -70,10 +70,6 @@ that are easy to remember.
 \itemize{
 \item \code{default}: default method
 
-\item \code{lme}: lme method
-
-\item \code{gls}: gls method
-
 \item \code{default}: default method
 
 \item \code{lme}: lme method

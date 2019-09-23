@@ -110,7 +110,7 @@
 #' @param help obsolete
 #' @return An object of class \code{wald}, with the following components:
 #'       COMPLETE
-#' @seealso \code{\link{Lform}}, ,
+#' @seealso \code{\link{Lform}},
 #'          \code{\link{Lfx}}, \code{\link{getX}}, \code{\link{M}},
 #'          \code{\link{Lall}},\code{\link{Lc}},\code{\link{Lequal}},
 #'          \code{\link{Ldiff}},\code{\link{Lmu}},\code{\link{Lmat}},\code{\link{Lrm}},
@@ -1602,6 +1602,36 @@ rowdiffs <- function(L) {
   rownames(Lret) <- paste(rownames(Lp),'-',rownames(Lm))
   Lret
 }
+#' Get the data used to fit a model
+#' 
+#' Returns a data frame with the variables used to fit a model.
+#' In contrast with \code{\link{model.frame}}, \code{getModelData}
+#' returns the variables as they appear in the original data frame
+#' used to fit the model.
+#' 
+#' @param model a model to which the function \code{\link{model.frame}} 
+#'      can be applied along with a number of other basic functions and
+#'      methods.
+#' @return a data frame with the variables needed to fit 'model'.
+#' @export
+getModelData <- function(model){
+  # author: J. Fox 2019_09_20
+  data <- model.frame(model)
+  vars <- all.vars(formula(model))
+  if ("pi" %in% vars){
+    vars <- setdiff(vars, "pi")
+    message("the symbol 'pi' is treated as a numeric constant in the model formula")
+  }
+  cols <- colnames(data)
+  check <- vars %in% cols
+  if (!(all(check))){
+    missing.cols <- !check
+    data <- expand.model.frame(model, vars[missing.cols])
+  }
+  valid <- make.names(colnames(data)) == colnames(data) 
+  data[valid]
+}
+
 # if(FALSE){ #TESTS:
 #   library(nlme)
 #   fit <- lme(mathach ~ ses * Sex * Sector, hs, random = ~ 1|school)
