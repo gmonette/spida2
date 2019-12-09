@@ -319,7 +319,7 @@
 #' # of freedom and t-values.
 #' 
 #' @export
-gspline <- function(
+Gspline <- function(
   knots, 
   degree = 3,
   smoothness = pmax(

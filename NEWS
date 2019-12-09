@@ -1,3 +1,5 @@
+2019_12_09
+* rename 'gspline' 'Gspline' to avert conflicts with package 'gspline'
 2019_12_08
 * development version 0.2.0.9000
 * released version 0.2.0
