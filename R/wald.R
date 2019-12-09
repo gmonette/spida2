@@ -88,23 +88,23 @@
 #'        variance-covariance matrix is returned
 #' @param full if TRUE, the hypothesis matrix is the model matrix for
 #'        \code{fit} such that the estimated coefficients are the predicted values for
-#'       the fixed portion of the model. This is designed to allow the calculation of
-#'       standard errors for models for which the \code{predict} method does not
-#'       provide them.
+#'        the fixed portion of the model. This is designed to allow the calculation of
+#'        standard errors for models for which the \code{predict} method does not
+#'        provide them.
 #' @param pred (default NULL) a data frame to use to create a model matrix. 
-#'       This is an alternative to `full` when the model matrix needs to
-#'       be based on data frame other than the data frame used for 
-#'       fitting the model.
+#'        This is an alternative to `full` when the model matrix needs to
+#'        be based on data frame other than the data frame used for 
+#'        fitting the model.
 #' @param fixed if \code{Llist} is a character to be used a regular expression,
-#'       if \code{fixed} is TRUE \code{Llist} is interpreted literally, i.e.
-#'       characters that have a special meaning in regular expressions are
-#'       interpreted literally.
+#'        if \code{fixed} is TRUE \code{Llist} is interpreted literally, i.e.
+#'        characters that have a special meaning in regular expressions are
+#'        interpreted literally.
 #' @param invert if \code{Llist} is a character to be used a regular
-#'       expression, \code{invert == TRUE} causes the matches to be inverted so that
-#'       coefficients that do not match will be selected.
+#'        expression, \code{invert == TRUE} causes the matches to be inverted so that
+#'        coefficients that do not match will be selected.
 #' @param method 'svd' (current default) or 'qr' is the method used to find the
-#'       full rank version of the hypothesis matrix.  'svd' has correctly identified
-#'       the rank of a large hypothesis matrix where 'qr' has failed.
+#'        full rank version of the hypothesis matrix.  'svd' has correctly identified
+#'        the rank of a large hypothesis matrix where 'qr' has failed.
 #' @param pars passed to \code{\link[rstan]{extract}} method for stanfit objects.
 #' @param include passed to \code{\link[rstan]{extract}} method for stanfit objects.#' 
 #' @param help obsolete
@@ -387,15 +387,14 @@ model.matrix(~ ses * Sex * Sector,data=pred)
 #' @describeIn wald experimental version with RHS?
 #' @export
 wald2 <- function(fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , maxrows = 25, full = FALSE, fixed = FALSE, invert = FALSE, method = 'svd',df = NULL, RHS = 0) {
-#' GM: 2015 08 11:  to do:
-#'  Experimental version of wald with RHS
-#' NEEDS to be restructured with
-#' 1. printing must show RHS
-#' 2. needs to work with a list as second argument
-#' 3. should redo handling of list so RHS is in list and so
-#'    list handing is outside main function
-#'
-
+# GM: 2015 08 11:  to do:
+#  Experimental version of wald with RHS
+# NEEDS to be restructured with
+# 1. printing must show RHS
+# 2. needs to work with a list as second argument
+# 3. should redo handling of list so RHS is in list and so
+#    list handing is outside main function
+#
     if (full ) return( wald ( fit, model.matrix(fit)))
   dataf <- function(x,...) {
     x <- cbind(x)
@@ -1072,12 +1071,12 @@ getData.lm <- function(x,...) model.frame(x,...)
 #' @param ... other orguments (currently not used)
 #' @export
 getFactorNames <- function(object, ...) UseMethod("getFactorNames")
-#' @describeIn getFactorNames
+#' @describeIn getFactorNames Get factor names
 #' @export
 getFactorNames.data.frame <- function(object,...) {
      names(object)[ sapply(object, is.factor)  ]
 }
-#' @describeIn getFactorNames
+#' @describeIn getFactorNames Get factor names in a data frame
 #' @export
 getFactorNames.default <- function(object,...) getFactorNames( getData(object))
 
@@ -1562,7 +1561,7 @@ glh <- function( ...) wald( ...)    # previous name for 'wald' function
 #' @param data (default NULL) a data frame on which to evaluate the design matrix
 #' @return a design matrix
 #' @export
-getX <- function(fit, data = getData(fit)) {
+getX <- function(fit, data = getModelData(fit)) {
   f <- formula(fit)
   if(length(f) == 3) f <- f[-2]
   ret <- model.matrix(f, data = data)
@@ -1631,6 +1630,61 @@ getModelData <- function(model){
   valid <- make.names(colnames(data)) == colnames(data) 
   data[valid]
 }
+#' Create a data frame of predictors to display a model
+#' 
+#' Generates the cartesian product of factors and ranges
+#' of continuous variables in a model. 
+#' 
+#' This function is particularly useful to display fitted  values
+#' of a model that is non-linear in continuous predictors where
+#' plotting curves against the original data would produce 
+#' linear segments instead of a continuous curve.
+#' 
+#' By default, 50 values of each continuous variable is
+#' generated. See the examples to generate fewer values.
+#' 
+#' Variables are considered discrete if the have fewer than
+#' discrete_max distinct values.
+#' 
+#' @param mod a model from which a model data frame can be
+#'        extracted with \code{\link{getModelData}}.
+#' @param n number of values generated for continuous predictors. Default: 50
+#' @param dmax maximum number of distinct values for a numeric variable
+#'        to be considered discrete. Default: 5
+#' @return a data frame with every combination of the values generated
+#'         for each variable.
+#' @export
+make.grid <- function(mod, n = 50, dmax = 5) {
+  d <- as.list(getModelData(mod))[-1] # drop response
+  for(i in seq_along(d)) {
+    dat <- d[[i]]
+    d[[i]] <- if(is.factor(dat)) {
+      levels(dat)} else {
+        if(is.numeric(dat)) {
+          if(length(unique(dat)) > dmax) {
+            rr <- range(dat)
+            dat <- seq(rr[1],rr[2],length.out = n)
+          } else {
+            dat <- unique(dat)
+          }
+        }
+        else {
+          if(is.character(dat)) {
+            dat <- levels(as.factor(dat))
+          }
+          else {
+            if(is.logical(dat)) {
+              dat <- c(FALSE,TRUE)
+            } else {
+              stop(paste0('Type of ',names(d)[i],' not known'))
+            }
+          }
+        }
+      }
+    
+  }
+  do.call(expand.grid,d)
+}
 
 # if(FALSE){ #TESTS:
 #   library(nlme)
@@ -1648,4 +1702,14 @@ getModelData <- function(model){
 #   w <- wald(fit,g)
 #   w
 #   as.data.frame(w)
+# 
+# hs$rand <- sample(1:5,nrow(hs), replace = T)
+# fit <- lm(mathach ~ ses * Sex * Sector + rand,hs)
+# summary(fit)
+# gg <- make.grid(fit)
+# tab(gg, ~ Sector + Sex)
+# gg$fit <- predict(fit, newdata = gg)
+# library(latticeExtra)
+# xyplot(fit ~ ses | Sex * Sector, gg, groups = rand) %>% useOuterStrips
+#
 # }

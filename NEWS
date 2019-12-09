@@ -1,3 +1,9 @@
+2019_12_08
+* added make.grid to generate cartesian product of predictor to help plot fitted responses
+* added getModelData (from gspline)
+* added copy of pipe (from magrittr)
+2019_10_25
+* added panel.barchart2 to allow varying heights/widths of bars in a barchart using lattice 
 2019_07_09
 * added llapply to provide list names and items to function argument in lapply
 # spida2 version 0.2.1 2019_07_09

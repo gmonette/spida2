@@ -4,7 +4,7 @@
 \alias{getX}
 \title{Design matrix for a fit possibly on a new data frame}
 \usage{
-getX(fit, data = getData(fit))
+getX(fit, data = getModelData(fit))
 }
 \arguments{
 \item{fit}{a fitted object with formula method}

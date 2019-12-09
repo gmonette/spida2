@@ -2,9 +2,15 @@
 % Please edit documentation in R/wald.R
 \name{getFactorNames}
 \alias{getFactorNames}
+\alias{getFactorNames.data.frame}
+\alias{getFactorNames.default}
 \title{get the names of variables that are factors}
 \usage{
 getFactorNames(object, ...)
+
+\method{getFactorNames}{data.frame}(object, ...)
+
+\method{getFactorNames}{default}(object, ...)
 }
 \arguments{
 \item{object}{a data frame or object with a \code{\link{getData}} method that produces a data frame or a list}
@@ -14,3 +20,10 @@ getFactorNames(object, ...)
 \description{
 get the names of variables that are factors
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{data.frame}: Get factor names
+
+\item \code{default}: Get factor names in a data frame
+}}
+
