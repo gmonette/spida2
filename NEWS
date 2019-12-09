@@ -2,6 +2,7 @@
 * added make.grid to generate cartesian product of predictor to help plot fitted responses
 * added getModelData (from gspline)
 * added copy of pipe (from magrittr)
+* released version 0.2.0
 2019_10_25
 * added panel.barchart2 to allow varying heights/widths of bars in a barchart using lattice 
 2019_07_09

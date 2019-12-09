@@ -1,7 +1,7 @@
 Package: spida2
 Type: Package
 Title: Collection of tools developed for the Summer Programme in Data Analysis 2000-2012
-Version: 0.2.0.9000
+Version: 0.2.0
 Date: 2019-12-08
 Author: Georges Monette [aut, cre], 
   John Fox [aut], 
