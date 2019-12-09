@@ -1,4 +1,5 @@
 2019_12_08
+* development version 0.2.0.9000
 * released version 0.2.0
 * added make.grid to generate cartesian product of predictor to help plot fitted responses
 * added getModelData (from gspline)
