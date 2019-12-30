@@ -206,7 +206,7 @@
 #'   z$gender <- with(z, cut( women, c(-1,15,50,101),labels = c("Male","Mixed","Female")))
 #'   z$type2 <- with( z, reorder(type,education, mean, na.rm=T))
 #'   tab(z, ~ gender + type2)
-#'   z <- fillin( z, ~ education + type + gender, xpd = 1.1)
+#'   z <- fillin( z, education ~ type + gender, xpd = 1.1)
 #'   fit <- lm( income ~ (education+I(education^2)+I(education^3) )* type * gender,
 #'              z, na.action = na.exclude)    # overfitting!
 #'   summary(fit)
@@ -389,14 +389,14 @@ fillin <- function(data, form, n = 200, xpd = 1.0) {
 #                   y = 1:10,
 #                   g2 = LETTERS[c(1,1,1,2,2,2,3,3,3,3)])
 # zd
-# (ff <- fillin(zd, ~ x + g, n = 10, xpd = 1.2))
+# (ff <- fillin(zd, x ~ g, n = 10, xpd = 1.2))
 # tab(ff, ~ g)
 # barchart
 # ?barchart
 # library(latticeExtra)
-# zz <- fillin(zd, ~ x + g+g2, n =100)
+# zz <- fillin(zd, x ~ g+g2, n =100)
 # xyplot( x ~ g|g2 ,zd, cex = 2) +
-#   xyplot( x ~ g|g2, fillin(zd, ~ x + g+g2, n =100),col='red')
+#   xyplot( x ~ g|g2, fillin(zd, x ~ g+g2, n =100),col='red')
 #
 # as.data.frame(tab(zd, ~g))
 # panel.fit ####
