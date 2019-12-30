@@ -1,3 +1,4 @@
+## 2019_12_29 GM: corrected error in call of fillin in help file 
 ##
 ## panel functions:
 ##
@@ -68,7 +69,7 @@
 #'         Prestige, na.action = na.exclude)    # overfitting!
 #'   # adding extra values of predictor to get smooth line
 #'   Prestige$occupation <- rownames(Prestige)
-#'   z <- fillin(Prestige, ~education + type, xpd = 1.1) # fill in 'education' within 'type'
+#'   z <- fillin(Prestige, education ~ type, xpd = 1.1) # fill in 'education' within 'type'
 #'
 #'   dim(z)
 #'   dim(Prestige)
