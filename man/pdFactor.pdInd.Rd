@@ -7,8 +7,6 @@
 pdFactor.pdInd(object)
 }
 \arguments{
-\item{object}{a 'pdInd' object from which the right-triangular factor of the variance matrix it represents will be extracted}
-
 \item{object}{a 'pdInd' object from which the right-triangular factor of the
 variance matrix it represents will be extracted}
 }

@@ -4,8 +4,12 @@
 \alias{jk_wtd_mean_se}
 \title{Post-stratification jacknife estimate of SE of weighted mean}
 \usage{
-jk_wtd_mean_se(x, by = rep(1, length(x)), w = rep(1, length(x)),
-  FUN = wtd_mean)
+jk_wtd_mean_se(
+  x,
+  by = rep(1, length(x)),
+  w = rep(1, length(x)),
+  FUN = wtd_mean
+)
 }
 \arguments{
 \item{x}{numerical vector}
@@ -201,7 +205,7 @@ ds$w_ws_sn <- with(ds, w_o_ht / ht_ws_mean)   # within-state 'sum to n' mean
 with(ds, tapply(w_ws_sn, State, sum)) # check that they sum to within-state n
 tab(ds, ~ State)
 #'
-#' As noted earlier, these weights need to be multiplied by $\\frac{N_s/N}{n_s/n}$ to transform them into
+#' As noted earlier, these weights need to be multiplied by $\frac{N_s/N}{n_s/n}$ to transform them into
 #' overall 'sum to $n$' weights. The easiest way to generate $N_s$ is to use the Horvitz-Thomson weights:
 #' 
 ds$N_s <- with(ds, capply(w_o_ht, State, sum))
@@ -234,7 +238,9 @@ round(dssum, 3)
      combinations, \code{\link{jk_wtd_mean_se}} for a jacknife estimate of the SE of a weighted mean
      and \code{\link{jk_lin_comb_se}} for a jacknife estimate of the SE of a linear combination.
 
-Other Post-stratification survey functions: \code{\link{jk_wtd_means}},
-  \code{\link{lin_comb}}, \code{\link{wtd_mean}}
+Other Post-stratification survey functions: 
+\code{\link{jk_wtd_means}()},
+\code{\link{lin_comb}()},
+\code{\link{wtd_mean}()}
 }
 \concept{Post-stratification survey functions}

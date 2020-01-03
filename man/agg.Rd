@@ -4,8 +4,15 @@
 \alias{agg}
 \title{Create a data frame at a higher level of aggregation with a possible incidence matrix for categorical factors}
 \usage{
-agg(object, form = formula(object), agg = NULL, sep = "_",
-  sep.clus = "/", na.rm = TRUE, ...)
+agg(
+  object,
+  form = formula(object),
+  agg = NULL,
+  sep = "_",
+  sep.clus = "/",
+  na.rm = TRUE,
+  ...
+)
 }
 \arguments{
 \item{object}{a data frame to be aggregated.}

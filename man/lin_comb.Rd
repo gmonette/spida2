@@ -15,7 +15,9 @@ lin_comb(x, w)
 Linear combination of x
 }
 \seealso{
-Other Post-stratification survey functions: \code{\link{jk_wtd_mean_se}},
-  \code{\link{jk_wtd_means}}, \code{\link{wtd_mean}}
+Other Post-stratification survey functions: 
+\code{\link{jk_wtd_mean_se}()},
+\code{\link{jk_wtd_means}()},
+\code{\link{wtd_mean}()}
 }
 \concept{Post-stratification survey functions}

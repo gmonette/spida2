@@ -35,30 +35,6 @@ dropped for use in a linear model.}
 \item{na.rm}{(default TRUE) whether to drop missing values}
 
 \item{FUN}{(default mean) function to be applied to create contextual values}
-
-\item{x}{variable to be centered or residualized within groups. If x is a
-factor, cvar and dvar return matrices whose columns are named consistently
-with the names of coding variables for factors.}
-
-\item{id}{identifies clusters}
-
-\item{all}{(default FALSE) if TRUE cvar.factor returns the columns means of
-an incidence matrix including the first level. Otherwise, the first level is
-dropped for use in a linear model.}
-
-\item{na.rm}{(default TRUE) whether to drop missing values}
-
-\item{x}{variable to be centered or residualized within groups. If x is a
-factor, cvar and dvar return matrices whose columns are named consistently
-with the names of coding variables for factors.}
-
-\item{id}{identifies clusters}
-
-\item{all}{(default FALSE) if TRUE cvar.factor returns the columns means of
-an incidence matrix including the first level. Otherwise, the first level is
-dropped for use in a linear model.}
-
-\item{na.rm}{(default TRUE) whether to drop missing values}
 }
 \description{
 cvar and  See also \code{\link{dvar}} are 

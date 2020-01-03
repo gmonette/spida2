@@ -4,8 +4,12 @@
 \alias{run}
 \title{Evaluate character strings as an expression}
 \usage{
-run(..., envir = parent.frame(), enclos = if (is.list(envir) ||
-  is.pairlist(envir)) parent.frame() else baseenv(), try = TRUE)
+run(
+  ...,
+  envir = parent.frame(),
+  enclos = if (is.list(envir) || is.pairlist(envir)) parent.frame() else baseenv(),
+  try = TRUE
+)
 }
 \arguments{
 \item{...}{expressions that can evaluate to character strings to paste.}

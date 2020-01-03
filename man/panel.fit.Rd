@@ -9,18 +9,83 @@
 \alias{fillin}
 \title{Panel functions for predicted values and SE bands}
 \usage{
-panel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number,
-  alpha, col, col.line, col.symbol, border = F, font, fontface)
+panel.fit(
+  x,
+  y,
+  fit,
+  lower,
+  upper,
+  subscripts,
+  ...,
+  type,
+  group.number,
+  alpha,
+  col,
+  col.line,
+  col.symbol,
+  border = F,
+  font,
+  fontface
+)
 
-gpanel.fit(x, y, fit, lower, upper, subscripts, ..., type, group.number,
-  alpha, col, col.line, col.symbol, border = F, font, fontface)
+gpanel.fit(
+  x,
+  y,
+  fit,
+  lower,
+  upper,
+  subscripts,
+  ...,
+  type,
+  group.number,
+  alpha,
+  col,
+  col.line,
+  col.symbol,
+  border = F,
+  font,
+  fontface
+)
 
-panel.band(x, y, fit, lower, upper, subscripts, ..., type, group.number,
-  alpha, col, col.line, col.symbol, border = F, font, fontface)
+panel.band(
+  x,
+  y,
+  fit,
+  lower,
+  upper,
+  subscripts,
+  ...,
+  type,
+  group.number,
+  alpha,
+  col,
+  col.line,
+  col.symbol,
+  border = F,
+  font,
+  fontface
+)
 
-panel.errorbars(x, y, fit, lower, upper, length = 0.2, angle = 90,
-  subscripts, ..., type, group.number, alpha, col, col.line, col.symbol,
-  border = F, font, fontface)
+panel.errorbars(
+  x,
+  y,
+  fit,
+  lower,
+  upper,
+  length = 0.2,
+  angle = 90,
+  subscripts,
+  ...,
+  type,
+  group.number,
+  alpha,
+  col,
+  col.line,
+  col.symbol,
+  border = F,
+  font,
+  fontface
+)
 
 panel.labels(x, y, labels, subscripts, ...)
 
@@ -57,31 +122,20 @@ fillin(data, form, n = 200, xpd = 1)
 
 \item{angle}{(default 90) of crossbar in `panel.errorbars`}
 
-\item{labels}{default is rownames of data}
-
-\item{data}{data frame to be used to add additional values of numeric variable}
-
-\item{form}{formula evaluated in data. The first term defines the variable with values to be filled in and the remaining terms define the variables to be used for grouping determining the minima and maxima within which values are added.}
-
-\item{n}{the number of values to be added between the global mininum and maximum.
-Values falling outside conditional minima and maxima are culled. Default 200.}
-
-\item{xpd}{expansion factor to add points beyond minima and maxima. Default 1.0.}
-
-\item{X}{argument, passed by 'layer' or 'glayer'}
-
-\item{dots}{passed from main plotting function}
-
 \item{labels}{to display}
 
 \item{data}{data frame with values of x that need filling in}
 
-\item{n}{number of additional points over range of predictor (default 200)}
-
 \item{form}{formula idenfying variable x to fill in and grouping variables, g1, g2, etc.
 using syntax: \code{~ x + g1 + g2} (the variable to fill in comes first)}
 
+\item{n}{number of additional points over range of predictor (default 200)}
+
 \item{xpd}{expansion beyond range of predictor (default 1.0, i.e. no expansion)}
+
+\item{X}{argument, passed by 'layer' or 'glayer'}
+
+\item{dots}{passed from main plotting function}
 }
 \value{
 The 'panel.bands', 'panel.fit', 'panel.errorbars', and 'panel.labels' functions are
@@ -147,7 +201,7 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
         Prestige, na.action = na.exclude)    # overfitting!
   # adding extra values of predictor to get smooth line
   Prestige$occupation <- rownames(Prestige)
-  z <- fillin(Prestige, ~education + type, xpd = 1.1) # fill in 'education' within 'type'
+  z <- fillin(Prestige, education ~ type, xpd = 1.1) # fill in 'education' within 'type'
 
   dim(z)
   dim(Prestige)
@@ -284,7 +338,7 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
   z$gender <- with(z, cut( women, c(-1,15,50,101),labels = c("Male","Mixed","Female")))
   z$type2 <- with( z, reorder(type,education, mean, na.rm=T))
   tab(z, ~ gender + type2)
-  z <- fillin( z, ~ education + type + gender, xpd = 1.1)
+  z <- fillin( z, education ~ type + gender, xpd = 1.1)
   fit <- lm( income ~ (education+I(education^2)+I(education^3) )* type * gender,
              z, na.action = na.exclude)    # overfitting!
   summary(fit)

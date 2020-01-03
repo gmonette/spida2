@@ -4,8 +4,15 @@
 \alias{tolong_2}
 \title{Long data set from wide data set}
 \usage{
-tolong_2(data, sep = "_", expand = TRUE, timevar = "time",
-  idvar = "id", safe_sep = "#\%@!", ...)
+tolong_2(
+  data,
+  sep = "_",
+  expand = TRUE,
+  timevar = "time",
+  idvar = "id",
+  safe_sep = "#\%@!",
+  ...
+)
 }
 \arguments{
 \item{data}{a data frame in 'wide' form.}

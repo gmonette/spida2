@@ -3,7 +3,6 @@
 \docType{package}
 \name{spida2}
 \alias{spida2}
-\alias{spida2-package}
 \title{spida2: Functions used in the Statistical Consulting Service at York University}
 \description{
 The spida2 package is a collection of functions and datasets intended primarily

@@ -1,3 +1,5 @@
+2020_01_02
+* added getD to get data from a model and optionally add rows (made possible by getModelData by J. Fox)
 2019_12_09
 * rename 'gspline' 'Gspline' to avert conflicts with package 'gspline'
 * version 0.2.1

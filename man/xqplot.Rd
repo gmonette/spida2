@@ -4,12 +4,26 @@
 \alias{xqplot}
 \title{Extended Quantile Plots}
 \usage{
-xqplot(x, ptype = "quantile", labels = dimnames(x)[[2]], ...,
-  mfrow = findmfrow(ncol(x)), ask = prod(mfrow) < ncol(x) &&
-  dev.interactive(), mcex = 0.8, maxlab = 12, debug = F, mar = c(4,
-  2.5, 2, 1), xlab.pos = 2, xlab.cex = 0.7, sublab.pos = xlab.pos +
-  xlab.cex * 1.15, text.cex.factor = 1, left.labs = F, class = TRUE,
-  xaxs = "i", maxvarnamelength = 20)
+xqplot(
+  x,
+  ptype = "quantile",
+  labels = dimnames(x)[[2]],
+  ...,
+  mfrow = findmfrow(ncol(x)),
+  ask = prod(mfrow) < ncol(x) && dev.interactive(),
+  mcex = 0.8,
+  maxlab = 12,
+  debug = F,
+  mar = c(4, 2.5, 2, 1),
+  xlab.pos = 2,
+  xlab.cex = 0.7,
+  sublab.pos = xlab.pos + xlab.cex * 1.15,
+  text.cex.factor = 1,
+  left.labs = F,
+  class = TRUE,
+  xaxs = "i",
+  maxvarnamelength = 20
+)
 }
 \arguments{
 \item{x}{a data frame or list of variables to plot}

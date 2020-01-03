@@ -9,13 +9,11 @@ change(x, ...)
 change(x, ...)
 }
 \arguments{
-\item{x}{FIXME}
+\item{x}{list or vector some of whose elements will be replaced or appended to}
 
 \item{...}{elements for replacement or appending}
 
 \item{ll}{FIXME}
-
-\item{x}{list or vector some of whose elements will be replaced or appended to}
 }
 \description{
 Replace elements of x with correspondingly named elements of ll

@@ -4,8 +4,7 @@
 \alias{as.data.frame.wald}
 \title{Transform output of a Wald test into a data frame}
 \usage{
-\method{as.data.frame}{wald}(obj, se = 2, digits = 3, sep = "",
-  which = 1)
+\method{as.data.frame}{wald}(obj, se = 2, digits = 3, sep = "", which = 1)
 }
 \arguments{
 \item{obj}{a 'wald' object}

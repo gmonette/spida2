@@ -1685,7 +1685,27 @@ make.grid <- function(mod, n = 50, dmax = 5) {
   }
   do.call(expand.grid,d)
 }
-
+#' Add rows of predictor variable values to model data frame
+#' 
+#' Generates additional rows of a predictor data frame
+#' so that factors retain the levels of the factors
+#' in the model data frame,  provided no new values
+#' are introduced.
+#' 
+#' @param mod a model from which a model data frame can be
+#'        extracted with \code{\link{getModelData}}.
+#' @param add a data frame containing values to be added.
+#' @return a data frame with concatenating the rows of the
+#'        model data frame and the rows of 'add' together
+#'        with an additional variable '.source' with the
+#'        value 'model' or 'add' showing the provenance of the row.
+#' @export
+expandModelData <- function(model, add) {
+  data <- getModelData(model)
+  data$.source <- 'model'
+  add$.source <- 'add'
+  merge(data, add, all = T)
+}
 # if(FALSE){ #TESTS:
 #   library(nlme)
 #   fit <- lme(mathach ~ ses * Sex * Sector, hs, random = ~ 1|school)
@@ -1713,3 +1733,69 @@ make.grid <- function(mod, n = 50, dmax = 5) {
 # xyplot(fit ~ ses | Sex * Sector, gg, groups = rand) %>% useOuterStrips
 #
 # }
+
+# getD: added 2020_01_02 by GM based on getModelData by John Fox
+#' Get model data frame with optional additional rows
+#' 
+#' Facilitates obtaining the data frame for a model
+#' along with optional additional creating rows of 
+#' predictor values to graph fitted values.
+#' 
+#' Might supersede \code{\link{getData}} and other
+#' processes to create a predictor data frame. Relies on
+#' \code{\link{getModelData}}, which, in strong contrast
+#' with \code{\link{getData}}, does not use methods 
+#' for each modelling methods. If some modelling methods
+#' don't work, then 'getD' will be come a generic function
+#' with the current definition as the default method. 
+#' 
+#' @param model whose model frame is used to obtain
+#'        variable names and, particularly, correct
+#'        levels for factors used as predictors in the model.
+#' @param add a data frame with values of predictor variables
+#' @return a data frame concatenating the rows of the 
+#'        model frame with those provided in 'add' with
+#'        an additional variable '.source' with value
+#'        'model' or 'add' to indicated the source of the row.
+#' @export
+getD <- function(model, add = NULL) {
+  data <- getModelData(model)
+  if(is.null(add)) return(data)
+  if(exists("data$.source")) warning('variable .source in model data will be overwritten')
+  data$.source <- 'model'
+  add$.source <- 'add'
+  merge(data, add, all = T)
+}
+
+if(FALSE){ #test getD
+  library(spida2)
+  library(car)
+  library(lattice)
+  fit <- lm(log(income) ~ type * women * log(education), Prestige)
+  getModelData(fit)
+  summary(fit)
+  Anova(fit)
+  dd <- getD(fit, add = expand.grid(
+    women = 0:100, 
+    type = levels(Prestige$type),
+    education = c(6, 10, 12, 16)))
+  dd$fit <- predict(fit, newdata = dd)
+  xyplot(exp(fit) ~ women | type, 
+         subset(dd, .source == 'add'),
+         groups = education, type = 'l',
+         auto.key = list(columns = 4, lines = T, points = F)
+         )
+
+  dd <- getD(fit, add = expand.grid(
+    women = c(0,10,20,50,100), 
+    type = levels(Prestige$type),
+    education = 6:16))
+  dd$fit <- predict(fit, newdata = dd)
+  xyplot(exp(fit) ~ education | type, 
+         subset(dd, .source == 'add'),
+         groups = women, type = 'l',
+         auto.key = list(columns = 4, lines = T, points = F)
+         )
+  # but these plots need modification to exclude unlikely values
+  # such high education in bc jobs
+  }

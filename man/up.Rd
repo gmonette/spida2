@@ -4,10 +4,22 @@
 \alias{up}
 \title{Create a data frame at a higher level of aggregation}
 \usage{
-up(object, form = formula(object), agg = NULL, sep.agg = "_",
-  freq = NULL, sep.freq = "_", all = FALSE, sep = "/",
-  na.rm = TRUE, FUN = function(x) mean(x, na.rm = na.rm),
-  omitGroupingFactor = FALSE, groups, invariantsOnly = !all, ...)
+up(
+  object,
+  form = formula(object),
+  agg = NULL,
+  sep.agg = "_",
+  freq = NULL,
+  sep.freq = "_",
+  all = FALSE,
+  sep = "/",
+  na.rm = TRUE,
+  FUN = function(x) mean(x, na.rm = na.rm),
+  omitGroupingFactor = FALSE,
+  groups,
+  invariantsOnly = !all,
+  ...
+)
 }
 \arguments{
 \item{object}{a data frame to be aggregated.}

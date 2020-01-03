@@ -4,8 +4,7 @@
 \alias{spline.E}
 \title{Spline estimation function}
 \usage{
-spline.E(knots, degree, smooth, lin = NULL, intercept = 0,
-  signif = 3)
+spline.E(knots, degree, smooth, lin = NULL, intercept = 0, signif = 3)
 }
 \arguments{
 \item{knots}{}

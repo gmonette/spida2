@@ -5,8 +5,7 @@
 \alias{brace_}
 \title{Draw a brace}
 \usage{
-brace(x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2,
-  tip = FALSE)
+brace(x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2, tip = FALSE)
 
 brace_(...)
 }

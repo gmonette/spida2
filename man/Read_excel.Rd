@@ -4,8 +4,14 @@
 \alias{Read_excel}
 \title{Wrapper for read_excel in 'readxl' package}
 \usage{
-Read_excel(path, sheet = 1, col_types = NULL, skip = 0,
-  stringsAsFactors = default.stringsAsFactors(), ...)
+Read_excel(
+  path,
+  sheet = 1,
+  col_types = NULL,
+  skip = 0,
+  stringsAsFactors = default.stringsAsFactors(),
+  ...
+)
 }
 \arguments{
 \item{path}{path to xls/xlsx file}

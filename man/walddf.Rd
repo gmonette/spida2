@@ -4,9 +4,21 @@
 \alias{walddf}
 \title{Wald function producing a data frame for graphing}
 \usage{
-walddf(fit, Llist = "", clevel = 0.95, data = NULL, debug = FALSE,
-  full = FALSE, fixed = FALSE, invert = FALSE, method = "svd",
-  df = NULL, se = 2, digits = 3, sep = "")
+walddf(
+  fit,
+  Llist = "",
+  clevel = 0.95,
+  data = NULL,
+  debug = FALSE,
+  full = FALSE,
+  fixed = FALSE,
+  invert = FALSE,
+  method = "svd",
+  df = NULL,
+  se = 2,
+  digits = 3,
+  sep = ""
+)
 }
 \arguments{
 \item{fit}{a model for which a \code{getFix} method exists.}

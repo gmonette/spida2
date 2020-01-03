@@ -5,13 +5,29 @@
 \alias{long}
 \title{Create a long file from a wide file}
 \usage{
-tolong(data, sep = "_", timevar = "time", idvar = "id",
-  ids = 1:nrow(data), expand = TRUE, safe_sep = "#\%@!",
-  reverse = F, ...)
+tolong(
+  data,
+  sep = "_",
+  timevar = "time",
+  idvar = "id",
+  ids = 1:nrow(data),
+  expand = TRUE,
+  safe_sep = "#\%@!",
+  reverse = F,
+  ...
+)
 
-long(data, sep = "_", timevar = "time", idvar = "id",
-  ids = 1:nrow(data), expand = TRUE, safe_sep = "#\%@!",
-  reverse = F, ...)
+long(
+  data,
+  sep = "_",
+  timevar = "time",
+  idvar = "id",
+  ids = 1:nrow(data),
+  expand = TRUE,
+  safe_sep = "#\%@!",
+  reverse = F,
+  ...
+)
 }
 \arguments{
 \item{data}{wide data frame}

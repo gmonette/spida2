@@ -10,15 +10,11 @@ test1(x, y)
 test2(x, y, z)
 }
 \arguments{
-\item{x}{the x parameter of test1}
-
-\item{y}{the y parameter of test1}
-
-\item{z}{the z parameter of test2}
-
 \item{x}{the x parameter of test2}
 
 \item{y}{the y parameter of test2}
+
+\item{z}{the z parameter of test2}
 }
 \description{
 test1 second paragraph

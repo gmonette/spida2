@@ -4,14 +4,23 @@
 \alias{panel.barchart2}
 \title{Control the width of bars in a barchart}
 \usage{
-panel.barchart2(x, y, box.ratio = 1, box.width = box.ratio/(1 +
-  box.ratio), horizontal = TRUE, origin = NULL, reference = TRUE,
-  stack = FALSE, groups = NULL, col = if (is.null(groups))
-  plot.polygon$col else superpose.polygon$col, border = if
-  (is.null(groups)) plot.polygon$border else superpose.polygon$border,
+panel.barchart2(
+  x,
+  y,
+  box.ratio = 1,
+  box.width = box.ratio/(1 + box.ratio),
+  horizontal = TRUE,
+  origin = NULL,
+  reference = TRUE,
+  stack = FALSE,
+  groups = NULL,
+  col = if (is.null(groups)) plot.polygon$col else superpose.polygon$col,
+  border = if (is.null(groups)) plot.polygon$border else superpose.polygon$border,
   lty = if (is.null(groups)) plot.polygon$lty else superpose.polygon$lty,
   lwd = if (is.null(groups)) plot.polygon$lwd else superpose.polygon$lwd,
-  ..., identifier = "barchart")
+  ...,
+  identifier = "barchart"
+)
 }
 \description{
 The box.width argument to the default panel.barchart panel function

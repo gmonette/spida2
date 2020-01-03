@@ -4,10 +4,27 @@
 \alias{panel.box}
 \title{Panel functions for predicted values and SE box}
 \usage{
-panel.box(x, y, se, lower = y - se, upper = y + se, width = if
-  (is.numeric(x)) max(diff(sort(x)))/2 else 1/2, subscripts, ..., type,
-  group.number, alpha = 0.9, alpha.fit = alpha, alpha.box = 0.3, col,
-  col.line, col.symbol, border = F, font, fontface)
+panel.box(
+  x,
+  y,
+  se,
+  lower = y - se,
+  upper = y + se,
+  width = if (is.numeric(x)) max(diff(sort(x)))/2 else 1/2,
+  subscripts,
+  ...,
+  type,
+  group.number,
+  alpha = 0.9,
+  alpha.fit = alpha,
+  alpha.box = 0.3,
+  col,
+  col.line,
+  col.symbol,
+  border = F,
+  font,
+  fontface
+)
 }
 \arguments{
 \item{x, y}{arguments passed by 'layer'}

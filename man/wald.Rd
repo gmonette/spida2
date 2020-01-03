@@ -7,13 +7,37 @@
 \alias{glh}
 \title{General Linear Hypothesis for the 'fixed' portion of a model with Wald test}
 \usage{
-wald(fit, Llist = "", clevel = 0.95, pred = NULL, data = NULL,
-  debug = FALSE, maxrows = 25, full = FALSE, fixed = FALSE,
-  invert = FALSE, method = "svd", df = NULL, pars = NULL, ...)
+wald(
+  fit,
+  Llist = "",
+  clevel = 0.95,
+  pred = NULL,
+  data = NULL,
+  debug = FALSE,
+  maxrows = 25,
+  full = FALSE,
+  fixed = FALSE,
+  invert = FALSE,
+  method = "svd",
+  df = NULL,
+  pars = NULL,
+  ...
+)
 
-wald2(fit, Llist = "", clevel = 0.95, data = NULL, debug = FALSE,
-  maxrows = 25, full = FALSE, fixed = FALSE, invert = FALSE,
-  method = "svd", df = NULL, RHS = 0)
+wald2(
+  fit,
+  Llist = "",
+  clevel = 0.95,
+  data = NULL,
+  debug = FALSE,
+  maxrows = 25,
+  full = FALSE,
+  fixed = FALSE,
+  invert = FALSE,
+  method = "svd",
+  df = NULL,
+  RHS = 0
+)
 
 wald.transform(x, fun, label = "Transformed coefficients")
 

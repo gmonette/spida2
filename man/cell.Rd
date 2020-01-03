@@ -8,15 +8,43 @@
 \usage{
 cell(x, ...)
 
-\method{cell}{wald}(obj, which.coef = 1:2, levels = 0.95,
-  Scheffe = FALSE, dfn = 2, center.pch = 19, center.cex = 1.5,
-  segments = 51, xlab, ylab, las = par("las"), col = palette()[2],
-  lwd = 2, lty = 1, add = FALSE, ...)
+\method{cell}{wald}(
+  obj,
+  which.coef = 1:2,
+  levels = 0.95,
+  Scheffe = FALSE,
+  dfn = 2,
+  center.pch = 19,
+  center.cex = 1.5,
+  segments = 51,
+  xlab,
+  ylab,
+  las = par("las"),
+  col = palette()[2],
+  lwd = 2,
+  lty = 1,
+  add = FALSE,
+  ...
+)
 
-\method{cell}{default}(model, which.coef, levels = 0.95,
-  Scheffe = FALSE, dfn = 2, center.pch = 19, center.cex = 1.5,
-  segments = 51, xlab, ylab, las = par("las"), col = palette()[2],
-  lwd = 2, lty = 1, add = FALSE, ...)
+\method{cell}{default}(
+  model,
+  which.coef,
+  levels = 0.95,
+  Scheffe = FALSE,
+  dfn = 2,
+  center.pch = 19,
+  center.cex = 1.5,
+  segments = 51,
+  xlab,
+  ylab,
+  las = par("las"),
+  col = palette()[2],
+  lwd = 2,
+  lty = 1,
+  add = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{fitted object}

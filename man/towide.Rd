@@ -4,8 +4,14 @@
 \alias{towide}
 \title{Wide data set from long data set}
 \usage{
-towide(data, idvar = "id", timevar = "time", sep = "_",
-  add.invariants = TRUE, ...)
+towide(
+  data,
+  idvar = "id",
+  timevar = "time",
+  sep = "_",
+  add.invariants = TRUE,
+  ...
+)
 }
 \arguments{
 \item{data}{a data frame in 'long' form.}

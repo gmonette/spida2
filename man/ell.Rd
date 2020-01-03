@@ -8,50 +8,24 @@
 \usage{
 ell(center = rep(0, 2), shape = diag(2), radius = 1, n = 100)
 
-ellplus(center = rep(0, 2), shape = diag(2), radius = 1, n = 100,
-  angles = (0:n) * 2 * pi/n, fac = chol, ellipse = all,
-  diameters = all, box = all, all = FALSE)
+ellplus(
+  center = rep(0, 2),
+  shape = diag(2),
+  radius = 1,
+  n = 100,
+  angles = (0:n) * 2 * pi/n,
+  fac = chol,
+  ellipse = all,
+  diameters = all,
+  box = all,
+  all = FALSE
+)
 
 dellplus(x, y, ...)
 
 ell(center = rep(0, 2), shape = diag(2), radius = 1, n = 100)
 }
 \arguments{
-\item{center}{(default: c(0,0))}
-
-\item{shape}{variance of bivariate normal. Default: 2 x 2 identity}
-
-\item{radius}{of ellipse, equivalently: square root of deviance contour}
-
-\item{n}{number of points on ellipse}
-
-\item{angles}{(default (0:n)*2*pi/n) at which points are generated. The angles
-refer to the generating circle that is then transformed linearly to
-form the ellipse}
-
-\item{fac}{(default: chol) method use to factor 'shape'}
-
-\item{ellipse}{(default: all) if TRUE generate ellipse}
-
-\item{diameters}{(default: all) if TRUE generate diameters}
-
-\item{box}{(default: all) if TRUE generate tangent box}
-
-\item{all}{(default: FALSE)}
-
-\item{x, y}{data values}
-
-\item{\dots}{arguments passed to \code{ellplus}}
-
-\item{center}{(default: c(0,0))}
-
-\item{shape}{(default: diag(2)) 'variance' corresponding to shape of ellipse
-if taken as a concentration ellipse for a bivariate normal}
-
-\item{radius}{(default: 1)}
-
-\item{n}{(default: 100) number of points generated}
-
 \item{center}{X,Y location of the center of the ellipse}
 
 \item{shape}{A 2x2 matrix, typically a covariance matrix of data (for a data
@@ -81,6 +55,10 @@ box should be returned}
 \item{all}{Logical to request all of \code{ellipse}, \code{diameters} and
 \code{box}. If \code{FALSE}, only the components specified separately by
 \code{ellipse}, \code{diameters} and \code{box} are returned.}
+
+\item{x, y}{data values}
+
+\item{\dots}{arguments passed to \code{ellplus}}
 }
 \value{
 Returns a 2-column matrix of (X,Y) coordinates suitable for drawing

@@ -4,8 +4,7 @@
 \alias{pals}
 \title{Display selected colors n at a time}
 \usage{
-pals(pattern = "", ignore = "^gray[0-9]|^grey[0-9]", n = 30,
-  ask = FALSE)
+pals(pattern = "", ignore = "^gray[0-9]|^grey[0-9]", n = 30, ask = FALSE)
 }
 \arguments{
 \item{pattern}{match to select colors}

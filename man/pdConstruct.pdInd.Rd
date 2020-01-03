@@ -4,8 +4,15 @@
 \alias{pdConstruct.pdInd}
 \title{Construct pdInd object}
 \usage{
-pdConstruct.pdInd(object, value = numeric(0), form = formula(object),
-  nam = Names(object), data = sys.parent(), cov = NULL, ...)
+pdConstruct.pdInd(
+  object,
+  value = numeric(0),
+  form = formula(object),
+  nam = Names(object),
+  data = sys.parent(),
+  cov = NULL,
+  ...
+)
 }
 \arguments{
 \item{object}{an object inheriting from the class \code{pdInd}, representing

@@ -12,9 +12,16 @@
 \title{General regression splines with variable degrees and ness, smoothing
 splines}
 \usage{
-gsp(x, knots, degree = 3, smoothness = pmax(pmin(degree[-1],
-  degree[-length(degree)]) - 1, -1), lin = NULL, periodic = FALSE,
-  intercept = 0, signif = 3)
+gsp(
+  x,
+  knots,
+  degree = 3,
+  smoothness = pmax(pmin(degree[-1], degree[-length(degree)]) - 1, -1),
+  lin = NULL,
+  periodic = FALSE,
+  intercept = 0,
+  signif = 3
+)
 }
 \arguments{
 \item{x}{value(s) where spline is evaluated}
@@ -100,14 +107,14 @@ fashion. A convenient aspect of this parametrization of the spline is that
 the estimated coefficients have a simple interpretation. The coefficients
 for 'plus' terms represent the 'saltus' (jump) in the value of a coefficient
 at the knot. Testing whether the true value of the saltus in a coefficient is 0 is
-equivalent to a test for the need to retain the corresponding knot.
+equivalent to a test for the need to retain the corresponding knot. 
 
 This approach does not work for some more complex splines with different
 degrees or different orders of continuity at the knots. An example is the
 commonly used natural quadratic spline. A natural quadratic spline with
 knots at -1,0 and 1 (where -1 and 1 are termed 'boundary knots') is linear
 in the intervals (-Inf,-1) and (1,+Inf), and quadratic in the intervals
-(-1,0) and (0,1). The spline is smooth of order 1 at each knot.
+(-1,0) and (0,1). The spline is smooth of order 1 at each knot.  
 
 Many
 techniques for fitting splines generate a basis for the spline (columns of
@@ -126,7 +133,7 @@ The
 spline that can be expressed as linear combinations of the spline
 coefficients.  Examples are various derivatives of the spline at any point,
 left or right derivatives of different orders and the saltus in derivatives
-at a knot.
+at a knot.  
 
 A disadvantage of \code{gsp} is that the spline basis may
 be poorly conditioned.  The impact of this problem can be mitigated by

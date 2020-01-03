@@ -19,8 +19,7 @@ labs(x, ...)
 
 labs(x, ...) <- value
 
-\method{print}{data.frame.lab}(x, ..., digits = NULL, quote = FALSE,
-  right = TRUE)
+\method{print}{data.frame.lab}(x, ..., digits = NULL, quote = FALSE, right = TRUE)
 
 \method{[}{data.frame.lab}(x, ...)
 

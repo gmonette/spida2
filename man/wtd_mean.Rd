@@ -19,7 +19,9 @@ Weighted mean
      combinations, \code{\link{jk_wtd_mean_se}} for a jacknife estimate of the SE of a weighted mean
      and \code{\link{jk_lin_comb_se}} for a jacknife estimate of the SE of a linear combination.
 
-Other Post-stratification survey functions: \code{\link{jk_wtd_mean_se}},
-  \code{\link{jk_wtd_means}}, \code{\link{lin_comb}}
+Other Post-stratification survey functions: 
+\code{\link{jk_wtd_mean_se}()},
+\code{\link{jk_wtd_means}()},
+\code{\link{lin_comb}()}
 }
 \concept{Post-stratification survey functions}

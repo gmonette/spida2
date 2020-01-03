@@ -4,8 +4,14 @@
 \alias{gspf.1}
 \title{Marked for deletion}
 \usage{
-gspf.1(x, knots, degree = 3, smooth = pmax(pmin(degree[-1],
-  degree[-length(degree)]) - 1, 0), intercept = 0, signif = 3)
+gspf.1(
+  x,
+  knots,
+  degree = 3,
+  smooth = pmax(pmin(degree[-1], degree[-length(degree)]) - 1, 0),
+  intercept = 0,
+  signif = 3
+)
 }
 \arguments{
 \item{x}{FIXME}

@@ -4,8 +4,14 @@
 \alias{Ldiff}
 \title{Hypothesis matrix to test differencs in factor levels}
 \usage{
-Ldiff(fit, pat, levnames = c(reflevel, substring(rownames(L), cut + 1)),
-  reflevel = "<ref>", cut = nchar(pat), verbose = F)
+Ldiff(
+  fit,
+  pat,
+  levnames = c(reflevel, substring(rownames(L), cut + 1)),
+  reflevel = "<ref>",
+  cut = nchar(pat),
+  verbose = F
+)
 }
 \arguments{
 \item{fit}{model}

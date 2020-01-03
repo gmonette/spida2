@@ -14,9 +14,7 @@ PolyShift(a, n)
 \item{n}{number of coefficients}
 }
 \description{
-Transformation of polynomial coefficients to change origin
- 
-Useful to equate polynomial coefficients for a periodic spline
+
 }
 \examples{
 coefs <- c(3,2,4)
