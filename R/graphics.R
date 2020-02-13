@@ -140,14 +140,14 @@ td <- function(...) gd(..., gglike = FALSE)
 #' gd(5, lwd = 2, lty = 1)
 #' gd(5, col = brewer.pal(5,"Dark2"),cex = 1.5)
 #'
-#' # To set colors with no groups
+#' # To set colors when not using groups (superpose = FALSE)
 #' gd_(col='tomato4')
 #' # changing the default color for lines and symbols
 #' gd(plot.line=list(col='red',lwd=2),
 #'            plot.symbol=list(col='blue', cex = 1.3))
 #' # OR using superpose = FALSE
 #' gd(superpose = FALSE, col = 'red', lwd = 2)
-#' # OR using the utility function:
+#' # OR using the utility function 'gd_':
 #' gd_(col = 'red', lwd = 2)
 #' #
 #' # To set colors for lattice::barchart:
@@ -204,15 +204,13 @@ gd <- function (n=8, pal = "Dark2",
     #
     # gd can also be used to set other graphical parameters
     # by specifying the list in which they are set
-    # (see trellis.par.get()). For example to reset
-    # symbol colors and line colors:
-    #    gd(
-    # Usage:
 
     library(lattice)
     library(latticeExtra)
     library(RColorBrewer)
     
+  
+  if(FALSE){ # feature turned off GM:2020_02_13
     # If there are arguments other than n
     # AND all are of length no greater than 1, superpose is FALSE
     arglist <- as.list(match.call())[-1]
@@ -221,8 +219,8 @@ gd <- function (n=8, pal = "Dark2",
        pmax(sapply(arglist,length)) == 1 &&
        missing(superpose) &&
        missing(n)) superpose <- FALSE
-
-    aargs <- list(...)
+  }
+  aargs <- list(...)
     
     # ggplot2
     if(gglike) {

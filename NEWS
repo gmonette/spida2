@@ -1,3 +1,5 @@
+2020_02_13
+* altered 'gd' so it always uses 'superpose=TRUE' as default. Use 'gd_' to get superpose=FALSE
 2020_01_02
 * added getD to get data frame from a model and optionally add rows (made possible by getModelData by J. Fox)
 2019_12_09

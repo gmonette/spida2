@@ -225,7 +225,7 @@ up <- function ( object, form = formula(object),
     for (i in seq_along(freq.mf)) {
       x <- freq.mf[[i]]
       if(is.character(x)) x <- factor(x)
-      x <- freq.mf[[i]]
+      # GM 2020_01_04 x <- freq.mf[[i]]
       if(is.factor(x)) {
         mat <- cvar(x, sel.mf, all = T, FUN = sum, na.rm = na.rm)
         colnames(mat) <- paste0(names(freq.mf[i]),sep.freq,colnames(mat))

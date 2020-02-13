@@ -40,10 +40,13 @@ a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{pdIn
 \section{Utilities for fitted objects}{
 
 \itemize{
-\item \code{\link[spida2]{getData}} get data frame from a fitted object
+\item \code{\link[spida2]{getD}} get data frame from a fitted object
+\item \code{\link[spida2]{getData}} older version using methods. Might work if previous fails
 \item \code{\link[spida2]{getFix}} get fixed effects from a fitted object
 \item \code{\link[spida2]{getX}} get X matrix from fitted object
-\item \code{\link[spida2]{gpanel.fit}} plot fitted values and confidence band
+\item \code{\link[spida2]{getV}} get V matrix from a mixed model
+\item \code{\link[spida2]{getG}} get G matrix from a mixed model
+\item \code{\link[spida2]{getR}} get R matrix from a mixed model
 \item \code{\link[spida2]{Vcov}} get estimated variance covariance of fixed effects from a fitted object
 }
 }
