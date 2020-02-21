@@ -61,7 +61,6 @@ NULL
 #' gd(7)            # sets line types for 7 groups using colors from RColorBrewer
 #' td( plot.symbol = list(col = 'red', pch = 17))
 #' gd_(col='blue')  # set main color to 'blue'
-#' @describeIn gd without ggplot2-like theme
 #' @export
 td <- function(...) gd(..., gglike = FALSE)
 # td <- function(
@@ -132,7 +131,8 @@ td <- function(...) gd(..., gglike = FALSE)
 #   ret <- trellis.par.get()
 #   invisible(ret[grep('superpose',names(ret))])
 # }
-#' @describeIn td uses a ggplot-like theme
+#' Set lattice parameters for plotting by group
+#'  
 #' @param n number of groups for which to set colors, line types, etc. using RColorBrewer.
 #' @examples
 #' #   - setting colors for groups, i.e. 'superpose.symbol' in trellis.par.get():
@@ -174,6 +174,7 @@ td <- function(...) gd(..., gglike = FALSE)
 #'   rgb  %>%
 #'   pal
 #' @concept lattice
+#' @describeIn td with ggplot2-like theme
 #' @export
 gd <- function (n=8, pal = "Dark2",
             col = brewer.pal(n, pal), lty = 1:n, lwd = 1,
