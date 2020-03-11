@@ -829,3 +829,10 @@ help = "Use help: ?panel.subgroups"
              }
          }
 }
+#' Display RColorBrewer palette
+#' 
+#' Function name that follows usual conventions and is
+#' easier to remember.
+#' 
+#' @export
+brewer.pal.show <- RColorBrewer::display.brewer.all

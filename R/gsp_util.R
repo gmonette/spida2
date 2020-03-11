@@ -15,7 +15,6 @@
 ##  Added periodic argument to gsp
 ##
 ##
-#' 
 #' Generate X matrix estimate Dth derivative of polynomial at x
 #' 
 #' @param x vector of values where derivative evaluated
@@ -52,9 +51,6 @@ Xmat <- function( x, degree, D = 0, signif = 3) {
   colnames(G) = paste( "X", 0:(ncol(G)-1), sep = "")
   G
 }
-
-#  Xmat( c(1:10,pi), 5,0:4,3)
-
 #' @export
 Xf <-  function(   x, knots, degree = 3, D = 0, right = TRUE , signif = 3) {
   
@@ -276,8 +272,8 @@ spline.E <- function( knots, degree, smooth, lin = NULL, intercept = 0, signif =
 
 #' Projection matrix
 #' 
-#' Projection matrix into column space of a matrix. Works even if the matrix
-#' does not have full column rank.
+#' Projection matrix into column space of a matrix. Works even if
+#' the matrix does not have full column rank.
 #' 
 #' @param x 
 #' @export
