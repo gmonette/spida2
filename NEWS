@@ -1,3 +1,6 @@
+2020_03_14
+* added paik from asbio, brewer.pal.show from RColorBrewer::display.brewer.pal, death.penalty data from asbio, and 'getS' to extract
+samples and sampling parameters from a 'stanfit' object in rstan.
 2020_02_13
 * altered 'gd' so it always uses 'superpose=TRUE' as default. Use 'gd_' to get superpose=FALSE
 2020_01_02
