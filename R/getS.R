@@ -4,9 +4,11 @@
 #'        using \code{rstan}.  
 #' @export
 getS <- function(x,...) UseMethod('getS')
+#' @export
 getS.default <- function(x,...) {
   stop('No method implemented for object of class ',class(x),'\n')
 }
+#' @export
 getS.stanfit <- function(sf) {
   # function to create a data frame
   # of samples from a stanfit object
