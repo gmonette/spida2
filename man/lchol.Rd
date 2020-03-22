@@ -5,18 +5,31 @@
 \title{Left Cholesky factor}
 \usage{
 lchol(x)
+
+lchol(x)
 }
 \arguments{
 \item{x}{a positive-definite matrix}
 }
 \description{
 Decomposes positive-definite G = L'L where L is lower-triangular.
+
+In R, \code{\link{chol}} returns a upper-triangular matrix \code{R}
+such that G = R'R. \code{lchol} return a lower-triangular matrix.
 }
 \details{
 In R, \code{\link{chol}} returns a upper-triangular matrix \code{R}
 such that G = R'R. \code{lchol} return a lower-triangular matrix.
 }
 \examples{
+mm <- cbind( c(8,2,1), c(2,10,2), c(1,2,5))
+mm
+chol(mm)
+lchol(mm)
+crossprod(chol(mm))
+t(chol(mm)) \%*\% chol(mm)
+crossprod(lchol(mm))
+t(lchol(mm)) \%*\% lchol(mm)
 mm <- cbind( c(8,2,1), c(2,10,2), c(1,2,5))
 mm
 chol(mm)
