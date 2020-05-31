@@ -134,6 +134,7 @@
 #' @param shape variance of bivariate normal. Default: 2 x 2 identity
 #' @param radius of ellipse, equivalently: square root of deviance contour
 #' @param n number of points on ellipse
+#' @param na.rm remove missing data in forming data ellipse, default TRUE
 #' 
 #' @export
 ell <- 
@@ -159,11 +160,11 @@ ell <-
 
 #' @export
 dell <-
-function( x, y, radius = 1, ...) {
+function( x, y, radius = 1, ..., na.rm = TRUE) {
         if ( (is.matrix(x) && (ncol(x) > 1))|| is.data.frame(x)) mat <- as.matrix(x[,1:2])
         else if (is.list(x)) mat <- cbind(x$x, x$y)
         else mat <- cbind( x,y)
-        ell( apply(mat,2,mean), var(mat), radius = radius, ...)
+        ell( apply(mat,2,mean,na.rm = na.rm), var(mat, na.rm = na.rm), radius = radius, ...)
     }
 
 #' @export
