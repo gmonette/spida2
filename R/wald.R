@@ -79,6 +79,7 @@
 #' @param Llist a hypothesis matrix or a pattern to be matched or a list of
 #'        these
 #' @param clevel level for confidence intervals. No confidence intervals if clevel is NULL
+#' @param LRT if TRUE, provide likelihood ratio test statistic and p-value
 #' @param pred prediction data frame to evaluate fitted model using
 #'        \code{getX(fit) %*% coef}
 #' @param data data frame used as 'data' attribute fot list elements returned only if
@@ -183,7 +184,7 @@
 #' @export
 wald <- 
   function(fit, Llist = "", clevel = 0.95,
-           pred = NULL,
+           LRT = TRUE, pred = NULL,
            data = NULL, debug = FALSE , maxrows = 25,
            full = FALSE, fixed = FALSE,
            invert = FALSE, method = 'svd',
@@ -282,7 +283,7 @@ wald <-
         if(debug)disp( sv )
         tol.fac <- max( dim(L) ) * max( sv$d )
         if(debug)disp( tol.fac )
-        if ( tol.fac > 1e6 ) warning( "Poorly conditioned L matrix, calculated numDF may be incorrect")
+        if ( tol.fac > 1e6 ) warning("Poorly conditioned L matrix, calculated numDF may be incorrect")
         tol <- tol.fac * .Machine$double.eps
         if(debug)disp( tol )
         L.rank <- sum( sv$d > tol )
@@ -311,8 +312,30 @@ wald <-
       denDF <- min( dfs[included.effects])
       numDF <- L.rank
       ret[[ii]]$anova <- list(numDF = numDF, denDF = denDF,
-                              "F-value" = Fstat,
-                              "p-value" = pf(Fstat, numDF, denDF, lower.tail = FALSE))
+                              "Wald F-value" = Fstat,
+                              "Wald p-value" = pf(Fstat, numDF, denDF, lower.tail = FALSE))
+      ## LRT
+      if (LRT) {
+        model_mat <- getX(fit)
+        sv2 <- svd(na.omit(L) , nu = 0, nv = NCOL(L))
+        rmv <- if (numDF == 0) 1:NCOL(L) else -(1:numDF)
+        constrainedX <- as.matrix(model_mat %*% sv2$v[ , rmv, drop=FALSE])
+        cXnames <- " "
+        for (j in 1:NCOL(constrainedX)){
+          cXnames <- c(cXnames, paste0("cX", j))
+          eval(parse(text = paste0("cX", j, "<- constrainedX[ ,", j, "]")))
+        }
+        constrained_fit <- update(fit, as.formula(paste('. ~ ', paste(cXnames, collapse = "+"), '- 1')), 
+                                  data = eval(parse(text = paste0("data.frame(getData(fit),", 
+                                                                  paste(cXnames[-1], collapse = ","), ")"))))
+        changeDF <- NCOL(L) - numDF
+        lrt_stat <- 2 * ( logLik(fit) - logLik(constrained_fit) )
+        if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
+        ret[[ii]]$anova[["changeDF"]] <- changeDF
+        ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
+        ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
+      }
+      
       ## Estimate
       
       etahat <- L %*% beta
@@ -379,9 +402,9 @@ fit <- lme(mathach ~ ses * Sex * Sector, hs, random = ~ 1|school)
 summary(fit)
 pred <- expand.grid( ses = seq(-2,2,1), Sex = levels(hs$Sex), Sector = levels(hs$Sector))
 pred
-wald(fit,model.matrix(fit,data=pred))
+wald(fit, 'Sector')
 model.matrix(fit,data = pred)
-model.matrix(~ ses * Sex * Sector,data=pred)
+test1 <- model.matrix(~ ses * Sex * Sector,data=pred)
 }
 
 #' @describeIn wald experimental version with RHS?
@@ -518,6 +541,7 @@ wald2 <- function(fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , maxr
     ret[[ii]]$anova <- list(numDF = numDF, denDF = denDF,
                             "F-value" = Fstat,
                             "p-value" = pf(Fstat, numDF, denDF, lower.tail = FALSE))
+    
     ## Estimate
     etahat <- L %*% beta-RHS
     # NAs if not estimable:
@@ -599,7 +623,10 @@ print.wald <- function(x, round = 6, pround = 5,...) {
     tt <- x[[ii]]
     ta <- tt$anova
 
-    ta[["p-value"]] <- pformat(ta[["p-value"]])
+    ta[["Wald p-value"]] <- pformat(ta[["Wald p-value"]])
+    if (!is.null(ta[["LRT p-value"]])) {
+      ta[["LRT p-value"]] <- pformat(ta[["LRT p-value"]])
+    }
     print(as.data.frame(ta, row.names = nn))
     te <- tt$estimate
      te[,'p-value'] <- pformat( te[,'p-value'])
