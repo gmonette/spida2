@@ -316,25 +316,28 @@ wald <-
                               "Wald p-value" = pf(Fstat, numDF, denDF, lower.tail = FALSE))
       ## LRT
       if (LRT) {
-        model_mat <- getX(fit)
-        sv2 <- svd(na.omit(L) , nu = 0, nv = NCOL(L))
-        rmv <- if (numDF == 0) 1:NCOL(L) else -(1:numDF)
-        constrainedX <- as.matrix(model_mat %*% sv2$v[ , rmv, drop=FALSE])
-        cXnames <- " "
-        for (j in 1:NCOL(constrainedX)){
-          cXnames <- c(cXnames, paste0("cX", j))
-          eval(parse(text = paste0("cX", j, "<- constrainedX[ ,", j, "]")))
+        if ( class(fit) %in% c("lme", "lm", "glm") ) {
+          model_mat <- getX(fit)
+          sv2 <- svd(na.omit(L) , nu = 0, nv = NCOL(L))
+          rmv <- if (numDF == 0) 1:NCOL(L) else -(1:numDF)
+          constrainedX <- as.matrix(model_mat %*% sv2$v[ , rmv, drop=FALSE])
+          cXnames <- " "
+          for (j in 1:NCOL(constrainedX)){
+            cXnames <- c(cXnames, paste0("cX", j))
+            eval(parse(text = paste0("cX", j, "<- constrainedX[ ,", j, "]")))
+          }
+          constrained_fit <- update(fit, as.formula(paste('. ~ ', paste(cXnames, collapse = "+"), '- 1')), 
+                                    data = eval(parse(text = paste0("data.frame(getData(fit),", 
+                                                                    paste(cXnames[-1], collapse = ","), ")"))))
+          changeDF <- NCOL(L) - numDF
+          lrt_stat <- 2 * ( logLik(fit) - logLik(constrained_fit) )
+          if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
+          ret[[ii]]$anova[["changeDF"]] <- changeDF
+          ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
+          ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
+        } else {
+          warning(paste0("LRT not yet tested with ", class(fit)))
         }
-        constrained_fit <- update(fit, as.formula(paste('. ~ ', paste(cXnames, collapse = "+"), '- 1')), 
-                                  data = eval(parse(text = paste0("data.frame(getData(fit),", 
-                                                                  paste(cXnames[-1], collapse = ","), ")"))))
-        changeDF <- NCOL(L) - numDF
-        lrt_stat <- 2 * ( logLik(fit) - logLik(constrained_fit) )
-        if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
-        ret[[ii]]$anova[["changeDF"]] <- changeDF
-        ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
-        ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
-      }
       
       ## Estimate
       
