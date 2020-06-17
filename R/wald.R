@@ -369,7 +369,7 @@ wald <-
           mlfit <- update(fit, REML = FALSE)     # refit both models using 'ML' for proper comparison
           formulalmer <- formula(fit)
           formulalmer <- paste(deparse(formulalmer, width.cutoff = 500), collapse="")
-          formind <- gregexpr("\\({1}?[^\\(|\\||\\)]*\\|{,2}[^//)]*[\\)]{1}?", formulalmer)[[1]]
+          formind <- gregexpr("\\({1}?[^\\(|\\||\\)]*\\|{1,2}[^//)]*[\\)]{1}?", formulalmer)[[1]]
           lengs <- attr(formind, which = "match.length")
           ranEffects <- substring(formulalmer, first = formind, last = formind + lengs - 1)
           constrained_fit <- update(fit, as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  
