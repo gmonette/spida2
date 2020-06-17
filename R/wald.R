@@ -327,61 +327,80 @@ wald <-
           names1 <- sapply(names1, function(x) paste0("XConCol", x))
           newData <- data.frame(cbind(constrainedX, getData(fit)))
           names(newData) <- c(names1, names(getData(fit)))
-          constrained_fit <- update(fit, as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  "- 1")), 
-                                    data = newData)
-          changeDF <- NCOL(L) - numDF
-          lrt_stat <- 2 * ( logLik(fit) - logLik(constrained_fit) )
-          if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
-          ret[[ii]]$anova[["changeDF"]] <- changeDF
-          ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
-          ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
+          constrained_fit <- try(update(fit, as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  "- 1")), 
+                                    data = newData))
+          if (is.null(constrained_fit) | class(constrained_fit) == "try-error") {
+            warning(paste0(class(fit), " object from original fit threw an error with ML method, LRT will be suppressed."))
+          } else {
+            changeDF <- NCOL(L) - numDF
+            lrt_stat <- 2 * ( logLik(mlfit) - logLik(constrained_fit) )
+            if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
+            ret[[ii]]$anova[["changeDF"]] <- changeDF
+            ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
+            ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
+          }
         
         } else if ( class(fit) %in% c("lme", "gls") ) {
-          model_mat <- getX(fit)
-          sv2 <- svd(na.omit(L) , nu = 0, nv = NCOL(L))
-          rmv <- if (numDF == 0) 1:NCOL(L) else -(1:numDF)
-          constrainedX <- as.matrix(model_mat %*% sv2$v[ , rmv, drop=FALSE])
-          numCol <- NCOL(constrainedX)
-          names1 <- as.character(1:numCol)
-          names1 <- sapply(names1, function(x) paste0("XConCol", x))
-          newData <- data.frame(cbind(constrainedX, getData(fit)))
-          names(newData) <- c(names1, names(getData(fit)))
-          mlfit <- update(fit, method = "ML")     # refit both models using 'ML' for proper comparison
-          constrained_fit <- update(fit, fixed. = as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  "- 1")), 
-                                    data = newData, method = "ML")
-          changeDF <- NCOL(L) - numDF
-          lrt_stat <- 2 * ( logLik(mlfit) - logLik(constrained_fit) )
-          if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
-          ret[[ii]]$anova[["changeDF"]] <- changeDF
-          ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
-          ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
+          mlfit <- try(update(fit, method = "ML"))   # refit both models using 'ML' for proper comparison
+          if (!(is.null(mlfit) | class(mlfit) == "try-error")) {
+            model_mat <- getX(fit)
+            sv2 <- svd(na.omit(L) , nu = 0, nv = NCOL(L))
+            rmv <- if (numDF == 0) 1:NCOL(L) else -(1:numDF)
+            constrainedX <- as.matrix(model_mat %*% sv2$v[ , rmv, drop=FALSE])
+            numCol <- NCOL(constrainedX)
+            names1 <- as.character(1:numCol)
+            names1 <- sapply(names1, function(x) paste0("XConCol", x))
+            newData <- data.frame(cbind(constrainedX, getData(fit)))
+            names(newData) <- c(names1, names(getData(fit)))
+            constrained_fit <- try(update(fit, fixed. = as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  "- 1")), 
+                                          data = newData, method = "ML"))
+            if (is.null(constrained_fit) | class(constrained_fit) == "try-error") {
+              warning(paste0(class(fit), " object from original fit threw an error with ML method, LRT will be suppressed."))
+            } else {
+              changeDF <- NCOL(L) - numDF
+              lrt_stat <- 2 * ( logLik(mlfit) - logLik(constrained_fit) )
+              if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
+              ret[[ii]]$anova[["changeDF"]] <- changeDF
+              ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
+              ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
+            }
+          } else {
+            warning(paste0(class(fit), " object from original fit threw an error with ML method, LRT will be suppressed."))
+          }
         
         } else if ( class(fit) %in% c("lmer", "lmerMod", "glmer", "glmerMod", "lmerModLmerTest") ) {
-          model_mat <- model.matrix(fit)
-          sv2 <- svd(na.omit(L) , nu = 0, nv = NCOL(L))
-          rmv <- if (numDF == 0) 1:NCOL(L) else -(1:numDF)
-          constrainedX <- as.matrix(model_mat %*% sv2$v[ , rmv, drop=FALSE])
-          numCol <- NCOL(constrainedX)
-          names1 <- as.character(1:numCol)
-          names1 <- sapply(names1, function(x) paste0("XConCol", x))
-          newData <- data.frame(cbind(constrainedX, getData(fit)))
-          names(newData) <- c(names1, names(getData(fit)))
-          mlfit <- update(fit, REML = FALSE)     # refit both models using 'ML' for proper comparison
-          formulalmer <- formula(fit)
-          formulalmer <- paste(deparse(formulalmer, width.cutoff = 500), collapse="")
-          formind <- gregexpr("\\({1}?[^\\(|\\||\\)]*\\|{1,2}[^//)]*[\\)]{1}?", formulalmer)[[1]]
-          lengs <- attr(formind, which = "match.length")
-          ranEffects <- substring(formulalmer, first = formind, last = formind + lengs - 1)
-          constrained_fit <- update(fit, as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  
-                                                           "- 1 + ", paste(ranEffects, collapse = "+"))),
-                                    data = newData, REML = FALSE)
-          changeDF <- NCOL(L) - numDF
-          lrt_stat <- 2 * ( logLik(mlfit) - logLik(constrained_fit) )
-          if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
-          ret[[ii]]$anova[["changeDF"]] <- changeDF
-          ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
-          ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
-          
+          mlfit <- try(update(fit, REML = FALSE))    # refit both models using 'ML' for proper comparison
+          if (!(is.null(mlfit) | class(mlfit) == "try-error")) {
+            model_mat <- model.matrix(fit)
+            sv2 <- svd(na.omit(L) , nu = 0, nv = NCOL(L))
+            rmv <- if (numDF == 0) 1:NCOL(L) else -(1:numDF)
+            constrainedX <- as.matrix(model_mat %*% sv2$v[ , rmv, drop=FALSE])
+            numCol <- NCOL(constrainedX)
+            names1 <- as.character(1:numCol)
+            names1 <- sapply(names1, function(x) paste0("XConCol", x))
+            newData <- data.frame(cbind(constrainedX, getData(fit)))
+            names(newData) <- c(names1, names(getData(fit)))
+            formulalmer <- formula(fit)
+            formulalmer <- paste(deparse(formulalmer, width.cutoff = 500), collapse="")
+            formind <- gregexpr("\\({1}?[^\\(|\\||\\)]*\\|{1,2}[^//)]*[\\)]{1}?", formulalmer)[[1]]
+            lengs <- attr(formind, which = "match.length")
+            ranEffects <- substring(formulalmer, first = formind, last = formind + lengs - 1)
+            constrained_fit <- try(update(fit, as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  
+                                                             "- 1 + ", paste(ranEffects, collapse = "+"))),
+                                      data = newData, REML = FALSE))
+            if (is.null(constrained_fit) | class(constrained_fit) == "try-error") {
+              warning(paste0(class(fit), " object from original fit threw an error with ML method, LRT will be suppressed."))
+            } else {
+              changeDF <- NCOL(L) - numDF
+              lrt_stat <- 2 * ( logLik(mlfit) - logLik(constrained_fit) )
+              if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
+              ret[[ii]]$anova[["changeDF"]] <- changeDF
+              ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
+              ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
+            }
+          } else {
+            warning(paste0(class(fit), " object from original fit threw an error with ML method, LRT will be suppressed."))
+          }
         } else {
           message(paste0("LRT not yet tested with class ", class(fit)))
         }
