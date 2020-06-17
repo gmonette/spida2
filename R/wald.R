@@ -327,7 +327,8 @@ wald <-
           names1 <- sapply(names1, function(x) paste0("XConCol", x))
           newData <- data.frame(cbind(constrainedX, getData(fit)))
           names(newData) <- c(names1, names(getData(fit)))
-          constrained_fit <- update(fit, as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  "- 1")), data = newData)
+          constrained_fit <- update(fit, as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  "- 1")), 
+                                    data = newData)
           changeDF <- NCOL(L) - numDF
           lrt_stat <- 2 * ( logLik(fit) - logLik(constrained_fit) )
           if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
@@ -345,7 +346,7 @@ wald <-
           names1 <- sapply(names1, function(x) paste0("XConCol", x))
           newData <- data.frame(cbind(constrainedX, getData(fit)))
           names(newData) <- c(names1, names(getData(fit)))
-          mlfit <- update(fit, method = "ML")
+          mlfit <- update(fit, method = "ML")     # refit both models using 'ML' for proper comparison
           constrained_fit <- update(fit, fixed. = as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  "- 1")), 
                                     data = newData, method = "ML")
           changeDF <- NCOL(L) - numDF
@@ -355,8 +356,34 @@ wald <-
           ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
           ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
         
+        } else if ( class(fit) %in% c("lmer", "lmerMod", "glmer", "glmerMod", "lmerModLmerTest") ) {
+          model_mat <- model.matrix(fit)
+          sv2 <- svd(na.omit(L) , nu = 0, nv = NCOL(L))
+          rmv <- if (numDF == 0) 1:NCOL(L) else -(1:numDF)
+          constrainedX <- as.matrix(model_mat %*% sv2$v[ , rmv, drop=FALSE])
+          numCol <- NCOL(constrainedX)
+          names1 <- as.character(1:numCol)
+          names1 <- sapply(names1, function(x) paste0("XConCol", x))
+          newData <- data.frame(cbind(constrainedX, getData(fit)))
+          names(newData) <- c(names1, names(getData(fit)))
+          mlfit <- update(fit, REML = FALSE)     # refit both models using 'ML' for proper comparison
+          formulalmer <- formula(fit)
+          formulalmer <- paste(deparse(formulalmer, width.cutoff = 500), collapse="")
+          formind <- gregexpr("\\({1}?[^\\(|\\||\\)]*\\|{,2}[^//)]*[\\)]{1}?", formulalmer)[[1]]
+          lengs <- attr(formind, which = "match.length")
+          ranEffects <- substring(formulalmer, first = formind, last = formind + lengs - 1)
+          constrained_fit <- update(fit, as.formula(paste0(". ~ ", paste(names1, collapse = "+"),  
+                                                           "- 1 + ", paste(ranEffects, collapse = "+"))),
+                                    data = newData, REML = FALSE)
+          changeDF <- NCOL(L) - numDF
+          lrt_stat <- 2 * ( logLik(mlfit) - logLik(constrained_fit) )
+          if (lrt_stat < 0) warning("LRT stat is negative, original fit may have convergence problems.")
+          ret[[ii]]$anova[["changeDF"]] <- changeDF
+          ret[[ii]]$anova[["LRT ChiSq"]] <- lrt_stat
+          ret[[ii]]$anova[["LRT p-value"]] <- pchisq(lrt_stat, changeDF, lower.tail = FALSE)
+          
         } else {
-          warning(paste0("LRT not yet tested with ", class(fit)))
+          message(paste0("LRT not yet tested with class ", class(fit)))
         }
       }
       
@@ -422,7 +449,7 @@ wald <-
 # Test
 if(FALSE){
 library(nlme)
-fit <- lme(mathach ~ ses * Sex * Sector, hs, random = ~ 1 | school)
+fit <- lmer(mathach ~ ses * Sex * Sector + (1 | school), hs)
 summary(fit)
 pred <- expand.grid( ses = seq(-2,2,1), Sex = levels(hs$Sex), Sector = levels(hs$Sector))
 pred
@@ -991,6 +1018,16 @@ getFix.glmer <- function(fit,...) {
        ret
 }
 
+#' @describeIn getFix method for lmerMod objects in the lme4 package
+#' @export
+getFix.lmerMod <- function(fit, ...) getFix.lmer(fit, ...)
+
+#' @describeIn getFix method for glmerMod objects in the lme4 package
+#' @export
+getFix.glmerMod <- function(fit, ...) getFix.glmer(fit, ...)
+
+getFix.lmerModLmerTest <- function(fit, ...) getFix.lmer(fit, ...)
+
 #' @describeIn getFix method for mer objects in the lme4 package
 #' @export
 getFix.mer <- function(fit,...) {
@@ -1105,8 +1142,12 @@ getData <- function(x,...) UseMethod("getData")
 #' @describeIn getData method for lmer objects
 #' @export
 getData.lmer <- function(x,...) slot(x,'frame')
-#' @describeIn getData method for lme objects
+#' @describeIn getData method for lme4 objects
 #' @export
+getData.lmerMod <- function(x,...) slot(x,'frame')
+#' @describeIn getData method for lme4 objects
+#' @export
+getData.lmerModLmerTest <- function(x,...) slot(x,'frame')
 getData.lme <- function(x,...) nlme:::getData.lme(x,...)
 #' @describeIn getData method for gls objects
 #' @export
