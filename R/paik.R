@@ -32,6 +32,8 @@
 #'   Logical, indicating whether or not the words "Marginal prop"
 #'   should printed in the graph above the dotted line indicating
 #'   marginal proportions.
+#' @param pal which palette to use from the RColorBrewer package, default: 'Dark2'
+#' @param col colors for groups, default brewer.pal(n, pal) where n is the number of levels of the conditioning variables
 #' @param ...	
 #'   Additional arguments from plot.
 #' @author Ken Aho
@@ -60,9 +62,11 @@
 paik <- 
 function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4, 
     xlab = NULL, ylab = NULL, leg.title = NULL, leg.loc = NULL, 
-    show.mname = FALSE, ...) 
+    show.mname = FALSE, pal = "Dark2", 
+	col = rep(brewer.pal(length(cl), pal),length(cl)), ...) 
 {
-    vars <- as.character(attr(terms(formula), "variables")[-1])
+library(RColorBrewer)    
+vars <- as.character(attr(terms(formula), "variables")[-1])
     cond.var = vars[3]
     rv <- data[, names(data) == vars[1]]
     cv <- data[, names(data) == cond.var]
@@ -102,7 +106,7 @@ function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
         byrow = TRUE)
     txm <- matrix(ncol = length(pts), nrow = length(cl), data = tx, 
         byrow = TRUE)
-    col <- gray(seq(1:length(cl))/length(cl))
+    col <- rep(col, length(cl))
     circle.col <- rep(col, length(cl))
     radii <- r.sum/sum(r.sum)
     radii <- stack(as.data.frame(radii))[, 1] * circle.mult
