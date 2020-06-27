@@ -11,10 +11,9 @@
 #' @export
 ker <- function(L, tol = 1e-14) {
   sv <- svd(t(L), nu = NCOL(L), nv = 0)
-  d <- sum(sv$d > tol)
-  ret <- sv$u[,-seq_len(d)]
-  attr(ret, 'd') <- sv$d
-  ret
+  ret <- sv$u[,sv$d < tol]
+  attr(ret, 'd') <- sv$d  # diagnostic for close callss
+  if(ncol(ret) > 0) ret else matrix(0,NCOL(L),1)
 }
 #' Canonical correlation on uncentered matrices
 #'
