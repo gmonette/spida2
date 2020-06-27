@@ -15,6 +15,8 @@ paik(
   leg.title = NULL,
   leg.loc = NULL,
   show.mname = FALSE,
+  pal = "Dark2",
+  col = rep(brewer.pal(length(cl), pal), length(cl)),
   ...
 )
 }
@@ -50,6 +52,10 @@ respect to the specified level of interest in the response.}
 \item{show.mname}{Logical, indicating whether or not the words "Marginal prop"
 should printed in the graph above the dotted line indicating
 marginal proportions.}
+
+\item{pal}{which palette to use from the RColorBrewer package, default: 'Dark2'}
+
+\item{col}{colors for groups, default brewer.pal(n, pal) where n is the number of levels of the conditioning variables}
 
 \item{...}{Additional arguments from plot.}
 }

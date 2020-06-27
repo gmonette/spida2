@@ -1,5 +1,147 @@
-## wald.R
-## From wald-lrt.R by Tino Ntentes
+## Combines wald-lrt.R by Tino Ntentes
+## with some new functions to compute kernels 
+## conjugate complements
+##
+## wald-lrt.R
+#' Kernel (null space) of a linear transformation
+#' 
+#' @param L a matrix
+#' @param tol the smallest singular value that is considered to
+#'        indicate a non-zero dimension.
+#' @export
+ker <- function(L, tol = 1e-14) {
+  sv <- svd(t(L), nu = NCOL(L), nv = 0)
+  d <- sum(sv$d > tol)
+  ret <- sv$u[,-seq_len(d)]
+  attr(ret, 'd') <- sv$d
+  ret
+}
+#' Canonical correlation on uncentered matrices
+#'
+#' The vector of canonical correlations of uncentered
+#' matrices helps to identify whether the column
+#' spaces of two matrices are identical, or whether one
+#' is a subspace of the other, or whether the spaces
+#' are orthogonal. 
+#' 
+#' @param x,y two matrices with the same number of rows
+#' @export  
+ccor <- function(x,y) {
+  # canonical correlations without centering
+  # to test whether two
+  # matrices span the same or orthogonal column spaces,
+  # also the dimension of the intersection
+  # is the number of 1's
+  cancor(x,y,F,F)$cor
+}
+#' SVD to generate an othonormal basis
+#'
+#' @param x a matrix 
+#' @param tol the smallest singular value that is considered to
+#'        indicate a non-zero dimension.
+#' @return an orthonormal basis for the column span of x
+#' @export
+ob <- function(x,  tol = 1e-14) {
+  # orthogonal basis
+  sv <- svd(x, nv = 0)
+  disp(sum(sv$d > tol))
+  ret <- sv$u[,seq_len(sum(sv$d > tol))]
+  attr(ret, 'd') <- sv$d
+  ret
+} 
+#' Conjugate complement of span(X) in span(Z) with respect 
+#' to inner product ip
+#' 
+#' @param X	matrix defining space whose complement is computed. 
+#'          Not necessarily of full column rank
+#' @param Z	matrix defining space within which the complement 
+#'          is computed. 
+#'          Should be of full column rank. Default: diag(nrow(X))
+#' @param ip positive definite matrix defining inner product with 
+#'        respect to which complement is computed. Default: diag(nrow(X))
+#' @param tol tolerance (default 1e-14)
+#' @examples
+#' #' cc_svd(cbind(1:3))
+#' cc_svd(cbind(1:3), cbind(1:3,1))
+#' cc_svd(cbind(1:3), cbind(3*c(1,-2,1), 1:3,1))
+#' # challenge with large numbers
+#' K <- cc_svd(cbind(1,1:10,(1:10)^2))
+#' K
+#' ret <- list()
+#' for(i in 1:20){
+#'   cbind(1,(1:10-10^i)^2,1:10) %>% 
+#'     { list(svd = ccor(cc_svd(.), K) -1, qr =ccor(cc_qr(.), K) -1)
+#'     }  %>% lapply(abs) %>% 
+#'     {list(med=lapply(.,median), ave = lapply(.,mean))} %>% unlist->ret[[i]]
+#' }
+#' ret <- do.call(rbind, ret)
+#' ret
+#' library(lattice)
+#' library(latticeExtra)
+#' xyplot(ts(log2(ret)),  scales = list(y = 'same'), ylab = 'cancorr: log base 2 of deviation from 1')
+#' #
+#' # challenge with small numbers
+#' #
+#' i <- 1
+#' K <- cc_svd(cbind(1,1:10,(1:10 == 1)* 10^{-i}))
+#' K
+#' ret <- list()
+#' for(i in 1:30){
+#'   cbind(1,1:10,(1:10 == 1)* 10^{-i}) %>% 
+#'     { list(svd = ccor(cc_svd(.), K) -1, qr =ccor(cc_qr(.), K) -1)
+#'     }  %>% lapply(abs) %>% 
+#'     {list(med=lapply(.,median), ave = lapply(.,mean))} %>% unlist->ret[[i]]
+#' }
+#' ret <- do.call(rbind, ret)
+#' ret
+#' 
+#' xyplot(ts(log2(ret)),  scales = list(y = 'same'), ylab = 'cancorr: log base 2 of deviation from 1')
+#' 
+#' #
+#' # challenge with small numbers added to 1
+#' #
+#' i <- 1
+#' K <- cc_svd(cbind(1,1:10,1+(1:10 == 1)* 10^{-i}, (1:10 != 1)))
+#' K
+#' ret <- list()
+#' for(i in 1:30){
+#'   cbind(1,1:10, 1 + (1:10 == 1)* 10^{-i}) %>% 
+#'     { list(svd = ccor(cc_svd(.), K) -1, qr =ccor(cc_qr(.), K) -1)
+#'     }  %>% lapply(abs) %>% 
+#'     {list(med=lapply(.,median), ave = lapply(.,mean))} %>% unlist->ret[[i]]
+#' }
+#' ret <- do.call(rbind, ret)
+#' ret
+#' @export
+cc_svd <- function( X , Z = NULL , ip = NULL, tol = 1e-14 ) {
+  #
+  # conjugate complement using the SVD
+  tX <- t(X)
+  if(!is.null(ip)) tX <- tX %*% ip
+  if(!is.null(Z)) tX <- tX %*% Z
+  K <- ker(tX, tol = tol)
+  if(!is.null(Z)) Z %*% K else K
+}
+#' 
+#' @describeIn cc_svd Conjugate complement using QR algorithm
+#' @export
+cc_qr <- function( X , Z = diag( NROW(X)) , ip = diag( NROW(X)), tol = 1e-14 ) {
+  # conjugate complement using QR
+  # keep versions consistent
+  # ConjComp returns a basis for the conjugate complement of the
+  # conjugate projection of X into span(Z) with respect to inner product with
+  # matrix ip.
+  # Note: Z is assumed to be of full column rank but not necessarily X.
+  nr <- NROW(X)
+  if(!is.null(ip)) X <- ip %*% X
+  if(!is.null(Z)) X <- t(Z) %*% X
+  xq <- qr(X, tol = tol)
+  if ( xq$rank == 0 ) return(if(!is.null(Z)) Z else diag(nr)) 
+  a <- qr.Q( xq, complete = TRUE ) [ ,-seq_len(xq$rank)]
+  if(!is.null(Z)) Z %*% a else a
+}
+
+
 ## This a collection of functions designed to facilitate testing hypotheses
 ## with Wald tests.
 ## The methods are readily extended to any fitting method that returns a vector
@@ -183,7 +325,7 @@
 #'   ret 
 #' }
 #' @export
-wald <- 
+wald_lrt <- 
   function(fit, Llist = "", clevel = 0.95,
            LRT = TRUE, pred = NULL,
            data = NULL, debug = FALSE , maxrows = 25,
@@ -462,7 +604,7 @@ wald <-
       ret[[ii]]$data <- data.attr
     }
     names(ret) <- names(Llist)
-    attr(ret,"class") <- "wald"
+    attr(ret,"class") <- c("wald_lrt", 'wald')
     ret
   }
 
@@ -679,7 +821,7 @@ wald2 <- function(fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , maxr
 #' @examples
 #' # coming soon FIXME
 #' @export
-print.wald <- function(x, round = 6, pround = 5,...) {
+print.wald_lrt <- function(x, round = 6, pround = 5,...) {
   pformat <- function(x, digits = pround) {
     x <- format(xx <- round(x,digits))
     x[ as.double(xx) == 0 ] <- paste(c("<.",rep('0',digits-1),'1'),collapse="")
