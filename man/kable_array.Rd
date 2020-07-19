@@ -24,6 +24,11 @@ defined by the third and higher dimensions of the array.
 kable_array(Titanic)
 kable_array(Titanic, row_spec = list(0, angle = -30), 
   add_header_above =list(c(' '= 1,'Gender'=2,Freq = 1)),
+  column_spec(1, bold = T, border_right = T)) 
+\dontrun{  
+kable_array(Titanic, row_spec = list(0, angle = -30), 
+  add_header_above =list(c(' '= 1,'Gender'=2,Freq = 1)),
   column_spec(1, bold = T, border_right = T)) \%>\%
   save_kable(file = 'test.html', self_contained = T)
+}
 }
