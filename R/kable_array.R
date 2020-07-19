@@ -22,7 +22,6 @@
 #' @export
 kable_array <- function(a,caption = '', ...) {
   require(kableExtra)
-  # ...: row_spec
   dots <- list(...)
   print(length(args))
   dd <- dim(a)
