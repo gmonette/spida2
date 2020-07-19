@@ -4,7 +4,8 @@
 \name{hsfull}
 \alias{hsfull}
 \title{Math achievement and ses in a sample of 160 U.S. schools from the 1982 study ``High School and Beyond''}
-\format{A data frame with 7185 observations on the following 9 variables.
+\format{
+A data frame with 7185 observations on the following 9 variables.
 \describe{
   \item{\code{school}}{school id}
  \item{\code{mathach}}{measure of math achievment}
@@ -15,7 +16,8 @@
    \item{\code{Sector}}{a factor with levels \code{Catholic} \code{Public}}
    \item{\code{PRACAD}}{a measure of the priority given by the school to academic subjects}
    \item{\code{DISCLIM}}{a measure of the disciplinary climate in the school}
- }}
+ }
+}
 \source{
 Bryk and Raudenbush (COMPLETE)
 }

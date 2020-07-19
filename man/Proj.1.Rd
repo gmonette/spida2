@@ -10,6 +10,6 @@ Proj.1(x)
 \item{x}{}
 }
 \description{
-Projection matrix into column space of a matrix. Works even if the matrix
-does not have full column rank.
+Projection matrix into column space of a matrix. Works even if
+the matrix does not have full column rank.
 }

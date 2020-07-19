@@ -4,11 +4,13 @@
 \name{Unemp2}
 \alias{Unemp2}
 \title{Copy Monthly unemployment data in the U.S. from 1995-01-01 to 2019-02-01}
-\format{A data set with 290 rows an two variables:
+\format{
+A data set with 290 rows an two variables:
   \describe{
     \item{\code{date}}{from 1995-01-01 to 2019-02-01}
     \item{\code{unemployment}}{rate in the U.S.}
-  }}
+  }
+}
 \usage{
 Unemp2
 }

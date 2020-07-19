@@ -199,9 +199,9 @@ towide <- function(data,
     }
     
     if(add.invariants) invars <- names(data)[invars(data, idvar)]
-    dinv <- data[,invars]
-    dinv <- dinv[!duplicated(dinv[idvar]),]
-    dl <- data[,c(idvar, names(data) %less% invars)]
+    dinv <- data[, invars, drop=FALSE]
+    dinv <- dinv[!duplicated(dinv[idvar]),,drop=FALSE]
+    dl <- data[,c(idvar, names(data) %less% invars), drop = FALSE]
     dw <- stats::reshape(dl, direction = 'wide',
                          idvar = idvar,
                          timevar = timevar, 

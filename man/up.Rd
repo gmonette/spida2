@@ -29,7 +29,7 @@ that identifies clusters. e.g. ~ school/Sex to get a summary within each Sex
 of each school.}
 
 \item{agg}{(NEW: Aug 2016) a one-sided formula identifying variables to be aggregated,
-i.e. variables that vary withing cluster and that need to be aggregated 
+i.e. variables that vary within clusters and that need to be aggregated 
 (within-cluster mean for numeric variables and within-cluster incidence
 proportions for factors). Default: NULL}
 

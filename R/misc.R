@@ -128,3 +128,35 @@ lchol <- function(x) {
   ret <- chol(xret)
   ret[rind,][,rind]
 }
+#' Vovk-Sellke Maximum p-Ratio
+#' 
+#' Calculates the Vovk-Sellke Maximum p-Ratio
+#' 
+#' @param p p-values
+#' @aliases vovk sellke
+#' @export 
+vs <- function(p) {
+  -1/(exp(1) * p * log(p))
+}
+#' Decomposes positive-definite G = L'L where L is lower-triangular.
+#' 
+#' In R, \code{\link{chol}} returns a upper-triangular matrix \code{R}
+#' such that G = R'R. \code{lchol} return a lower-triangular matrix.
+#' 
+#' @param x a positive-definite matrix
+#' @examples
+#' mm <- cbind( c(8,2,1), c(2,10,2), c(1,2,5))
+#' mm
+#' chol(mm)
+#' lchol(mm)
+#' crossprod(chol(mm))
+#' t(chol(mm)) %*% chol(mm)
+#' crossprod(lchol(mm))
+#' t(lchol(mm)) %*% lchol(mm)
+#' @export
+lchol <- function(x) {
+  rind <- rev(1:nrow(x))
+  xret <- x[rind,][,rind]
+  ret <- chol(xret)
+  ret[rind,][,rind]
+}

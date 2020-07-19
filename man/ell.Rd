@@ -59,6 +59,8 @@ box should be returned}
 \item{x, y}{data values}
 
 \item{\dots}{arguments passed to \code{ellplus}}
+
+\item{na.rm}{remove missing data in forming data ellipse, default TRUE}
 }
 \value{
 Returns a 2-column matrix of (X,Y) coordinates suitable for drawing

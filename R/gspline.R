@@ -319,7 +319,7 @@
 #' # of freedom and t-values.
 #' 
 #' @export
-Gspline <- function(
+gspline <- function(
   knots, 
   degree = 3,
   smoothness = pmax(
@@ -862,3 +862,12 @@ if(FALSE) {
   rownames(Lmat) <- with(evs, paste(x,D,limit))
   wald(fit, Lmat)
 }
+#' Synonym for gspline
+#' 
+#' For transitional reasons with the forthcoming
+#' gspline package, \code{Gspline} is a synonym for 
+#' \code{gspline}.
+#' 
+#' @rdname gspline
+#' @export
+Gspline <- gspline
