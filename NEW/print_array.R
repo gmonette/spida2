@@ -1,5 +1,5 @@
 #' ---
-#' title: "Regression in R"
+#' title: "Playing with kableExtra to print arrays"
 #' author: "Georges Monette"
 #' date: "July 2020"
 #' fontsize: 12pt
@@ -24,7 +24,8 @@
 #' 
 library(knitr)
 library(spida2)
-# remotes::install_github('gmonette/spida2@wald-lrt')
+remotes::install_github('gmonette/spida2@wald-lrt')
+devtools::install_github('gmonette/spida2')
 
 
 # install.packages('kableExtra')
