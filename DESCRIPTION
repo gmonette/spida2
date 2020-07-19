@@ -7,7 +7,8 @@ Author: Georges Monette [aut, cre],
   John Fox [aut], 
   Michael Friendly [aut], 
   Heather Krause [aut],
-  Tino Ntentes [aut]
+  Tino Ntentes [aut],
+  Fan Zhu [ctb]
 Maintainer: Georges Monette <georges@yorku.ca>
 Description: Collection of utility functions for linear and mixed models
     including wald: Wald test with functions to generate hypothesis matrices gsp:
@@ -23,6 +24,7 @@ Encoding: UTF-8
 Imports: stats, nlme, lattice, latticeExtra, lme4, magrittr
 Suggests: 
     knitr,
+    car,
     rmarkdown,
     testthat (>= 2.1.0)
 VignetteBuilder: knitr, rmarkdown

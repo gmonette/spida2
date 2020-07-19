@@ -20,7 +20,7 @@
 #'   save_kable(file = 'test.html', self_contained = T)
 #' }
 #' @export
-kable_array <- function(a,caption = '', ...) {
+kable_array <- function(a, caption = '', ...) {
   require(kableExtra)
   dots <- list(...)
   print(length(args))

@@ -1,3 +1,8 @@
+2020_07_19
+* makegrid uses getD to create a Cartesian product of predictor with the correct types.
+* kable_array used kableExtra to print arrays (in development)
+2020_07_15
+* wald_lrt performs an LRT test to supplement Wald tests by computing the design matrix for the null hypothesis
 2020_03_14
 * added paik from asbio, brewer.pal.show from RColorBrewer::display.brewer.pal, death.penalty data from asbio, and 'getS' to extract
 samples and sampling parameters from a 'stanfit' object in rstan.
