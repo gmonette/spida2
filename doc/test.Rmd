@@ -1,0 +1,671 @@
+---
+title: "General Parametric Splines in carEx"
+author: ""
+date: "`r Sys.Date()`"
+output: rmarkdown::pdf_document
+bibliography: bib.bib
+link-citations: yes
+vignette: >
+  %\VignetteIndexEntry{General Parametric Splines in carEx}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment='', message = FALSE)
+library(spida2)
+#library(carEx)
+library(magrittr)
+library(latticeExtra)
+
+sp <- gspline(1)
+Dmat <- environment(sp)$Dmat
+basis <- environment(sp)$basis
+Xmat <- environment(sp)$Xmat
+Pcon <- environment(sp)$Pcon
+Xf <- environment(sp)$Xf
+
+Cmat <-
+function( knots, degree, smoothness, lin = NULL, intercept = 0, signif = 3) {
+  # GM 2013-06-13
+  #	add lin: contraints, 
+  # generates constraint matrix
+  # GM: 2019_02_22: added facility to input smoothness as a list 
+  #    for smoothness constraints that don't have the form 0:smoothness[[i]]
+	
+  dm = max(degree)
+  
+  # intercept
+  
+  cmat = NULL
+  if( !is.null(intercept))  cmat = rbind( cmat, "Intercept" =
+                                            Xf( intercept, knots, dm, D=0 ))
+  # continuity constraints
+ 
+  for ( i in seq_along(knots) ) {
+    k <- knots[i]
+    sm <- smoothness[[i]]
+    if ( max(sm) > -1 ) {  # sm = -1 corresponds to discontinuity
+	    if(!is.list(smoothness)) sm <- 0:sm
+      
+      dmat <- Xf( k, knots, dm, D = sm, F ) -   
+      	Xf( k, knots, dm, D = sm, T )
+      rownames( dmat ) <- paste( "C(",signif(k, signif),").",
+                                sm, sep = '')
+      cmat <- rbind( cmat,  dmat)
+    }
+  }
+  
+  # reduced degree constraints
+  
+  degree <- rep( degree, length.out = length(knots) + 1)
+  for ( i in seq_along( degree)) {
+    di <- degree[i]
+    
+    if ( dm > di ) {
+      dmat <- diag( (length(knots) + 1) * (dm +1)) [  (i - 1)*(dm + 1) +
+                                                       1 + seq( di+1,dm), , drop = F]
+      rownames( dmat ) = paste( "I.", i,".",seq(di+1,dm),sep = '')
+      cmat = rbind( cmat, dmat)
+    }
+  }
+  
+  # add additional linear constraints
+  
+  if( ! is.null(lin)) cmat <- rbind(cmat,lin) # GM:2013-06-13
+  rk = qr(cmat)$rank
+  spline.rank = ncol(cmat) - rk
+  attr(cmat,"ranks") = c(npar.full = ncol(cmat), C.n = nrow(cmat),
+                         C.rank = rk , spline.rank = spline.rank )
+  attr(cmat,"d") = svd(cmat) $ d
+  cmat
+  
+}
+
+# basis  <- function(X, tol = 1e-9) {
+#   # returns linear independent columns
+#   # with possible pivoting
+#   q <- qr(X, tol = tol)
+#   sel <- q$pivot[seq_len(q$rank)]
+#   ret <- X[, sel, drop = FALSE]
+#   colnames(ret) <- colnames(X)[sel]
+#   ret
+# }
+# 
+# Xmat <-	function(x,
+#                  degree,
+#                  D = 0,
+#                  signif = 3) {
+#   # Returns rows of design matrix if D = 0
+#   # or linear hypothesis matrix for D-th derivative
+#   if (length(D) < length(x))
+#     D = rep(D, length.out = length(x))
+#   if (length(x) < length(D))
+#     x = rep(x, length.out = length(D))
+#   xmat = matrix(x, nrow = length(x), ncol = degree + 1)
+#   expvec <- 0:degree
+#   coeffvec <- rep(1, degree + 1)
+#   expmat <- NULL
+#   coeffmat <- NULL
+#   
+#   for (i in 0:max(D)) {
+#     expmat <- rbind(expmat, expvec)
+#     coeffmat <- rbind(coeffmat, coeffvec)
+#     coeffvec <- coeffvec * expvec
+#     expvec <- ifelse(expvec > 0, expvec - 1, 0)
+#   }
+#   X = coeffmat[D + 1,,drop = FALSE] * xmat ^ expmat[D + 1,, drop = FALSE]
+#   
+#   xlab = signif(x, signif)
+#   rownames(X) = ifelse(D == 0,
+#                        paste('f(', xlab , ')', sep = ''),
+#                        paste("D", D, "(", xlab, ")", sep = ""))
+#   colnames(X) = paste("X", 0:(ncol(X) - 1), sep = "")
+#   class(X) <- c('gspline_matrix',class(X)) 
+#   X
+# }
+# Xf <-
+#   function(x,
+#            knots,
+#            degree = 3,
+#            D = 0,
+#            right = TRUE,
+#            periodic = FALSE,
+#            signif = 3) {
+#     # Returns block diagonal matrix (if x ordered)
+#     # with design matrix or linear hypothesis matrix
+#     # for the 'full' model with contrained parameters.
+#     #
+#     # With the default, right == TRUE, 
+#     # if x is at a knot then it is included in
+#     # in the lower interval. 
+#     # With right = FALSE, it is included in the higher
+#     # interval. This is needed when building 
+#     # derivative constraints at the knot
+#     if(periodic) {
+#       period <- max(knots)
+#       xx <- x %% period
+#       if(right) xx[xx==0] <- period
+#       x <- xx
+#       knots <- knots[-length(knots)]
+#     }
+#     xmat = Xmat (x, degree, D , signif)
+#     k = sort(knots)
+#     g = cut(x, c(-Inf, k, Inf), right = right)
+#     ret <- do.call('cbind',
+#                    lapply(seq_along(levels(g)), function(i)
+#                      (g == levels(g)[i]) *  xmat))
+#     if(periodic) rownames(ret) <- 
+#       sub(')',paste0(' mod ',period,')'), rownames(ret))
+#   class(ret) <- c('gspline_matrix',class(ret)) 
+# 
+#         ret
+#   }
+# 
+# # 
+# # Value and derivatives at 0
+# #
+# # And all discontinuities at knots
+# #
+# Dmat <- function(knots, degree, periodic = FALSE, signif = 3) {
+#   dm <- max(degree)
+#   cmat <- Xf(0, knots, dm, D=0:dm, periodic = periodic)
+#   n_knots <- length(knots)
+#   for (i in seq_len(n_knots - 1) ) {
+#     k <- knots[i]
+#     dmat <- Xf(k, knots, dm, D = seq(0,dm), F, periodic = periodic) -   
+#       Xf(k, knots, dm, D = seq(0,dm), T, periodic = periodic)
+#     rownames( dmat ) <- paste( "C(",signif(k, signif),").",
+#                                seq(0,dm), sep = '')
+#     cmat <- rbind( cmat,  dmat)
+#   }
+#   k <- knots[length(knots)]
+#   if(periodic) {
+#     dmat <- Xf(0, knots, dm, D = seq(0,dm) , F ,periodic = periodic) -   
+#       Xf(k, knots, dm, D = seq(0,dm) , T ,periodic = periodic)
+#     rownames( dmat ) <- paste( "C(0 mod ",signif(k, signif),").",
+#                                seq(0,dm), sep = '')
+#     cmat <- rbind(cmat, dmat)
+#   } else {
+#     dmat <- Xf(k, knots, dm, D = seq(0,dm) , F ,periodic = periodic) -
+#       Xf(k, knots, dm, D = seq(0,dm) , T ,periodic = periodic)
+#     rownames( dmat ) <- paste( "C(",signif(k, signif),").",
+#                                seq(0,dm), sep = '')
+#     cmat <- rbind(cmat, dmat)
+#   }
+#     class(cmat) <- c('gspline_matrix',class(cmat)) 
+# 
+#   cmat
+# }
+# 
+# # 
+# # Parameters to constrain
+# #
+# # TODO: Change so degree can be a list
+# #
+# Pcon <- function(knots, degree, periodic) {
+#   degree <- rep( degree, length.out = length(knots) + 1)
+#   if(periodic) {
+#     if(degree[length(degree)] != degree[1]) warning("For periodic splines, the degree of the last and first intervals should match")
+#     knots <- knots[-length(knots)]
+#     degree <- degree[-length(degree)]
+#   }
+#   dm <- max(degree)
+#   cmat <- NULL
+#   for ( i in seq_along(degree)) {
+#     di <- degree[i]
+#     if ( dm > di ) {
+#       dmat <- diag( (length(knots) + 1) * (dm +1)) [  
+#         (i - 1)*(dm + 1) + 1 + seq( di+1,dm), , drop = F]
+#       rownames( dmat ) = paste( "I.", i,".",seq(di+1,dm),sep = '')
+#       cmat = rbind( cmat, dmat)
+#     }
+#   }
+#     class(cmat) <- c('gspline_matrix',class(cmat)) 
+# 
+#   cmat
+# }
+```
+
+## Introduction
+
+The parametric polynomial splines implemented in the 'carEx' package are 
+piecewise polynomial functions on $k+1$ intervals formed by $k$ knots partitioning
+the real line: 
+$$(-\infty, t_1], (t_1, t_2], ..., (t_{i-1}, t_i], ..., (t_k, \infty)$$
+with degree $d_i$ on the $i$th interval $(t_{i-1}, t_i]$, $i = 1,...,k+1$, 
+and order of continuity $c_i$ at the $i$th knot, $i = 1,...,k$. 
+
+The order of continuity refers to the highest order 
+for which the derivatives of the polynomial on the interval to the left and to the right of 
+a knot, $t_i$, 
+have the same limits at $t_i$. 
+For all orders above $c_i$, derivatives, if any, are not constained to have the same limit.
+
+Such a spline is parametrized by three vectors: 
+a vector of knots, $t_1 < t_2 < ... < t_k$, of length $k > 0$, 
+a vector of polynomial degrees, $d_1, d_2, ... , d_{k+1}$,  of length $k+1$, and
+a vector of orders of continuity or 'smoothness', $c_1, c_2, ... , c_{k}$,  of length $k$.
+
+## Theory
+
+We first describe the general principles that underly the implemention of splines in this package.
+
+Let $X_f$ be a $n \times q$ matrix for a model whose coefficients are subject
+to $c$ linearly independent constraints given by a $c \times q$ matrix $C$. That is,
+the linear space for the model is:
+$$\mathcal{M} = \{ \eta = X_f \phi : \phi \in \mathbb{R}^q, C \phi = 0 \}$$
+We wish to construct a $n \times p$ design matrix $X$ with $p=q-c$ so that
+$$\mathcal{M} = \{ \eta = X \beta : \beta \in \mathbb{R}^p\}$$
+Supppose further that we want the parameters $\beta$ to provide $p$ specified linearly independent
+function of $\phi$ represented by the rows of the $p \times q$ matrix $E$ whose rows are
+linearly independent of the rows of $C$ to ensure that they are not equal to 0 on 
+$\mathcal{M}$.
+
+Consider the $q \times q$ partitioned matrix $\left[\begin{array}{cc} C \\ E \end{array} \right]$.
+Since its rows are linearly independent, it is invertible and has a conformably 
+partitioned inverse:
+$$\left[\begin{array}{cc} F & G \end{array} \right] = \left[\begin{array}{cc} C \\ E \end{array} \right]^{-1}$$
+Thus $FC + GE = I$, $CF = I$, etc.
+
+Consider the model matrix $X = X_f G$.
+We show that $\mathcal{M} = \{X\beta : \beta \in \mathbb{R}^p\}$ and that
+for any $\phi \in  \mathbb{R}^q$, such that $C\phi =0$, $\beta = E \phi$.
+
+Suppose $C \phi = 0$. Then
+
+$$\phi = \left[\begin{array}{cc} F & G \end{array} \right] \left[\begin{array}{cc} C \\ E \end{array} \right] \phi =  \left[\begin{array}{cc} F & G \end{array} \right] \left[\begin{array}{cc} 0 \\ E \phi \end{array} \right] = GE \phi$$
+Thus, with $\beta = E \phi$, we have
+$$ X_f \phi = X_f GE \phi = X \beta$$ 
+We therefore have a 1-1 correspondence between $\beta \in \mathbb{R}^p$ and 
+$\{\phi \in \mathbb{R}^q : C \phi = 0\}$ given by $\beta = E \phi$ and $\phi = G\beta$.
+
+If $X$ is of full rank, we can obtain the least-squares estimator $\hat{\beta} = (X'X)^{-1}X'Y$.
+We can then estimate any linear function $\psi = L\phi$ of $\phi$ under the constraint $C \phi = 0$ with the estimator $\hat{\psi} = A\hat{\beta}$ with 
+$$A = LG$$
+Thus, the matrix $G$ serves as a post-multiplier to transform $X_f$ into a model matrix $X=X_f G$
+that can be used in a linear model. The matrix $G$ also serves as a post-multiplier to
+transform any general linear hypothesis matrix expressed in terms of $\phi$ into a 
+general linear hypothesis matrix in terms of of $\beta$.
+
+## Application to Splines
+
+Our goal is to generate model matrices for splines in a way that produces interpretable
+coefficients and lends itself to easily estimating and testing properties of the spline
+that are linear functions of parameters: slope, curvature, discontinuities, etc. 
+
+Given $k$ knots, $-\infty = t_0 < t_1 < ... < t_k < t_{k+1} = \infty$, the spline
+in the $i$th interval, $(t_{i-1},t_i]$, is a polynomial of degree $d_i$, a non-negative integer 
+with the value 0 signifying a constant over the corresponding interval.
+
+The order of smoothness $c_i$ at $t_i$ is either a non-negative integer or -1 
+to allow a discontinuity. (TODO: control direction of discontinuity)
+
+Generating a model matrix for some piecewise polynomial functions is simple.
+For example, if the degrees, $d_i$, are
+non-decreasing and the order of continuity is a constant $c$ less than $\min(d_i)$, one can add terms using 'plus' functions at each knot. For example, a
+quadratic spline (degree 2, continuity 1) with one knot at 1 can be generated with a model
+matrix with three columns, in addition to the intercept term: 
+$$x, x^2, (x -1)_+^2$$
+where
+$$(y)_+ = \left\{ \begin{array}{ll}
+0 & \textrm{if } y < 0 \\
+y & \textrm{otherwise }
+\end{array}\right.$$
+A spline that is quadratic on the interval $(-\infty,1]$ and cubic on $(1,\infty)$ with
+continuity of order 1, $c_1 = 1$, at $t_1 = 1$, can be generated by the columns:
+$$x, x^2, (x -1)_+^2, (x -1)_+^3$$
+However, if one allows the degree of the polynomial or the order of smoothness to
+vary in diffenret parts of the spline, the approach above works only in special cases.
+
+Generating model matrices in more general situations, for example with degrees that are
+not monotone, nor monotone increasing as the index radiates from a central value, is more
+challenging. The approach described here works for any pattern of degrees, $d_i$ and smoothness
+constraints, $c_i$.
+
+We start by constucting a matrix, $X_f$, for a spline in which the polynomial degree in
+each interval is the maximal value, $\max(d_i)$. We then construct constraints for the coefficients
+of this model to produce the desired spline.
+
+As an example, consider a spline, $\mathcal{S}$, with knots at 3 and 7, polynomial degrees, 
+$(2, 3, 2)$,
+and smoothness, $(1, 2)$, meaning that $\mathcal{S}$ is smooth of order 1 at
+$x=3$, and smooth of order 2 at $x=7$.
+Columns of the full matrix $X_f$ contain the intercept, 
+linear and quadratic and cubic terms in each
+interval of the spline.
+
+To create an instance of $X_f$ we need to specify the values over which
+the matrix is evaluated. Evaluating $X_f$ at $x = 0, 1, ... 9$, we obtain
+the following matrix, which happens here to be block diagonal because of the
+ordering of the $x$ values:
+
+```{r}
+Xf(0:9, knots = c(3,7), degree = 3)
+```
+The model for the unconstrained maximal polynomial is 
+$X_f \phi: \phi \in \mathbb{R}^{12}$.
+
+We impose three types of constraints on $\phi$.
+
+1. $X_f \phi$ should evaluate to 0 at $x=0$ so an intercept
+   term in the model will have the correct interpretation,
+2. the limits of the value and of the first derivative of the
+   spline must be the same when approaching the first knot
+   from the right or from the left, and the limits of the
+   value, the first and second derivatives should be the same
+   when approaching the second knot from the right or
+   from the left, and
+3. the degree of the polynomial in the first and third 
+   intervals must be reduced to 2.
+   
+The constraint marix, $C$ is created by the 'Cmat' function:
+```{r}
+Cmat(knots = c(3, 7), degree = c(2, 3, 2), smooth = c(1, 2))
+```
+The row labels of the constraint matrix show the role of each row.
+For example, "f(0)" is
+the value of the spline when $x=0$ which is constrained to 0 so that
+an intercept term in a linear model can have its usual interpretation,
+"C(3).0" ensures continuity 
+at $x=3$, "C(7).2" forces continuity of the
+second derivative at $x = 7$, "I.1.3" constrains the cubic term
+to be 0 in the first interval, etc.
+
+Attributes give the length of the $\phi$ vector as 'npar.full',
+the number of constraints as 'C.n', the rank of the constraint
+matrix as 'C.rank' and the rank of the spline, omitting
+the intercept term, as 'spline.rank'.
+
+The 'd' attribute contains the vector of singular values of the
+constraint matrix.
+
+The following is the matrix $E$ of estimable functions created by the 'Emat'
+function:
+```{r}
+Emat(knots = c(3, 7), degree = c(2, 3, 2), smooth = c(1, 2))
+```
+The row labels signify the first derivative at $x=0$, 'D1(0)',
+the second derivative at $x=0$, 'D2(0)', the saltus in the second
+derivative at $x = 3$ and the saltus in the third derivative
+at $x=3$.
+
+The full rank model for the spline is generated by a
+matrix $X= X_f G$ as described in the previous section.
+
+The spline modelling function
+is a closure generated by the `gspline` function.
+```{r}
+sp <- gspline(knots = c(3, 7), degree = c(2, 3, 2), smoothness = c(1, 2))
+sp(0:9)
+```
+produce a matrix $X = X_fG$ that will generate the desired spline parametrized by linear estimable coefficients.
+
+The closure created by the `gspline` function can be used in a linear model formulas.
+We illustrate its use with a small example. Note that the spline function can be used in
+any linear model formula. It can, for example, be modelled as interacting with other predictors.
+```{r}
+df <- data.frame(x = 0:10)
+set.seed(123)
+df <- within(df, y <- -2* (x-5) + .1 * (x-5)^3 + rnorm(x))
+df <- rbind(df, data.frame(x = seq(0,10,.1), y = NA))
+df <- sortdf(df, ~ x)
+plot(y~x, df, pch = 16)
+fit <- lm(y ~ sp(x), data = df)
+summary(fit)
+lines(df$x , predict(fit, df))
+```
+
+## Linear hypotheses
+
+Linear hypotheses about a spline may be easy to formulate in terms
+of its 'full' parameter vector
+$\phi$ but challenging in terms of the 'working' parameters, $\beta$. For example, the 
+derivative or curvature of the spline over a range of values is easily expressed in terms
+of $\phi$.  To do this We use the relationship between linear hypotheses in terms of $\phi$ with those
+in terms of $\beta$ to generate linear hypotheses based on $\hat{\beta}$. Namely the 
+least-squares estimator of 
+$\psi = L \phi$ under the contraint $C \phi =0$ is 
+$\hat{\psi} = A \hat{\beta}$ where $A = LG$.
+
+Given a spline function `sp` created by the `gspline` function:
+```{r}
+sp <- gspline(knots = c(3,7), degree = c(2,3,2), smoothness = c(1,2))
+sp(0:9)
+```
+The `sp` function will generate a hypothesis matrix to query values and derivatives
+of the spline.
+```{r}
+sp(c(2, 3, 7), D = 1)
+```
+Denoting the matrix above by $A$, $A \hat{\beta}$ will estimate the first derivative
+of the spline at $x=2$ and its limit from the right at the knots $x = 3, 7$. 
+The `limit` parameter to the spline function is used to select whether the value
+estimated is a limit from the right, from the left, or the saltus (jump) in value
+if discontinuous. For example, at $x=3$ where the spline has a discontinuous
+second derivatives:
+```{r}
+sp(c(3, 3, 3), D = 2, limit = c(-1,0,1))
+```
+Using the 'wald' function it is possible to graph these estimates as a function of
+of $x$.
+```{r}
+
+# xpred <- seq(0,10, .05)
+# 
+# A.1 <- cbind(0, sp(xpred, D = 1))
+# ww.1 <- as.data.frame(wald(fit, A.1))
+# 
+# A.2 <- cbind(0, sp(xpred, D = 2))
+# ww.2 <- as.data.frame(wald(fit, A.2))
+# 
+# plot(xpred, ww.1$coef, type = 'l')
+# plot(xpred, ww.2$coef, type = 'l')
+# library(latticeExtra)
+# ww.1$x <- xpred
+# xyplot(coef ~ x, ww.1, type = 'l',
+#  	   lower = ww.1$L2, upper = ww.1$U2,
+#  	   ylab = 'first derivative',
+#  	   subscripts = TRUE) +
+#  	layer(gpanel.fit(...))
+# head(ww.1)
+```
+
+## Periodic splines
+
+We show how periodic splines can be used to fit periodic patterns such as seasonal
+patterns. We use the monthly U.S. unemployment rates from January 1995 to February 2019.
+
+The 'crash' in November 2008 creates a discontinuity in the series which we can use
+to illustrate how to a discontinuity at an a priori value of time. We model the series
+as consisting of two components, a long-term secular component and a periodic 
+annual component. We also illustrate how to use a parsimonious secular spline to model
+secular interactions with the seasonal spline.
+
+```{r}
+unemp <- as.data.frame(spida2::Unemp) # TODO: change to 'carData::Unemp'??
+head(unemp)
+library(lattice)
+library(latticeExtra)
+xyplot(unemployment ~ date, unemp) + layer(panel.abline(v = as.Date('2008-12-15')))
+
+toyear <- function(x) {
+  # number of years from January 1, 2000
+  (as.numeric(x) - as.numeric(as.Date('2000-01-01')))/365.25
+}
+unemp <- within(
+  unemp,
+  {
+    year <- toyear(date)
+    month <- as.numeric(format(date, '%m'))
+  })
+summary(unemp)
+quintiles <- quantile(unemp$year, 1:4/5)
+sp2 <- gspline(quintiles, 2, 1) # quadratic spline
+sp3 <- gspline(quintiles, 3, 2) # cubic spline    
+
+quintiles_with_crash <- sort(c(quintiles, toyear(as.Date('2008-12-15'))))
+
+sp2d <- gspline(quintiles_with_crash, 2, c(1,1,-1,1,1))
+sp3d <- gspline(quintiles_with_crash, 3,  c(2,2,-1,2,2))
+
+fit2 <- lm(unemployment ~ sp2(year), unemp)
+summary(fit2)
+unemp$fit2 <- predict(fit2)
+fit3 <- lm(unemployment ~ sp3(year), unemp)
+summary(fit3)
+unemp$fit3 <- predict(fit3)
+
+fit2d <- lm(unemployment ~ sp2d(year), unemp)
+summary(fit2d)
+unemp$fit2d <- predict(fit2d)
+fit3d <- lm(unemployment ~ sp3d(year), unemp)
+summary(fit3d)
+unemp$fit3d <- predict(fit3d)
+
+pp <- xyplot(unemployment ~ date, unemp, type = 'b',
+             col = 'gray',
+             key = list(
+               corner = c(1,1),
+               text = list(lab = c('quadratic','cubic','quadratic disc.','cubic disc.')),
+               lines = list(col= c('red','blue','red','blue'),
+                            lty = c(1,1,3,3))
+               )) +
+  layer(panel.lines(x, unemp$fit3, col = 'blue')) +
+  layer(panel.lines(x, unemp$fit2, col = 'red')) + 
+  layer(panel.lines(x, unemp$fit3d, col = 'blue', lty = 3)) +
+  layer(panel.lines(x, unemp$fit2d, col = 'red', lty = 3)) 
+pp
+
+```
+
+# Periodic spline
+
+We add a periodic spline component as a function of months
+using a cubic spline with period 12 and four internal knot at
+$12 \times (1/5 2/5 3/5 4/5)$. 
+```{r}
+per3 <- gspline(12 * 1:5/5, 3, 2, periodic = TRUE)
+per3
+per3(1:12)
+per3(1:12, D= 0)
+
+
+per3(1:12, D= 1)
+sp3d(1:2)
+sp3d(1:2, D = 1)
+
+fitper3 <-  lm(unemployment ~ sp3d(year) + per3(month), unemp)
+summary(fitper3)
+unemp$fitper3 <- predict(fitper3)
+pp <- xyplot(unemployment ~ date, unemp, type = 'b',
+             col = 'gray') +
+  layer(panel.lines(x, unemp$fitper3, col = 'blue'))  
+pp
+str(sp3d(1:12))
+str(sp3d(1:12, D = 0))
+str(sp3d(1:12, D = 1))
+str(sp3d(1:12, D = 2))
+str(per3(1:12, D = 0))
+str(per3(1:12, D = 1))
+str(per3(1:12, D = 2))
+
+```
+```{r}
+knitr::knit_exit()
+```
+
+We can examine the monthly periodic spline fit
+```{r}
+str(sp3d(1:12, D = 0))
+str(sp3d(1:12, D = 1))
+str(sp3d(1:12, D = 2))
+str(per3(1:12, D = 0))
+str(per3(1:12, D = 1))
+str(per3(1:12, D = 2))
+
+
+
+pred <- data.frame(month = seq(0,24,.01), year = 0)
+pred$fitper3 <- predict(fitper3, newdata = pred)
+xyplot(fitper3 ~ month, pred, type = 'l',
+       xlim = c(0,24),
+       scales = list( x = list( at =3 * 0:8)),
+       ylab = 'seasonal unemployment') +
+  layer(panel.abline(v = 12))
+wald(fitper3)
+pred_deriv <- expand.grid(month = seq(0,24, .05), year = 0, D = 1:3)
+dim(pred_deriv)
+head(pred_deriv)
+LD <- with(pred_deriv, per3(month, D = D))
+LD2 <- per3(pred_deriv$month, D = pred_deriv$D)
+LD3 <- per3(pred_deriv$month, D = 1)
+
+str(sp3d(1:12, D = 0))
+str(sp3d(1:12, D = 1))
+str(sp3d(1:12, D = 2))
+str(per3(1:12, D = 0))
+str(per3(1:12, D = 1))
+str(per3(1:12, D = 2))
+
+dim(LD)
+#print(per3)
+str(LD)
+str(LD2)
+str(LD3)
+print(LD)
+#class(LD[1,1])
+#class(0*LD)
+
+```
+
+## Visualizing derivatives
+
+We construct a linear estimation matrix for the derivatives of the spline by
+setting the coefficients of the secular portion to 0 and using the spline function
+to generate coefficients to estimate various derivatives.
+```{r}
+wald(fitper3)
+pred_deriv <- expand.grid(month = seq(0,24, .05), year = 0, D = 1:3)
+dim(pred_deriv)
+head(pred_deriv)
+LD <- with(pred_deriv, per3(month, D = D))
+LD2 <- per3(pred_deriv$month, D = pred_deriv$D)
+LD3 <- per3(pred_deriv$month, D = 1)
+
+dim(LD)
+#print(per3)
+str(LD)
+str(LD2)
+str(LD3)
+print(LD)
+#class(LD[1,1])
+#class(0*LD)
+
+```
+```{r}
+knitr::knit_exit()
+```
+
+
+```{r}
+LD <- cbind(0 * LD[,rep(1,12)], LD)
+ww <- as.data.frame(wald(fitper3, LD))
+pred3 <- expand.grid(month = pred$month, year = 0, D = 1:3)
+pred3$labs <- reorder(factor(c('first','second','third')[pred3$D]), pred3$D) 
+
+ww <- cbind(ww, pred3)
+xyplot(coef ~ month | labs, ww, as.table = TRUE, 
+       xlim = c(0,24),
+       ylab = 'derivative',
+       scales = list(x = list(at = 3* 0:8)),
+       layout = c(1,3), type = 'l') +
+  layer(panel.abline(v=12))
+```
+
+## References to incorporate
+
+- [Spline derivatives](https://pdfs.semanticscholar.org/6215/21606c14c81655990e8e1aa2615aef059be5.pdf)
+
+

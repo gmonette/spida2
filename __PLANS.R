@@ -1,0 +1,3 @@
+- Add colour to Paik
+- Add LRT to Wald
+- Vovk-Sellke generally as default that can be suppressed
