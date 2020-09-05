@@ -15,6 +15,8 @@ paik(
   leg.title = NULL,
   leg.loc = NULL,
   show.mname = FALSE,
+  col = brewer.pal(8, "Dark2"),
+  alpha = "66",
   ...
 )
 }
@@ -51,18 +53,21 @@ respect to the specified level of interest in the response.}
 should printed in the graph above the dotted line indicating
 marginal proportions.}
 
-\item{...}{Additional arguments from plot.}
+\item{alpha}{transparency for circles expressed in hexadecimal, 
+e.g. 'AA' or 'FF' for no transparency. Default: '66'}
+
+\item{...}{Additional arguments from plot. Especially useful to 
+provide \code{ylim} if needed.}
 }
 \description{
 Construct a Paik-Agresti diagram adapted and enhanced from the
 \code{asbio::paik} function.
 }
 \examples{
-require(tcltk)
 
 data(death.penalty)# from Agresti 2012 
 
-op <- par(mfrow=c(1,2), mar=c(4,4,0,0))
+op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
 paik(verdict ~ d.race + v.race, counts = count, data = death.penalty, 
 leg.title = "Victims race", xlab = "Defendants race", 
 ylab = "Proportion receiving death penalty")
@@ -81,5 +86,5 @@ Agresti, A. (2012) Categorical Data Analysis, 3rd edition.
   American Statistician 39:53-54.
 }
 \author{
-Ken Aho
+Ken Aho, modified by Georges Monette based on an idea by Fan Zhu
 }

@@ -32,9 +32,12 @@
 #'   Logical, indicating whether or not the words "Marginal prop"
 #'   should printed in the graph above the dotted line indicating
 #'   marginal proportions.
+#' @param alpha transparency for circles expressed in hexadecimal, 
+#'   e.g. 'AA' or 'FF' for no transparency. Default: '66'
 #' @param ...	
-#'   Additional arguments from plot.
-#' @author Ken Aho
+#'   Additional arguments from plot. Especially useful to 
+#'   provide \code{ylim} if needed.
+#' @author Ken Aho, modified by Georges Monette based on an idea by Fan Zhu
 #' @references
 #'   Agresti, A. (2012) Categorical Data Analysis, 3rd edition.
 #'   New York. Wiley.
@@ -42,11 +45,10 @@
 #'   contingency table: Simpson's paradox and correlation.
 #'   American Statistician 39:53-54.
 #' @examples
-#' require(tcltk)
 #' 
 #' data(death.penalty)# from Agresti 2012 
 #' 
-#' op <- par(mfrow=c(1,2), mar=c(4,4,0,0))
+#' op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
 #' paik(verdict ~ d.race + v.race, counts = count, data = death.penalty, 
 #' leg.title = "Victims race", xlab = "Defendants race", 
 #' ylab = "Proportion receiving death penalty")
@@ -57,11 +59,34 @@
 #' par(op)
 #' 
 #' @export 
-paik <- 
-function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4, 
+paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4, 
     xlab = NULL, ylab = NULL, leg.title = NULL, leg.loc = NULL, 
-    show.mname = FALSE, ...) 
+    show.mname = FALSE,  
+    col = brewer.pal(8, 'Dark2'), alpha = '66', ...) 
 {
+    draw.circle <- function (x, y, radius, nv = 100, border = NULL, col, lty = 1, 
+              density = NULL, angle = 45, lwd = 1) 
+    {
+        # copied from plotrix
+        col <- paste0(col,'66')
+        xylim <- par("usr")
+        plotdim <- par("pin")
+        ymult <- getYmult()
+        angle.inc <- 2 * pi/nv
+        angles <- seq(0, 2 * pi - angle.inc, by = angle.inc)
+        if (length(col) < length(radius)) 
+            col <- rep(col, length.out = length(radius))
+        for (circle in 1:length(radius)) {
+            xv <- cos(angles) * radius[circle] + x
+            yv <- sin(angles) * radius[circle] * ymult + y
+            polygon(xv, yv, border = border, col = col[circle], lty = lty, 
+                    density = density, angle = angle, lwd = lwd)
+        }
+        invisible(list(x = xv, y = yv))
+    }
+  
+    # fix for R version 4
+    data[] <- lapply(data, function(x) if(is.character(x)) factor(x) else x)
     vars <- as.character(attr(terms(formula), "variables")[-1])
     cond.var = vars[3]
     rv <- data[, names(data) == vars[1]]
@@ -72,6 +97,7 @@ function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
     cl <- levels(data[, names(data) == cond.var])
     ol <- levels(data[, names(data) == ov])
     rl <- levels(data[, names(data) == vars[1]])
+    if(is.null(data$count)) data$count <- data$Freq
     x <- xtabs(count ~ rv + or + cv, data = data)
     xm <- xtabs(count ~ rv + or, data = data)
     m.prop <- apply(xm, 2, function(x) x[resp.lvl]/sum(x))
@@ -93,7 +119,7 @@ function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
     p <- plot(x.loc, y.loc, xlim = c(1.5, (length(ol) + 1.5)), 
         type = "n", xaxt = "n", xlab = ifelse(is.null(xlab), 
             ov, xlab), ylab = ifelse(is.null(ylab), eval(temp.ylab), 
-            ylab))
+            ylab), ...)
     grid(p)
     axis(1, at = pts, labels = ol)
     tprop <- stack(as.data.frame(t(r.prop)))[, 1]
@@ -102,16 +128,15 @@ function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
         byrow = TRUE)
     txm <- matrix(ncol = length(pts), nrow = length(cl), data = tx, 
         byrow = TRUE)
-    col <- gray(seq(1:length(cl))/length(cl))
-    circle.col <- rep(col, length(cl))
+    circle.col <- rep(col[1:length(cl)], length(ol))
     radii <- r.sum/sum(r.sum)
     radii <- stack(as.data.frame(radii))[, 1] * circle.mult
     for (i in 1:length(radii)) draw.circle(x.loc[i], y.loc[i], 
-        radii[i], col = circle.col[i])
+        radii[i], col = circle.col[i], alpha = alpha)
     if (length(pts) == 2) {
         for (i in 1:length(cl)) {
             segments(txm[i, ][1], tpropm[i, ][1], txm[i, ][2], 
-                tpropm[i, ][2])
+                tpropm[i, ][2], col = circle.col[i])
         }
         segments(pts[1], m.prop[1], pts[2], m.prop[2], lty = 2, 
             lwd = 2)
@@ -119,9 +144,9 @@ function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
     if (length(pts) == 3) {
         for (i in 1:length(cl)) {
             segments(txm[i, ][1], tpropm[i, ][1], txm[i, ][2], 
-                tpropm[i, ][2])
+                tpropm[i, ][2], col = circle.col[i])
             segments(txm[i, ][2], tpropm[i, ][2], txm[i, ][3], 
-                tpropm[i, ][3])
+                tpropm[i, ][3], col = circle.col[i])
         }
         segments(pts[1], m.prop[1], pts[2], m.prop[2], lty = 2, 
             lwd = 2)
@@ -131,11 +156,11 @@ function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
     if (length(pts) == 4) {
         for (i in 1:length(cl)) {
             segments(txm[i, ][1], tpropm[i, ][1], txm[i, ][2], 
-                tpropm[i, ][2])
+                tpropm[i, ][2], col = circle.col[i])
             segments(txm[i, ][2], tpropm[i, ][2], txm[i, ][3], 
-                tpropm[i, ][3])
+                tpropm[i, ][3], col = circle.col[i])
             segments(txm[i, ][3], tpropm[i, ][3], txm[i, ][4], 
-                tpropm[i, ][4])
+                tpropm[i, ][4], col = circle.col[i])
         }
         segments(pts[1], m.prop[1], pts[2], m.prop[2], lty = 2, 
             lwd = 2)
