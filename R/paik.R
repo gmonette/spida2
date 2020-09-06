@@ -9,7 +9,8 @@
 #'   whose levels are distinguished in the graph with different
 #'   colors. Interactions and nested terms are not allowed.
 #' @param counts A vector of counts for the associated
-#'   categorical variables in formula.
+#'   categorical variables in formula. The variable 'Freq' is used
+#'   if it exists in the data frame, data
 #' @param resp.lvl The level in Y of primary interest. See
 #'   example below.
 #' @param data
@@ -46,7 +47,7 @@
 #'   American Statistician 39:53-54.
 #' @examples
 #' 
-#' data(death.penalty)# from Agresti 2012 
+#' data(death.penalty) # from Agresti 2012 
 #' 
 #' op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
 #' paik(verdict ~ d.race + v.race, counts = count, data = death.penalty, 
@@ -62,7 +63,9 @@
 paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4, 
     xlab = NULL, ylab = NULL, leg.title = NULL, leg.loc = NULL, 
     show.mname = FALSE,  
-    col = brewer.pal(8, 'Dark2'), alpha = '66', ...) 
+    col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02", 
+            "#A6761D", "#666666"), 
+    alpha = '66', ...) 
 {
     draw.circle <- function (x, y, radius, nv = 100, border = NULL, col, lty = 1, 
               density = NULL, angle = 45, lwd = 1) 
@@ -93,7 +96,7 @@ paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
     cv <- data[, names(data) == cond.var]
     ov <- vars[vars != vars[1] & vars != cond.var]
     or <- data[, names(data) == ov]
-    new.formula <- formula(counts ~ rv + ov + cv)
+    new.formula <- formula(counts ~ rv + ov + cv) # not used?
     cl <- levels(data[, names(data) == cond.var])
     ol <- levels(data[, names(data) == ov])
     rl <- levels(data[, names(data) == vars[1]])
