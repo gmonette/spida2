@@ -15,7 +15,8 @@ paik(
   leg.title = NULL,
   leg.loc = NULL,
   show.mname = FALSE,
-  col = brewer.pal(8, "Dark2"),
+  col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02", "#A6761D",
+    "#666666"),
   alpha = "66",
   ...
 )
@@ -28,7 +29,8 @@ whose levels are distinguished in the graph with different
 colors. Interactions and nested terms are not allowed.}
 
 \item{counts}{A vector of counts for the associated
-categorical variables in formula.}
+categorical variables in formula. The variable 'Freq' is used
+if it exists in the data frame, data}
 
 \item{resp.lvl}{The level in Y of primary interest. See
 example below.}
@@ -65,7 +67,7 @@ Construct a Paik-Agresti diagram adapted and enhanced from the
 }
 \examples{
 
-data(death.penalty)# from Agresti 2012 
+data(death.penalty) # from Agresti 2012 
 
 op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
 paik(verdict ~ d.race + v.race, counts = count, data = death.penalty, 
