@@ -6,10 +6,10 @@
 \usage{
 paik(
   formula,
+  data,
   counts,
   resp.lvl = 2,
-  data,
-  circle.mult = 0.4,
+  circle.mult = 1,
   xlab = NULL,
   ylab = NULL,
   leg.title = NULL,
@@ -28,14 +28,14 @@ explanatory variable, i.e. X2, is used as the trace variable
 whose levels are distinguished in the graph with different
 colors. Interactions and nested terms are not allowed.}
 
+\item{data}{Dataframe containing variables in formula.}
+
 \item{counts}{A vector of counts for the associated
 categorical variables in formula. The variable 'Freq' is used
-if it exists in the data frame, data}
+if it exists in the data frame, \code{data}}
 
 \item{resp.lvl}{The level in Y of primary interest. See
 example below.}
-
-\item{data}{Dataframe containing variables in formula.}
 
 \item{circle.mult}{Multiplier for circle radii in the diagram.}
 
@@ -54,6 +54,9 @@ respect to the specified level of interest in the response.}
 \item{show.mname}{Logical, indicating whether or not the words "Marginal prop"
 should printed in the graph above the dotted line indicating
 marginal proportions.}
+
+\item{col}{list of colors for conditional levels. Default: the 8 colours
+of the 'Dark2' palette of RColorBrewer.}
 
 \item{alpha}{transparency for circles expressed in hexadecimal, 
 e.g. 'AA' or 'FF' for no transparency. Default: '66'}

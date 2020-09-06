@@ -8,13 +8,13 @@
 #'   explanatory variable, i.e. X2, is used as the trace variable
 #'   whose levels are distinguished in the graph with different
 #'   colors. Interactions and nested terms are not allowed.
-#' @param counts A vector of counts for the associated
-#'   categorical variables in formula. The variable 'Freq' is used
-#'   if it exists in the data frame, data
-#' @param resp.lvl The level in Y of primary interest. See
-#'   example below.
 #' @param data
 #' 	 Dataframe containing variables in formula.
+#' @param counts A vector of counts for the associated
+#'   categorical variables in formula. The variable 'Freq' is used
+#'   if it exists in the data frame, \code{data}
+#' @param resp.lvl The level in Y of primary interest. See
+#'   example below.
 #' @param circle.mult	
 #'   Multiplier for circle radii in the diagram.
 #' @param xlab	
@@ -33,6 +33,9 @@
 #'   Logical, indicating whether or not the words "Marginal prop"
 #'   should printed in the graph above the dotted line indicating
 #'   marginal proportions.
+#' @param col
+#'   list of colors for conditional levels. Default: the 8 colours
+#'   of the 'Dark2' palette of RColorBrewer.
 #' @param alpha transparency for circles expressed in hexadecimal, 
 #'   e.g. 'AA' or 'FF' for no transparency. Default: '66'
 #' @param ...	
@@ -60,7 +63,7 @@
 #' par(op)
 #' 
 #' @export 
-paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4, 
+paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1, 
     xlab = NULL, ylab = NULL, leg.title = NULL, leg.loc = NULL, 
     show.mname = FALSE,  
     col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02", 
@@ -68,10 +71,23 @@ paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
     alpha = '66', ...) 
 {
     draw.circle <- function (x, y, radius, nv = 100, border = NULL, col, lty = 1, 
-              density = NULL, angle = 45, lwd = 1) 
+              density = NULL, angle = 45, lwd = 1, alpha = '66') 
     {
         # copied from plotrix
-        col <- paste0(col,'66')
+        getYmult <- function () 
+        {
+            if (dev.cur() == 1) {
+                warning("No graphics device open.")
+                ymult <- 1
+            }
+            else {
+                xyasp <- par("pin")
+                xycr <- diff(par("usr"))[c(1, 3)]
+                ymult <- xyasp[1]/xyasp[2] * xycr[2]/xycr[1]
+            }
+            return(ymult)
+        }
+        col <- ifelse(nchar(col) == 7, paste0(col,alpha), col)
         xylim <- par("usr")
         plotdim <- par("pin")
         ymult <- getYmult()
@@ -88,7 +104,7 @@ paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
         invisible(list(x = xv, y = yv))
     }
   
-    # fix for R version 4
+    # fix for R version 4: can't assume character variables are factors!
     data[] <- lapply(data, function(x) if(is.character(x)) factor(x) else x)
     vars <- as.character(attr(terms(formula), "variables")[-1])
     cond.var = vars[3]
@@ -133,7 +149,7 @@ paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
         byrow = TRUE)
     circle.col <- rep(col[1:length(cl)], length(ol))
     radii <- r.sum/sum(r.sum)
-    radii <- stack(as.data.frame(radii))[, 1] * circle.mult
+    radii <- stack(as.data.frame(radii))[, 1] * circle.mult * 0.4
     for (i in 1:length(radii)) draw.circle(x.loc[i], y.loc[i], 
         radii[i], col = circle.col[i], alpha = alpha)
     if (length(pts) == 2) {
