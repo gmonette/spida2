@@ -9,7 +9,7 @@ paik(
   counts,
   resp.lvl = 2,
   data,
-  circle.mult = 0.4,
+  circle.mult = 1,
   xlab = NULL,
   ylab = NULL,
   leg.title = NULL,

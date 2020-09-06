@@ -60,7 +60,7 @@
 #' par(op)
 #' 
 #' @export 
-paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4, 
+paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 1, 
     xlab = NULL, ylab = NULL, leg.title = NULL, leg.loc = NULL, 
     show.mname = FALSE,  
     col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02", 
@@ -68,10 +68,23 @@ paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
     alpha = '66', ...) 
 {
     draw.circle <- function (x, y, radius, nv = 100, border = NULL, col, lty = 1, 
-              density = NULL, angle = 45, lwd = 1) 
+              density = NULL, angle = 45, lwd = 1, alpha = '66') 
     {
         # copied from plotrix
-        col <- paste0(col,'66')
+        getYmult <- function () 
+        {
+            if (dev.cur() == 1) {
+                warning("No graphics device open.")
+                ymult <- 1
+            }
+            else {
+                xyasp <- par("pin")
+                xycr <- diff(par("usr"))[c(1, 3)]
+                ymult <- xyasp[1]/xyasp[2] * xycr[2]/xycr[1]
+            }
+            return(ymult)
+        }
+        col <- ifelse(nchar(col) == 7, paste0(col,alpha), col)
         xylim <- par("usr")
         plotdim <- par("pin")
         ymult <- getYmult()
@@ -133,7 +146,7 @@ paik <- function (formula, counts, resp.lvl = 2, data, circle.mult = 0.4,
         byrow = TRUE)
     circle.col <- rep(col[1:length(cl)], length(ol))
     radii <- r.sum/sum(r.sum)
-    radii <- stack(as.data.frame(radii))[, 1] * circle.mult
+    radii <- stack(as.data.frame(radii))[, 1] * circle.mult * 0.4
     for (i in 1:length(radii)) draw.circle(x.loc[i], y.loc[i], 
         radii[i], col = circle.col[i], alpha = alpha)
     if (length(pts) == 2) {
