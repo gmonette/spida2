@@ -101,3 +101,29 @@
 #' Simpson, E. H. (1951) The Interpretation of interaction in contingency tables. Journal of the Royal Statistical Society Ser. B 13: 238-241.
 #' @keywords datasets
 "death.penalty"
+#' Florida state death penalty data
+#' 
+#' Dataset detailing death penalty 674 homicide trials in the
+#' state of Florida from 1976-1987 with respect to verdict, and
+#' victim and defendant race. The data were previously used
+#' (Agresti 2012) to demonstrate Simpson's Paradox. This
+#' dataset was obtained from the \code{\link{asbio}} package.
+#' 
+#' A reversal of associations or comparisons may occur as a
+#' result of lurking variables or aggregating groups. This is
+#' called Simpson's Paradox.
+#' 
+#' @format A data frame with 8 observations on the following 4
+#'   variables.
+#'   \describe{
+#'     \item{\code{Freq}}{Counts from cross classification}
+#'     \item{\code{sentence}}{Death penalty verdict: Internment Death}
+#'     \item{\code{defendant}}{Defendant's race: Black, White}
+#'     \item{\code{victim}}{Victim's race: Black, White}
+#'   }
+#' @references
+#' Agresti, A. (2012) Categorical Data Analysis, 3rd edition. New York. Wiley.
+#' Radelet, M. L., and G. L. Pierce (1991) Choosing those who will die: race and the death penalty in Florida. Florida Law Review 43(1):1-34.
+#' Simpson, E. H. (1951) The Interpretation of interaction in contingency tables. Journal of the Royal Statistical Society Ser. B 13: 238-241.
+#' @keywords datasets
+"Florida_sentencing"
