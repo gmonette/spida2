@@ -130,10 +130,13 @@ bm25 <- function() {
   cumulate <- 0; c <- 0; qra <-0
   for (i in 1:runs) {
     a <- new("dgeMatrix", x = Rnorm(2000*2000), Dim = as.integer(c(2000,2000)))
-    b <- as.double(1:2000)
+    b <- cbind(as.double(1:2000))
     invisible(gc())
+    # disp(str(a))
+    # disp(str(b))
+    # disp(methods(crossprod))
     timing <- system.time({
-      c <- solve(crossprod(a), crossprod(a,b))
+      c <- solve(crossprod(as.matrix(a)), crossprod(as.matrix(a),b))
     })[3]
     cumulate <- cumulate + timing
     
@@ -222,8 +225,8 @@ bm25 <- function() {
   # (4)
   cumulate <- 0; b <- 0
   for (i in 1:runs) {
-    a <- crossprod(new("dgeMatrix", x = Rnorm(3000*3000),
-                       Dim = as.integer(c(3000, 3000))))
+    a <- crossprod(as.matrix(new("dgeMatrix", x = Rnorm(3000*3000),
+                       Dim = as.integer(c(3000, 3000)))))
     invisible(gc())
     #a <- Rnorm(900*900); dim(a) <- c(900, 900)
     #a <- crossprod(a, a)
