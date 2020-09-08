@@ -101,7 +101,7 @@
 #' Simpson, E. H. (1951) The Interpretation of interaction in contingency tables. Journal of the Royal Statistical Society Ser. B 13: 238-241.
 #' @keywords datasets
 "death.penalty"
-#' Florida state death penalty data
+#' Florida state death penalty data 1976-1987
 #' 
 #' Dataset detailing death penalty 674 homicide trials in the
 #' state of Florida from 1976-1987 with respect to verdict, and
@@ -126,4 +126,4 @@
 #' Radelet, M. L., and G. L. Pierce (1991) Choosing those who will die: race and the death penalty in Florida. Florida Law Review 43(1):1-34.
 #' Simpson, E. H. (1951) The Interpretation of interaction in contingency tables. Journal of the Royal Statistical Society Ser. B 13: 238-241.
 #' @keywords datasets
-"Florida_sentencing"
+"Florida_sentences"
