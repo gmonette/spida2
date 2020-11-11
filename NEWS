@@ -1,3 +1,5 @@
+2020_11_09
+* fixed cvar so 'up' with the 'freq' argument can return 'grouped data' in the sense of Agrest
 2020_11_07
 * fixed getFix.lm to return vcov with NA for rank-deficient models
 2020_03_14
