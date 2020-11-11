@@ -878,6 +878,7 @@ getFix.lm <- function(fit,...) {
        ss <- summary(fit)
        ret <- list()
        ret$fixed <- coef(fit)
+       ret$vcov <- vcov(fit)
        ret$vcov <- ss$sigma^2 * ss$cov.unscaled
        ret$df <- rep(ss$df[2], length(ret$fixed))
        ret
