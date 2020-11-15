@@ -127,8 +127,10 @@ varLevel <- function(x, form, ...) {
 #' @param invariantsOnly kept for compatibility with \code{gsummary}
 #' @param \dots additional arguments to \code{tapply} when summarizing
 #' numerical variables. e.g. \code{na.rm = TRUE}
-#' @return a data frame with one row per value of the variable in \code{form}
-#' 
+#' @return a data frame with one row per combination of values of the variable(s) in \code{form}.
+#'         The number of rows for each combination is retuned in a variable 'Freq'.
+#'         Frequencies (proportions) of values for each variable specified
+#'         by '~freq' ('~agg') are also included. 
 #' @examples
 #'     data(hs)
 #'     dim( hs )
@@ -200,7 +202,15 @@ up <- function ( object, form = formula(object),
   } else {
     groups <- as.factor(sel.mf[[1]])
   }
-  
+
+  # Create Freq variable
+  if(!is.null(object[["Freq"]])) {
+    warning("Variable 'Freq' exists in data set: grouped frequencies will be in 'Freq_up'")
+    warning("Note: 'Freq' is ignored for 'agg' and 'freq' arguments. ")
+    object$Freq_up <- with(object, capply(Freq, groups, sum))
+  } else {
+    object$Freq <- with(object, capply(groups, groups, length))
+  }
   if(!is.null(agg)) {
     agg.mf <- model.frame(agg, object, na.action = na.include)
     

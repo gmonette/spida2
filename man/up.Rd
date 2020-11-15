@@ -67,7 +67,10 @@ used.}
 numerical variables. e.g. \code{na.rm = TRUE}}
 }
 \value{
-a data frame with one row per value of the variable in \code{form}
+a data frame with one row per combination of values of the variable(s) in \code{form}.
+        The number of rows for each combination is retuned in a variable 'Freq'.
+        Frequencies (proportions) of values for each variable specified
+        by '~freq' ('~agg') are also included.
 }
 \description{
 Produce a higher level data set with one row per cluster. The data set can
