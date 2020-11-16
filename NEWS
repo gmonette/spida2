@@ -1,5 +1,6 @@
 2020_11_15
 * modified up to return 'Freq'
+* fixed 'counts' in 'paik'
 2020_11_14
 * added empty environment to render_keep
 2020_11_09

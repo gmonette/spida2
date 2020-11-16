@@ -112,11 +112,18 @@ paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1,
     cv <- data[, names(data) == cond.var]
     ov <- vars[vars != vars[1] & vars != cond.var]
     or <- data[, names(data) == ov]
-    new.formula <- formula(counts ~ rv + ov + cv) # not used?
+    # new.formula <- formula(counts ~ rv + ov + cv) # not used?
     cl <- levels(data[, names(data) == cond.var])
     ol <- levels(data[, names(data) == ov])
     rl <- levels(data[, names(data) == vars[1]])
-    if(is.null(data$count)) data$count <- data$Freq
+    if(!missing(counts)) data$count <- counts
+    if(is.null(data$count)) {
+      if(is.null(data$Freq)) {
+        data$count <- 1 
+        } else {
+          data$count <- data$Freq
+        }
+    }
     x <- xtabs(count ~ rv + or + cv, data = data)
     xm <- xtabs(count ~ rv + or, data = data)
     m.prop <- apply(xm, 2, function(x) x[resp.lvl]/sum(x))
