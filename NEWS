@@ -1,3 +1,5 @@
+2020_11_20
+* fixed bug with up
 2020_11_15
 * modified up to return 'Freq'
 * fixed 'counts' in 'paik'

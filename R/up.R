@@ -186,6 +186,8 @@ up <- function ( object, form = formula(object),
   }
   sel.mf <- model.frame( form , object , na.action = na.include )
   narows <- apply(sel.mf,1,function(x) any(is.na(x)))
+  hasFreq <- !is.null(object[['Freq']])
+  if(hasFreq & all) warning("variable 'Freq' is ignored in computing aggregate values")
   if(any(narows)) {
     warning("Rows with NAs in grouping variable(s) are omitted")
     sel.mf <- droplevels(sel.mf[!narows,,drop=FALSE])
@@ -204,14 +206,11 @@ up <- function ( object, form = formula(object),
   }
 
   # Create Freq variable
-  if(!is.null(object[["Freq"]])) {
-    warning("Variable 'Freq' exists in data set: grouped frequencies will be in 'Freq_up'")
-    warning("Note: 'Freq' is ignored for 'agg' and 'freq' arguments. ")
-    object$Freq_up <- with(object, capply(Freq, groups, sum))
-  } else {
-    object$Freq <- with(object, capply(groups, groups, length))
-  }
-  if(!is.null(agg)) {
+  if(!hasFreq) object$Freq <- 1
+  object$Freq <- capply(object$Freq, groups, sum)
+
+    if(!is.null(agg)) {
+    if(hasFreq) warning("Frequencies in 'Freq' are ignored when using the argument 'agg'")
     agg.mf <- model.frame(agg, object, na.action = na.include)
     
     #ret <- object
@@ -231,7 +230,8 @@ up <- function ( object, form = formula(object),
     }
   }
   if(!is.null(freq)) {
-  freq.mf <- model.frame(freq, object, na.action = na.include)
+    if(hasFreq) warning("Frequencies in 'Freq' are ignored when using the argument 'freq'")
+    freq.mf <- model.frame(freq, object, na.action = na.include)
     for (i in seq_along(freq.mf)) {
       x <- freq.mf[[i]]
       if(is.character(x)) x <- factor(x)
