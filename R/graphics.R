@@ -383,8 +383,7 @@ xqplot <- function(x,
   ## Adapted from myplot.data.frame for R by G. Monette, Oct. 25, 2004
   ##    maxlab is maximum number of labels
   # Turn matrices into variables:
-  if (!is.list(x))
-    x <- as.data.frame(x)
+  x <- as.data.frame(x)
   if (any (sapply(x, class) == 'matrix')) {
     zz <- list()
     for (ii in seq_along(x)) {

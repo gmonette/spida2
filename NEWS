@@ -1,3 +1,5 @@
+2020_12_13
+* xqplot: coerce x to data.frame, to correct problem with tibbles
 2020_11_20
 * fixed bug with up
 2020_11_15
