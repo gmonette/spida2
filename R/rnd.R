@@ -41,4 +41,9 @@ rnd.default <- function(x, digits = 3, ..., verbose = 0) {
   }
   ret
 }
-
+rnd.default <- function(x,...) x
+rnd.data.frame <- function(x, ...) {
+  x[] <- lapply(x, rnd, ...)
+  x
+}
+rnd.numeric <- function(x,...) round(x, ...)
