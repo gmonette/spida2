@@ -34,10 +34,21 @@ na20 <- function(x) {
 #' @param dir (default: TRUE) return the directory of the current R script, otherwise the full file name
 #' 
 #' @export
-here <- function(dir = TRUE) {
+here <- function(dir = FALSE) {
   path <- rstudioapi::getActiveDocumentContext()$path
   if(dir) path <- dirname(path)
   path
+}
+#' Set working directory to directory of active R script
+#' 
+#' Set working directory to directory of active R script
+#' if script is not being knitted
+#' 
+#' @export
+setwd_here <- function() {
+  path <- here(TRUE)
+  if(is.null(knitr::opts_knit$get('output.dir'))) setwd(here)
+  invisible(here)
 }
 #' Vectorized ifelse with multiple conditions
 #' 
