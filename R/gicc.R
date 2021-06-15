@@ -16,7 +16,8 @@
 #' the simple ICC with (variance between) / (variance between + variance
 #' within) applied to the rank (by default) of the variable. In either case, a
 #' value of 1 signifies a variable that is constant within clusters and a value
-#' of 0, a variable that is perfectly balanced within clusters.
+#' of 0, a variable that is perfectly balanced within clusters, in the sense
+#' that within-cluster means are identical.
 #'
 #' @param x a data frame, factor, character variable or a numerical variable.
 #' @param by if \code{x} is a data frame, \code{by} can be a formula (e.g.
