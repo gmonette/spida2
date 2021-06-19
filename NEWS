@@ -1,3 +1,5 @@
+2021_06_19
+* added sublast to substitute the last occurrence of a pattern in a string
 2021_03_02
 * added setwd_here which does nothing when knitting
 2020_12_13

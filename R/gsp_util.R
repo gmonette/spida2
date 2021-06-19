@@ -1,11 +1,13 @@
 ##  gsp-util.R
 ##
+##  added
+##
 ##  General polynomial splines: August 8, 2008
 ##  Revised June 16, 2010 to incorporate degree 0 polynomials
 ##    and constraining evaluation of spline to 0 with intercept
 ##   
 ##  Modified: June 15, 2013 - GM
-##  Added specified linear contraints to gsp and 
+##  Added specified linear constraints to gsp and 
 ##  to sc expressed
 ##  in terms of full polynomial parametrization
 ##  

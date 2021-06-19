@@ -1,3 +1,27 @@
+#' Substitute last occurrence of a pattern in a string
+#' 
+#' @param pattern character string containing a regular expression whose
+#'        whose last match in 'x' will be replaced
+#' @param replacement character string that is a replacement for the
+#'        matched 'pattern' in 'x'
+#' @param x a character vector where matches are sought.
+#' @param ... arguments passed to \code{\link{gsub}}.
+#' 
+#' @examples
+#' string <- 'a_b_c_D'
+#' sublast('_','__',string)
+#' dd <- data.frame(id = 1:3, X_a_1 = 1:3, X_a_2 = 1:3, X_b_1 = 1:3, X_b_2 = 1:3)
+#' dd
+#' names(dd) <- sublast('_','__',names(dd))
+#' tolong(dd, sep = '__')
+#' tolong(dd, sep = '__') %>% tolong(sep = '_', idvar = 'id2', timevar = 'time2')
+#' 
+#' @export
+sublast <- function(pattern, replacement, x, ...) {
+  pat <- paste0('(', pattern, ')(?!.*\\1)')
+  # disp(pat)
+  sub(pat, replacement, x, ..., perl = TRUE)
+}
 #' Change NAs to FALSE
 #' 
 #' @param x vector, possibly with NAs

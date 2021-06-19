@@ -57,7 +57,7 @@ variable name}
 'long' file with each wide row repeated as many times as there are distinct values for the 'timevar' variable.
 }
 \description{
-Uses a minimal number  of arguments to create a long file using \code{stats::\link{reshape}}. Produces output even when long variable names and time values are not fully crossed.
+Uses a minimal number of arguments to create a long file using \code{stats::\link{reshape}}. Produces output even when long variable names and time values are not fully crossed.
 }
 \details{
 \code{tolong} is intended for the simple case in which 'wide' variables in the input data frame are identified
@@ -78,6 +78,12 @@ tolong(z, timevar = 'Side', idvar = 'idn', ids = z$id2)
 # unbalanced times
 z <- data.frame(id =letters[1:10], id2= 11:20, v_L = 1:10, v_R = 11:20, z_L = 21:30)
 tolong(z)
+
+# a separator with multiple occurrences:
+z <- data.frame(id =letters[1:10], id2= 11:20, v_a_L = 1:10, v_a_R = 11:20, z_L = 21:30)
+# tolong(z) would produce an error due to multiple occurrences of the default separator '_'
+names(z) <- sublast('_', '__', names(z))
+tolong(z, sep = '__')
 
 # multi-character sep
 z <- data.frame(id =letters[1:10], id2= 11:20, HPC_head_R = 1:10, HPC_tail_R = 11:20, HPC_head_L = 21:30, HPC_tail_L = 31:40)

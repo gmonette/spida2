@@ -54,7 +54,7 @@ these}
 \item{clevel}{level for confidence intervals. No confidence intervals if clevel is NULL}
 
 \item{pred}{(default NULL) a data frame to use to create a model matrix. 
-This is an alternative to `full` when the model matrix needs to
+This is an alternative to 'full' when the model matrix needs to
 be based on data frame other than the data frame used for 
 fitting the model.}
 
@@ -87,7 +87,7 @@ the rank of a large hypothesis matrix where 'qr' has failed.}
 
 \item{pars}{passed to \code{\link[rstan]{extract}} method for stanfit objects.}
 
-\item{include}{passed to \code{\link[rstan]{extract}} method for stanfit objects.#'}
+\item{include}{passed to \code{\link[rstan]{extract}} method for stanfit objects.}
 
 \item{help}{obsolete}
 }

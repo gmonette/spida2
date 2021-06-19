@@ -92,7 +92,7 @@
 #'        standard errors for models for which the \code{predict} method does not
 #'        provide them.
 #' @param pred (default NULL) a data frame to use to create a model matrix. 
-#'        This is an alternative to `full` when the model matrix needs to
+#'        This is an alternative to 'full' when the model matrix needs to
 #'        be based on data frame other than the data frame used for 
 #'        fitting the model.
 #' @param fixed if \code{Llist} is a character to be used a regular expression,
@@ -106,7 +106,7 @@
 #'        full rank version of the hypothesis matrix.  'svd' has correctly identified
 #'        the rank of a large hypothesis matrix where 'qr' has failed.
 #' @param pars passed to \code{\link[rstan]{extract}} method for stanfit objects.
-#' @param include passed to \code{\link[rstan]{extract}} method for stanfit objects.#' 
+#' @param include passed to \code{\link[rstan]{extract}} method for stanfit objects. 
 #' @param help obsolete
 #' @return An object of class \code{wald}, with the following components:
 #'       COMPLETE

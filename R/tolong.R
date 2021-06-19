@@ -1,6 +1,6 @@
 #' Create a long file from a wide file
 #'
-#' Uses a minimal number  of arguments to create a long file using \code{stats::\link{reshape}}. Produces output even when long variable names and time values are not fully crossed.
+#' Uses a minimal number of arguments to create a long file using \code{stats::\link{reshape}}. Produces output even when long variable names and time values are not fully crossed.
 #'
 #' \code{tolong} is intended for the simple case in which 'wide' variables in the input data frame are identified
 #' by the fact that they contain a separator character that separates the name of the variable in the long file from
@@ -36,6 +36,12 @@
 #' # unbalanced times
 #' z <- data.frame(id =letters[1:10], id2= 11:20, v_L = 1:10, v_R = 11:20, z_L = 21:30)
 #' tolong(z)
+#'
+#' # a separator with multiple occurrences:
+#' z <- data.frame(id =letters[1:10], id2= 11:20, v_a_L = 1:10, v_a_R = 11:20, z_L = 21:30)
+#' # tolong(z) would produce an error due to multiple occurrences of the default separator '_'
+#' names(z) <- sublast('_', '__', names(z))
+#' tolong(z, sep = '__')
 #'
 #' # multi-character sep
 #' z <- data.frame(id =letters[1:10], id2= 11:20, HPC_head_R = 1:10, HPC_tail_R = 11:20, HPC_head_L = 21:30, HPC_tail_L = 31:40)
@@ -108,14 +114,16 @@ tolong <- function (data, sep = "_",  timevar = 'time',
                   idvar = 'id', ids = 1:nrow(data),
                   expand = TRUE, safe_sep = "#%@!", 
                   reverse = F, ...) {
-  if (timevar %in% names(data)) warning(paste("Variable",timevar, "in data is replaced by a variable to mark occasions"))
+  if (timevar %in% names(data)) warning(paste("Variable",timevar, "in data is replaced by a variable to mark occasions. Use the 'timevar' argument to specify a different variable name"))
   if (idvar %in% names(data)) {
     idwide <- data[[idvar]]
     if( length(unique(idwide)) != length(idwide)) {
-      warning(paste ("idvar:", idvar, "must have unique values. It will be replaced in the output data frame with a variable containing row numbers of the input data frame"))
+      warning(paste ("idvar:", idvar, "must have unique values. It will be replaced in the output data frame with a variable containing row numbers of the input data frame. Use the 'idvar' argument to specify a different variable name"))
       data[[idvar]] <- ids
     }
   }
+  # Check for multiple occurrences of the separator in variable names
+  
   Flip <- function(nams, sep) {
     expr <- paste0('^(.*)(\\Q',sep,'\\E)(.*)$')
     new <- "\\3\\2\\1"
