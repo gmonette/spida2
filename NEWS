@@ -1,3 +1,6 @@
+2021_07_02
+* 'as.data.frame.wald' now includes the L matrix in the returned data frame so subsetting the data frame can provide selected rows of the L matrix
+* added 'contr.nhelmert' to construct normalized Helmert coding for factors
 2021_06_19
 * added sublast to substitute the last occurrence of a pattern in a string
 2021_03_02

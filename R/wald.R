@@ -651,8 +651,9 @@ as.data.frame.wald <- function(obj, se = 2, digits = 3, sep = "", which = 1) {
     colnames(cminus) <- paste("L",colnames(cminus),sep=sep)
     ret <- cbind(ret, cplus, cminus)
 
-    if(is.null(dd <- obj[[1]]$data)) return(ret)
-    else return(cbind(ret, dd))
+    if(!is.null(dd <- obj[[1]]$data)) ret <- cbind(ret, dd)
+    if(is.null(dd$L)) dd$L <- obj[[1]]$L
+    return(ret)
   }
   else ret <- lapply( obj, as.data.frame.wald)
   ret
