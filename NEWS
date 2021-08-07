@@ -1,3 +1,5 @@
+2021_08_06
+* added getFix.lmerMod and getFix.glmerMod
 2021_07_02
 * 'as.data.frame.wald' now includes the L matrix in the returned data frame so subsetting the data frame can provide selected rows of the L matrix
 * added 'contr.nhelmert' to construct normalized Helmert coding for factors

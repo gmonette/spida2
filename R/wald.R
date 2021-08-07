@@ -998,6 +998,24 @@ function(fit, pars, include = TRUE, ...) {
   ret$df <- rep(Inf, length(ret$fixed))
   ret
 }
+#' @describeIn getFix method for `lmerMod` objects in the `lme4` package
+#' @export
+getFix.lmerMod <- function(fit, ...) {
+  ret <- list()
+  ret$fixed <- getME(fit, 'fixef')
+  ret$vcov <- vcov(summary(fit))
+  ret$df <- rep(Inf, length(ret$fixed))
+  ret
+}
+#' @describeIn getFix method for `glmerMod` objects in the `lme4` package
+#' @export
+getFix.glmerMod <- function(fit, ...) {
+  ret <- list()
+  ret$fixed <- getME(fit, 'fixef')
+  ret$vcov <- vcov(summary(fit))
+  ret$df <- rep(Inf, length(ret$fixed))
+  ret
+}
 #' @describeIn getFix print message if getFix id used for a class for which a method has not been written
 #' @export
 getFix.default <- function(fit, ...) stop(paste("Write a 'getFix' method for class",class(fit)))

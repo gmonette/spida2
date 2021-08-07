@@ -14,6 +14,8 @@
 \alias{getFix.mipo}
 \alias{getFix.MCMCglmm}
 \alias{getFix.stanfit}
+\alias{getFix.lmerMod}
+\alias{getFix.glmerMod}
 \alias{getFix.default}
 \title{Get information on fixed effects from a model object}
 \usage{
@@ -42,6 +44,10 @@ getFix(fit, ...)
 \method{getFix}{MCMCglmm}(fit, ...)
 
 \method{getFix}{stanfit}(fit, pars, include = TRUE, ...)
+
+\method{getFix}{lmerMod}(fit, ...)
+
+\method{getFix}{glmerMod}(fit, ...)
 
 \method{getFix}{default}(fit, ...)
 }
@@ -93,6 +99,10 @@ requires a \code{getFix} method for the new class.
 \item \code{MCMCglmm}: method for MCMCglmm objects in the MCMCglmm package
 
 \item \code{stanfit}: method for `stanfit` objects in the `rstan` package
+
+\item \code{lmerMod}: method for `lmerMod` objects in the `lme4` package
+
+\item \code{glmerMod}: method for `glmerMod` objects in the `lme4` package
 
 \item \code{default}: print message if getFix id used for a class for which a method has not been written
 }}
