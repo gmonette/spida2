@@ -106,7 +106,11 @@
 #'        full rank version of the hypothesis matrix.  'svd' has correctly identified
 #'        the rank of a large hypothesis matrix where 'qr' has failed.
 #' @param pars passed to \code{\link[rstan]{extract}} method for stanfit objects.
-#' @param include passed to \code{\link[rstan]{extract}} method for stanfit objects. 
+#' @param include passed to \code{\link[rstan]{extract}} method for stanfit objects.
+#' @param overdispersion (default FALSE) if TRUE, adjust variance-covariance
+#'        estimate by multiplying by the overdispersion factor calculated
+#'        by \code{\link{overdisp_fun}}. If `overdisperion` is numerical, use
+#'        its value as an overdispersion factor.  
 #' @param help obsolete
 #' @return An object of class \code{wald}, with the following components:
 #'       COMPLETE
@@ -187,6 +191,7 @@ wald <-
            data = NULL, debug = FALSE , maxrows = 25,
            full = FALSE, fixed = FALSE,
            invert = FALSE, method = 'svd',
+           overdispersion = FALSE,
            df = NULL, pars = NULL,...) {
     # New version with support for stanfit
     if (full) return(wald(fit, getX(fit)))
@@ -220,7 +225,9 @@ wald <-
       fix <- getFix(fit)
     }
     beta <- fix$fixed
-    vc <- fix$vcov
+    vc <- if(isTRUE(overdispersion)) overdisp_fun(fit)["ratio"] * fix$vcov 
+        else if(isFALSE(overdispersion)) fix$vcov
+        else fix$vcov
     
     dfs <- if(is.null(df) ) fix$df else df + 0*fix$df
 
@@ -313,6 +320,15 @@ wald <-
       ret[[ii]]$anova <- list(numDF = numDF, denDF = denDF,
                               "F-value" = Fstat,
                               "p-value" = pf(Fstat, numDF, denDF, lower.tail = FALSE))
+      if(!isFALSE(overdispersion)) {
+        ret[[ii]]$anova <- c(
+          ret[[ii]]$anova, 
+          `overdispersion variance factor` =
+            if(isTRUE(overdispersion)) overdisp_fun(fit)[["ratio"]]
+             else overdispersion)
+      }
+      # disp(ret[[ii]]$anova)
+        
       ## Estimate
       
       etahat <- L %*% beta
@@ -600,7 +616,7 @@ print.wald <- function(x, round = 6, pround = 5,...) {
     ta <- tt$anova
 
     ta[["p-value"]] <- pformat(ta[["p-value"]])
-    print(as.data.frame(ta, row.names = nn))
+    print(as.data.frame(ta, row.names = nn, check.names = FALSE))
     te <- tt$estimate
      te[,'p-value'] <- pformat( te[,'p-value'])
     if ( !is.null(round)) {
@@ -1003,7 +1019,7 @@ function(fit, pars, include = TRUE, ...) {
 getFix.lmerMod <- function(fit, ...) {
   ret <- list()
   ret$fixed <- getME(fit, 'fixef')
-  ret$vcov <- vcov(summary(fit))
+  ret$vcov <- as.matrix(vcov(summary(fit)))
   ret$df <- rep(Inf, length(ret$fixed))
   ret
 }
@@ -1012,7 +1028,7 @@ getFix.lmerMod <- function(fit, ...) {
 getFix.glmerMod <- function(fit, ...) {
   ret <- list()
   ret$fixed <- getME(fit, 'fixef')
-  ret$vcov <- vcov(summary(fit))
+  ret$vcov <- as.matrix(vcov(summary(fit)))
   ret$df <- rep(Inf, length(ret$fixed))
   ret
 }

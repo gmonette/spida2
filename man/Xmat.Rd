@@ -2,7 +2,7 @@
 % Please edit documentation in R/gsp_util.R
 \name{Xmat}
 \alias{Xmat}
-\title{Generate X matrix estimate Dth derivative of polynomial at x}
+\title{Estimate Dth derivative of polynomial at x}
 \usage{
 Xmat(x, degree, D = 0, signif = 3)
 }
@@ -16,5 +16,5 @@ Xmat(x, degree, D = 0, signif = 3)
 \item{order}{of derivative}
 }
 \description{
-Generate X matrix estimate Dth derivative of polynomial at x
+Generate X matrix to estimate Dth derivative of polynomial at x
 }

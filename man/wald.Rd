@@ -19,6 +19,7 @@ wald(
   fixed = FALSE,
   invert = FALSE,
   method = "svd",
+  overdispersion = FALSE,
   df = NULL,
   pars = NULL,
   ...
@@ -84,6 +85,11 @@ coefficients that do not match will be selected.}
 \item{method}{'svd' (current default) or 'qr' is the method used to find the
 full rank version of the hypothesis matrix.  'svd' has correctly identified
 the rank of a large hypothesis matrix where 'qr' has failed.}
+
+\item{overdispersion}{(default FALSE) if TRUE, adjust variance-covariance
+estimate by multiplying by the overdispersion factor calculated
+by \code{\link{overdisp_fun}}. If `overdisperion` is numerical, use
+its value as an overdispersion factor.}
 
 \item{pars}{passed to \code{\link[rstan]{extract}} method for stanfit objects.}
 
