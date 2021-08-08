@@ -327,6 +327,10 @@ wald <-
             if(isTRUE(overdispersion)) overdisp_fun(fit)[["ratio"]]
              else overdispersion)
       }
+      if(isTRUE(overdispersion)) {
+        ret[[ii]]$anova <- c(
+          ret[[ii]]$anova, overdisp_fun(fit)[c(1,3,4)])
+      }
       # disp(ret[[ii]]$anova)
         
       ## Estimate
