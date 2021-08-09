@@ -331,7 +331,7 @@ gd_ <- function(...) gd(superpose = FALSE, ...)
 #' @param \dots additional arguments passed to 'plot' command
 #' @param mfrow number of rows and columns per page. If missing, an attempt is
 #' made to choose a reasonable number.
-#' @param ask FIXME
+#' @param ask if TRUE pause after each page, default: FALSE
 #' @param mcex character expansion factor for marginal text
 #' \code{mcex}
 #' @param maxlab maximum number of categories to label in barcharts
@@ -362,8 +362,9 @@ xqplot <- function(x,
                    labels = dimnames(x)[[2]],
                    ...,
                    mfrow = findmfrow (ncol(x)),
-                   ask = prod(mfrow) <
-                     ncol(x) && dev.interactive(),
+                   # ask = prod(mfrow) <
+                   # ncol(x) && dev.interactive(),
+                   ask = FALSE,
                    mcex = 0.8,
                    maxlab = 12 ,
                    debug = F,
