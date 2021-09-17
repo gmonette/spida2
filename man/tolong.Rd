@@ -68,6 +68,16 @@ be temporarily substituted.
 
 \code{\link{reshape}} does not work if long variable names and time values are not fully crossed, e.g \code{x_1, x_2, x_3, y_1, y_2}. By default \code{long}
 creates additional variables with "NAs" so the set of variables given to \code{\link{reshape}} is fully crossed, e.g. adding a variable \code{y_3 <- NA}.
+
+Compare the functionality of \code{tolong} with that of \code{\link{tidyr::gather}} and of 
+\code{\link{tidyr::pivot_longer}}. 'tolong' depends on the format of variable names to 
+identify variables whose values become new variables in the long form of the data and which labels
+are used as the indices of the indexing variable, whose default name is 'time', which can
+be set to another value with the "timevar" argument. "tolong" can handle many 'time-varying' variables.
+"gather" can only handle one.  "pivot_longer" can handle many and might be considered a replacement
+for "to_long" which has the disadvantage of frequently requiring the renaming of variables, an
+easier task for those who have mastered the use of regular expressions, but potentially 
+challenging otherwise.
 }
 \examples{
 z <- data.frame(id =letters[1:10], id2= 11:20, v_L = 1:10, v_R = 11:20)
