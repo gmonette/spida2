@@ -12,6 +12,10 @@ years <- function(x,...) UseMethod("years")
 #' @describeIn years method for Date objects
 #' @export
 years.Date <- function(x,...) as.numeric(format(x,"%Y"))
+#' @describeIn years default method
+#' @param date an object that can be converted to a 'Date'
+#' @export
+years.default <- function(x,...) as.numeric(format(as.Date(x),"%Y"))
 #' Extract month as a factor
 #' 
 #' @param date an object that can be converted to a 'Date'
