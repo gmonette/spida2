@@ -1,3 +1,5 @@
+2021_10_09
+* as.data.frame.wald includes the original wald object as the 'wald' attribute of the returned object
 2021_08_06
 * added getFix.lmerMod and getFix.glmerMod
 2021_07_02

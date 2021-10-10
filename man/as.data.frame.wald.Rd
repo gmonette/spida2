@@ -16,7 +16,9 @@ is appended to 'L' and 'U' to label the variables.}
 }
 \value{
 A data frame with estimated coefficient, standard error, and, optionally, upper and lower limits and
-        the variables included the 'data' element of 'obj' if present.
+        the variables included the 'data' element of 'obj' if present. The 'wald' object is 
+        returned as the 'wald' attribute so p-values, for example, can be obtained with
+        attr(ret, 'wald')$estimate$`p-value` 
         If \code{length(which) > 1}, the returned object is a list of data frames.
 }
 \description{

@@ -644,7 +644,9 @@ print.wald <- function(x, round = 6, pround = 5,...) {
 #'        is appended to 'L' and 'U' to label the variables.
 #' @param which selects elements of 'obj' to turn to a data.frame.
 #' @return A data frame with estimated coefficient, standard error, and, optionally, upper and lower limits and
-#'         the variables included the 'data' element of 'obj' if present.
+#'         the variables included the 'data' element of 'obj' if present. The 'wald' object is 
+#'         returned as the 'wald' attribute so p-values, for example, can be obtained with
+#'         attr(ret, 'wald')$estimate$`p-value` 
 #'         If \code{length(which) > 1}, the returned object is a list of data frames.
 #' @examples
 #' # coming soon!
@@ -673,6 +675,7 @@ as.data.frame.wald <- function(obj, se = 2, digits = 3, sep = "", which = 1) {
 
     if(!is.null(dd <- obj[[1]]$data)) ret <- cbind(ret, dd)
     if(!("L" %in% names(ret))) ret$L <- obj[[1]]$L
+    attr(ret, 'wald') <- obj[[1]]
     return(ret)
   }
   else ret <- lapply( obj, as.data.frame.wald)
