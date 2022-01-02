@@ -172,5 +172,9 @@ tablemissing <-
 
     finaltable
   }
-
+#' Show patterns of missing data
+#' 
+#' From naniar::gg_plot_upset
+#' 
+tablemissing_ <- naniar::gg_plot_upset
 

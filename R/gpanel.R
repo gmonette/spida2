@@ -344,7 +344,7 @@ panel.labels <-
 #'
 #' @param data data frame with values of x that need filling in
 #' @param n number of additional points over range of predictor (default 200)
-#' @param form formula idenfying variable x to fill in and grouping variables, g1, g2, etc.
+#' @param form formula identifying variable x to fill in and grouping variables, g1, g2, etc.
 #'       using syntax: \code{~ x + g1 + g2} (the variable to fill in comes first)
 #' @param xpd expansion beyond range of predictor (default 1.0, i.e. no expansion)
 #' @describeIn panel.fit fill in values to produce smoother fitted curve  
