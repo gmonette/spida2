@@ -126,7 +126,7 @@ fillin(data, form, n = 200, xpd = 1)
 
 \item{data}{data frame with values of x that need filling in}
 
-\item{form}{formula idenfying variable x to fill in and grouping variables, g1, g2, etc.
+\item{form}{formula identifying variable x to fill in and grouping variables, g1, g2, etc.
 using syntax: \code{~ x + g1 + g2} (the variable to fill in comes first)}
 
 \item{n}{number of additional points over range of predictor (default 200)}
