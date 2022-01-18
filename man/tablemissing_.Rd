@@ -7,5 +7,5 @@
 tablemissing_(data, order.by = "freq", ...)
 }
 \description{
-From naniar::gg_miss_upset
+See naniar::gg_miss_upset
 }

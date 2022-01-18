@@ -174,7 +174,8 @@ tablemissing <-
   }
 #' Show patterns of missing data
 #' 
-#' From naniar::gg_miss_upset
+#' See naniar::gg_miss_upset
 #' 
+#' @export
 tablemissing_ <- naniar::gg_miss_upset
 

@@ -20,7 +20,7 @@ LazyLoad: yes
 LazyData: yes
 RoxygenNote: 7.1.1
 Encoding: UTF-8
-Imports: stats, nlme, lattice, latticeExtra, lme4, magrittr, RColorBrewer, naniar
+Imports: stats, nlme, lattice, latticeExtra, lme4, magrittr, RColorBrewer, naniar, UpSetR
 Suggests: 
     knitr,
     rmarkdown,
