@@ -118,7 +118,7 @@ here <- function(dir = FALSE) {
 #' 
 #' @export
 setwd_here <- function() {
-  path <- here(TRUE)
+  path <- spida2:::here(TRUE)
   if(is.null(knitr::opts_knit$get('output.dir'))) setwd(path)
   invisible(here)
 }
