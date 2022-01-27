@@ -1,5 +1,7 @@
+2022_01_27
+* added napply to allow lapply to have access to names of elements of list used as an argument
 2022_01_02
-* linke 'tablemissing_' to naniar::gg_miss_upset
+* linked 'tablemissing_' to naniar::gg_miss_upset
 2021_10_09
 * as.data.frame.wald includes the original wald object as the 'wald' attribute of the returned object
 2021_08_06

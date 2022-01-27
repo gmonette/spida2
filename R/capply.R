@@ -206,3 +206,47 @@ capply.default <- function ( x, by, FUN , ..., sep = '#^#') {
   if ( !is.null( dim(ret)) && length(dim(ret)) ==1) ret <- c(ret)
   ret
 }
+#' napply: lapply with access to the names of the list argument
+#' 
+#' lapply allows a function to operate on each element of a list but does not
+#' provide a way to access the name of the elements in the list. napply
+#' provides a mechanism for doing this by setting a ".name" attribute
+#' for each element. This attribute can be extracted with the .name function.
+#' 
+#' **WARNING:** This sets and uses a '.name' attribute and is likely 
+#' to conflict with functions that use such an attribute or that
+#' rely on 'is.vector'.
+#' 
+#' @param X a list to be passed to \code{\link{lapply}}
+#' @param FUN a function to be passed to  \code{\link{lapply}}
+#' @param ... optional arguments to FUN
+#' @param DO.CLEAN remove ,name attribute in result
+#' 
+#' @export
+napply <- function(X, FUN, ..., DO.CLEAN = TRUE) {
+  X <- as.list(X)
+  namesX <- if( is.null(names(X))) seq_along(X) else names(X)
+  for(i in seq_along(X)) {
+    .name(X[[i]]) <- namesX[i]
+  }
+  ret <- lapply(X, FUN, ...)
+  if(DO.CLEAN) lapply(ret, function(x) {
+    .name(x) <- NULL
+    x
+  }) else ret
+}
+#' Set and extract the '.name' attribute
+#' 
+#' These functions are used with \code{\link{napply}}
+#' 
+#' @export
+.name <- function(x) {
+  attr(x, '.name')
+}
+#' @export
+".name<-" <- function(x, value) {
+  attr(x, '.name') <- value
+  x
+}
+
+#'
