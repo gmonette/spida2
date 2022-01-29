@@ -187,6 +187,36 @@ case <- function(.select., ...) {
   what <- do.call(cbind, replace)
   what[cbind(1:nrow(what), which)]
 }
+#' 
+#' Sequential ifelse with paired arguments
+#' 
+#' Equivalent of nested ifelse with alternating conditions and values
+#' 
+#' @param ... a sequence of alternating arguments with each pair consisting
+#'        of a vector logical argument followed by a vector of values to be returned in
+#'        the positions in which the logical argument is TRUE. Each pair
+#'        corresponds to the first two arguments of a \code{\link{ifelse}}.
+#' @param OTHER value returned if no logical vector evaluates to TRUE in 
+#'        a position.  Can be modified directly or the same result achieved
+#'        by ending the pairs of arguments with: TRUE, other_value.
+#' @return a vector consisting of the value vector corresponding to the first
+#'        logical vector that evaluates to TRUE in a position.
+#' @export
+esac <- function(..., OTHER = 'NONE SELECTED') {
+  # Equivalent of nested ifelse
+  # Arguments are alternating (unnamed pairs) giving:
+  # condition followed by the value if the condition is satisfied
+  # To specify a default: end with: TRUE, default value
+  # or use argument OTHER
+  a <- list(...)
+  sel <- do.call(cbind, a[seq(1,length(a), 2)])
+  repl <- do.call(cbind, a[seq(2,length(a), 2)])
+  sel <- cbind(sel,TRUE)
+  repl <- cbind(repl, other)
+  first_col <- apply(sel, 1, function(x) min(which(x)))
+  repl[cbind(seq_len(nrow(sel)), first_col)]
+}
+#'
 #' Left Cholesky factor
 #' 
 #' Decomposes positive-definite G = L'L where L is lower-triangular.

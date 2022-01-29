@@ -1,3 +1,5 @@
+2022_01_29
+* added 'esac': equivalent to nested ifelse statements (see also case) 
 2022_01_27
 * added napply to allow lapply to have access to names of elements of list used as an argument
 2022_01_02
