@@ -1,5 +1,7 @@
+2022_02_07
+* added 'pred.grid', an easier version of expand.grid for plotting predicted values from a fitted model
 2022_01_29
-* added 'esac': equivalent to nested ifelse statements (see also case) 
+* added 'esac': equivalent to nested ifelse statements (see also case for a different syntax) 
 2022_01_27
 * added napply to allow lapply to have access to names of elements of list used as an argument
 2022_01_02

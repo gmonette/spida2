@@ -10,7 +10,7 @@ contr.nhelmert(n, ...)
 \item{n}{a vector of levels for a factor or the number of levels.}
 }
 \description{
-Normalized Helmert contrasts for parsimonious random effects models
+- [R Library Contrast Coding Systems for categorical variables](https://stats.idre.ucla.edu/r/library/r-library-contrast-coding-systems-for-categorical-variables/)
 }
 \examples{
 zf <- factor(c("A","B","B","C"))
