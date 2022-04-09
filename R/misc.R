@@ -118,7 +118,8 @@ here <- function(dir = FALSE) {
 #' @export
 setwd_here <- function() {
   path <- spida2:::here(TRUE)
-  if(is.null(knitr::opts_knit$get('output.dir'))) setwd(path)
+#  if(is.null(knitr::opts_knit$get('output.dir'))) setwd(path)
+  setwd(path)
   invisible(here)
 }
 #' Vectorized ifelse with multiple conditions

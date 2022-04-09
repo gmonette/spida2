@@ -1,5 +1,5 @@
 #' @name Deriv
-#' @title Symbollic differentiation of an expression or function
+#' @title Symbolic differentiation of an expression or function
 #' @description Symbollic differentiation of an expression or function
 #' @aliases Deriv drule
 #' @concept symbollic differentiation
