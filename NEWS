@@ -1,3 +1,5 @@
+2022_04_21
+* fixed bug in pred.grid
 2022_02_07
 * added 'pred.grid', an easier version of expand.grid for plotting predicted values from a fitted model
 2022_01_29
