@@ -377,8 +377,8 @@ lchol <- function(x) {
 pred.grid <- function(...) {
   nams <- as.character(as.list(substitute(list(...)))[-1L])
   x <- list(...)
-  if(any(names(x) =='')||is.null(names(x))) names(x)[names(x) == ''] <- nams[names(x) == '']
-#  names(x) <- nams
+  if(is.null(names(x))) names(x) <- nams
+  else if(any(names(x) =='')) names(x)[names(x) == ''] <- nams[names(x) == '']
   x <- lapply(x, unique)
   do.call(expand.grid, x)
 }
