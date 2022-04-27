@@ -380,6 +380,8 @@ pred.grid <- function(...) {
   if(is.null(names(x))) names(x) <- nams
   else if(any(names(x) =='')) names(x)[names(x) == ''] <- nams[names(x) == '']
   x <- lapply(x, unique)
+  # to ensure that factors are in their internal order, not the order of their appearance in the data
+  x <- lapply(x, sort)  
   do.call(expand.grid, x)
 }
 
