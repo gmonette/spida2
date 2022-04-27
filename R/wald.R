@@ -672,7 +672,9 @@ as.data.frame.wald <- function(obj, se = 2, digits = 3, sep = "", which = 1) {
     colnames(cplus) <- paste("U",colnames(cplus),sep=sep)
     colnames(cminus) <- paste("L",colnames(cminus),sep=sep)
     ret <- cbind(ret, cplus, cminus)
-
+    ret[['p-value']] <- obj[[1]]$estimate[['p-value']]
+    ret[['t-value']] <- obj[[1]]$estimate[['t-value']]
+    ret[['DF']] <- obj[[1]]$estimate[['DF']]
     if(!is.null(dd <- obj[[1]]$data)) ret <- cbind(ret, dd)
     if(!("L" %in% names(ret))) ret$L <- obj[[1]]$L
     attr(ret, 'wald') <- obj[[1]]

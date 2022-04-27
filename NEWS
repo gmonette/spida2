@@ -1,3 +1,5 @@
+2022_04_27
+* add p-values to as.data.frame.wald
 2022_04_26
 * sort input variables to ensure that the prediction fram has factors in their internal order, not the order of appearance in the data
 2022_04_21
