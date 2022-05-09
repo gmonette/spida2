@@ -1,3 +1,5 @@
+2022_05_09
+^ improved behaviour of wald with waldx for singular models 
 2022_04_27
 * add p-values to as.data.frame.wald
 2022_04_26

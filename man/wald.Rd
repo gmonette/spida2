@@ -2,12 +2,31 @@
 % Please edit documentation in R/wald.R
 \name{wald}
 \alias{wald}
+\alias{waldx}
 \alias{wald2}
 \alias{wald.transform}
 \alias{glh}
 \title{General Linear Hypothesis for the 'fixed' portion of a model with Wald test}
 \usage{
 wald(
+  fit,
+  Llist = "",
+  clevel = 0.95,
+  pred = NULL,
+  data = NULL,
+  debug = FALSE,
+  maxrows = 25,
+  full = FALSE,
+  fixed = FALSE,
+  invert = FALSE,
+  method = "svd",
+  overdispersion = FALSE,
+  df = NULL,
+  pars = NULL,
+  ...
+)
+
+waldx(
   fit,
   Llist = "",
   clevel = 0.95,
@@ -138,6 +157,8 @@ and for 'mipo' objects in the packages 'mice':
 }
 \section{Functions}{
 \itemize{
+\item \code{waldx}: experimental version for singular models
+
 \item \code{wald2}: experimental version with RHS?
 
 \item \code{wald.transform}: transforms estimates canfidence intervals using delta method

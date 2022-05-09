@@ -18,14 +18,17 @@
 ##  Added periodic argument to gsp
 ##
 ##
-#' @title Estimate Dth derivative of polynomial at x
+#' Estimate Dth derivative of 
+#' polynomial at x
 #'
-#' @description Generate X matrix to estimate Dth derivative of polynomial at x
+#' Generate X matrix 
+#' to estimate Dth derivative 
+#' of polynomial at x
 #'
 #' @param x vector of values where derivative evaluated
 #' @param degree of polynomial
 #' @param order of derivative
-#' @param signif significant digits for labelling
+#' @param signif significant digits for labeling
 #' 
 #' @export
 Xmat <- function( x, degree, D = 0, signif = 3) {
