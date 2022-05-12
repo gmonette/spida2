@@ -382,7 +382,7 @@ pred.grid <- function(...) {
   x <- lapply(x, unique)
   # to ensure that factors are in their internal order, not the order of their appearance in the data
   x <- lapply(x, sort)  
-  do.call(expand.grid, x)
+  do.call(expand.grid, x, stringsAsFactors = FALSE)
 }
 
 

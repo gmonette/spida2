@@ -23,29 +23,10 @@
 # TODO: update tab.Rd to explain new features in Tab
 # and keep = "All"
 
-#' Display matrix
-#'
-#' Transform a matrix of test results for display
-#' 
-#' @param x matrix
-#' @export
-.mat2arr <- function(x) {
-      ret <- as.list(x)
-      dim(ret) <- NULL
-      nams <- expand.grid( dimnames(x))
-      for ( ii in 1:length(nams)) {
-          nams[[ii]] <- paste( names(nams)[ii] , nams[[ii]], sep = " = ")
-      }
-      nams <- c( nams, sep = ", ")
-      nams <- do.call( paste, nams)
-      names(ret) <- nams
-      ret
-}
 #' Drop last facets of array
 #' 
 #' Primarily used to strips totals from a table bordered by totals 
 #' by dropping the last facet. 
-#' The 
 #'
 #' @param arr array
 #' @param drop drop parameter in subsetting, default FALSE
@@ -550,5 +531,23 @@ tab_df <- function(data, fmla, ...){
     if(is.ordered(data[[nn]])) ret[[nn]] <- ordered(ret[[nn]],levels = levels(data[[nn]]))
     else ret[[nn]] <- factor(ret[[nn]], levels = levels(data[[nn]]))
   }
+  ret
+}
+#' Display matrix
+#'
+#' Transform a matrix of test results for display
+#'
+#' @param x matrix
+#' @export
+.mat2arr <- function(x) {
+  ret <- as.list(x)
+  dim(ret) <- NULL
+  nams <- expand.grid( dimnames(x))
+  for ( ii in 1:length(nams)) {
+    nams[[ii]] <- paste( names(nams)[ii] , nams[[ii]], sep = " = ")
+  }
+  nams <- c( nams, sep = ", ")
+  nams <- do.call( paste, nams)
+  names(ret) <- nams
   ret
 }

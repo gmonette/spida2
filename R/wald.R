@@ -478,13 +478,16 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
       ##      Truncate beta and vc 
       ## 
       narows <- NULL
+      singular <- FALSE
       if(sum(is.na(beta)) > 0) {  # singular model
+        singular <- TRUE
         if(!(ncol(L) %in% c(length(beta), length(na.omit(beta))) )) stop("ncol(L) incorrect for singular or non-singular model")
         if(ncol(L) == length(beta)) {  # L for singular model
           # Is L estimable?
           Lna <- L[, is.na(beta), drop = FALSE]
           narows <- apply(Lna,1, function(x) sum(abs(x))) > 0
           warning("Row(s): ", paste(which(narows),collapse = ' '), " of L not estimable. L coefficients set to 0.")
+          Lsing <- L
           L <- L[, !is.na(beta), drop = FALSE]
           attr(L,'data') <- Ldata
         }
@@ -603,6 +606,10 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
       ret[[ii]]$coef <- c(etahat)
       ret[[ii]]$vcov <- etavar
       ret[[ii]]$L <- L
+      if(singular) {
+        ret[[ii]]$L <- Lsing
+        ret[[ii]]$Lreduced <- L
+      }
       ret[[ii]]$se <- etasd
       ret[[ii]]$L.full <- L.full
       ret[[ii]]$L.rank <- L.rank
