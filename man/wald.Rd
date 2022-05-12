@@ -3,6 +3,7 @@
 \name{wald}
 \alias{wald}
 \alias{waldx}
+\alias{waldf}
 \alias{wald2}
 \alias{wald.transform}
 \alias{glh}
@@ -43,6 +44,8 @@ waldx(
   pars = NULL,
   ...
 )
+
+waldf(...)
 
 wald2(
   fit,
@@ -157,7 +160,9 @@ and for 'mipo' objects in the packages 'mice':
 }
 \section{Functions}{
 \itemize{
-\item \code{waldx}: experimental version for singular models
+\item \code{waldx}: experimental version for singular models. Reports rows of L matrix that are not estimable.
+
+\item \code{waldf}: equivalent to \code{as.data.frame(waldx(...))}
 
 \item \code{wald2}: experimental version with RHS?
 
