@@ -4,9 +4,17 @@
 #' link-citations: true
 #' ---
 #' 
+#' 
+#' Note: I think current version of waldx should replace wald
+#' and waldf should point to new wald,
+#' Should also set SE to NA
+
+
 library(spida2)
 
-{
+
+
+if(F){
   waldx <- function(fit, Llist = "", clevel = 0.95,
                     pred = NULL,
                     data = NULL, debug = FALSE , maxrows = 25,
@@ -103,23 +111,20 @@ library(spida2)
       }
       narows <- NULL
       singular <- FALSE
-      if(sum(is.na(beta)) > 0) {  # singular model
+      nas <- is.na(beta)
+      if(sum(nas) > 0) {  # singular model
         singular <- TRUE
-        if(!(ncol(L) %in% c(length(beta), length(na.omit(beta))) )) stop("ncol(L) incorrect for singular or non-singular model")
-        if(ncol(L) == length(beta)) {  # L for singular model
-          # Is L estimable?
-          # Lna <- L[, is.na(beta), drop = FALSE]
-          # narows <- apply(Lna,1, function(x) sum(abs(x))) > 0
-          narows <- which_not_estimable(fit, L)
-          if(any(narows)) warning("Row(s): ", paste(which(narows),collapse = ' '), " of L not estimable. L coefficients set to 0.")
-          Lsing <- L
-          L <- L[, !is.na(beta), drop = FALSE]
-          attr(L,'data') <- Ldata
-        }
-        # fix beta and vc
+        narows <- which_not_estimable(fit, L)
+        warning("Row(s): ", paste(which(narows),collapse = ' '), " of L not estimable. L coefficients set to 0.")
+        # fix L beta and vc
         nas <- is.na(beta)
-        beta <- beta[!nas]
-        vc <- vc[!nas, !nas, drop= FALSE]
+        # The following could cause L and dfs to get out of sync for lme models
+        # beta <- beta[!nas]
+        # vc <- vc[!nas, !nas, drop= FALSE]
+        # Instead:
+        L[,nas] <- 0
+        beta[nas] <- 0                                                           # NEW 2022_05_13
+        vc[nas,nas] <- 0                                                         # NEW 2022_05_13
       }
       
       
@@ -200,7 +205,12 @@ library(spida2)
         etasd <- sqrt( apply( L * (L%*%vc), 1, sum))
       }
       
-      denDF <- apply( L , 1 , function(x,dfs) min( dfs[x!=0]), dfs = dfs)
+      min_ <- function(x) {
+        if(length(x) == 0) NA
+        else min(x)
+      }
+      
+      denDF <- apply( L , 1 , function(x,dfs) min_( dfs[x!=0]), dfs = dfs)
       
       aod <- cbind(
         Estimate=c(etahat),
@@ -286,7 +296,7 @@ waldx(fit, ww$L)
 
 # prediction with cartesian frame
 # 
-pred <- with(dd, pred.grid(a, b, x =5))
+pred <- with(dd, pred.grid(a, b, x =0))
 ww <- as.data.frame(waldx(fit, pred = pred))
 
 # what if the missing combination is the reference levels of the factors
@@ -316,6 +326,8 @@ xyplot(coef ~ a, ww, groups = b, type = 'l', auto.key = T, ylim=c(-2, 8)) +
   xyplot(coef ~ a, wwr, groups = b, type = 'p') 
 predict(fitr, newdata = pred)       # incorrectly predicts where it shouldn't
 predict(fitr, newdata = pred[-1,])  # correct in data space
+waldf(fitr, pred = pred)                               # Eureka! correct NA
+
 
 getX(fitr)
 coef(fitr)
@@ -344,7 +356,7 @@ ww
 debug(waldx)
 
 
-qtab(dd2, ~ a +b)
+ktab(dd2, ~ a +b)
 fit2 <- lm(y ~ a*b*x, dd2)
 summary(fit2)
 getX(fit2)

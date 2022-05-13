@@ -506,6 +506,7 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
       nas <- is.na(beta)
       beta <- beta[!nas]
       vc <- vc[!nas, !nas, drop= FALSE]
+      if(length(dfs) > 1) dfs <- dfs[!nas]
     }
     
     
@@ -577,7 +578,6 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
     etahat <- L %*% beta
     
     # NAs if not estimable:
-    if(!is.null(narows)) etahat[narows] <- NA
     if( nrow(L) <= maxrows ) {
       etavar <- L %*% vc %*% t(L)
       etasd <- sqrt( diag( etavar ))
@@ -586,7 +586,17 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
       etasd <- sqrt( apply( L * (L%*%vc), 1, sum))
     }
     
-    denDF <- apply( L , 1 , function(x,dfs) min( dfs[x!=0]), dfs = dfs)
+    if(!is.null(narows)) {
+      etahat[narows] <- NA
+      etasd[narows] <- NA
+    }
+    
+    min_ <- function(x) {
+      if(length(x) == 0) NA
+      else min(x)
+    }
+    
+    denDF <- apply( L , 1 , function(x,dfs) min_( dfs[x!=0]), dfs = dfs)
     
     aod <- cbind(
       Estimate=c(etahat),
@@ -635,7 +645,6 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
 }
 #' @describeIn wald equivalent to \code{as.data.frame(waldx(...))}
 #' @export
-
 waldf <- function(...) {
   as.data.frame(waldx(...))
 }
