@@ -112,6 +112,9 @@
 #'        by \code{\link{overdisp_fun}}. If `overdisperion` is numerical, use
 #'        its value as an overdispersion factor.  
 #' @param help obsolete
+#' @param robust (default FALSE) use Huber-White corrected covariance matrix
+#' @param type (default 'hc0') type of Huber-White correction to use. See 
+#'        \code{\link[car]{hccm}}.
 #' @return An object of class \code{wald}, with the following components:
 #'       COMPLETE
 #' @seealso \code{\link{Lform}},
@@ -399,7 +402,8 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
                   full = FALSE, fixed = FALSE,
                   invert = FALSE, method = 'svd',
                   overdispersion = FALSE,
-                  df = NULL, pars = NULL,...) {
+                  df = NULL, pars = NULL,
+                  robust = FALSE, type = 'hc0', ...) {
   # New version with support for stanfit
   if (full) return(waldx(fit, getX(fit)))
   if(!is.null(pred)) return(waldx(fit, getX(fit,pred)))
@@ -429,7 +433,7 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
       paste('Sorry: wald needs Llist to be a n x',
             length(fix$fixed),'matrix for this stanfit object'))
   } else {
-    fix <- getFix(fit)
+    fix <- getFix(fit, robust = robust, type = type)
   }
   beta <- fix$fixed
   vc <- if(isTRUE(overdispersion)) overdisp_fun(fit)["ratio"] * fix$vcov 
@@ -1156,11 +1160,11 @@ getFix.multinom <- function(fit,...) {
 
 #' @describeIn getFix method for lm objects
 #' @export
-getFix.lm <- function(fit,...) {
+getFix.lm <- function(fit, robust = FALSE, type = 'hc0', ...) {
        ss <- summary(fit)
        ret <- list()
        ret$fixed <- coef(fit)
-       ret$vcov <- vcov(fit)
+       ret$vcov <- if(robust) hccm(fit, type = type) else vcov(fit)
        # old: ret$vcov <- ss$sigma^2 * ss$cov.unscaled
        ret$df <- rep(ss$df[2], length(ret$fixed))
        ret

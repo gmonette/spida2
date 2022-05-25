@@ -1,3 +1,7 @@
+2022_05_25
+* added tps, tps_ and tpg, to update trellis settings without resetting other parameters as gd and td do
+2022_05_17
+* added 'robust' and 'type' to getFix.lm and to waldx
 2022_05_12
 * improved identification of non-estimable rows of hypothesis L matrix
 2022_05_09
