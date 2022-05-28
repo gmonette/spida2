@@ -322,6 +322,7 @@ tps <- function (...)
   args <- list(...)
   # disp(args)
   theme <- trellis.par.get()
+  old_theme <- theme
   nams <- names(args)
   for(i in seq_along(args)) {
     # disp(nams[i])
@@ -382,7 +383,8 @@ tps <- function (...)
          }
     )
   }
-  invisible(trellis.par.set(theme=theme))
+  trellis.par.set(theme=theme)
+  invisible(old_theme)
 }
 #' @describeIn td trellis par set for all parameters, special treatment for col, lwd, lty, pch
 #' @export
