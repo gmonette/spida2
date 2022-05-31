@@ -551,3 +551,64 @@ tab_df <- function(data, fmla, ...){
   names(ret) <- nams
   ret
 }
+#' Add faces to an array of data frames
+#' 
+#' Add union of rows in elements of an array of data frames to marginal
+#' faces of the array
+#' 
+#' @param arr an array of data frames
+#' @param label character string to label faces, default "All"
+#' @export
+add_faces <- function(arr, label = 'All', ...) {
+  if(is.null(dim(arr))) {
+    nn <- names(arr)
+    dim(arr) <- length(arr)
+    dimnames(arr)[[1]] <- nn
+  }
+  d <- dim(arr)
+  cls <- class(arr)
+  n <- length(d)
+  ret <- arr
+  ind <- 1:n
+  for ( i in n:1) {
+    new <- apply(ret,ind[-i], function(x) do.call(rbind, x))
+    ret <- abind( ret, new, i, label)
+  }
+  class( ret ) <- cls
+  ret
+}
+#' Create an array of data frames splitting on a formula with marginal faces 
+#'
+#' Like a table but each element consists of the rows of the data frame
+#' for a particular combination of levels of the formula
+#' 
+#' @param dd data frame
+#' @param fmla formula whose RHS creates a table and 
+#'             LHS adds variables to the resulting data frames
+#' @param all adds all variables in the data frame              
+#' @export
+tabf <- function(dd, fmla, all = FALSE, ...) {
+  # returns an array of data frames
+  # that can be processed through 
+  # Apply (version of lapply for dimensioned lists)
+  mm <- model.frame(fmla, dd, na.action = NULL)
+  mp <- if(length(fmla) == 3) 
+    model.frame(fmla[-2],mm, na.action = NULL) else mm
+  if(all) mm <- dd
+  ret <- split(mm, mp)
+  tt <- tab__(mp)
+  dim(ret) <- dim(tt)
+  add_faces(ret)
+}
+#' Version of lapply that can return an array of lists
+#' 
+#' Returns an array of lists similar to its input
+#' 
+#' @param X list of array of lists, as in \code{\link{lapply}}
+#' @param fun function to be applied to each element of X
+#' @param ... same as \code{\link{lapply}}
+#' @export
+Apply <- function(X, fun, ...) {
+  X[] <- lapply(X, fun,...)
+  X
+}

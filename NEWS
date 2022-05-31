@@ -1,3 +1,6 @@
+2022_05_31
+* new: tabf, Apply, add_faces: tabf is similar to tab in concept but returns an array of rows of a data frame with margins
+* Apply works like lapply but returns the correct structure, like that of its argument
 2022_05_25
 * added tps, tps_ and tpg, to update trellis settings without resetting other parameters as gd and td do
 2022_05_17
