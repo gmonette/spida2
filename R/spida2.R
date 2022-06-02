@@ -7,17 +7,9 @@
 #'
 #' @section General Bugs:
 #' \itemize{
-#' \item \code{\link[latticeExtra]{+.trellis}} in xyplot + xyplot requires same data set to avoid misregistration of panel if some levels of panel factors are absent.
+#' \item \code{\link[latticeExtra]{+.trellis}} in xyplot + xyplot requires same data set to avoid misregistration of panels if some levels of panel factors are different
+#'                 in data sets for different panes. 
 #'         Use \code{\link{Rbind}} to create common data frame and different names for plotted variables, e.g. to plot both lines and points. 
-#' }
-#' 
-#' @section Code Trick:
-#' \itemize{
-#' \item To create a unique name: 
-#' \code{
-#' id <- '.id'
-#' while( any(id %in% nams)) id <- paste0(id,".")
-#' }
 #' }
 #' 
 #' @section New functions:
