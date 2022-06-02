@@ -210,14 +210,32 @@ tab.default <- function (..., total.margins = TRUE,
     aa <- c(aa[[1]],list( total.margins = total.margins,
                           useNA = useNA, pr = pr, pct = pct, test=test,
                           na.rm = na.rm, weights = weights))
-    disp(aa[[1]])
+    # disp(aa[[1]])
     return(do.call("tab", aa[[1]]))
   }
   if (is.null(names(aa))) {
     nns = names(match.call())
     names(aa) = nns[2:(1 + length(aa))]
   }
-  if(useNA=="ifany") for (ii in 1:length(aa)) aa[[ii]] <- factor(aa[[ii]], exclude = NULL)  # table uses 'ifany' correctly when a number but not for factors
+  if(FALSE) {
+    
+    if(useNA == "ifany") {
+      for (ii in 1:length(aa)) {
+        if(sum(is.na(aa[[ii]]))>0) levels(aa[[ii]]) <- unique(c(levels(aa[[ii]]) ,NA))
+        # aa[[ii]] <- factor(aa[[ii]], exclude = NULL)  # table uses 'ifany' correctly when a number but not for factors
+      }
+    }
+    if(useNA == 'no'){
+      for (ii in 1:length(aa)) {
+        levels(aa[[ii]]) <- na.omit(levels(aa[[ii]]))
+      }
+    }
+    if(useNA=='yes'){
+      for (ii in 1:length(aa)) {
+        levels(aa[[ii]]) <- na.omit(levels(aa[[ii]]))
+      }
+    }
+  }
   if( is.null(weights)){
     aa[["useNA"]] <- useNA
     aa[["na.rm"]] <- NULL

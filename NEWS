@@ -1,3 +1,5 @@
+2022_06_01
+* Corrected bug in tab that didn't show a frequency of 0 for factor levels absent in data
 2022_05_31
 * new: tabf, Apply, add_faces: tabf is similar to tab in concept but returns an array of rows of a data frame with margins
 * Apply works like lapply but returns the correct structure, like that of its argument
