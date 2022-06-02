@@ -4,7 +4,7 @@
 \alias{tabf}
 \title{Create an array of data frames splitting on a formula with marginal faces}
 \usage{
-tabf(dd, fmla, all = FALSE, ...)
+tabf(dd, fmla, all = TRUE, ...)
 }
 \arguments{
 \item{dd}{data frame}
@@ -17,4 +17,10 @@ LHS adds variables to the resulting data frames}
 \description{
 Like a table but each element consists of the rows of the data frame
 for a particular combination of levels of the formula
+}
+\examples{
+tabf(mtcars, ~ cyl + carb)[1,1]            
+tabf(mtcars, ~ cyl + carb) \%>\% dimnames  
+tabf(mtcars, ~ cyl + carb + gear ) \%>\% Apply(dim) \%>\% Apply(paste, collapse = ' ')  
+          
 }

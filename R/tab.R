@@ -603,9 +603,14 @@ add_faces <- function(arr, label = 'All', ...) {
 #' @param dd data frame
 #' @param fmla formula whose RHS creates a table and 
 #'             LHS adds variables to the resulting data frames
-#' @param all adds all variables in the data frame              
+#' @param all adds all variables in the data frame  
+#' @examples
+#' tabf(mtcars, ~ cyl + carb)[1,1]            
+#' tabf(mtcars, ~ cyl + carb) %>% dimnames  
+#' tabf(mtcars, ~ cyl + carb + gear ) %>% Apply(dim) %>% Apply(paste, collapse = ' ')  
+#'           
 #' @export
-tabf <- function(dd, fmla, all = FALSE, ...) {
+tabf <- function(dd, fmla, all = TRUE, ...) {
   # returns an array of data frames
   # that can be processed through 
   # Apply (version of lapply for dimensioned lists)
