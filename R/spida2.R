@@ -5,8 +5,29 @@
 #' longitudinal and hierarchical data analysis. Some documents related to this 
 #' package can be found at \url{http://blackwell.math.yorku.ca/R/spida2/doc}
 #'
+#' @section General Bugs:
+#' \itemize{
+#' \item \code{\link[latticeExtra]{+.trellis}} in xyplot + xyplot requires same data set to avoid misregistration of panel if some levels of panel factors are absent.
+#'         Use \code{\link{Rbind}} to create common data frame and different names for plotted variables, e.g. to plot both lines and points. 
+#' }
+#' 
+#' @section Code Trick:
+#' \itemize{
+#' \item To create a unique name: 
+#' \code{
+#' id <- '.id'
+#' while( any(id %in% nams)) id <- paste0(id,".")
+#' }
+#' }
+#' 
 #' @section New functions:
 #' \itemize{
+#' \item \code{\link[spida2]{Rbind}} works on data.frame, missing variables get NA: use to avoid shifted panels in latticeExtra
+#' \item \code{\link[spida2]{Apply}} returns list with same structure, e.g. list array
+#' \item \code{\link[spida2]{tabf}} returns result of applying function as a list array
+#' \item \code{\link[spida2]{waldx}} temporary name for rank-deficient aware version of wald
+#' \item \code{\link[spida2]{waldf}} rank-deficient aware version of wald that returns a data frame and L matrix
+#' \item \code{\link[spida2]{subrow}} subtracts selected rows of L matrix from ranges of rows, e.g. to compare with comparators
 #' \item \code{\link[spida2]{lchol}} returns lower-triangular L so that G = L'L.
 #' \item \code{\link[spida2]{getR}}, \code{\link[spida2]{getG}} and \code{\link[spida2]{getV}} return R, G and V matrices for \code{\link[nlme]{lme}} objects.
 #' \item \code{\link[spida2]{pdInd}} constructs a pdClass for a G matrix with patterns of zero covariances. See

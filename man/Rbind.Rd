@@ -4,7 +4,7 @@
 \alias{Rbind}
 \title{Stack data frames vertically}
 \usage{
-Rbind(..., verbose = FALSE)
+Rbind(..., verbose = FALSE, id = ".index")
 }
 \arguments{
 \item{\dots}{data frames or objects that can be coerced to data frames}
@@ -18,4 +18,5 @@ zd2 <- data.frame(x = 1:4, y = 'y', w = 1, m = matrix(1:8, nrow = 4))
 zm1 <- cbind(x = 1:3, y = 2, z = 3)
 zm2 <- cbind(x = 1:4, y = 3, w = 1)
 Rbind(zm1, zm2, zd1, zd1, zd2)
+Rbind(Rbind(zm1, zm2), Rbind(zd1, zd2))
 }
