@@ -5,9 +5,9 @@
 \alias{Vcor}
 \title{Generic 'vcov' extended to objects with a \code{getFix} method}
 \usage{
-Vcov(fit)
+Vcov(fit, ...)
 
-Vcor(fit)
+Vcor(fit, ...)
 }
 \arguments{
 \item{fit}{model with \code{\link{getFix}} method}

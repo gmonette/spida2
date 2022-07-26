@@ -25,29 +25,29 @@ getFix(fit, ...)
 
 \method{getFix}{lm}(fit, robust = FALSE, type = "hc0", ...)
 
-\method{getFix}{glm}(fit, ...)
+\method{getFix}{glm}(fit, robust = FALSE, ...)
 
-\method{getFix}{lme}(fit, ...)
+\method{getFix}{lme}(fit, robust = FALSE, ...)
 
-\method{getFix}{gls}(fit, ...)
+\method{getFix}{gls}(fit, robust = FALSE...)
 
-\method{getFix}{lmer}(fit, ...)
+\method{getFix}{lmer}(fit, robust = FALSE, ...)
 
-\method{getFix}{glmer}(fit, ...)
+\method{getFix}{glmer}(fit, robust = FALSE, ...)
 
-\method{getFix}{mer}(fit, ...)
+\method{getFix}{mer}(fit, robust = FALSE, ...)
 
-\method{getFix}{zeroinfl}(fit, ...)
+\method{getFix}{zeroinfl}(fit, robust = FALSE...)
 
-\method{getFix}{mipo}(fit, ...)
+\method{getFix}{mipo}(fit, robust = FALSE, ...)
 
-\method{getFix}{MCMCglmm}(fit, ...)
+\method{getFix}{MCMCglmm}(fit, robust = FALSE, ...)
 
-\method{getFix}{stanfit}(fit, pars, include = TRUE, ...)
+\method{getFix}{stanfit}(fit, pars, include = TRUE, robust = FALSE, ...)
 
-\method{getFix}{lmerMod}(fit, ...)
+\method{getFix}{lmerMod}(fit, robust = FALSE, ...)
 
-\method{getFix}{glmerMod}(fit, ...)
+\method{getFix}{glmerMod}(fit, robust = FALSE, ...)
 
 \method{getFix}{default}(fit, ...)
 }

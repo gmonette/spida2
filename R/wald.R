@@ -487,7 +487,8 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
       sv <- svd(getX(fit), nu = 0)
       epsilon <- sqrt(.Machine$double.eps)
       v <-sv$v[, sv$d > epsilon, drop = F]                                                   # row space of model
-      res <- cbind(resid(lsfit(v, t(L), intercept = FALSE)))
+      # res <- cbind(resid(lsfit(v, t(L), intercept = FALSE)))
+      res <- cbind(lssvd(v, t(L))$residuals)                                         # NEW
       narow <- apply(res,2, function(x) sum(abs(x))) > epsilon
       narow
     }
@@ -1164,7 +1165,7 @@ getFix.lm <- function(fit, robust = FALSE, type = 'hc0', ...) {
        ss <- summary(fit)
        ret <- list()
        ret$fixed <- coef(fit)
-       ret$vcov <- if(robust) hccm(fit, type = type) else vcov(fit)
+       ret$vcov <- if(robust) sandwich::vcovHC(fit, type = type) else vcov(fit)
        # old: ret$vcov <- ss$sigma^2 * ss$cov.unscaled
        ret$df <- rep(ss$df[2], length(ret$fixed))
        ret
@@ -1172,7 +1173,9 @@ getFix.lm <- function(fit, robust = FALSE, type = 'hc0', ...) {
 
 #' @describeIn getFix method for glm objects
 #' @export
-getFix.glm <- function(fit,...) {
+getFix.glm <- function(fit, robust = FALSE,...) {
+  if(robust) warning(' robust not yet implemented for class glm')
+  
        ss <- summary(fit)
        ret <- list()
        ret$fixed <- coef(fit)
@@ -1182,7 +1185,9 @@ getFix.glm <- function(fit,...) {
 }
 #' @describeIn getFix method for lme objects in the nlme package
 #' @export
-getFix.lme <- function(fit,...) {
+getFix.lme <- function(fit, robust = FALSE, ...) {
+  if(robust) warning(' robust not yet implemented for class lme')
+  
        require(nlme)
        ret <- list()
        ret$fixed <- nlme::fixef(fit)
@@ -1192,7 +1197,8 @@ getFix.lme <- function(fit,...) {
 }
 #' @describeIn getFix method for gls objects in the nlme package
 #' @export
-getFix.gls <- function(fit,...) {
+getFix.gls <- function(fit, robust = FALSE...) {
+  if(robust) warning(' robust not yet implemented for class gls')
   require(nlme)
   ret <- list()
   ret$fixed <-coef(fit)
@@ -1205,8 +1211,9 @@ getFix.gls <- function(fit,...) {
 
 #' @describeIn getFix method for lmer objects in the lme4 package
 #' @export
-getFix.lmer <- function(fit,...) {
+getFix.lmer <- function(fit, robust = FALSE, ...) {
   # 2014 06 04: changed fit@fixef to fixef(fit)
+  if(robust) warning(' robust not yet implemented for class lmer')
   ret <- list()
        ret$fixed <- fixef(fit)
        ret$vcov <- as.matrix( vcov(fit) )
@@ -1216,9 +1223,10 @@ getFix.lmer <- function(fit,...) {
 }
 #' @describeIn getFix method for glmer objects in the lme4 package
 #' @export
-getFix.glmer <- function(fit,...) {
+getFix.glmer <- function(fit, robust = FALSE, ...) {
   # 2014 06 04: changed fit@fixef to fixef(fit)
-
+  if(robust) warning(' robust not yet implemented for class glmer')
+  
   ret <- list()
        ret$fixed <- fixef(fit)
        ret$vcov <- as.matrix(vcov(fit))
@@ -1229,8 +1237,9 @@ getFix.glmer <- function(fit,...) {
 
 #' @describeIn getFix method for mer objects in the lme4 package
 #' @export
-getFix.mer <- function(fit,...) {
+getFix.mer <- function(fit, robust = FALSE, ...) {
   # 2014 06 04: changed fit@fixef to fixef(fit)
+  if(robust) warning(' robust not yet implemented for class mer')
 
        ret <- list()
        ret$fixed <- fixef(fit)
@@ -1241,7 +1250,8 @@ getFix.mer <- function(fit,...) {
 }
 #' @describeIn getFix method for zeroinfl objects in the pscl?? package
 #' @export
-getFix.zeroinfl <- function(fit,...){
+getFix.zeroinfl <- function(fit, robust = FALSE...){
+  if(robust) warning(' robust not yet implemented for class zeroinfl')
        ret <- list()
        ret$fixed <- coef(fit)
        ret$vcov <- as.matrix(vcov(fit))
@@ -1251,11 +1261,12 @@ getFix.zeroinfl <- function(fit,...){
 }
 #' @describeIn getFix method for mipo objects in the mice package
 #' @export
-getFix.mipo <- function( fit, ...){
+getFix.mipo <- function( fit, robust = FALSE, ...){
   # pooled multiple imputation object in mice
   # uses the minimal df for components with non-zero weights
   # -- this is probably too conservative and should
   # improved
+  if(robust) warning(' robust not yet implemented for class mipo')
   ret <- list()
   ret$fixed <- fit$qbar
   ret$vcov <- fit$t
@@ -1264,7 +1275,8 @@ getFix.mipo <- function( fit, ...){
 }
 #' @describeIn getFix method for MCMCglmm objects in the MCMCglmm package
 #' @export
-getFix.MCMCglmm <- function(fit,...) {
+getFix.MCMCglmm <- function(fit, robust = FALSE, ...) {
+  if(robust) warning(' robust not yet implemented for class MCMCglmm')
   ret <- list()
   ret$fixed <- apply(fit$Sol, 2, mean)
   ret$vcov <- var( fit $ Sol)
@@ -1274,7 +1286,8 @@ getFix.MCMCglmm <- function(fit,...) {
 #' @describeIn getFix method for `stanfit` objects in the `rstan` package
 #' @export
 getFix.stanfit <-
-function(fit, pars, include = TRUE, ...) {
+function(fit, pars, include = TRUE, robust = FALSE, ...) {
+  if(robust) warning(' robust not yet implemented for class stanfit')
   if(missing(pars)) pars <- dimnames(fit)$parameter
   sam <- as.matrix(fit, pars = pars , include = include)
   ret <- list()
@@ -1285,7 +1298,8 @@ function(fit, pars, include = TRUE, ...) {
 }
 #' @describeIn getFix method for `lmerMod` objects in the `lme4` package
 #' @export
-getFix.lmerMod <- function(fit, ...) {
+getFix.lmerMod <- function(fit, robust = FALSE, ...) {
+  if(robust) warning(' robust not yet implemented for class lmerMod')
   ret <- list()
   ret$fixed <- getME(fit, 'fixef')
   ret$vcov <- as.matrix(vcov(summary(fit)))
@@ -1294,7 +1308,8 @@ getFix.lmerMod <- function(fit, ...) {
 }
 #' @describeIn getFix method for `glmerMod` objects in the `lme4` package
 #' @export
-getFix.glmerMod <- function(fit, ...) {
+getFix.glmerMod <- function(fit, robust = FALSE, ...) {
+  if(robust) warning(' robust not yet implemented for class glmerMod')
   ret <- list()
   ret$fixed <- getME(fit, 'fixef')
   ret$vcov <- as.matrix(vcov(summary(fit)))
@@ -1311,16 +1326,16 @@ getFix.default <- function(fit, ...) stop(paste("Write a 'getFix' method for cla
 #' @return estimated variance covariance matrix of fixed effects
 #' @author GM
 #' @export
-Vcov <- function(fit) {
-     getFix(fit)$vcov
+Vcov <- function(fit,...) {
+     getFix(fit,...)$vcov
 }
 
 #' Correlation matrix of fixed effects
 #'
 #' @describeIn Vcov correlation matrix of fixed effects
 #' @export
-Vcor <- function(fit) {
-     vc <- cov2cor(getFix(fit)$vcov)
+Vcor <- function(fit,...) {
+     vc <- cov2cor(getFix(fit,...)$vcov)
      svds <- svd(vc)$d
      attribute(vc,'conditionNumber') <- svds[1]/svds[length(svds)]
      vc
@@ -2103,4 +2118,79 @@ if(FALSE){ #test getD
          )
   # but these plots need modification to exclude unlikely values
   # such high education in bc jobs
+}
+#' lsfit using SVD
+#' 
+#' not well optimized yet
+#' 
+#' @param x a matrix of predictors. Should include an intercept term if needed
+#' @param y a vector or matrix of responses 
+#' @param zero a value used to identify latent roots eseentially 0
+#' @param has_intercept not yet used
+#' 
+#' @return
+#' A list with three elements: Beta, the matrix of coefficients; residuals and sse
+#' 
+#' 
+#' @export
+lssvd <- function(x, y, zero = 1e-07, ...) {
+  x <- cbind(x)
+  y <- cbind(y)
+  xn <- colnames(x)
+  yn <- colnames(y)
+  rown <- rownames(x)
+  if(is.null(rown)) rown <- rownames(y)
+  # Beta <- lssvd_nc(x, y, zero = zero)
+  Beta <- MASS::ginv(x, tol = zero) %*% y
+  colnames(Beta) <- yn
+  rownames(Beta) <- xn
+  resids <-  y - x%*%Beta
+  colnames(resids) <- yn
+  rownames(resids) <- rown
+  sse <- apply(resids, 2, function(x) sum(x^2))
+  list(coefficients = Beta, residuals = resids  , sse = sse)
+}
+#' @describeIn lssvd previous version not using MASS::ginv
+#' @export
+lssvd_old <- function(x, y, zero = 10^(-16), has_intercept = all(cbind(x)[,1] ==1)) {
+  lssvd_nc <- function(x,y, zero) {
+    # x and y should be matrices
+    xp <- svd(x, nu = ncol(x), nv = ncol(x))
+    uy <- t(xp$u)%*%y
+    dinv <- 1/xp$d
+    dinv[abs(xp$d) < zero] <- 0
+    t(t(xp$v)*dinv) %*% uy
   }
+  disp <- function(...) NULL
+  # if(!has_intercept) stop('has_intercept FALSE not yet implemented.')
+  # if(!all(x[,1] == 1)) stop('first column must be intercept term.')
+  x <- cbind(x)
+  y <- cbind(y)
+  xorig <- x
+  xn <- colnames(x)
+  yn <- colnames(y)
+  # if(has_intercept) {
+  if(FALSE) {   ## NEEDS FIXING    -----
+    x <- x[,-1, drop = FALSE]
+    xc <- scale(x)
+    yc <- scale(y)
+    yc[is.na(yc)] <- 0
+    xm <- apply(x,2, mean)
+    ym <- apply(y,2, mean)
+    xs <- apply(x,2, sd)
+    ys <- apply(y,2, sd)
+    B <- lssvd_nc(xc, yc, zero = zero)
+    disp(B)
+    B <- ys * t(t(B)/c(xs))
+    disp(B)
+    disp(xm)
+    disp(ym)
+    Beta <- rbind( ym - rbind(xm) %*% B, B)
+  }
+  else Beta <- lssvd_nc(x, y, zero = zero)
+  colnames(Beta) <- yn
+  rownames(Beta) <- xn
+  resids <-  y - xorig%*%Beta
+  sse <- apply(resids, 2, function(x) sum(x^2))
+  list(coefficients = Beta, residuals = y - xorig%*%Beta  , sse = sse)
+}

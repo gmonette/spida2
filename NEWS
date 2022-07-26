@@ -1,3 +1,5 @@
+2022_07_25
+* modified lssvd to use MASS::ginv and added used of sandwich::vcovHC to waldx and waldf if robust=TRUE
 2022_06_01
 * Corrected bug in tab that didn't show a frequency of 0 for factor levels absent in data
 2022_05_31
