@@ -531,6 +531,13 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
       if(debug) disp(L)
       #              if(debug)disp( t(na.omit(t(L))))
       #              sv <- svd( t(na.omit(t(L))) , nu = 0 )
+      # spida2::disp(dim(L))
+      # spida2::disp(dim(na.omit(L)))
+      if(any(dim(na.omit(L))==0)) {
+        cat('\n na.omit(L) is 0: L:\n')
+        print(L)
+      }
+      L[is.na(L)] <- 0    # might remove
       sv <- svd(na.omit(L) , nu = 0 )
       
       if(debug)disp( sv )
