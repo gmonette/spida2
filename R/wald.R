@@ -484,12 +484,14 @@ waldx <- function(fit, Llist = "", clevel = 0.95,
     which_not_estimable <- function(fit, L) {
       # identify rows of L that are not in space spanned by model matrix
       L <- rbind(L)     # in case L is a vector
+      narows <- apply(is.na(L), 1, sum) > 0
+      L[narows,] <- 0
       sv <- svd(getX(fit), nu = 0)
       epsilon <- sqrt(.Machine$double.eps)
       v <-sv$v[, sv$d > epsilon, drop = F]                                                   # row space of model
       # res <- cbind(resid(lsfit(v, t(L), intercept = FALSE)))
       res <- cbind(lssvd(v, t(L))$residuals)                                         # NEW
-      narow <- apply(res,2, function(x) sum(abs(x))) > epsilon
+      narow <- narows | (apply(res,2, function(x) sum(abs(x))) > epsilon)
       narow
     }
     narows <- NULL

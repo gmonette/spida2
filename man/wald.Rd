@@ -43,7 +43,7 @@ waldx(
   df = NULL,
   pars = NULL,
   robust = FALSE,
-  type = "hc0",
+  type = "HC3",
   ...
 )
 
@@ -117,10 +117,10 @@ its value as an overdispersion factor.}
 
 \item{pars}{passed to \code{\link[rstan]{extract}} method for stanfit objects.}
 
-\item{robust}{(default FALSE) use Huber-White corrected covariance matrix}
+\item{robust}{(default FALSE) use Huber-White corrected covariance matrix from sandwich package}
 
-\item{type}{(default 'hc0') type of Huber-White correction to use. See 
-\code{\link[car]{hccm}}.}
+\item{type}{(default 'HC3') type of Huber-White correction to use. See 
+\code{\link[sandwich]{vcovHC}}.}
 
 \item{include}{passed to \code{\link[rstan]{extract}} method for stanfit objects.}
 

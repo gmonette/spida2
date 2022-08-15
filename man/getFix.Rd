@@ -23,7 +23,7 @@ getFix(fit, ...)
 
 \method{getFix}{multinom}(fit, ...)
 
-\method{getFix}{lm}(fit, robust = FALSE, type = "hc0", ...)
+\method{getFix}{lm}(fit, robust = FALSE, type = "HC3", ...)
 
 \method{getFix}{glm}(fit, robust = FALSE, ...)
 
