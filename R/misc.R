@@ -196,13 +196,13 @@ case <- function(.select., ...) {
 #'        of a vector logical argument followed by a vector of values to be returned in
 #'        the positions in which the logical argument is TRUE. Each pair
 #'        corresponds to the first two arguments of a \code{\link{ifelse}}.
-#' @param OTHER value returned if no logical vector evaluates to TRUE in 
-#'        a position.  Can be modified directly or the same result achieved
-#'        by ending the pairs of arguments with: TRUE, other_value.
+#'        To get a default value, use a condition 'TRUE' for the last pair.
+#'        You may also need to specify is.na(x) if there are NAs.
 #' @return a vector consisting of the value vector corresponding to the first
 #'        logical vector that evaluates to TRUE in a position.
 #' @export
-esac <- function(..., OTHER = 'NONE SELECTED') {
+esac <- function(...) {
+# esac <- function(...) {
   # Equivalent of nested ifelse
   # Arguments are alternating (unnamed pairs) giving:
   # condition followed by the value if the condition is satisfied
@@ -210,11 +210,16 @@ esac <- function(..., OTHER = 'NONE SELECTED') {
   # or use argument OTHER
   a <- list(...)
   sel <- do.call(cbind, a[seq(1,length(a), 2)])
-  repl <- do.call(cbind, a[seq(2,length(a), 2)])
-  sel <- cbind(sel,TRUE)
-  repl <- cbind(repl, other)
+  # repl needs to have the right shape without messing up its type
+  repl <- a[seq(2,length(a),2)]
+  repl[[1]] <- rep(repl[[1]], length.out = nrow(sel))
+  repl <- do.call(cbind, repl)
+  # disp(sel)
   first_col <- apply(sel, 1, function(x) min(which(x)))
   repl[cbind(seq_len(nrow(sel)), first_col)]
+}
+if(FALSE) {
+  esac(c(T,F,T), 'a', c(T,F,F), 'b', TRUE, 'c')
 }
 #'
 #' Left Cholesky factor
