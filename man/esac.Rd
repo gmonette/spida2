@@ -4,17 +4,15 @@
 \alias{esac}
 \title{Sequential ifelse with paired arguments}
 \usage{
-esac(..., OTHER = "NONE SELECTED")
+esac(...)
 }
 \arguments{
 \item{...}{a sequence of alternating arguments with each pair consisting
 of a vector logical argument followed by a vector of values to be returned in
 the positions in which the logical argument is TRUE. Each pair
-corresponds to the first two arguments of a \code{\link{ifelse}}.}
-
-\item{OTHER}{value returned if no logical vector evaluates to TRUE in 
-a position.  Can be modified directly or the same result achieved
-by ending the pairs of arguments with: TRUE, other_value.}
+corresponds to the first two arguments of a \code{\link{ifelse}}.
+To get a default value, use a condition 'TRUE' for the last pair.
+You may also need to specify is.na(x) if there are NAs.}
 }
 \value{
 a vector consisting of the value vector corresponding to the first

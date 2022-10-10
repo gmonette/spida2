@@ -319,6 +319,10 @@ gd_ <- function(...) {
 #' @export
 tps <- function (...)
 {
+  library(lattice)
+  library(latticeExtra)
+  library(RColorBrewer)
+  
   args <- list(...)
   # disp(args)
   theme <- trellis.par.get()
