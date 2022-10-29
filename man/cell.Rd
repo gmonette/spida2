@@ -64,8 +64,8 @@ Confidence ellipse for two parameters of a fitted object
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{wald}: method for wald object
+\item \code{cell(wald)}: method for wald object
 
-\item \code{default}: default method
+\item \code{cell(default)}: default method
+
 }}
-

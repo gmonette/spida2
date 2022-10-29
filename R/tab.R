@@ -413,7 +413,7 @@ abind <- function(arr1,arr2,d,facename="") {
 	d2 <- dim(arr2)
 	n2 <- length(d2)
 	dn2 <- dimnames(arr2)
-
+  warning('spida2::abind is deprecated. Consider using abind::abind')
 	arenull <- is.null(dn1) & is.null(dn2)
 	if (is.null(dn1)){
 		dn1 <- lapply( as.list(d1), function(x) seq(1,x))

@@ -22,9 +22,9 @@ Correlation matrix of fixed effects
 }
 \section{Functions}{
 \itemize{
-\item \code{Vcor}: correlation matrix of fixed effects
-}}
+\item \code{Vcor()}: correlation matrix of fixed effects
 
+}}
 \author{
 GM
 }

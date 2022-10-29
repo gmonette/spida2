@@ -76,37 +76,37 @@ requires a \code{getFix} method for the new class.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{multinom}: method for multinom objects in package nnet
+\item \code{getFix(multinom)}: method for multinom objects in package nnet
 
-\item \code{lm}: method for lm objects
+\item \code{getFix(lm)}: method for lm objects
 
-\item \code{glm}: method for glm objects
+\item \code{getFix(glm)}: method for glm objects
 
-\item \code{lme}: method for lme objects in the nlme package
+\item \code{getFix(lme)}: method for lme objects in the nlme package
 
-\item \code{gls}: method for gls objects in the nlme package
+\item \code{getFix(gls)}: method for gls objects in the nlme package
 
-\item \code{lmer}: method for lmer objects in the lme4 package
+\item \code{getFix(lmer)}: method for lmer objects in the lme4 package
 
-\item \code{glmer}: method for glmer objects in the lme4 package
+\item \code{getFix(glmer)}: method for glmer objects in the lme4 package
 
-\item \code{mer}: method for mer objects in the lme4 package
+\item \code{getFix(mer)}: method for mer objects in the lme4 package
 
-\item \code{zeroinfl}: method for zeroinfl objects in the pscl?? package
+\item \code{getFix(zeroinfl)}: method for zeroinfl objects in the pscl?? package
 
-\item \code{mipo}: method for mipo objects in the mice package
+\item \code{getFix(mipo)}: method for mipo objects in the mice package
 
-\item \code{MCMCglmm}: method for MCMCglmm objects in the MCMCglmm package
+\item \code{getFix(MCMCglmm)}: method for MCMCglmm objects in the MCMCglmm package
 
-\item \code{stanfit}: method for `stanfit` objects in the `rstan` package
+\item \code{getFix(stanfit)}: method for `stanfit` objects in the `rstan` package
 
-\item \code{lmerMod}: method for `lmerMod` objects in the `lme4` package
+\item \code{getFix(lmerMod)}: method for `lmerMod` objects in the `lme4` package
 
-\item \code{glmerMod}: method for `glmerMod` objects in the `lme4` package
+\item \code{getFix(glmerMod)}: method for `glmerMod` objects in the `lme4` package
 
-\item \code{default}: print message if getFix id used for a class for which a method has not been written
+\item \code{getFix(default)}: print message if getFix id used for a class for which a method has not been written
+
 }}
-
 \examples{
 library(nlme)
 fit <- lme( mathach ~ (ses + I(ses^2)) * Sex, hs, random = ~ 1 + ses| school)

@@ -22,8 +22,8 @@ get the names of variables that are factors
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{data.frame}: Get factor names
+\item \code{getFactorNames(data.frame)}: Get factor names
 
-\item \code{default}: Get factor names in a data frame
+\item \code{getFactorNames(default)}: Get factor names in a data frame
+
 }}
-

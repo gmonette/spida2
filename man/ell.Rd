@@ -98,11 +98,11 @@ Add function that works with direction to compute slices and conjugate direction
 }
 \section{Functions}{
 \itemize{
-\item \code{ellplus}: tangents and axes
+\item \code{ellplus()}: tangents and axes
 
-\item \code{dellplus}: data ellipse with tangents and axes
+\item \code{dellplus()}: data ellipse with tangents and axes
+
 }}
-
 \examples{
 plot( x=0,y=0, xlim = c(-3,3), ylim = c(-3,3),
       xlab = '', ylab = '', type = 'n', asp=1)

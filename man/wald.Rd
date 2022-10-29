@@ -167,17 +167,17 @@ and for 'mipo' objects in the packages 'mice':
 }
 \section{Functions}{
 \itemize{
-\item \code{waldx}: experimental version for singular models. Reports rows of L matrix that are not estimable.
+\item \code{waldx()}: experimental version for singular models. Reports rows of L matrix that are not estimable.
 
-\item \code{waldf}: equivalent to \code{as.data.frame(waldx(...))}
+\item \code{waldf()}: equivalent to \code{as.data.frame(waldx(...))}
 
-\item \code{wald2}: experimental version with RHS?
+\item \code{wald2()}: experimental version with RHS?
 
-\item \code{wald.transform}: transforms estimates canfidence intervals using delta method
+\item \code{wald.transform()}: transforms estimates canfidence intervals using delta method
 
-\item \code{glh}: same as \code{wald}, kept for backward compatibility
+\item \code{glh()}: same as \code{wald}, kept for backward compatibility
+
 }}
-
 \examples{
 data(hs)
 library(nlme)

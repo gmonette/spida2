@@ -159,17 +159,17 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
 }
 \section{Functions}{
 \itemize{
-\item \code{gpanel.fit}: to be used with 'layer' -- but, actually, identical to 'glayer'
+\item \code{gpanel.fit()}: to be used with 'layer' -- but, actually, identical to 'glayer'
 
-\item \code{panel.band}: identical to panel.fit but kept for backward compatibility
+\item \code{panel.band()}: identical to panel.fit but kept for backward compatibility
 
-\item \code{panel.errorbars}: similar to panel.fit but draws error bars instead of bands
+\item \code{panel.errorbars()}: similar to panel.fit but draws error bars instead of bands
 
-\item \code{panel.labels}: add labels
+\item \code{panel.labels()}: add labels
 
-\item \code{fillin}: fill in values to produce smoother fitted curve
+\item \code{fillin()}: fill in values to produce smoother fitted curve
+
 }}
-
 \examples{
 \dontrun{
   library(spida2)

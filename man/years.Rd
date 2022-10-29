@@ -25,8 +25,8 @@ Works like 'months', 'weekdays', etc. for years.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{Date}: method for Date objects
+\item \code{years(Date)}: method for Date objects
 
-\item \code{default}: default method
+\item \code{years(default)}: default method
+
 }}
-

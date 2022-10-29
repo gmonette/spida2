@@ -26,6 +26,6 @@ not well optimized yet
 }
 \section{Functions}{
 \itemize{
-\item \code{lssvd_old}: previous version not using MASS::ginv
-}}
+\item \code{lssvd_old()}: previous version not using MASS::ginv
 
+}}

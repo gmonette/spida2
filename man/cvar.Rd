@@ -35,11 +35,11 @@ a 'centered-within-groups' version.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{factor}: method for class 'factor'
+\item \code{cvar(factor)}: method for class 'factor'
 
-\item \code{default}: default method
+\item \code{cvar(default)}: default method
+
 }}
-
 \examples{
 \dontrun{
 dd <- data.frame(x= 1:100, id = rep( LETTERS[1:10], each = 10))

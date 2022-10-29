@@ -120,17 +120,17 @@ device with a white background if new = TRUE.
 }
 \section{Functions}{
 \itemize{
-\item \code{gd}: with ggplot2-like theme
+\item \code{gd()}: with ggplot2-like theme
 
-\item \code{gd_}: gd to set non-group parameters
+\item \code{gd_()}: gd to set non-group parameters
 
-\item \code{tps}: trellis par set for superpose parameters
+\item \code{tps()}: trellis par set for superpose parameters
 
-\item \code{tps_}: trellis par set for all parameters, special treatment for col, lwd, lty, pch
+\item \code{tps_()}: trellis par set for all parameters, special treatment for col, lwd, lty, pch
 
-\item \code{tpg}: trellis par set for superpose parameters
+\item \code{tpg()}: trellis par set for superpose parameters
+
 }}
-
 \examples{
 td( lty = 1:7)   # sets line types for 7 groups
 gd(7)            # sets line types for 7 groups using colors from RColorBrewer

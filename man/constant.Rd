@@ -30,8 +30,8 @@ Generic test for constant
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: Default methods
+\item \code{constant(default)}: Default methods
 
-\item \code{data.frame}: method for class 'data.frame'
+\item \code{constant(data.frame)}: method for class 'data.frame'
+
 }}
-

@@ -48,6 +48,6 @@ value of DFBETAS for each cluster dropped.
 }
 \section{Functions}{
 \itemize{
-\item \code{parDropone}: parallel computing version of dropone using the parallel package
-}}
+\item \code{parDropone()}: parallel computing version of dropone using the parallel package
 
+}}

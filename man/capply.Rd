@@ -124,11 +124,11 @@ then that variable can be treated as a vector by \code{FUN}.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{formula}: method for class 'formula'
+\item \code{capply(formula)}: method for class 'formula'
 
-\item \code{default}: default method
+\item \code{capply(default)}: default method
+
 }}
-
 \note{
 \code{capply} tends to be slow when there are many cells and \code{by}
 is a factor. This may be due to the need to process all factor levels for

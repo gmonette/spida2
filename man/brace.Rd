@@ -26,9 +26,9 @@ Draw a brace
 }
 \section{Functions}{
 \itemize{
-\item \code{brace_}: default tip = TRUE
-}}
+\item \code{brace_()}: default tip = TRUE
 
+}}
 \examples{
 plot(c(0,10), c(0,10), type = 'n')
 lines(brace(0, 0, 0, 5), lwd = 2)

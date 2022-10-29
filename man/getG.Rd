@@ -68,21 +68,24 @@ that are easy to remember.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: default method
+\item \code{getG(default)}: default method
 
-\item \code{default}: default method
-
-\item \code{lme}: lme method
-
-\item \code{gls}: gls method
-
-\item \code{default}: gls method
-
-\item \code{lme}: lme method
-
-\item \code{gls}: gls method
 }}
+\section{Functions}{
+\itemize{
+\item \code{getR(default)}: default method
 
+\item \code{getR(lme)}: lme method
+
+\item \code{getR(gls)}: gls method
+
+\item \code{getV(default)}: gls method
+
+\item \code{getV(lme)}: lme method
+
+\item \code{getV(gls)}: gls method
+
+}}
 \examples{
 library(spida2)
 library(nlme)

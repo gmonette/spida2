@@ -30,9 +30,9 @@ by Ben Bolker.
 }
 \section{Functions}{
 \itemize{
-\item \code{quasi_table}: display coefficient table with standard errors adjusted for overdispersion
-}}
+\item \code{quasi_table()}: display coefficient table with standard errors adjusted for overdispersion
 
+}}
 \examples{
 library(lme4)
 library(spida2)

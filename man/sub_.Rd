@@ -37,11 +37,11 @@ levels is reduced.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{default}: default method
+\item \code{sub_(default)}: default method
 
-\item \code{factor}: method for factor objects
+\item \code{sub_(factor)}: method for factor objects
+
 }}
-
 \examples{
 \dontrun{
 library(magrittr)
