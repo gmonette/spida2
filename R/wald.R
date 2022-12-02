@@ -1331,7 +1331,18 @@ getFix.glmerMod <- function(fit, robust = FALSE, ...) {
 }
 #' @describeIn getFix print message if getFix id used for a class for which a method has not been written
 #' @export
-getFix.default <- function(fit, ...) stop(paste("Write a 'getFix' method for class",class(fit)))
+getFix.default <- function(fit, ...) {
+  # stop(paste("Write a 'getFix' method for class",class(fit)))
+  ret <- list()
+  ret$fixed <- coef(fit)
+  ret$vcov <- vcov(fit)
+  ret$df <- rep(Inf, length(ret$fixed))
+  ret
+}
+  
+  
+  
+  
 
 #' Generic 'vcov' extended to objects with a \code{getFix} method
 #'

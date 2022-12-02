@@ -409,32 +409,40 @@ bm <- function(n=1) {
   set.seed(123)
   m <- matrix(rnorm(1e6), 1000,1000)
   ret <- rbind(
-   qr = system.time(replicate(n, qr(m))),
-   svd = system.time(replicate(n, svd(m))),
-   solve = system.time(replicate(n, solve(m))),
-   crossprod = system.time(replicate(n, crossprod(m))),
-   lsfit = system.time(replicate(n, lsfit(m[,-1],m[,1])))
+    qr = system.time(replicate(n, qr(m))),
+    svd = system.time(replicate(n, svd(m))),
+    solve = system.time(replicate(n, solve(m))),
+    crossprod = system.time(replicate(n, crossprod(m))),
+    lsfit = system.time(replicate(n, lsfit(m[,-1],m[,1])))
   )
-  nix.times <-structure(c(0.114149999999972, 3.21702000000023, 0.323029999999853, 
-                          0.0830400000000373, 0.121879999999765, 0.000940000000009604, 
-                          0.103089999999977, 0.000810000000014952, 0.00886999999998352, 
-                          0.000970000000004347, 0.11394000000003, 0.233139999999948, 0.0230400000000282, 
-                          0.00834999999999127, 0.121690000000008, 1.00191, 13.79699, 14.0796, 
-                          10.03548, 1.0016), dim = 5:4, dimnames = list(c("qr", "svd", 
-                                                                          "solve", "crossprod", "lsfit"), c("self", "sys", "elapsed", "factor"
-                                                                          )), cpu = structure(list(vendor_id = "AuthenticAMD", model_name = "AMD Ryzen 9 3950X 16-Core Processor", 
-                                                                                                   no_of_cores = 16L), class = "data.frame", row.names = c(NA, 
-                                                                                                                                                           -1L)), blas = structure(list(blas = "/usr/lib/x86_64-linux-gnu/openblas-openmp/libblas.so.3", 
-                                                                                                                                                                                      lapack = "/usr/lib/x86_64-linux-gnu/openblas-openmp/liblapack.so.3"), class = "data.frame", row.names = c(NA, 
-                                                                                                                                                                                                                                                                                                  -1L)))
+  nix.times <-structure(
+    c(0.114149999999972, 3.21702000000023, 0.323029999999853, 
+      0.0830400000000373, 0.121879999999765, 0.000940000000009604, 
+      0.103089999999977, 0.000810000000014952, 0.00886999999998352, 
+      0.000970000000004347, 0.11394000000003, 0.233139999999948, 0.0230400000000282, 
+      0.00834999999999127, 0.121690000000008, 1.00191, 13.79699, 14.0796, 
+      10.03548, 1.0016), dim = 5:4, 
+    dimnames = list(
+      c("qr", "svd", 
+        "solve", "crossprod", "lsfit"), c("self", "sys", "elapsed", "factor"
+        )), cpu = structure(
+          list(vendor_id = "AuthenticAMD", model_name = "AMD Ryzen 9 3950X 16-Core Processor", 
+               no_of_cores = 16L), class = "data.frame", 
+          row.names = c(NA,-1L)), 
+    blas = structure(
+      list(
+        blas = "/usr/lib/x86_64-linux-gnu/openblas-openmp/libblas.so.3",
+        lapack = "/usr/lib/x86_64-linux-gnu/openblas-openmp/liblapack.so.3"), class = "data.frame", 
+      row.names = c(NA, 
+                    -1L)))
   ret <- ret[,1:3]
   colnames(ret) <- c('self','sys','elapsed')
   ret <- as.data.frame(ret)
   ret$factor <- round(ret$self / ret$elapsed,3)
   ret <- as.matrix(ret)
   if(require(benchmarkme)) {
-   attr(ret,'cpu') <- as.data.frame(get_cpu())
-  attr(ret,'blas') <- as.data.frame(get_linear_algebra())
+    attr(ret,'cpu') <- as.data.frame(get_cpu())
+    attr(ret,'blas') <- as.data.frame(get_linear_algebra())
   }
   list(timings = ret, rel2nix = round(ret/nix.times,2))
 }
