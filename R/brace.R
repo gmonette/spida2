@@ -1,4 +1,4 @@
-#' Draw braces
+#' Draw brace
 #'
 #' @param x1, y1, x1, y2 endpoints of brace
 #' @param right (default TRUE) direction in which brace points
