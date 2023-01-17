@@ -446,3 +446,30 @@ bm <- function(n=1) {
   }
   list(timings = ret, rel2nix = round(ret/nix.times,2))
 }
+#' Benchmark used by John Fox
+#' 
+#' @param file append results to this file
+#' 
+#' @export
+bm_fox <- function(file = NULL) {
+  if(!is.null(file)) {
+    on.exit(sink())
+    sink(file, append = TRUE, split = TRUE)
+  }
+  set.seed(123) 
+  N <- 20000
+  M <- 2000
+  X <- matrix(rnorm(N*M),N)
+  cat('\ncrossprod:\n')
+  system.time(Z <- crossprod(X)) %>% print
+  cat('\nsolve:\n')%>% print
+  system.time(Zinv <- solve(Z)) %>% print
+  cat('\nprecision:\n')
+  max(abs(diag(M) - Z %*% Zinv))%>% print
+  cat('\ncpu:\n')
+  benchmarkme::get_cpu() %>% print
+  cat('\nsessionInfo:\n')
+  sessionInfo() %>% print
+  invisible() 
+}
+
