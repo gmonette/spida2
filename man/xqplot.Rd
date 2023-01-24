@@ -14,7 +14,7 @@ xqplot(
   mcex = 0.8,
   maxlab = 12,
   debug = F,
-  mar = c(4, 2.5, 2, 1),
+  mar = c(4, 2.5, 4, 1),
   xlab.pos = 2,
   xlab.cex = 0.7,
   sublab.pos = xlab.pos + xlab.cex * 1.15,

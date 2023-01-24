@@ -3,7 +3,7 @@
 \name{brace}
 \alias{brace}
 \alias{brace_}
-\title{Draw a brace}
+\title{Draw brace}
 \usage{
 brace(x1 = 0, y1 = 0, x2 = 0, y2 = 1, right = TRUE, rad = 0.2, tip = FALSE)
 
@@ -22,7 +22,7 @@ brace_(...)
 the coordinates of the point of the brace, invisibly
 }
 \description{
-Draw a brace
+Draw brace
 }
 \section{Functions}{
 \itemize{

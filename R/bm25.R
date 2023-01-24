@@ -472,4 +472,14 @@ bm_fox <- function(file = NULL) {
   sessionInfo() %>% print
   invisible() 
 }
+#' Stress test
+#' 
+#' @export
+stress <- function(mc.cores = 8,N=1000000) {
+  library(parallel)
+  mclapply(1:N, function(i) {
+    rpois(1000000,5)
+    numeric(0)
+  }, mc.cores = mc.cores)
+}
 

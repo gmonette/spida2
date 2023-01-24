@@ -594,7 +594,7 @@ xqplot <- function(x,
                    mcex = 0.8,
                    maxlab = 12 ,
                    debug = F,
-                   mar = c(4, 2.5, 2, 1),
+                   mar = c(4, 2.5, 4, 1),
                    xlab.pos = 2,
                    # new param
                    xlab.cex = .7,
