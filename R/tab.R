@@ -386,6 +386,8 @@ atotal <- function(arr, FUN = sum, label = 'Total', ...) {
 #'
 #' \code{abind} binds two conformable arrays along a dimension.
 #'
+#' Warning: abind::abind should be preferred to spida2::abind.
+#' 
 #' dim( arr1 ) and dim( arr2 ) must be equal except in the dth dimension. If
 #' the length of dim( arr2 ) is 1 less than that of dim( arr1 ), then 'arr2' is
 #' treated as if it had dropped the dth dimension with size 1.
@@ -413,7 +415,7 @@ abind <- function(arr1,arr2,d,facename="") {
 	d2 <- dim(arr2)
 	n2 <- length(d2)
 	dn2 <- dimnames(arr2)
-  warning('spida2::abind is deprecated. Consider using abind::abind')
+  # warning('spida2::abind is deprecated. Consider using abind::abind')
 	arenull <- is.null(dn1) & is.null(dn2)
 	if (is.null(dn1)){
 		dn1 <- lapply( as.list(d1), function(x) seq(1,x))
