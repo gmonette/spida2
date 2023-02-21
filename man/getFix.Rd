@@ -29,7 +29,7 @@ getFix(fit, ...)
 
 \method{getFix}{lme}(fit, robust = FALSE, ...)
 
-\method{getFix}{gls}(fit, robust = FALSE...)
+\method{getFix}{gls}(fit, robust = FALSE, ...)
 
 \method{getFix}{lmer}(fit, robust = FALSE, ...)
 
