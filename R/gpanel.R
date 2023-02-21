@@ -299,7 +299,7 @@ panel.errorbars <-
       dd <- data.frame( x=x, lower = lower, upper = upper)
       dd <- dd[order(dd$x),]
       panel.arrows(dd$x, dd$lower, dd$x, dd$upper, 
-                   length = .25, angle = 90, code = 3,
+                   length = length, angle = angle, code = 3,
                    ...)
       # panel.polygon( c(dd$x, rev(dd$x)),c(dd$upper, rev(dd$lower)),
       #                border = border, col = col, alpha = alpha,...)
