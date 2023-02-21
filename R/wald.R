@@ -1210,7 +1210,7 @@ getFix.lme <- function(fit, robust = FALSE, ...) {
 }
 #' @describeIn getFix method for gls objects in the nlme package
 #' @export
-getFix.gls <- function(fit, robust = FALSE...) {
+getFix.gls <- function(fit, robust = FALSE, ...) {
   if(robust) warning(' robust not yet implemented for class gls')
   require(nlme)
   ret <- list()

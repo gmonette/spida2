@@ -69,7 +69,7 @@ function (fit, form = NULL, FUN = if (inherits(fit, "lme")) fixef else coef,
     }
     values <- dframe$by
     names(values) <- values
-    ret <- mclapply(cl, values, function(v) {
+    ret <- mclapply(values, function(v) {
         ret <- try(update(fit, data = data[by != v, , drop = FALSE], 
             ...))
         if (class(ret) == "try-error") 
