@@ -379,15 +379,21 @@ lchol <- function(x) {
 #' p + glayer(panel.abline(v=ses_mean))
 #' p + xyplot(fit1 ~ ses | id, pred1, type = 'l')    
 #' @export
-pred.grid <- function(...) {
+pred.grid <-function (...) {
   nams <- as.character(as.list(substitute(list(...)))[-1L])
   x <- list(...)
-  if(is.null(names(x))) names(x) <- nams
-  else if(any(names(x) =='')) names(x)[names(x) == ''] <- nams[names(x) == '']
-  x <- lapply(x, unique)
-  # to ensure that factors are in their internal order, not the order of their appearance in the data
-  x <- lapply(x, sort)  
-  do.call(expand.grid, c(x, stringsAsFactors = FALSE))
+  if (is.null(names(x))) 
+    names(x) <- nams
+  else if (any(names(x) == "")) 
+    names(x)[names(x) == ""] <- nams[names(x) == ""]
+  ret <- lapply(x, unique)
+  ret <- lapply(ret, sort)
+  ret <- do.call(expand.grid, c(ret, stringsAsFactors = FALSE))
+  for(nn in names(ret)){
+    if(is.factor(ret[[nn]])) contrasts(ret[[nn]]) <- contrasts(x[[nn]])
+  }
+  ret
 }
+
 
 
