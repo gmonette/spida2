@@ -126,7 +126,7 @@ device with a white background if new = TRUE.
 
 \item \code{tps()}: trellis par set for superpose parameters
 
-\item \code{tps_()}: trellis par set for all parameters, special treatment for col, lwd, lty, pch
+\item \code{tps_()}: trellis par set for all parameters, special treatment for col, lwd, lty, pch, padding
 
 \item \code{tpg()}: trellis par set for superpose parameters
 

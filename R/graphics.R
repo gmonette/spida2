@@ -390,7 +390,7 @@ tps <- function (...)
   trellis.par.set(theme=theme)
   invisible(old_theme)
 }
-#' @describeIn td trellis par set for all parameters, special treatment for col, lwd, lty, pch
+#' @describeIn td trellis par set for all parameters, special treatment for col, lwd, lty, pch, padding
 #' @export
 tps_ <- function (...)
 {
@@ -448,6 +448,25 @@ tps_ <- function (...)
            },
            'pch' = {
              theme$plot.symbol$pch <- args[[i]]
+           },
+           'padding' = {
+             #  left.padding      key.ylab.padding  ylab.axis.padding axis.key.padding  right.padding    
+             theme$layout.widths$axis.key.padding <- args[[i]]
+             theme$layout.widths$right.padding <- args[[i]]
+             theme$layout.widths$left.padding <- args[[i]]
+             theme$layout.widths$ylab.axis.padding <- args[[i]]
+             theme$layout.widths$key.ylab.padding <- args[[i]]
+             
+             # top.padding       main.key.padding  key.axis.padding  axis.xlab.padding xlab.key.padding  key.sub.padding   bottom.padding   
+             
+             theme$layout.heights$top.padding <- args[[i]]
+             theme$layout.heights$main.key.padding <- args[[i]]
+             theme$layout.heights$key.axis.padding <- args[[i]]
+             theme$layout.heights$axis.xlab.padding <- args[[i]]
+             theme$layout.heights$xlab.key.padding <- args[[i]]
+             theme$layout.heights$key.sub.padding <- args[[i]]
+             theme$layout.heights$bottom.padding <- args[[i]]
+             
            },
            {
              lnames <- strsplit(nams[i], split = '_', fixed = TRUE)[[1]]

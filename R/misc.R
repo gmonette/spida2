@@ -395,5 +395,3 @@ pred.grid <-function (...) {
   ret
 }
 
-
-
