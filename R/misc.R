@@ -394,4 +394,22 @@ pred.grid <-function (...) {
   }
   ret
 }
-
+#' List debugged functions
+#' 
+#' @param environments default: search()
+#' @param all list all functions including those not debugged, default: FALSE
+#' @returns a data frame listing functions and whether they are currently debugged
+#' @export
+debugged <- function(environments=search(), all = FALSE) {
+  r <- do.call("rbind", lapply(environments, function(environment.name) {
+    return(do.call("rbind", lapply(ls(environment.name), function(x) {
+      if(is.function(get(x))) {
+        is.d <- try(isdebugged(get(x)))
+        if(!(class(is.d)=="try-error")) {
+          return(data.frame(function.name=x, debugged=is.d))
+        } else { return(NULL) }
+      }
+    })))
+  }))
+  if(all) return(r) else subset(r, debugged == TRUE)
+} 

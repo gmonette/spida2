@@ -9,7 +9,7 @@
 #' @export
 disp <- function(x, head = deparse(substitute(x)))
 {
-  if(options('verbose')$verbose) {
+  if(isTRUE(options('verbose')[['verbose']])) {
     cat("::: ", head, " :::\n")
     print(x)
     cat("======================\n")
