@@ -8,6 +8,7 @@
 \alias{getFix.lme}
 \alias{getFix.gls}
 \alias{getFix.lmer}
+\alias{getFix.glmerMod}
 \alias{getFix.glmer}
 \alias{getFix.mer}
 \alias{getFix.zeroinfl}
@@ -15,7 +16,6 @@
 \alias{getFix.MCMCglmm}
 \alias{getFix.stanfit}
 \alias{getFix.lmerMod}
-\alias{getFix.glmerMod}
 \alias{getFix.default}
 \title{Get information on fixed effects from a model object}
 \usage{
@@ -32,6 +32,8 @@ getFix(fit, ...)
 \method{getFix}{gls}(fit, robust = FALSE, ...)
 
 \method{getFix}{lmer}(fit, robust = FALSE, ...)
+
+\method{getFix}{glmerMod}(fit, robust = FALSE, ...)
 
 \method{getFix}{glmer}(fit, robust = FALSE, ...)
 
@@ -87,6 +89,8 @@ requires a \code{getFix} method for the new class.
 \item \code{getFix(gls)}: method for gls objects in the nlme package
 
 \item \code{getFix(lmer)}: method for lmer objects in the lme4 package
+
+\item \code{getFix(glmerMod)}: method for glmerMod objects in the lme4 package
 
 \item \code{getFix(glmer)}: method for glmer objects in the lme4 package
 

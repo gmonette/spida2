@@ -1234,6 +1234,19 @@ getFix.lmer <- function(fit, robust = FALSE, ...) {
        ret$df <- rep( Inf, length(ret$fixed))
        ret
 }
+#' @describeIn getFix method for glmerMod objects in the lme4 package
+#' @export
+getFix.glmerMod <- function(fit, robust = FALSE, ...) {
+  # 2023 03 24: copied from getFix.glmer
+  # 2014 06 04: changed fit@fixef to fixef(fit)
+  if(robust) warning(' robust not yet implemented for class lmer')
+  ret <- list()
+  ret$fixed <- fixef(fit)
+  ret$vcov <- as.matrix( vcov(fit) )
+  # ret$df <- Matrix:::getFixDF(fit)
+  ret$df <- rep( Inf, length(ret$fixed))
+  ret
+}
 #' @describeIn getFix method for glmer objects in the lme4 package
 #' @export
 getFix.glmer <- function(fit, robust = FALSE, ...) {
