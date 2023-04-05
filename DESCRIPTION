@@ -1,4 +1,4 @@
-librPackage: spida2
+Package: spida2
 Type: Package
 Title: Collection of tools developed for the Summer Programme in Data Analysis 2000-2012
 Version: 0.2.1
@@ -20,7 +20,17 @@ LazyLoad: yes
 LazyData: yes
 RoxygenNote: 7.2.3
 Encoding: UTF-8
-Imports: stats, nlme, lattice, latticeExtra, lme4, magrittr, RColorBrewer, naniar, UpSetR, MASS, Matrix
+Imports: stats, 
+    nlme, 
+    lattice, 
+    latticeExtra, 
+    lme4, 
+    magrittr, 
+    RColorBrewer, 
+    naniar, 
+    UpSetR, 
+    MASS, 
+    Matrix
 Suggests: 
     knitr,
     rmarkdown,
