@@ -7,5 +7,5 @@
 ga(x)
 }
 \description{
-Nickname for getAnywhere
+See [getAnywhere()].
 }

@@ -1,5 +1,7 @@
 #' Nickname for getAnywhere
 #' 
+#' See [getAnywhere()].
+#' 
 #' @export
 ga <- function (x) {
   if (tryCatch(!is.character(x), error = function(e) TRUE)) 
