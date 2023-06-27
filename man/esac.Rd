@@ -16,7 +16,7 @@ You may also need to specify is.na(x) if there are NAs.}
 }
 \value{
 a vector consisting of the value vector corresponding to the first
-       logical vector that evaluates to TRUE in a position.
+logical vector that evaluates to TRUE in a position.
 }
 \description{
 Equivalent of nested ifelse with alternating conditions and values

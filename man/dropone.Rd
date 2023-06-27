@@ -27,11 +27,11 @@ parDropone(
 and a \code{\link{getData}} method.}
 
 \item{form}{a formula evaluated in the data frame for 'fit'
-that defines clusters to be dropped one at a time. If NULL, the 
+that defines clusters to be dropped one at a time. If NULL, the
 default, each row is dropped successively.}
 
 \item{FUN}{function used to extract coefficients. Default:
-\code{\link[spida2]{fixef}} for class 'lme' and 
+\code{\link[spida2]{fixef}} for class 'lme' and
 \code{\link{coef}} otherwise.}
 
 \item{data}{data frame in which to evaluate the refitted object. Default:
@@ -40,8 +40,8 @@ default, each row is dropped successively.}
 \item{mc.cores}{number of cores to use. Default: \code{parallel::detectCores()} \eqn{\exp^n}}
 }
 \description{
-Drop each row or each cluster in a fitted object and 
-collect the resulting linear estimates. Return 
+Drop each row or each cluster in a fitted object and
+collect the resulting linear estimates. Return
 the drop one estimates along with variable from original
 data that are invariant within clusters, as well as the maximum
 value of DFBETAS for each cluster dropped.

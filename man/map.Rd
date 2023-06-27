@@ -14,7 +14,7 @@ map(from, to, x, ...)
 \item{x}{vector of values to be matched}
 }
 \description{
-A mnemonic for \code{to[match(x, from)]}. 
+A mnemonic for \code{to[match(x, from)]}.
 Compare with the more elaborate \code{\link{tr}} or \code{\link{tran}}.
 }
 \examples{

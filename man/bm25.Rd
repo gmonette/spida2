@@ -10,3 +10,6 @@ bm25()
 Use the total time for all 15 tests to decide whether you would benefit
 from running time-consuming tasks on a faster server.
 }
+\seealso{
+\code{\link[=bm25f]{bm25f()}} for a benchmark saving results in a file
+}

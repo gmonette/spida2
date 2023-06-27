@@ -7,12 +7,12 @@
 pred.grid(...)
 }
 \arguments{
-\item{...}{names of variables or named arguments with values. The 
+\item{...}{names of variables or named arguments with values. The
 arguments that are names are evaluated in the environment, which will
 typically
-be a data frame supplied as an environment with the \code{\link{with}} 
-function. Named arguments are evaluted in the usual way.  The unique values 
-of each argument are supplied to \code{\link{expand.grid}} to 
+be a data frame supplied as an environment with the \code{\link{with}}
+function. Named arguments are evaluted in the usual way.  The unique values
+of each argument are supplied to \code{\link{expand.grid}} to
 create a data frame whose rows are the Cartesian product of the
 unique values of the input. See comments on usage in the examples.}
 }
@@ -24,8 +24,8 @@ Plotting predicted values for a model often requires computing
 predicted values on a grid of predictor values other than the
 original data set. Categorical variables (character or factor)
 must be of the same form (same set of character values in the case
-of character variables and the same levels in the same order in the case of 
-factor variables) as they appear in the model data frame on which the 
+of character variables and the same levels in the same order in the case of
+factor variables) as they appear in the model data frame on which the
 model was fitted. \code{pred.grid} facilitates the process, in comparison
 with \code{\link{expand.grid}}, by allowing references to variables
 in the model data frame by name or by specifying a vector of values

@@ -17,13 +17,13 @@ constant(x, ...)
 
 \item{\dots}{other arguments}
 
-\item{na.rm}{(default FALSE) logical value indicating whether `NA` values should be ignored}
+\item{na.rm}{(default FALSE) logical value indicating whether \code{NA} values should be ignored}
 
 \item{id}{vector or list of vectors used to define clusters within which
-to check whether `x` is constant}
+to check whether \code{x} is constant}
 
 \item{all}{if TRUE, report whether constant overall instead of checking
-within subgroups created by `id`}
+within subgroups created by \code{id}}
 }
 \description{
 Generic test for constant

@@ -71,10 +71,10 @@ For \code{ellplus}, when more than one of the options \code{ellipse},
 separated by a row of \code{NA}.
 }
 \description{
-Tools to generate 2D data, concentration and confidence 
+Tools to generate 2D data, concentration and confidence
 ellipses given a center and a 'variance' matrix. Also tools
 to generate points on a ellipse in a given direction or conjugate to that direction, axes
-along a vector or conjugate to it, tangent lines at a 
+along a vector or conjugate to it, tangent lines at a
 point or parallel to a vector.
 
 Generates an ellipse augmented with conjugate axes and tangents

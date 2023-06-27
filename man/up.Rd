@@ -29,7 +29,7 @@ that identifies clusters. e.g. ~ school/Sex to get a summary within each Sex
 of each school.}
 
 \item{agg}{(NEW: Aug 2016) a one-sided formula identifying variables to be aggregated,
-i.e. variables that vary within clusters and that need to be aggregated 
+i.e. variables that vary within clusters and that need to be aggregated
 (within-cluster mean for numeric variables and within-cluster incidence
 proportions for factors). Default: NULL}
 
@@ -38,7 +38,7 @@ level for within-cluster incidence proportions. Default: '_'}
 
 \item{freq}{(NEW: Nov 2018) a one-sided formula identifying character variables to
 be represented according the frequencies of their levels,
-i.e. variables that vary withing cluster and that need to be aggregated 
+i.e. variables that vary withing cluster and that need to be aggregated
 (within-cluster sum for numeric variables and within-cluster frequencies
 for factors). Default: NULL}
 
@@ -68,9 +68,9 @@ numerical variables. e.g. \code{na.rm = TRUE}}
 }
 \value{
 a data frame with one row per combination of values of the variable(s) in \code{form}.
-        The number of rows for each combination is retuned in a variable 'Freq'.
-        Frequencies (proportions) of values for each variable specified
-        by '~freq' ('~agg') are also included.
+The number of rows for each combination is retuned in a variable 'Freq'.
+Frequencies (proportions) of values for each variable specified
+by '~freq' ('~agg') are also included.
 }
 \description{
 Produce a higher level data set with one row per cluster. The data set can

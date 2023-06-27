@@ -7,15 +7,15 @@
 \description{
 The spida2 package is a collection of functions and datasets intended primarily
 for statistical consulting, with a particular emphasis on
-longitudinal and hierarchical data analysis. Some documents related to this 
+longitudinal and hierarchical data analysis. Some documents related to this
 package can be found at \url{http://blackwell.math.yorku.ca/R/spida2/doc}
 }
 \section{General Bugs}{
 
 \itemize{
 \item \code{\link[latticeExtra]{+.trellis}} in xyplot + xyplot requires same data set to avoid misregistration of panels if some levels of panel factors are different
-                in data sets for different panes. 
-        Use \code{\link{Rbind}} to create common data frame and different names for plotted variables, e.g. to plot both lines and points. 
+in data sets for different panes.
+Use \code{\link{Rbind}} to create common data frame and different names for plotted variables, e.g. to plot both lines and points.
 }
 }
 
@@ -70,33 +70,33 @@ a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{pdIn
 
 \itemize{
 \item \code{\link[spida2]{capply}}: \code{capply(x,id,FUN)} applies the
-  function \code{FUN} to chunks of 'x' formed by levels of 'id'.
-  The result has the same form as 'x' with replication within
-  chunks, if needed.
+function \code{FUN} to chunks of 'x' formed by levels of 'id'.
+The result has the same form as 'x' with replication within
+chunks, if needed.
 \item \code{\link{up}}, \code{\link[spida2]{agg}} and \code{\link[spida2]{up_apply}} create summary
-  data sets consisting, by default, of within-id-invariant variables. 
-  Summaries of id-varying variables can also be included. \code{\link[spida2]{agg}} can
-  create mean incidence matrices for lower-level factors.
+data sets consisting, by default, of within-id-invariant variables.
+Summaries of id-varying variables can also be included. \code{\link[spida2]{agg}} can
+create mean incidence matrices for lower-level factors.
 \item \code{\link[spida2]{cvar}} and \code{\link[spida2]{dvar}} are designed to be used
-  in linear model formulas to generate 'centered-within-group' and 'within-group
-  deviation' variables. WIth factors, they generate mean incidence matrices.
+in linear model formulas to generate 'centered-within-group' and 'within-group
+deviation' variables. WIth factors, they generate mean incidence matrices.
 \item \code{link[spida2]{varLevel}} and \item \code{link[spida2]{gicc}}: the level of a variable with respect
-  to a clustering formula and the 'generalized' intra-class correlation coefficient.
-\item \code{\link[spida2]{tolong}} and \code{\link[spida2]{towide}} are 
-  interfaces to \code{\link[stats]{reshape}} to facilitate
-  the typical uses of reshape for longitudinal data.
+to a clustering formula and the 'generalized' intra-class correlation coefficient.
+\item \code{\link[spida2]{tolong}} and \code{\link[spida2]{towide}} are
+interfaces to \code{\link[stats]{reshape}} to facilitate
+the typical uses of reshape for longitudinal data.
 }
 }
 
 \section{Splines -- parametric and non-parametric}{
 
 \itemize{
-\item \code{\link[spida2]{gsp}} creates a function for a generalized 
-      spline that can
-      be included in a linear model formula. 
-\item \code{\link[spida2]{sc}} creates a spline contrast matrix for 
-      general spline hypotheses. The matrix can be included
-      in hypothesis matrices for the \code{\link[spida2]{wald}} function.
+\item \code{\link[spida2]{gsp}} creates a function for a generalized
+spline that can
+be included in a linear model formula.
+\item \code{\link[spida2]{sc}} creates a spline contrast matrix for
+general spline hypotheses. The matrix can be included
+in hypothesis matrices for the \code{\link[spida2]{wald}} function.
 \item \code{\link[spida2]{smsp}} creates a matrix for a smoothing spline.
 }
 }
@@ -106,7 +106,7 @@ a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{pdIn
 \itemize{
 \item \code{\link[spida2]{hsfull}} Classical data set on high school math achievement and ses. See Bryk and Raudenbush and many other sources.
 \item \code{\link[spida2]{iq}} Recovery after traumatic brain injury
-\item \code{\link[spida2]{Drugs}} Longitudinal data on drugs and schizophrenia symptoms. Illustrates role of control variables with non-random assignment. 
+\item \code{\link[spida2]{Drugs}} Longitudinal data on drugs and schizophrenia symptoms. Illustrates role of control variables with non-random assignment.
 \item \code{\link[spida2]{Indonesia}} Xerophthalmia.
 \item \code{\link[spida2]{migraines}} Longitudinal data on migraine treatment and weather
 \item \code{\link[spida2]{coffee}} Artificial data on coffee, heart damage and stress. Illustrates Simpson's Paradox with continuous predictors.
@@ -119,8 +119,8 @@ a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{pdIn
 
 \itemize{
 \item \code{\link[spida2]{gd}} and \code{\link[spida2]{td}} easy interface to set
-      graphical parameters for lattice and graphics. \code{gd} sets
-      parameters to make graphs look like ggplot2 graphics. 
+graphical parameters for lattice and graphics. \code{gd} sets
+parameters to make graphs look like ggplot2 graphics.
 \item \code{\link[spida2]{panel.fit}} add fitted values and error bands with \code{\link[latticeExtra]{layer}} or \code{\link[latticeExtra]{glayer}}
 \item \code{\link[spida2]{panel.dell}} add data ellipse \code{\link[latticeExtra]{layer}} or \code{\link[latticeExtra]{glayer}}
 }
@@ -134,7 +134,7 @@ a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{pdIn
 \item \code{\link[spida2]{disp}} utility to display value of a variable -- useful for debugging
 \item \code{\link[spida2]{getFactorNames}} get names of variables that are factors in a data frame
 \item \code{\link[spida2]{\%less\%}} synonym for \code{\link{setdiff}} as well as
-      \code{\link[spida2]{\%and\%}} and \code{\link[spida2]{\%or\%}}
+\code{\link[spida2]{\%and\%}} and \code{\link[spida2]{\%or\%}}
 \item \code{\link[spida2]{labs}} assign, extract and print labels for various objects
 \item \code{\link[spida2]{pch}} generate plotting character mnemonically
 \item \code{\link[spida2]{pfmt}} format p-values
@@ -149,8 +149,8 @@ a vignette at \href{http://blackwell.math.yorku.ca/R/spida2/doc/pdInd.html}{pdIn
 
 Function designed to work smoothly with pipes in \pkg{magrittr}:
 \itemize{
-\item \code{\link[spida2]{sub_}} and \code{\link[spida2]{gsub_}} handle substitution in a pipeline and return a factor if the input is a factor. 
-\item \code{\link[spida2]{name}} changes the names of an object and returns the renamed object 
+\item \code{\link[spida2]{sub_}} and \code{\link[spida2]{gsub_}} handle substitution in a pipeline and return a factor if the input is a factor.
+\item \code{\link[spida2]{name}} changes the names of an object and returns the renamed object
 }
 }
 

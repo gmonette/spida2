@@ -22,14 +22,14 @@ that are transformed to a single row in the wide file.}
 \item{timevar}{(default: 'time') the variable containing
 the occasion names in the long file.}
 
-\item{sep}{(default: '_') the character(s) that separate the name of
+\item{sep}{(default: '\emph{') the character(s) that separate the name of
 a time-varying variable in the long form
 from the added suffix for the
-correponding names in wide form. Default: '_'.}
+correponding names in wide form. Default: '}'.}
 
 \item{add.invariants}{(default TRUE) additional variables that are invariant
 within clusters are kept in output even if not included in 'idvar'
-(default: names(data)[gicc(data, data[idvar])]).
+(default: names(data)[gicc(data, data\link{idvar})]).
 For all variables, except \code{idvar} to be treated as time-varying,
 use \code{invar = NULL}.}
 

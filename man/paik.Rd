@@ -58,10 +58,10 @@ marginal proportions.}
 \item{col}{list of colors for conditional levels. Default: the 8 colours
 of the 'Dark2' palette of RColorBrewer.}
 
-\item{alpha}{transparency for circles expressed in hexadecimal, 
+\item{alpha}{transparency for circles expressed in hexadecimal,
 e.g. 'AA' or 'FF' for no transparency. Default: '66'}
 
-\item{...}{Additional arguments from plot. Especially useful to 
+\item{...}{Additional arguments from plot. Especially useful to
 provide \code{ylim} if needed.}
 }
 \description{
@@ -85,10 +85,10 @@ par(op)
 }
 \references{
 Agresti, A. (2012) Categorical Data Analysis, 3rd edition.
-  New York. Wiley.
-  Paik M. (1985) A graphical representation of a three-way
-  contingency table: Simpson's paradox and correlation.
-  American Statistician 39:53-54.
+New York. Wiley.
+Paik M. (1985) A graphical representation of a three-way
+contingency table: Simpson's paradox and correlation.
+American Statistician 39:53-54.
 }
 \author{
 Ken Aho, modified by Georges Monette based on an idea by Fan Zhu

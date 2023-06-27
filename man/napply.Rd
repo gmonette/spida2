@@ -22,7 +22,7 @@ provides a mechanism for doing this by setting a ".name" attribute
 for each element. This attribute can be extracted with the .name function.
 }
 \details{
-**WARNING:** This sets and uses a '.name' attribute and is likely 
+\strong{WARNING:} This sets and uses a '.name' attribute and is likely
 to conflict with functions that use such an attribute or that
 rely on 'is.vector'.
 }

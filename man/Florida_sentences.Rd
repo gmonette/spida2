@@ -6,13 +6,13 @@
 \title{Florida state death penalty data 1976-1987}
 \format{
 A data frame with 8 observations on the following 4
-  variables.
-  \describe{
-    \item{\code{Freq}}{Counts from cross classification}
-    \item{\code{sentence}}{Death penalty verdict: Internment Death}
-    \item{\code{defendant}}{Defendant's race: Black, White}
-    \item{\code{victim}}{Victim's race: Black, White}
-  }
+variables.
+\describe{
+\item{\code{Freq}}{Counts from cross classification}
+\item{\code{sentence}}{Death penalty verdict: Internment Death}
+\item{\code{defendant}}{Defendant's race: Black, White}
+\item{\code{victim}}{Victim's race: Black, White}
+}
 }
 \usage{
 Florida_sentences

@@ -40,7 +40,7 @@ getV(fit, ...)
 \method{getV}{gls}(fit, ...)
 }
 \arguments{
-\item{fit}{model created with \code{\link[nlme]{lme}} or 
+\item{fit}{model created with \code{\link[nlme]{lme}} or
 \code{\link[nlme]{gls}}}
 
 \item{individuals}{for \code{getR} or \code{getV} with
@@ -50,19 +50,19 @@ first cluster is returned.}
 }
 \value{
 For \code{\link[nlme]{lme}} objects, \code{getG} returns
-   the between-cluster variance of random effects, \code{getV},
-   and \code{getR} returns a list with the within-cluster marginal
-   variance and the within-cluster conditional variance respectively
-   for the the clusters listed in \code{individuals}. If 
-   \code{individuals} is missing, the variance of the first
-   cluster is returned. ISSUE: For 
-   \code{\link[nlme]{gls}} objects all functions return the same thing but
-   uninformatively if correlation is clustered and if weights
-   produce differenct variances in the corresponding positions in 
-   different clusters.
+the between-cluster variance of random effects, \code{getV},
+and \code{getR} returns a list with the within-cluster marginal
+variance and the within-cluster conditional variance respectively
+for the the clusters listed in \code{individuals}. If
+\code{individuals} is missing, the variance of the first
+cluster is returned. ISSUE: For
+\code{\link[nlme]{gls}} objects all functions return the same thing but
+uninformatively if correlation is clustered and if weights
+produce differenct variances in the corresponding positions in
+different clusters.
 }
 \description{
-These functions call \code{\link[nlme]{getVarCov}} in the 
+These functions call \code{\link[nlme]{getVarCov}} in the
 \pkg{nlme} package. They are intended to have names and functions
 that are easy to remember.
 }

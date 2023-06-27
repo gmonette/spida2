@@ -21,7 +21,7 @@ LagI(x, id, time, lag = 1, delta = 0.01, check = T)
 }
 \value{
 return the value of 'x' in the position 'idx - lag' in the same cluster
-        calculated by intrapolation.
+calculated by intrapolation.
 }
 \description{
 Lags within clusters based on a time vector with possibly unequal intervals

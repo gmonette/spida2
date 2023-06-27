@@ -17,9 +17,9 @@ tab_df(data, fmla, ...)
 Return a table as as data frame
 }
 \details{
-The right hand side of 'fmla' is used for the dimensions of the table. The 
+The right hand side of 'fmla' is used for the dimensions of the table. The
 left-hand side, if present, is summed to generate the values in the cells of the table. If there is no
-left-hand side, cell frequencies are shown.   
+left-hand side, cell frequencies are shown.
 
 \code{tab_df(data, fmla)} is similar in effect to \code{as.data.frame(tab_(data, fmla))} except
 that the former uses the name in the LHS of \code{fmla} as a variable name for counts while the latter

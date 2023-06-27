@@ -19,7 +19,7 @@ is extended by arr2.}
 }
 \value{
 The returned value, ret, is an array with dimension dim(arr1) except
-for the dth dimension where dim(ret)[d] == dim(arr1)[d] + dim(arr2)[d].
+for the dth dimension where dim(ret)\link{d} == dim(arr1)\link{d} + dim(arr2)\link{d}.
 }
 \description{
 \code{abind} binds two conformable arrays along a dimension.

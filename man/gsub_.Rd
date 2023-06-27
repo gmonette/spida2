@@ -25,14 +25,14 @@ gsub_(x, pattern, replacement, ...)
 Value of \code{sub(pattern, replacement, x, ...)} or \code{gsub(pattern, replacement, x, ...)}
 }
 \description{
-The first argument of sub_  and gsub_ is the object to 
+The first argument of sub_  and gsub_ is the object to
 be modified instead of the pattern to be matched. Thus \code{sub_}
 and \code{gsub_} can be used as generic functions that dispatch on
 the class of the first argument. This allows them to recognize factors
 and work with the levels attribute instead of coercing the
 factor to a character vector. Two consequences are that a
 factor, instead of a character vector, is returned, and that the
-original order of the levels is preserved unless the number of 
+original order of the levels is preserved unless the number of
 levels is reduced.
 }
 \section{Methods (by class)}{

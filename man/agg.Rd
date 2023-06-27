@@ -36,11 +36,11 @@ used.}
 \item{FUN}{(default cvar) function to be used for summaries.}
 }
 \value{
-a data frame with one row per value of the variable in \code{form} and 
+a data frame with one row per value of the variable in \code{form} and
 aggregate variabless for each variable name in \code{agg}
 }
 \description{
-Produce a higher level data set with one row per cluster. The data set 
+Produce a higher level data set with one row per cluster. The data set
 contains variables that are invariant in each cluster and, optionally, summaries
 of other variables (means for numeric variables and blocks of variables
 corresponding to incidence matrices for factors.

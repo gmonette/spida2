@@ -9,7 +9,7 @@ tabf(dd, fmla, all = TRUE, ...)
 \arguments{
 \item{dd}{data frame}
 
-\item{fmla}{formula whose RHS creates a table and 
+\item{fmla}{formula whose RHS creates a table and
 LHS adds variables to the resulting data frames}
 
 \item{all}{adds all variables in the data frame}

@@ -1,6 +1,6 @@
 #' Nickname for getAnywhere
 #' 
-#' See [getAnywhere()].
+#' See [utils::getAnywhere()].
 #' 
 #' @export
 ga <- function (x) {

@@ -13,11 +13,11 @@ up_apply(object, form, FUN, ..., sep = "/")
 that identifies clusters. e.g. ~ school/Sex to get a summary within each Sex
 of each school}
 
-\item{FUN}{a function to be applied to each data frame consisting of a 
+\item{FUN}{a function to be applied to each data frame consisting of a
 cluster of rows of 'object'. The most common choice is \code{\link{with}} so that
 '...' can be an expression using variable names in 'object'.}
 
-\item{...}{other arguments to FUN, frequently when FUN is 'with', an expression 
+\item{...}{other arguments to FUN, frequently when FUN is 'with', an expression
 using variable names in 'object'}
 }
 \description{

@@ -20,8 +20,8 @@ DiffI(xx, ...)
 \item{check}{(default TRUE) check for unique values of idx within each cluster}
 }
 \value{
-return the value of  x minus x in the position 'idx - lag' in the same cluster 
-        using intrapolation
+return the value of  x minus x in the position 'idx - lag' in the same cluster
+using intrapolation
 }
 \description{
 Diffs within clusters based on a time vector with possibly unequal intervals

@@ -35,8 +35,8 @@ estimated and, thus, possibly non-zero. The default is that the covariances
 in the first column are estimated and possibly non-zero.}
 }
 \description{
-This function is an alternative constructor for the pdMat class 
-associated with object and is mostly used internally in other functions. 
-See the documentation on the principal constructor function 
+This function is an alternative constructor for the pdMat class
+associated with object and is mostly used internally in other functions.
+See the documentation on the principal constructor function
 \code{\link[spida2]{pdInd}}.
 }

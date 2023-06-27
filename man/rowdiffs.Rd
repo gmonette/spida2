@@ -11,11 +11,11 @@ rowdiffs(L)
 }
 \description{
 Returns all pairwise difference of rows of a matrix with
-rownames formed with the corresponding rownames of the original 
+rownames formed with the corresponding rownames of the original
 matrix. The main application is to estimate differences between
-treatment levels given a linear hypothesis matrix, L, in which 
+treatment levels given a linear hypothesis matrix, L, in which
 each row estimates a function of model parameter given
-a level of a categorical variable. \code{rowdiffs} provides 
+a level of a categorical variable. \code{rowdiffs} provides
 an analog to differentiation
 (see \code{\link{Lfx}}) for categorical variables.
 }

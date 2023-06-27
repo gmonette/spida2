@@ -7,16 +7,16 @@
 \format{
 A data frame with 7185 observations on the following 9 variables.
 \describe{
-  \item{\code{school}}{school id}
- \item{\code{mathach}}{measure of math achievment}
-   \item{\code{ses}}{socio-economic status of family}
-   \item{\code{Sex}}{a factor with levels \code{Female} \code{Male}}
-   \item{\code{Minority}}{a factor with levels \code{No} \code{Yes}}
-   \item{\code{Size}}{the size of the school}
-   \item{\code{Sector}}{a factor with levels \code{Catholic} \code{Public}}
-   \item{\code{PRACAD}}{a measure of the priority given by the school to academic subjects}
-   \item{\code{DISCLIM}}{a measure of the disciplinary climate in the school}
- }
+\item{\code{school}}{school id}
+\item{\code{mathach}}{measure of math achievment}
+\item{\code{ses}}{socio-economic status of family}
+\item{\code{Sex}}{a factor with levels \code{Female} \code{Male}}
+\item{\code{Minority}}{a factor with levels \code{No} \code{Yes}}
+\item{\code{Size}}{the size of the school}
+\item{\code{Sector}}{a factor with levels \code{Catholic} \code{Public}}
+\item{\code{PRACAD}}{a measure of the priority given by the school to academic subjects}
+\item{\code{DISCLIM}}{a measure of the disciplinary climate in the school}
+}
 }
 \source{
 Bryk and Raudenbush (COMPLETE)
@@ -46,7 +46,7 @@ which seems to be a good number of clusters for presentations in class.
 }
 \references{
 Raudenbush, Stephen and Bryk, Anthony (2002),
-            Hierarchical Linear Models: Applications and Data Analysis Methods, Sage (chapter 4).
+Hierarchical Linear Models: Applications and Data Analysis Methods, Sage (chapter 4).
 }
 \concept{hierarchical data}
 \concept{observational data}

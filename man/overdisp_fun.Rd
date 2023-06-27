@@ -16,15 +16,15 @@ quasi_table(
 }
 \arguments{
 \item{model}{a model fitted using a generalized linear mixed model family without
-an independent scale parameter, i.e. `poisson` or `binomial` with counts
+an independent scale parameter, i.e. \code{poisson} or \code{binomial} with counts
 (not with a 0/1 response for logistic regression)}
 }
 \description{
 Test for overdispersion and compute overdispersion factor for generalized linear mixed models.
 }
 \details{
-Two functions `overdisp_fun` and `quasi_table` are adapted from the
-from the 
+Two functions \code{overdisp_fun} and \code{quasi_table} are adapted from the
+from the
 \href{https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#testing-for-overdispersioncomputing-overdispersion-factor}{GLMM FAQ}
 by Ben Bolker.
 }

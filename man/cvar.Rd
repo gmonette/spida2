@@ -28,7 +28,7 @@ dropped for use in a linear model.}
 \item{FUN}{(default mean) function to be applied to create contextual values}
 }
 \description{
-cvar and  See also \code{\link{dvar}} are 
+cvar and  See also \code{\link{dvar}} are
 designed to be used in regression formulas to
 create a contextual mean of a cluster-varying variable and
 a 'centered-within-groups' version.

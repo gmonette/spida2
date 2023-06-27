@@ -6,13 +6,13 @@
 \title{Florida state death penalty data}
 \format{
 A data frame with 8 observations on the following 4
-  variables.
-  \describe{
-    \item{\code{count}}{Counts from cross classification}
-    \item{\code{verdict}}{Death penalty verdict: No Yes}
-    \item{\code{d.race}}{Defendant's race: Black, White}
-    \item{\code{v.race}}{Victim's race: Black, White}
-  }
+variables.
+\describe{
+\item{\code{count}}{Counts from cross classification}
+\item{\code{verdict}}{Death penalty verdict: No Yes}
+\item{\code{d.race}}{Defendant's race: Black, White}
+\item{\code{v.race}}{Victim's race: Black, White}
+}
 }
 \usage{
 death.penalty

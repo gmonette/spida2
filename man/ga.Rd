@@ -7,5 +7,5 @@
 ga(x)
 }
 \description{
-See [getAnywhere()].
+See \code{\link[utils:getAnywhere]{utils::getAnywhere()}}.
 }

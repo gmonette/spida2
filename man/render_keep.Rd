@@ -12,7 +12,7 @@ render_keep(input, ...)
 \item{...}{other arguments passed to \code{\link{rmarkdown::render}}.}
 }
 \description{
-Following https://github.com/rstudio/rmarkdown/issues/17 
-add the YAML: \code{knit: spida2::render_keep} to a .R Rmarkdown 
+Following https://github.com/rstudio/rmarkdown/issues/17
+add the YAML: \code{knit: spida2::render_keep} to a .R Rmarkdown
 document with output YAML \code{output: html_document}.
 }

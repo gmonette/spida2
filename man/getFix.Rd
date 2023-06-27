@@ -56,15 +56,15 @@ getFix(fit, ...)
 \arguments{
 \item{fit}{A fitted model object}
 
-\item{\dots}{Other arguments [unused]}
+\item{\dots}{Other arguments \link{unused}}
 }
 \value{
 Returns a list with the following components:
-     \itemize{
-          \item{fixed}{Fixed effect parameter estimates}
-          \item{vcov}{Covariance matrix of the parameters}
-          \item{df}{denominator degrees of freedom for each effect}
-          }
+\itemize{
+\item{fixed}{Fixed effect parameter estimates}
+\item{vcov}{Covariance matrix of the parameters}
+\item{df}{denominator degrees of freedom for each effect}
+}
 }
 \description{
 \code{getFix} extracts coefficients, covariance matrix and degrees of
@@ -102,11 +102,11 @@ requires a \code{getFix} method for the new class.
 
 \item \code{getFix(MCMCglmm)}: method for MCMCglmm objects in the MCMCglmm package
 
-\item \code{getFix(stanfit)}: method for `stanfit` objects in the `rstan` package
+\item \code{getFix(stanfit)}: method for \code{stanfit} objects in the \code{rstan} package
 
-\item \code{getFix(lmerMod)}: method for `lmerMod` objects in the `lme4` package
+\item \code{getFix(lmerMod)}: method for \code{lmerMod} objects in the \code{lme4} package
 
-\item \code{getFix(glmerMod)}: method for `glmerMod` objects in the `lme4` package
+\item \code{getFix(glmerMod)}: method for \code{glmerMod} objects in the \code{lme4} package
 
 \item \code{getFix(default)}: print message if getFix id used for a class for which a method has not been written
 

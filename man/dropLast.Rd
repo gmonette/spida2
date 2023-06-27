@@ -14,7 +14,7 @@ dropLast(arr, drop = FALSE, keep = NULL)
 \item{keep}{names of facets to be kept, default NULL}
 }
 \description{
-Primarily used to strips totals from a table bordered by totals 
+Primarily used to strips totals from a table bordered by totals
 by dropping the last facet.
 }
 \examples{

@@ -46,7 +46,9 @@
 #' lmer objects.  Can be extended to other objects (e.g.) 'glm' by writing
 #' 'getFix.glm'
 #'
-#' Tests a general linear hypothesis for the linear fixed portion of a model.
+#' Tests a general linear hypothesis for the linear fixed portion of a model
+#' or the form:
+#' \deqn{H_0: L\beta = 0}
 #' The hypothesis can be specified in a variety of ways such as a hypothesis
 #' matrix or a pattern that is used as a regular expression to be matched with
 #' the names of coefficients of the model. A number of tools are available to

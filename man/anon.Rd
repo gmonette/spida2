@@ -16,7 +16,7 @@ x without names
 Anonymize a vector or list
 }
 \details{
-Useful is a list has names but will be passed as the argument list to \code{\link{do.call}} 
+Useful is a list has names but will be passed as the argument list to \code{\link{do.call}}
 if the names are not intended to be parameter names.
 }
 \seealso{

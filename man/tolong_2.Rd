@@ -17,9 +17,9 @@ tolong_2(
 \arguments{
 \item{data}{a data frame in 'wide' form.}
 
-\item{sep}{(default: '_') the separator that identifies time-varying
+\item{sep}{(default: '\emph{') the separator that identifies time-varying
 variables separating the 'root' containing the name of the variable in the
-long data set from the 'occasion' name. e.g. the separator '_' in the
+long data set from the 'occasion' name. e.g. the separator '}' in the
 variable names 'y_1', 'y_2', separate the 'root', 'y', from the occasions,
 '1' and '2'. Default: '_'.}
 
