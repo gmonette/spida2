@@ -8,7 +8,7 @@
 #' @seealso [bm25()] for a benchmark without saving results in a file
 #' 
 #' @export
-bm25f <- function() {
+bm25f <- function(note='none specified') {
   # R Benchmark 2.5 (06/2008) [Simon Urbanek]
   # version 2.5: scaled to get roughly 1s per test, R 2.7.0 @ 2.6GHz Mac Pro
   # R Benchmark 2.4 (06/2008) [Simon Urbanek]
@@ -39,7 +39,7 @@ bm25f <- function() {
   date <- date()
   fileinfo <- paste0(date,".sysinfo")
   fileinfoq <- paste0("'",fileinfo,"'")
-  syscall <- paste0('echo ',date, '>', fileinfoq)
+  syscall <- paste0('echo ',date, '  ', note, '>', fileinfoq)
   system(syscall)
   syscall <- paste0('lscpu | egrep "CPU|Model|MIPS" >>', fileinfoq)
   system(syscall)
@@ -55,7 +55,7 @@ bm25f <- function() {
     cat(...)
     out <- paste(...)
     out <- sub(': ', '\t', out)
-    cat(date,'\t', out, file = outfile, append = TRUE)
+    cat(date,'\t', note, '\t', out, file = outfile, append = TRUE)
   }
   
   runs <- 3			# Number of times the tests are executed
