@@ -4,7 +4,7 @@
 \alias{bm25f}
 \title{Simon Urbanek's Benchmark 2.5}
 \usage{
-bm25f()
+bm25f(note = "none specified")
 }
 \description{
 Use the total time for all 15 tests to decide whether you would benefit

@@ -71,7 +71,7 @@ Construct a Paik-Agresti diagram adapted and enhanced from the
 \examples{
 
 data(death.penalty) # from Agresti 2012 
-
+print(death.penalty)
 op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
 paik(verdict ~ d.race + v.race, counts = count, data = death.penalty, 
 leg.title = "Victims race", xlab = "Defendants race", 

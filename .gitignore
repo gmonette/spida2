@@ -28,3 +28,4 @@ vignettes/*.pdf
 rsconnect/
 .Rproj.user
 scraps
+docs

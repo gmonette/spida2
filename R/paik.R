@@ -51,7 +51,7 @@
 #' @examples
 #' 
 #' data(death.penalty) # from Agresti 2012 
-#' 
+#' print(death.penalty)
 #' op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
 #' paik(verdict ~ d.race + v.race, counts = count, data = death.penalty, 
 #' leg.title = "Victims race", xlab = "Defendants race", 
@@ -108,8 +108,8 @@ paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1,
     data[] <- lapply(data, function(x) if(is.character(x)) factor(x) else x)
     vars <- as.character(attr(terms(formula), "variables")[-1])
     cond.var = vars[3]
-    rv <- data[, names(data) == vars[1]]
-    cv <- data[, names(data) == cond.var]
+    rv <- as.factor(data[, names(data) == vars[1]])
+    cv <- as.factor(data[, names(data) == cond.var])
     ov <- vars[vars != vars[1] & vars != cond.var]
     or <- data[, names(data) == ov]
     # new.formula <- formula(counts ~ rv + ov + cv) # not used?
