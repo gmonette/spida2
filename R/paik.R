@@ -49,19 +49,19 @@
 #'   contingency table: Simpson's paradox and correlation.
 #'   American Statistician 39:53-54.
 #' @examples
-#' 
 #' data(death.penalty) # from Agresti 2012 
 #' print(death.penalty)
 #' op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
-#' paik(verdict ~ d.race + v.race, counts = count, data = death.penalty, 
-#' leg.title = "Victims race", xlab = "Defendants race", 
-#' ylab = "Proportion receiving death penalty")
+#' paik(verdict ~ d.race + v.race, 
+#'    data = death.penalty, 
+#'    leg.title = "Victims race", xlab = "Defendants race", 
+#'    ylab = "Proportion receiving death penalty")
 #' par(mar=c(4,2,0,2))
-#' paik(verdict ~ v.race + d.race, counts = count, data = death.penalty, 
-#' xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft", 
-#' ylab = "", yaxt = "n")
+#' paik(verdict ~ v.race + d.race, counts = death.penalty$count, data = death.penalty, 
+#'      xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft", 
+#'      ylab = "", yaxt = "n")
 #' par(op)
-#' 
+#' @importFrom gplots col2hex
 #' @export 
 paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1, 
     xlab = NULL, ylab = NULL, leg.title = NULL, leg.loc = NULL, 
@@ -70,6 +70,8 @@ paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1,
             "#A6761D", "#666666"), 
     alpha = '66', ...) 
 {
+    col <- gplots::col2hex(col)
+    col <- paste0(col,alpha)
     draw.circle <- function (x, y, radius, nv = 100, border = NULL, col, lty = 1, 
               density = NULL, angle = 45, lwd = 1, alpha = '66') 
     {
@@ -209,3 +211,24 @@ paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1,
     res <- invisible(list(marginal.prop = r.prop, group.prop = r.sum/sum(r.sum)))
     invisible(res)
 }
+
+
+# paik(verdict ~ d.race + v.race, 
+#     counts = death.penalty$count, 
+#     data = death.penalty, 
+#     leg.title = "Victims race", xlab = "Defendants race", 
+#     ylab = "Proportion receiving death penalty")
+#  par(mar=c(4,2,0,2))
+#  paik(verdict ~ v.race + d.race, counts = death.penalty$count, data = death.penalty, 
+#       xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft", 
+#       ylab = "", yaxt = "n")
+#  paik(verdict ~ v.race + d.race, data = death.penalty, 
+#       xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft", 
+#       ylab = "", yaxt = "n")
+#  
+# z <- death.penalty
+# z$Freq <- z$count
+# z$count <- NULL
+# paik(verdict ~ v.race + d.race, data = death.penalty, 
+#      xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft", 
+#      ylab = "", yaxt = "n")

@@ -69,19 +69,18 @@ Construct a Paik-Agresti diagram adapted and enhanced from the
 \code{asbio::paik} function.
 }
 \examples{
-
 data(death.penalty) # from Agresti 2012 
 print(death.penalty)
 op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
-paik(verdict ~ d.race + v.race, counts = count, data = death.penalty, 
-leg.title = "Victims race", xlab = "Defendants race", 
-ylab = "Proportion receiving death penalty")
+paik(verdict ~ d.race + v.race, 
+   data = death.penalty, 
+   leg.title = "Victims race", xlab = "Defendants race", 
+   ylab = "Proportion receiving death penalty")
 par(mar=c(4,2,0,2))
-paik(verdict ~ v.race + d.race, counts = count, data = death.penalty, 
-xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft", 
-ylab = "", yaxt = "n")
+paik(verdict ~ v.race + d.race, counts = death.penalty$count, data = death.penalty, 
+     xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft", 
+     ylab = "", yaxt = "n")
 par(op)
-
 }
 \references{
 Agresti, A. (2012) Categorical Data Analysis, 3rd edition.
