@@ -14,21 +14,36 @@ paik(
   ylab = NULL,
   leg.title = NULL,
   leg.loc = NULL,
-  show.mname = FALSE,
+  show.mname = TRUE,
   col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02", "#A6761D",
     "#666666"),
   alpha = "66",
+  marginal = TRUE,
+  cex = 1,
+  cex.cond = cex,
+  cex.marg = cex,
+  pch.cond = 19,
+  pch.marg = 15,
+  lwd = 2,
+  lwd.marg = lwd,
+  lwd.cond = lwd,
+  lwd.circle = lwd,
   ...
 )
 }
 \arguments{
 \item{formula}{A two sided formula, e.g. Y ~ X1 + X2, with
-cross-classified categorical variables. The second
-explanatory variable, i.e. X2, is used as the trace variable
+cross-classified variables that will be treated as categorical variables.
+The levels of the first explanatory variable, \code{X1} are displayed along
+the x-axis and the second
+explanatory variable, \code{X2}, is used as the conditioning variable
 whose levels are distinguished in the graph with different
 colors. Interactions and nested terms are not allowed.}
 
-\item{data}{Dataframe containing variables in formula.}
+\item{data}{data.frame containing variables in formula. If rows of the the data frame should
+represent more than one observation, a variable named 'Freq' must
+record the frequency of each row, or the frequencies must be given through
+the 'counts' parameter below.}
 
 \item{counts}{A vector of counts for the associated
 categorical variables in formula. The variable 'Freq' is used
@@ -51,8 +66,8 @@ respect to the specified level of interest in the response.}
 "bottom", "bottomleft", "left", "topleft", "top",
 "topright", "right" or "center".}
 
-\item{show.mname}{Logical, indicating whether or not the words "Marginal prop"
-should printed in the graph above the dotted line indicating
+\item{show.mname}{Logical, indicating whether or not the words "Overall proportion"
+should be printed in the graph above the dotted line indicating
 marginal proportions.}
 
 \item{col}{list of colors for conditional levels. Default: the 8 colours
@@ -60,6 +75,21 @@ of the 'Dark2' palette of RColorBrewer.}
 
 \item{alpha}{transparency for circles expressed in hexadecimal,
 e.g. 'AA' or 'FF' for no transparency. Default: '66'}
+
+\item{marginal}{logical, show marginal relationship, default: TRUE}
+
+\item{cex, }{cex.cond, cex.marg cex for points, default: 1, default for
+cex.cond and cex.marg is cex}
+
+\item{pch.cond}{pch for conditional points, default 19}
+
+\item{pch.marg}{pch for marginal points, default 15}
+
+\item{lwd}{lwd for line segments, default: 2}
+
+\item{lwd.marg}{lwd for marginal (overall) line segments. Default: lwd}
+
+\item{lwd.cond}{lwd for conditional line segments. Default: lwd}
 
 \item{...}{Additional arguments from plot. Especially useful to
 provide \code{ylim} if needed.}
@@ -73,13 +103,15 @@ data(death.penalty) # from Agresti 2012
 print(death.penalty)
 op <- par(mfrow=c(1,2), mar=c(4,4,0.1,0.1))
 paik(verdict ~ d.race + v.race, 
+   counts = death.penalty$count,
    data = death.penalty, 
-   leg.title = "Victims race", xlab = "Defendants race", 
+   leg.title = "Victims' race", xlab = "Defendants' race", 
    ylab = "Proportion receiving death penalty")
 par(mar=c(4,2,0,2))
 paik(verdict ~ v.race + d.race, counts = death.penalty$count, data = death.penalty, 
-     xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft", 
+     xlab = "Victims' race", leg.title = "Defendants' race",leg.loc="topleft", 
      ylab = "", yaxt = "n")
+paik(am ~ gear + carb, mtcars)
 par(op)
 }
 \references{
