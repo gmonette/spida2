@@ -28,6 +28,7 @@ paik(
   lwd.marg = lwd,
   lwd.cond = lwd,
   lwd.circle = lwd,
+  raise.prop = 0.03,
   ...
 )
 }
@@ -90,6 +91,9 @@ cex.cond and cex.marg is cex}
 \item{lwd.marg}{lwd for marginal (overall) line segments. Default: lwd}
 
 \item{lwd.cond}{lwd for conditional line segments. Default: lwd}
+
+\item{raise.prop}{proportion of vertical height of plot by which to
+raise the "Overall Proportion" label. Default: 0.03}
 
 \item{...}{Additional arguments from plot. Especially useful to
 provide \code{ylim} if needed.}

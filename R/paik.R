@@ -51,6 +51,8 @@
 #' @param lwd lwd for line segments, default: 2
 #' @param lwd.marg lwd for marginal (overall) line segments. Default: lwd 
 #' @param lwd.cond lwd for conditional line segments. Default: lwd
+#' @param raise.prop proportion of vertical height of plot by which to 
+#'   raise the "Overall Proportion" label. Default: 0.03
 #' @param ...	
 #'   Additional arguments from plot. Especially useful to 
 #'   provide \code{ylim} if needed.
@@ -94,6 +96,7 @@ paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1,
     lwd.marg = lwd,
     lwd.cond = lwd,
     lwd.circle = lwd,
+    raise.prop = .03,
     ...) 
 
 
@@ -286,7 +289,7 @@ paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1,
   degree <- atan2((diff(m.prop)/ud[2])*pin[2], (diff(pts)/ud[1])*pin[1]) * (180/pi)
   disp(degree)
   if (marginal & show.mname == TRUE & length(pts) ==2) 
-    text(mean(pts), mean(m.prop) + 0.02 * max(y.loc, na.rm = T), srt = degree, 
+    text(mean(pts), mean(m.prop) + raise.prop * (usr[4] - usr[3]), srt = degree, 
          "Overall proportion")
   res <- invisible(list(marginal.prop = r.prop, group.prop = r.sum/sum(r.sum)))
   invisible(res)
@@ -301,7 +304,7 @@ if(FALSE){
        leg.title = "Victims race", xlab = "Defendants race",
        show.mname = TRUE,
        marginal = TRUE,
-       lwd = 3,
+       lwd = 3, raise.prop = .03,
        ylab = "Proportion receiving death penalty")
   
   paik(verdict ~ d.race + v.race,
