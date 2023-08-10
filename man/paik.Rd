@@ -2,6 +2,7 @@
 % Please edit documentation in R/paik.R
 \name{paik}
 \alias{paik}
+\alias{paik2}
 \title{Paik-Agresti diagrams}
 \usage{
 paik(
@@ -29,6 +30,36 @@ paik(
   lwd.cond = lwd,
   lwd.circle = lwd,
   raise.prop = 0.03,
+  ...
+)
+
+paik2(
+  formula,
+  data,
+  counts,
+  resp.lvl = 2,
+  circle.mult = 1,
+  xlab = NULL,
+  ylab = NULL,
+  leg.title = NULL,
+  leg.loc = NULL,
+  mtext = "Overall proportion",
+  col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02", "#A6761D",
+    "#666666"),
+  alpha = "66",
+  marginal = TRUE,
+  cex = 1,
+  cex.cond = cex,
+  cex.marg = cex,
+  pch.cond = 19,
+  pch.marg = 15,
+  lwd = 2,
+  lwd.marg = lwd,
+  lwd.cond = lwd,
+  lwd.circle = lwd,
+  raise.prop = 0.03,
+  circle.factor = 0.2,
+  ylim,
   ...
 )
 }
@@ -102,6 +133,11 @@ provide \code{ylim} if needed.}
 Construct a Paik-Agresti diagram adapted and enhanced from the
 \code{asbio::paik} function.
 }
+\section{Functions}{
+\itemize{
+\item \code{paik2()}: version for numerical Y value
+
+}}
 \examples{
 data(death.penalty) # from Agresti 2012 
 print(death.penalty)
@@ -117,6 +153,13 @@ paik(verdict ~ v.race + d.race, counts = death.penalty$count, data = death.penal
      ylab = "", yaxt = "n")
 paik(am ~ gear + carb, mtcars)
 par(op)
+dd <- death.penalty  
+dd$Freq <- dd$count
+dd$ver <- as.numeric(dd$verdict == 'Y')
+paik2(ver ~ d.race + v.race, dd, cex = 2, circle.factor = .2)  
+
+d <- mtcars
+paik2(mpg ~ cyl + gear, d, cex = 3)  
 }
 \references{
 Agresti, A. (2012) Categorical Data Analysis, 3rd edition.

@@ -332,3 +332,164 @@ if(FALSE){
        xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft",
        ylab = "", yaxt = "n")
 }
+#' @describeIn paik version for numerical Y value
+#' @examples
+#' dd <- death.penalty  
+#' dd$Freq <- dd$count
+#' dd$ver <- as.numeric(dd$verdict == 'Y')
+#' paik2(ver ~ d.race + v.race, dd, cex = 2, circle.factor = .2)  
+#' 
+#' d <- mtcars
+#' paik2(mpg ~ cyl + gear, d, cex = 3)  
+#' @export
+paik2 <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1, 
+                  xlab = NULL, ylab = NULL, leg.title = NULL, leg.loc = NULL, 
+                  mtext = "Overall proportion",  
+                  col = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02", 
+                          "#A6761D", "#666666"), 
+                  alpha = '66', 
+                  marginal = TRUE,
+                  cex = 1,
+                  cex.cond = cex,
+                  cex.marg = cex,
+                  pch.cond = 19,
+                  pch.marg = 15,
+                  lwd = 2,
+                  lwd.marg = lwd,
+                  lwd.cond = lwd,
+                  lwd.circle = lwd,
+                  raise.prop = .03,
+                  circle.factor = .2,
+                  ylim,
+                  ...) 
+
+
+{
+  disp <- function(...) {}
+
+  allvars <- all.vars(formula)
+  yvname <- allvars[1]
+  xvname <- allvars[2]
+  cvname <- allvars[3]
+  
+  # Weighted averages
+  
+  if(is.null(data$Freq)) data$Freq <- 1
+  if(!missing(counts)) data$Freq <- counts
+  
+  dd <- data
+  dd$yvar <- data[[yvname]]
+  if(is.factor(dd$yvar)) stop("Use paik if y is a factor")
+  dd$xvar <- as.factor(data[[xvname]])
+  dd$cvar <- as.factor(data[[cvname]])
+  
+  dd$ymean <- capply(dd, ~ xvar+cvar, with, weighted.mean(yvar, Freq) )
+  
+  dd$ymarg <- capply(dd, ~ xvar, with, weighted.mean(yvar, Freq) )
+  
+   
+  col <- gplots::col2hex(col)
+  col <- paste0(col,alpha)
+  draw.circle <- function (x, y, radius, nv = 100, border = NULL, col, lty = 1, 
+                           density = NULL, angle = 45, lwd = 1, alpha = '66') 
+  {  # copied from plotrix
+    
+    getYmult <- function () 
+    {
+      if (dev.cur() == 1) {
+        warning("No graphics device open.")
+        ymult <- 1
+      }
+      else {
+        xyasp <- par("pin")
+        xycr <- diff(par("usr"))[c(1, 3)]
+        ymult <- xyasp[1]/xyasp[2] * xycr[2]/xycr[1]
+      }
+      return(ymult)
+    }
+    col <- ifelse(nchar(col) == 7, paste0(col,alpha), col)
+    xylim <- par("usr")
+    plotdim <- par("pin")
+    ymult <- getYmult()
+    angle.inc <- 2 * pi/nv
+    angles <- seq(0, 2 * pi - angle.inc, by = angle.inc)
+    if (length(col) < length(radius)) 
+      col <- rep(col, length.out = length(radius))
+    for (circle in 1:length(radius)) {
+      xv <- cos(angles) * radius[circle] /ymult + x
+      yv <- sin(angles) * radius[circle]  + y
+      polygon(xv, yv, border = border, col = col[circle], lty = lty, 
+              density = density, angle = angle, lwd = lwd)
+    }
+    invisible(list(x = xv, y = yv))
+  }
+  
+  xlevs <- levels(dd$xvar)
+  clevs <- levels(dd$cvar)
+  
+  b <- barplot(1:(length(xlevs) + 2), plot = FALSE)
+  x.pts <- b[-c(1, (length(xlevs) + 2))]
+  
+  dd$xvals <- x.pts[dd$xvar]
+  
+  ddcond <- up(dd, ~ xvar + cvar)
+  ddmarg <- up(dd, ~ xvar)
+  
+  radii <- ddcond$Freq/sum(ddcond$Freq)
+  ylims <- range(ddcond$ymean)
+  radii <- radii * circle.factor * diff(ylims) / max(radii)
+  ddcond$radii <- radii
+  
+  limits <- if(missing(ylim)) range(c(ddcond$ymean + radii,ddcond$ymean-radii )) else ylim
+  # disp(limits)
+  p <- plot(ddcond$xvals, ddcond$ymean, xlim = c(1.5, (length(xlevs) + 1.5)), 
+            type = "n", xaxt = "n", 
+            ylim = limits,
+            xlab = ifelse(is.null(xlab), xvname, xlab), 
+            ylab = ifelse(is.null(ylab), yvname, ylab), ...)
+  grid(p)
+  axis(1, at = x.pts, labels = xlevs)
+  
+  with(ddcond,points(xvals,ymean, pch = 16))
+  if(marginal) with(ddmarg, points(xvals, ymarg, pch = 18))
+  
+  for(i in seq_along(clevs)) {
+    with(ddcond[ddcond$cvar==clevs[i],], 
+         lines(xvals,ymean, col = col[i], lwd = lwd.cond ))
+  }
+  
+  if(marginal) with(ddmarg, lines(xvals, ymarg, col = 'black', lwd = lwd.marg))
+  
+  for (i in 1:nrow(ddcond)) {
+    with(ddcond[i,],
+         draw.circle(
+           xvals, ymean, radii, col = col[cvar],
+           alpha = alpha, lwd = lwd.circle))
+  }
+  
+  if(!marginal){
+    legend(ifelse(is.null(leg.loc), "topright", leg.loc), 
+           pch = rep(21, length(clevs)), pt.bg = col, bg = "white", 
+           pt.cex = 1.5, title = ifelse(is.null(leg.title), cvname, 
+                                        leg.title), legend = clevs)
+  } else {
+    clevs <- c(clevs, 'Overall')
+    legend(ifelse(is.null(leg.loc), "topright", leg.loc), 
+           pch = c(rep(21, length(clevs)-1),pch.marg) , pt.bg = c(col,'black'), bg = "white", 
+           pt.cex = 1.5, title = ifelse(is.null(leg.title), cvname, 
+                                        leg.title), legend = clevs)
+    
+  }
+  
+  
+  pin <- par('pin')
+  usr <- par('usr')
+  ud <- c(usr[2] - usr[1], usr[4] - usr[3])
+  degree <- atan2((diff(ddmarg$ymarg[1:2])/ud[2])*pin[2], (diff(ddmarg$xvals[1:2])/ud[1])*pin[1]) * (180/pi)
+  if (marginal & !is.null(mtext)) 
+    text(mean(ddmarg$xvals[1:2]), mean(ddmarg$ymarg[1:2]) + raise.prop * (usr[4] - usr[3]), srt = degree, 
+         mtext)
+  res <- list(data = data, cond = ddcond, marginal = ddmarg)
+  invisible(res)
+}
+ 
