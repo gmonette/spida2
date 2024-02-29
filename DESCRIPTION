@@ -30,7 +30,8 @@ Imports: stats,
     naniar, 
     UpSetR, 
     MASS, 
-    Matrix
+    Matrix,
+    gplots
 Suggests: 
     knitr,
     rmarkdown,
