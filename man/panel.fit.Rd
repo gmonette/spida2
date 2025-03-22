@@ -118,9 +118,9 @@ fillin(data, form, n = 200, xpd = 1)
 
 \item{fontface}{passed from main plotting function}
 
-\item{length}{(default .2) of crossbar in `panel.errorbars`}
+\item{length}{(default .2) of crossbar in \code{panel.errorbars}}
 
-\item{angle}{(default 90) of crossbar in `panel.errorbars`}
+\item{angle}{(default 90) of crossbar in \code{panel.errorbars}}
 
 \item{labels}{to display}
 
@@ -139,7 +139,7 @@ using syntax: \code{~ x + g1 + g2} (the variable to fill in comes first)}
 }
 \value{
 The 'panel.bands', 'panel.fit', 'panel.errorbars', and 'panel.labels' functions are
-        invoked for their graphical effect.
+invoked for their graphical effect.
 }
 \description{
 Panel functions for predicted values and SE bands using 'layer' and 'glayer' in the package latticeExtra
@@ -159,17 +159,17 @@ confidence or prediction bands that have a reasonable appearance whether a plot 
 }
 \section{Functions}{
 \itemize{
-\item \code{gpanel.fit}: to be used with 'layer' -- but, actually, identical to 'glayer'
+\item \code{gpanel.fit()}: to be used with 'layer' -- but, actually, identical to 'glayer'
 
-\item \code{panel.band}: identical to panel.fit but kept for backward compatibility
+\item \code{panel.band()}: identical to panel.fit but kept for backward compatibility
 
-\item \code{panel.errorbars}: similar to panel.fit but draws error bars instead of bands
+\item \code{panel.errorbars()}: similar to panel.fit but draws error bars instead of bands
 
-\item \code{panel.labels}: add labels
+\item \code{panel.labels()}: add labels
 
-\item \code{fillin}: fill in values to produce smoother fitted curve
+\item \code{fillin()}: fill in values to produce smoother fitted curve
+
 }}
-
 \examples{
 \dontrun{
   library(spida2)
@@ -365,5 +365,5 @@ trellis.unfocus()
 }
 }
 \author{
-Georges Monette <georges@yorku.ca>
+Georges Monette \href{mailto:georges@yorku.ca}{georges@yorku.ca}
 }

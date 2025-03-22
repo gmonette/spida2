@@ -9,7 +9,7 @@ getModelData(model)
 getModelData(model)
 }
 \arguments{
-\item{model}{a model to which the function \code{\link{model.frame}} 
+\item{model}{a model to which the function \code{\link{model.frame}}
 can be applied along with a number of other basic functions and
 methods.}
 }

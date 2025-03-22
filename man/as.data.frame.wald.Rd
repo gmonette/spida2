@@ -18,12 +18,12 @@ is appended to 'L' and 'U' to label the variables.}
 }
 \value{
 A data frame with estimated coefficient, standard error, and, optionally, upper and lower limits and
-        the variables included the 'data' element of 'obj' if present.
-        If \code{length(which) > 1}, the returned object is a list of data frames.
+the variables included the 'data' element of 'obj' if present.
+If \code{length(which) > 1}, the returned object is a list of data frames.
 
 A data frame with estimated coefficient, standard error, and, optionally, upper and lower limits and
-        the variables included the 'data' element of 'obj' if present.
-        If \code{length(which) > 1}, the returned object is a list of data frames.
+the variables included the 'data' element of 'obj' if present.
+If \code{length(which) > 1}, the returned object is a list of data frames.
 }
 \description{
 The generic method is included in the possibly false hope that it will ensure that the method

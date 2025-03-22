@@ -47,24 +47,24 @@ so we just add a method for 'lm' and other objects
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{lmer}: method for lmer objects
+\item \code{getData(lmer)}: method for lmer objects
 
-\item \code{lmerMod}: method for lme4 objects
+\item \code{getData(lmerMod)}: method for lme4 objects
 
-\item \code{lmerModLmerTest}: method for lme4 objects
+\item \code{getData(lmerModLmerTest)}: method for lme4 objects
 
-\item \code{gls}: method for gls objects
+\item \code{getData(gls)}: method for gls objects
 
-\item \code{lm}: method for lm objects
+\item \code{getData(lm)}: method for lm objects
 
-\item \code{lmer}: method for lmer objects
+\item \code{getData(lmer)}: method for lmer objects
 
-\item \code{lmerMod}: method for lme4 objects
+\item \code{getData(lmerMod)}: method for lme4 objects
 
-\item \code{lmerModLmerTest}: method for lme4 objects
+\item \code{getData(lmerModLmerTest)}: method for lme4 objects
 
-\item \code{gls}: method for gls objects
+\item \code{getData(gls)}: method for gls objects
 
-\item \code{lm}: method for lm objects
+\item \code{getData(lm)}: method for lm objects
+
 }}
-

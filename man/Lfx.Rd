@@ -54,10 +54,10 @@ For example, letting \code{fac} be a factor, \code{fac0}, the same factor
 in a different order
 and \code{x} a numerical variable:
 \itemize{
- \item{factor prediction: \code{M(fac)}}
- \item{factor pairwise differences: \code{M(fac) - M(fac0)}}
- \item{interaction terms: \code{M(x) * M(fac0)}}
- \item{zero block of the correct size: \code{0 * M(fac)}}
+\item{factor prediction: \code{M(fac)}}
+\item{factor pairwise differences: \code{M(fac) - M(fac0)}}
+\item{interaction terms: \code{M(x) * M(fac0)}}
+\item{zero block of the correct size: \code{0 * M(fac)}}
 }
 }
 \examples{

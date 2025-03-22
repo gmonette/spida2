@@ -3,7 +3,7 @@
 \name{PolyShift}
 \alias{PolyShift}
 \title{Transformation of polynomial coefficients to change origin
- 
+
 Useful to equate polynomial coefficients for a periodic spline}
 \usage{
 PolyShift(a, n)
@@ -14,7 +14,11 @@ PolyShift(a, n)
 \item{n}{number of coefficients}
 }
 \description{
-
+If \code{coef} is a vector of coefficients for a polynomial of the
+form \code{ coef[1] + coef[2]*x + coef[3]*x^2 + coef[4]*x^3 }, then
+\code{coef_tr <- PolyShift(a, 4) \%*\% coef} is a vector of coefficients
+for the same polynomial centered at \code{a}, i.e.
+\code{ coef_tr[1] + coef_tr[2]*(x-a) + coef_tr[3]*(x-a)^2 + coef_tr[4]*(x-a)^3 },
 }
 \examples{
 coefs <- c(3,2,4)

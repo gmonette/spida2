@@ -45,25 +45,31 @@ Interprets a formula to generate the corresponding portion of a hypothesis matri
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{formula}: formula method
+\item \code{M(formula)}: formula method
 
-\item \code{factor}: factor method
+\item \code{M(factor)}: factor method
 
-\item \code{M}: method for M object
+\item \code{M(M)}: method for M object
 
-\item \code{default}: default method
+\item \code{M(default)}: default method
 
-\item \code{M}: multiplication of M objects
-
-\item \code{factor}: '<' method for factors
-
-\item \code{factor}: '>' method for factors
-
-\item \code{factor}: '<=' method for factors
-
-\item \code{factor}: '>=' method for factors
 }}
+\section{Methods (by generic)}{
+\itemize{
+\item \code{ * }: multiplication of M objects
 
+}}
+\section{Functions}{
+\itemize{
+\item \code{ < }: '<' method for factors
+
+\item \code{ > }: '>' method for factors
+
+\item \code{ <= }: '<=' method for factors
+
+\item \code{ >= }: '>=' method for factors
+
+}}
 \seealso{
 \code{\link[spida2]{Lfx}}
 }

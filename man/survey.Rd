@@ -20,14 +20,15 @@ jk_lin_comb_se(x, by, w, check = TRUE)
 \item{w}{vector of weights, e.g. Horvitz-Thomson weights or renormed version. Default: 1}
 }
 \description{
-### Functions for linear combinations
+\subsection{Functions for linear combinations}{
+}
 }
 \details{
 Standardize a vector of weights
 }
 \seealso{
 \code{\link{wtd_mean}} for weighted means, \code{link{lin_comb}} for linear
-     combinations, \code{\link{jk_wtd_mean_se}} for a jacknife estimate of the SE of a weighted mean
-     and \code{\link{jk_lin_comb_se}} for a jacknife estimate of the SE of a linear combination.
+combinations, \code{\link{jk_wtd_mean_se}} for a jacknife estimate of the SE of a weighted mean
+and \code{\link{jk_lin_comb_se}} for a jacknife estimate of the SE of a linear combination.
 }
 \concept{post-stratification functions}

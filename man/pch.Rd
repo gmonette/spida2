@@ -25,6 +25,6 @@ mnemonic names.
 }
 \section{Functions}{
 \itemize{
-\item \code{lty}: Easy line types
-}}
+\item \code{lty()}: Easy line types
 
+}}

@@ -21,10 +21,10 @@ Read_excel(
 \item{col_types}{Either NULL to use guess from the spreadsheet made
 by 'read_excel'
 or a character vector containing 'blank', 'numeric',
-'date' or 'text' which is recycled to match the 
-number of columns in the spreadsheet. 
+'date' or 'text' which is recycled to match the
+number of columns in the spreadsheet.
 This behavior is different from
-that of 'read_excel' that does not recycle. 
+that of 'read_excel' that does not recycle.
 If \code{col_types} is equal to 'text', all variables in
 the returned data frame have class character and the user
 needs to handle conversions manually.}
@@ -49,7 +49,7 @@ character without automatic coercion when it fails with 'read_excel'
 }
 \details{
 read_excel, in the 'readxl' package, guesses the type of each column based on
-some initial number of values.  If non-numeric 
+some initial number of values.  If non-numeric
 values first occur quite far into the spread sheet, read_excel
 will misguess the type and the non-numeric values will
 be returned as missing when coerced to numeric.

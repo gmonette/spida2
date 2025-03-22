@@ -3,7 +3,7 @@
 \name{cc_svd}
 \alias{cc_svd}
 \alias{cc_qr}
-\title{Conjugate complement of span(X) in span(Z) with respect 
+\title{Conjugate complement of span(X) in span(Z) with respect
 to inner product ip}
 \usage{
 cc_svd(X, Z = NULL, ip = NULL, tol = 1e-14)
@@ -11,27 +11,27 @@ cc_svd(X, Z = NULL, ip = NULL, tol = 1e-14)
 cc_qr(X, Z = diag(NROW(X)), ip = diag(NROW(X)), tol = 1e-14)
 }
 \arguments{
-\item{X}{matrix defining space whose complement is computed. 
+\item{X}{matrix defining space whose complement is computed.
 Not necessarily of full column rank}
 
-\item{Z}{matrix defining space within which the complement 
-is computed. 
+\item{Z}{matrix defining space within which the complement
+is computed.
 Should be of full column rank. Default: diag(nrow(X))}
 
-\item{ip}{positive definite matrix defining inner product with 
+\item{ip}{positive definite matrix defining inner product with
 respect to which complement is computed. Default: diag(nrow(X))}
 
 \item{tol}{tolerance (default 1e-14)}
 }
 \description{
-Conjugate complement of span(X) in span(Z) with respect 
+Conjugate complement of span(X) in span(Z) with respect
 to inner product ip
 }
 \section{Functions}{
 \itemize{
-\item \code{cc_qr}: Conjugate complement using QR algorithm
-}}
+\item \code{cc_qr()}: Conjugate complement using QR algorithm
 
+}}
 \examples{
 #' cc_svd(cbind(1:3))
 cc_svd(cbind(1:3), cbind(1:3,1))

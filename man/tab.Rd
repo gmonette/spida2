@@ -91,19 +91,19 @@ percentages
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{table}: method class table
+\item \code{tab(table)}: method class table
 
-\item \code{matrix}: method for matrices
+\item \code{tab(matrix)}: method for matrices
 
-\item \code{array}: method for arrays
+\item \code{tab(array)}: method for arrays
 
-\item \code{formula}: method for formulas
+\item \code{tab(formula)}: method for formulas
 
-\item \code{data.frame}: method for data frames
+\item \code{tab(data.frame)}: method for data frames
 
-\item \code{default}: default method
+\item \code{tab(default)}: default method
+
 }}
-
 \examples{
 titanic <- as.data.frame(Titanic)
 head(titanic)

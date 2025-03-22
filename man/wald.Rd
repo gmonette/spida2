@@ -75,9 +75,9 @@ these}
 
 \item{clevel}{level for confidence intervals. No confidence intervals if clevel is NULL}
 
-\item{pred}{(default NULL) a data frame to use to create a model matrix. 
-This is an alternative to `full` when the model matrix needs to
-be based on data frame other than the data frame used for 
+\item{pred}{(default NULL) a data frame to use to create a model matrix.
+This is an alternative to \code{full} when the model matrix needs to
+be based on data frame other than the data frame used for
 fitting the model.}
 
 \item{data}{data frame used as 'data' attribute fot list elements returned only if
@@ -117,7 +117,7 @@ the rank of a large hypothesis matrix where 'qr' has failed.}
 }
 \value{
 An object of class \code{wald}, with the following components:
-      COMPLETE
+COMPLETE
 }
 \description{
 General Linear Hypothesis with Wald test for lm, glm, lme, nlme and
@@ -150,25 +150,25 @@ particular \code{\link{Lfx}}.
 To extend the 'wald' function to a new class of objects, one needs to
 write a 'getFix' method to extract estimated coefficients, their estimated
 covariance matrix, and the denominator degrees of freedom for each
-estimated coefficient. See the examples below for 
+estimated coefficient. See the examples below for
 a \code{\link{getFix}} method for a \code{\link{glm}} object
 and for 'mipo' objects in the packages 'mice':
 }
 \section{Functions}{
 \itemize{
-\item \code{wald2}: experimental version with RHS?
+\item \code{wald2()}: experimental version with RHS?
 
-\item \code{wald.transform}: transforms estimates canfidence intervals using delta method
+\item \code{wald.transform()}: transforms estimates canfidence intervals using delta method
 
-\item \code{glh}: same as \code{wald}, kept for backward compatibility
+\item \code{glh()}: same as \code{wald}, kept for backward compatibility
 
-\item \code{wald2}: experimental version with RHS?
+\item \code{wald2()}: experimental version with RHS?
 
-\item \code{wald.transform}: transforms estimates canfidence intervals using delta method
+\item \code{wald.transform()}: transforms estimates canfidence intervals using delta method
 
-\item \code{glh}: same as \code{wald}, kept for backward compatibility
+\item \code{glh()}: same as \code{wald}, kept for backward compatibility
+
 }}
-
 \examples{
 data(hs)
 library(nlme)
@@ -237,10 +237,10 @@ REFERENCES HERE
 }
 \seealso{
 \code{\link{Lform}},
-         \code{\link{Lfx}}, \code{\link{getX}}, \code{\link{M}},
-         \code{\link{Lall}},\code{\link{Lc}},\code{\link{Lequal}},
-         \code{\link{Ldiff}},\code{\link{Lmu}},\code{\link{Lmat}},\code{\link{Lrm}},
-         \code{\link{as.data.frame.wald}}. To extend to new
-         models see \code{\link{getFix}}. To generate hypothesis matrices for general
-         splines see \code{\link{gsp}} and \code{\link{sc}}.
+\code{\link{Lfx}}, \code{\link{getX}}, \code{\link{M}},
+\code{\link{Lall}},\code{\link{Lc}},\code{\link{Lequal}},
+\code{\link{Ldiff}},\code{\link{Lmu}},\code{\link{Lmat}},\code{\link{Lrm}},
+\code{\link{as.data.frame.wald}}. To extend to new
+models see \code{\link{getFix}}. To generate hypothesis matrices for general
+splines see \code{\link{gsp}} and \code{\link{sc}}.
 }

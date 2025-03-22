@@ -6,16 +6,16 @@
 \title{Longitudinal study of IQ after traumatic brain injuries}
 \format{
 A longitudinal with 331 observations 200 subjects measured on a varying number
-       of occasions (ranging from 1 to 5) on the following 7 variables.
- \describe{
-   \item{\code{DAYSPC}}{time of measurement in days post recovery from coma}
-   \item{\code{DCOMA}}{duration of coma rounded to nearest day}
-   \item{\code{SEX}}{a factor with levels \code{Female} \code{Male}}
-   \item{\code{AgeIn}}{age at time of injury}
-   \item{\code{ID}}{identifying subjects}
-   \item{\code{PIQ}}{performance (or mathematical) IQ}
-   \item{\code{VIQ}}{verbal IQ}
- }
+of occasions (ranging from 1 to 5) on the following 7 variables.
+\describe{
+\item{\code{DAYSPC}}{time of measurement in days post recovery from coma}
+\item{\code{DCOMA}}{duration of coma rounded to nearest day}
+\item{\code{SEX}}{a factor with levels \code{Female} \code{Male}}
+\item{\code{AgeIn}}{age at time of injury}
+\item{\code{ID}}{identifying subjects}
+\item{\code{PIQ}}{performance (or mathematical) IQ}
+\item{\code{VIQ}}{verbal IQ}
+}
 }
 \usage{
 iq

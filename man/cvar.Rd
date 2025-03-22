@@ -37,12 +37,12 @@ dropped for use in a linear model.}
 \item{FUN}{(default mean) function to be applied to create contextual values}
 }
 \description{
-cvar and  See also \code{\link{dvar}} are 
+cvar and  See also \code{\link{dvar}} are
 designed to be used in regression formulas to
 create a contextual mean of a cluster-varying variable and
 a 'centered-within-groups' version.
 
-cvar and  See also \code{\link{dvar}} are 
+cvar and  See also \code{\link{dvar}} are
 designed to be used in regression formulas to
 create a contextual mean of a cluster-varying variable and
 a 'centered-within-groups' version.
@@ -53,15 +53,15 @@ a 'centered-within-groups' version. See also \code{\link{cvar}}.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{factor}: method for class 'factor'
+\item \code{cvar(factor)}: method for class 'factor'
 
-\item \code{default}: default method
+\item \code{cvar(default)}: default method
 
-\item \code{factor}: method for class 'factor'
+\item \code{cvar(factor)}: method for class 'factor'
 
-\item \code{default}: default method
+\item \code{cvar(default)}: default method
+
 }}
-
 \examples{
 \dontrun{
 dd <- data.frame(x= 1:100, id = rep( LETTERS[1:10], each = 10))

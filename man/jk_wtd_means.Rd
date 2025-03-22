@@ -18,14 +18,14 @@ jk_wtd_means(x, by, w, check = TRUE, FUN = wtd_mean)
 \item{FUN}{(default: wtd_mean) function used to obtain estimate}
 }
 \description{
-Jacknife estimates of the weighted mean with a stratified sample. 
+Jacknife estimates of the weighted mean with a stratified sample.
 Weights are adjusted to take the change in n into account when obtaining the
 jacknife estimate dropping an observation within a stratum.
 }
 \seealso{
 \code{\link{wtd_mean}} for weighted means, \code{link{lin_comb}} for linear
-     combinations, \code{\link{jk_wtd_mean_se}} for a jacknife estimate of the SE of a weighted mean
-     and \code{\link{jk_lin_comb_se}} for a jacknife estimate of the SE of a linear combination.
+combinations, \code{\link{jk_wtd_mean_se}} for a jacknife estimate of the SE of a weighted mean
+and \code{\link{jk_lin_comb_se}} for a jacknife estimate of the SE of a linear combination.
 
 Other Post-stratification survey functions: 
 \code{\link{jk_wtd_mean_se}()},

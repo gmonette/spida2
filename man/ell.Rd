@@ -71,10 +71,10 @@ For \code{ellplus}, when more than one of the options \code{ellipse},
 separated by a row of \code{NA}.
 }
 \description{
-Tools to generate 2D data, concentration and confidence 
+Tools to generate 2D data, concentration and confidence
 ellipses given a center and a 'variance' matrix. Also tools
 to generate points on a ellipse in a given direction or conjugate to that direction, axes
-along a vector or conjugate to it, tangent lines at a 
+along a vector or conjugate to it, tangent lines at a
 point or parallel to a vector.
 
 Generates an ellipse augmented with conjugate axes and tangents
@@ -98,11 +98,11 @@ Add function that works with direction to compute slices and conjugate direction
 }
 \section{Functions}{
 \itemize{
-\item \code{ellplus}: tangents and axes
+\item \code{ellplus()}: tangents and axes
 
-\item \code{dellplus}: data ellipse with tangents and axes
+\item \code{dellplus()}: data ellipse with tangents and axes
+
 }}
-
 \examples{
 plot( x=0,y=0, xlim = c(-3,3), ylim = c(-3,3),
       xlab = '', ylab = '', type = 'n', asp=1)

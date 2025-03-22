@@ -29,6 +29,4 @@ Extract coefficients from Wald object
 }
 \author{
 GM
-
-GM
 }

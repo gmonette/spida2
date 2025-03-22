@@ -36,16 +36,16 @@ in the interval at which the spline must evaluate to 0.}
 
 \item{smoothness}{vector with the degree of smoothness at each knot (0 =
 continuity, 1 = smoothness with continuous first derivative, 2 = continuous
-second derivative, etc. The value -1 allows a discontinuity at the knot. 
+second derivative, etc. The value -1 allows a discontinuity at the knot.
 A scalar is recycled so its length equals the
-number of knots. Alternatively, 
-a list of length equal to the number of knots. Each element of the list is a 
+number of knots. Alternatively,
+a list of length equal to the number of knots. Each element of the list is a
 vector of the orders of derivatives which are required to be smooth. THis allows
 non-sequential constraints, e.g. to have the same first and second derivative
 on either side of a knot but a possible discontinuity and change in
 higher-order derivatives, the vector would be c(1,2). Note that if a list is used,
 all elements must provide all desired constraints. That is the list argument corresponding
-to `smoothness = c(1,2,-1)` is `smoothness=list(0:1, 0:2, -1)`. The default is
+to \code{smoothness = c(1,2,-1)} is \code{smoothness=list(0:1, 0:2, -1)}. The default is
 1 less than the minimum of adjoining degrees at}
 
 \item{lin}{provides a matrix specifying additional linear contraints on the
@@ -54,7 +54,7 @@ to max(degree) in each of the length(knots)+1 intervals of the spline. See
 below for examples of a spline that is 0 outside of its boundary knots.}
 
 \item{periodic}{if TRUE generates a period spline on the base interval
-[0,max(knots)]. A constraint is generated so that the coefficients generate
+\link{0,max(knots)}. A constraint is generated so that the coefficients generate
 the same values to the right of max(knots) as they do to the right of 0.
 Note that all knots should be strictly positive.}
 
@@ -97,50 +97,50 @@ example, a 'quadratic spline' (a spline that is quadratic in each interval
 with and smooth with a first derivative at each knot) with knots at 1 and 3
 can be fitted with:
 
-\code{   plus <- function(x,y) ifelse(x>0,y,0)}\cr 
+\code{   plus <- function(x,y) ifelse(x>0,y,0)}\cr
 \code{   lm(y ~ x + I(x^2) + plus(x-1,(x-1)^2) + plus(x-3,(x-3)^2))}
- 
-All 'standard' polynomial splines with the same 
+
+All 'standard' polynomial splines with the same
 degree in each interval and continuity of
 order one less than the degree at each knot can be constructed in this
 fashion. A convenient aspect of this parametrization of the spline is that
 the estimated coefficients have a simple interpretation. The coefficients
 for 'plus' terms represent the 'saltus' (jump) in the value of a coefficient
 at the knot. Testing whether the true value of the saltus in a coefficient is 0 is
-equivalent to a test for the need to retain the corresponding knot. 
+equivalent to a test for the need to retain the corresponding knot.
 
 This approach does not work for some more complex splines with different
 degrees or different orders of continuity at the knots. An example is the
 commonly used natural quadratic spline. A natural quadratic spline with
 knots at -1,0 and 1 (where -1 and 1 are termed 'boundary knots') is linear
 in the intervals (-Inf,-1) and (1,+Inf), and quadratic in the intervals
-(-1,0) and (0,1). The spline is smooth of order 1 at each knot.  
+(-1,0) and (0,1). The spline is smooth of order 1 at each knot.
 
 Many
 techniques for fitting splines generate a basis for the spline (columns of
 the design matrix) that has good numerical properties but whose coefficients
-do not have a simple interpretation. 
- 
+do not have a simple interpretation.
+
 The \code{gsp} function makes it
 easy to specify a spline with arbitrary degree in each interval and
 arbitrary smoothness at each knot. The parametrization produces coefficients
 that have a simple interpretation. For a spline of degree p at x = 0,
 coefficients correspond to the 1st, 2nd, ... pth derivative at 0. Additional
-coefficients correspond to each free saltus at each knot. 
- 
+coefficients correspond to each free saltus at each knot.
+
 The
 \code{sc} function generates a matrix to estimate features of a fitted
 spline that can be expressed as linear combinations of the spline
 coefficients.  Examples are various derivatives of the spline at any point,
 left or right derivatives of different orders and the saltus in derivatives
-at a knot.  
+at a knot.
 
 A disadvantage of \code{gsp} is that the spline basis may
 be poorly conditioned.  The impact of this problem can be mitigated by
 rescaling the x variable so that it has an appropriate range. For example,
 with a spline whose highest degree is cubic, ensuring that x has a range
-between -10 and 10 should avert numerical problems. 
- 
+between -10 and 10 should avert numerical problems.
+
 \code{gsp}
 generates a matrix of regressors for a spline with knots, degree of
 polynomials in each interval and the degree of smoothness at each knot.
@@ -148,10 +148,10 @@ Typically, \code{gsp} is used to define a function that is then used in a
 model equation. See the examples below.
 
 A function to fit a cubic spline with knots at 5 and 10 is generated with:
- 
+
 Overview of utility functions:
- 
-\code{Xmat = function( x, degree, D = 0, signif = 3)} design/estimation matrix for f[D](x) where f(x) is
+
+\code{Xmat = function( x, degree, D = 0, signif = 3)} design/estimation matrix for f\href{x}{D} where f(x) is
 polynomial of degree degree.
 
 \code{Xf = function( x, knots, degree = 3, D = 0, right = TRUE , signif = 3)}
@@ -516,7 +516,7 @@ xyplot( logSize ~ days, pred, type = 'l')
 
 }
 \references{
-%% ~put references to the literature/web site here ~
+\%\% ~put references to the literature/web site here ~
 }
 \seealso{
 \code{\link[spida2]{wald}} \code{\link[spida2]{sc}}

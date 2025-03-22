@@ -15,10 +15,10 @@ Lmat(fit, pattern, fixed = FALSE, invert = FALSE, debug = FALSE)
 }
 \value{
 hypothesis matrix to test the hypothesis that the true values of
-       matched coefficients are zero
+matched coefficients are zero
 
 hypothesis matrix to test the hypothesis that the true values of
-       matched coefficients are zero
+matched coefficients are zero
 }
 \description{
 Generates a hypothesis matrix to test whether a group of coefficients in a

@@ -16,14 +16,14 @@ extracted with \code{\link{getModelData}}.}
 }
 \value{
 a data frame with concatenating the rows of the
-       model data frame and the rows of 'add' together
-       with an additional variable '.source' with the
-       value 'model' or 'add' showing the provenance of the row.
+model data frame and the rows of 'add' together
+with an additional variable '.source' with the
+value 'model' or 'add' showing the provenance of the row.
 
 a data frame with concatenating the rows of the
-       model data frame and the rows of 'add' together
-       with an additional variable '.source' with the
-       value 'model' or 'add' showing the provenance of the row.
+model data frame and the rows of 'add' together
+with an additional variable '.source' with the
+value 'model' or 'add' showing the provenance of the row.
 }
 \description{
 Generates additional rows of a predictor data frame

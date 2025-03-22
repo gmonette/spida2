@@ -15,8 +15,8 @@ character by \code{\link{regexpr}}.}
 \item{...}{other arguments passed to \code{\link{regexpr}}.}
 }
 \value{
-\code{getex} returns the substrings matched by \code{pattern} in \code{x}. 
-        \code{getex_} returns the portion of \code{x} that is not matched.
+\code{getex} returns the substrings matched by \code{pattern} in \code{x}.
+\code{getex_} returns the portion of \code{x} that is not matched.
 }
 \description{
 Extract of remove a substring matching a regular expression.

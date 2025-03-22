@@ -13,7 +13,7 @@ col_name(x, nam = x, ...)
 row_name(x, nam = x, ...)
 }
 \arguments{
-\item{x}{object to be named or renamed with a 'names', 'colnames' 
+\item{x}{object to be named or renamed with a 'names', 'colnames'
 or 'rownames' attribute}
 
 \item{nam}{vector of names or a function}
@@ -22,14 +22,14 @@ or 'rownames' attribute}
 }
 \value{
 x with a modified name. If \code{nam} is a function then the names attribute
-        is modified with \code{names(x) <- nam(names(x), ...)}.
+is modified with \code{names(x) <- nam(names(x), ...)}.
 }
 \description{
 This function is well suited to modifying the name of an object in a pipeline.
-It can be thought of as the verb corresponding to the noun 'names'. 
+It can be thought of as the verb corresponding to the noun 'names'.
 Convenient functions to modify names using regular expressions are
-\code{\link{spida2::sub_}} and \code{\link{spida2::gsub_}}. 
- See also \code{\link{uname}}.
+\code{\link{spida2::sub_}} and \code{\link{spida2::gsub_}}.
+See also \code{\link{uname}}.
 }
 \examples{
 \dontrun{

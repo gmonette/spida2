@@ -111,11 +111,11 @@ device with a white background if new = TRUE.
 }
 \section{Functions}{
 \itemize{
-\item \code{gd}: with ggplot2-like theme
+\item \code{gd()}: with ggplot2-like theme
 
-\item \code{gd_}: gd to set non-group parameters
+\item \code{gd_()}: gd to set non-group parameters
+
 }}
-
 \examples{
 td( lty = 1:7)   # sets line types for 7 groups
 gd(7)            # sets line types for 7 groups using colors from RColorBrewer

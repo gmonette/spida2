@@ -18,7 +18,7 @@ autonym(x, force = FALSE)
 x with names equal to x
 }
 \description{
-Uses x to name x. Useful in when applying \code{\link{lapply}} to a character vector. 
+Uses x to name x. Useful in when applying \code{\link{lapply}} to a character vector.
 Should probably be called 'autonym'. Superseded by \code{\link{name}}.
 }
 \seealso{

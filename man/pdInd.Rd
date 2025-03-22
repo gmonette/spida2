@@ -34,19 +34,19 @@ column.}
 }
 \description{
 This function is a constructor for the \code{pdInd} class used to
-represent a positive-definite random effects variance matrix 
+represent a positive-definite random effects variance matrix
 with some specified patterns of zero covariances.
 }
 \details{
-Mixed models in which many predictors have random slopes often fail to converge 
+Mixed models in which many predictors have random slopes often fail to converge
 in part because of the large number of parameters in the full covariance (G)
 matrix for random effects. One way of fitting a more parsimonious model that
 includes random slopes is to use \code{\link[nlme]{pdDiag}} with zeros off the
 diagonal. However, this also forces zero covariances between random slopes and
 and the random intercept, resulting in a model that is not equivariant
-with respect to location transformations of the predictors with random 
-slopes. The alternative remedy of omitting random slopes for some 
-predictors can lead to biased estimates and incorrect standard errors of 
+with respect to location transformations of the predictors with random
+slopes. The alternative remedy of omitting random slopes for some
+predictors can lead to biased estimates and incorrect standard errors of
 regression coefficients.
 
 The default covariance pattern for \code{pdInd} produces a G matrix with
@@ -58,7 +58,7 @@ the reason that having all covariances equal to zero results in a
 model that fails to be equivariant under location transformations.
 
 The optional \code{cov} parameter can be used to allow selected non-zero
-covariance between random slopes.   
+covariance between random slopes.
 and biased eIt is often desirable to fit a parsimonious model with more than one
 variable with a random slope.
 }

@@ -19,10 +19,10 @@ to be considered discrete. Default: 5}
 }
 \value{
 a data frame with every combination of the values generated
-        for each variable.
+for each variable.
 
 a data frame with every combination of the values generated
-        for each variable.
+for each variable.
 }
 \description{
 Generates the cartesian product of factors and ranges
@@ -34,7 +34,7 @@ of continuous variables in a model.
 \details{
 This function is particularly useful to display fitted  values
 of a model that is non-linear in continuous predictors where
-plotting curves against the original data would produce 
+plotting curves against the original data would produce
 linear segments instead of a continuous curve.
 
 By default, 50 values of each continuous variable is
@@ -45,7 +45,7 @@ discrete_max distinct values.
 
 This function is particularly useful to display fitted  values
 of a model that is non-linear in continuous predictors where
-plotting curves against the original data would produce 
+plotting curves against the original data would produce
 linear segments instead of a continuous curve.
 
 By default, 50 values of each continuous variable is

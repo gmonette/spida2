@@ -7,7 +7,7 @@
 case(.select., ...)
 }
 \arguments{
-\item{.select.}{a variable whose values determine the 
+\item{.select.}{a variable whose values determine the
 argument to be used}
 
 \item{\dots}{named arguments and one possibly unnamed argument.}
@@ -18,13 +18,13 @@ the value of a variable
 }
 \details{
 Each argument in \dots evaluates
-to a vector whose value is returned where the name of the 
-argument matches a value of \code{.select.}. 
+to a vector whose value is returned where the name of the
+argument matches a value of \code{.select.}.
 
 The vectors in \dots are combined into a matrix with
 \code{\link{cbind}} and the names of the arguments
 are used as values of \code{.select.} to select which
-vector value is returned.  See the examples. 
+vector value is returned.  See the examples.
 
 If there is an unnamed argument, its value is used
 as a value in \code{.select.} is not matched by

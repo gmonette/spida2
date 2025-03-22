@@ -59,7 +59,7 @@ panel.box(
 }
 \value{
 The 'panel.bands', 'panel.fit', and 'panel.labels' functions are
-        invoked for their graphical effect.
+invoked for their graphical effect.
 }
 \description{
 With 'layer' and 'glayer' in 'latticeExtra', these functions can be used to easily generate fitted values and
@@ -98,5 +98,5 @@ error boxes that have a reasonable appearance whether a plot uses 'groups' or no
 }
 }
 \author{
-Georges Monette <georges@yorku.ca>
+Georges Monette \href{mailto:georges@yorku.ca}{georges@yorku.ca}
 }

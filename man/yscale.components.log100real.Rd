@@ -7,10 +7,10 @@
 yscale.components.log100real(...)
 }
 \description{
-Plots axis on right side of lattice graph showing pretty selection of 
-real values corresponding to 100 x log values in graph. The function has no 
-parameters and is intended to be supplied as an argument to the 
-`yscale.components` parameter in `xyplot``
+Plots axis on right side of lattice graph showing pretty selection of
+real values corresponding to 100 x log values in graph. The function has no
+parameters and is intended to be supplied as an argument to the
+\code{yscale.components} parameter in `xyplot``
 }
 \examples{
 \dontrun{

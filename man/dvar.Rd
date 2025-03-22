@@ -36,15 +36,15 @@ a 'centered-within-groups' version. See also \code{\link{cvar}}.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{factor}: method for class 'factor'
+\item \code{dvar(factor)}: method for class 'factor'
 
-\item \code{default}: default method
+\item \code{dvar(default)}: default method
 
-\item \code{factor}: method for class 'factor'
+\item \code{dvar(factor)}: method for class 'factor'
 
-\item \code{default}: default method
+\item \code{dvar(default)}: default method
+
 }}
-
 \examples{
 \dontrun{
 dd <- data.frame(x= 1:100, id = rep( LETTERS[1:10], each = 10))
