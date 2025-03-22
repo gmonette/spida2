@@ -1,3 +1,17 @@
+0.2.3
+2025-03-20
+* modified `tolong` so the separator is matched only in its last occurrence in each variable name
+  altenatively a pattern can be specified for the 'time' values, e.g. "[0-9]+$"
+0.2.2
+* xqplot_: experimental modified xqplot to work with data frames containing list elements 
+* improved pred.grid to better handle factors with special contrasts
+* changed knots.gspline to knots_.gspline to avoid conflict with stats::knots
+* fixed gplots problem
+
+2023-08-10
+* paik2 to draw Paik-Agresti diagrams for a numerical response
+2023-08-05
+* Improvements to `paik`
 2020_07_19
 * makegrid uses getD to create a Cartesian product of predictor with the correct types.
 * kable_array used kableExtra to print arrays (in development)
