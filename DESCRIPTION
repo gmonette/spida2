@@ -25,14 +25,16 @@ Imports:
     nlme,
     lattice,
     latticeExtra,
-    lme4,
     magrittr,
     RColorBrewer,
     naniar,
     UpSetR,
-    MASS,
-    rstan
+    MASS
 Suggests: 
+    lme4,
+    rstan,
+    TMB,
+    glmmTMB,
     knitr,
     rmarkdown,
     testthat (>= 2.1.0)
