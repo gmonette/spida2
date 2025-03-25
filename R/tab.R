@@ -23,29 +23,10 @@
 # TODO: update tab.Rd to explain new features in Tab
 # and keep = "All"
 
-#' Display matrix
-#'
-#' Transform a matrix of test results for display
-#' 
-#' @param x matrix
-#' @export
-.mat2arr <- function(x) {
-      ret <- as.list(x)
-      dim(ret) <- NULL
-      nams <- expand.grid( dimnames(x))
-      for ( ii in 1:length(nams)) {
-          nams[[ii]] <- paste( names(nams)[ii] , nams[[ii]], sep = " = ")
-      }
-      nams <- c( nams, sep = ", ")
-      nams <- do.call( paste, nams)
-      names(ret) <- nams
-      ret
-}
 #' Drop last facets of array
 #' 
 #' Primarily used to strips totals from a table bordered by totals 
 #' by dropping the last facet. 
-#' The 
 #'
 #' @param arr array
 #' @param drop drop parameter in subsetting, default FALSE
@@ -82,7 +63,7 @@ dropLast <- function(arr, drop = FALSE, keep = NULL) {
 #' Drop last elements of an array if it is a "Total"
 #'
 #' Used to drop "Total" rows and columns after using \code{\link{tab}}. Synonyms for
-#' legacy: \code{Tab} and \{pab}.
+#' legacy: \code{Tab} and \code{pab}.
 #'
 #' @param mat a matrix, array or table
 #' @param names_to_drop (default "Total")
@@ -173,7 +154,7 @@ tab.formula <- function( fmla, data = sys.frame(sys.parent()), ... ) tab.data.fr
 #' @describeIn tab method for data frames
 #' @export
 tab.data.frame <-
-  function (dd, fmla,
+  function (x, fmla,
         total.margins = TRUE,
         useNA = "ifany",
         pct = NULL, pr = NULL,
@@ -182,20 +163,20 @@ tab.data.frame <-
         na.rm = NULL,
         all.label = "All", 
         simulate = FALSE,
-        B = 2000)
+        B = 2000, ...)
 {
   # GM: 2014 08 22: modified handling of lhs to fix bug when variable in lhs
   #                 also appears in rhs
   if (missing(fmla)) {
-    fmla <- parse(text = paste(c("~",paste(names(dd),collapse="+"))))
+    fmla <- parse(text = paste(c("~",paste(names(x),collapse="+"))))
     fmla <- eval(fmla)
     environment(fmla) <- parent.frame()
   }
   if (is.null(weights) && (length(fmla) >2 )) {
-    weights <- model.frame(fmla[-3], dd, na.action = NULL)[[1]]
-    xx <- model.frame(fmla[-2], dd, na.action = NULL)
+    weights <- model.frame(fmla[-3], x, na.action = NULL)[[1]]
+    xx <- model.frame(fmla[-2], x, na.action = NULL)
   } else {
-    xx = model.frame(fmla, dd, na.action = NULL)
+    xx = model.frame(fmla, x, na.action = NULL)
     #weights <- eval(substitute(weights), dd, environment(fmla))  # so weights is evaluated in parent.frame
   }
   if(!is.null(weights) && any(is.na(weights))) {
@@ -229,14 +210,32 @@ tab.default <- function (..., total.margins = TRUE,
     aa <- c(aa[[1]],list( total.margins = total.margins,
                           useNA = useNA, pr = pr, pct = pct, test=test,
                           na.rm = na.rm, weights = weights))
-    disp(aa[[1]])
+    # disp(aa[[1]])
     return(do.call("tab", aa[[1]]))
   }
   if (is.null(names(aa))) {
     nns = names(match.call())
     names(aa) = nns[2:(1 + length(aa))]
   }
-  if(useNA=="ifany") for (ii in 1:length(aa)) aa[[ii]] <- factor(aa[[ii]], exclude = NULL)  # table uses 'ifany' correctly when a number but not for factors
+  if(FALSE) {
+    
+    if(useNA == "ifany") {
+      for (ii in 1:length(aa)) {
+        if(sum(is.na(aa[[ii]]))>0) levels(aa[[ii]]) <- unique(c(levels(aa[[ii]]) ,NA))
+        # aa[[ii]] <- factor(aa[[ii]], exclude = NULL)  # table uses 'ifany' correctly when a number but not for factors
+      }
+    }
+    if(useNA == 'no'){
+      for (ii in 1:length(aa)) {
+        levels(aa[[ii]]) <- na.omit(levels(aa[[ii]]))
+      }
+    }
+    if(useNA=='yes'){
+      for (ii in 1:length(aa)) {
+        levels(aa[[ii]]) <- na.omit(levels(aa[[ii]]))
+      }
+    }
+  }
   if( is.null(weights)){
     aa[["useNA"]] <- useNA
     aa[["na.rm"]] <- NULL
@@ -387,6 +386,8 @@ atotal <- function(arr, FUN = sum, label = 'Total', ...) {
 #'
 #' \code{abind} binds two conformable arrays along a dimension.
 #'
+#' Warning: abind::abind should be preferred to spida2::abind.
+#' 
 #' dim( arr1 ) and dim( arr2 ) must be equal except in the dth dimension. If
 #' the length of dim( arr2 ) is 1 less than that of dim( arr1 ), then 'arr2' is
 #' treated as if it had dropped the dth dimension with size 1.
@@ -414,7 +415,7 @@ abind <- function(arr1,arr2,d,facename="") {
 	d2 <- dim(arr2)
 	n2 <- length(d2)
 	dn2 <- dimnames(arr2)
-
+  # warning('spida2::abind is deprecated. Consider using abind::abind')
 	arenull <- is.null(dn1) & is.null(dn2)
 	if (is.null(dn1)){
 		dn1 <- lapply( as.list(d1), function(x) seq(1,x))
@@ -551,4 +552,88 @@ tab_df <- function(data, fmla, ...){
     else ret[[nn]] <- factor(ret[[nn]], levels = levels(data[[nn]]))
   }
   ret
+}
+#' Display matrix
+#'
+#' Transform a matrix of test results for display
+#'
+#' @param x matrix
+#' @export
+.mat2arr <- function(x) {
+  ret <- as.list(x)
+  dim(ret) <- NULL
+  nams <- expand.grid( dimnames(x))
+  for ( ii in 1:length(nams)) {
+    nams[[ii]] <- paste( names(nams)[ii] , nams[[ii]], sep = " = ")
+  }
+  nams <- c( nams, sep = ", ")
+  nams <- do.call( paste, nams)
+  names(ret) <- nams
+  ret
+}
+#' Add faces to an array of data frames
+#' 
+#' Add union of rows in elements of an array of data frames to marginal
+#' faces of the array
+#' 
+#' @param arr an array of data frames
+#' @param label character string to label faces, default "All"
+#' @export
+add_faces <- function(arr, label = 'All', ...) {
+  if(is.null(dim(arr))) {
+    nn <- names(arr)
+    dim(arr) <- length(arr)
+    dimnames(arr)[[1]] <- nn
+  }
+  d <- dim(arr)
+  cls <- class(arr)
+  n <- length(d)
+  ret <- arr
+  ind <- 1:n
+  for ( i in n:1) {
+    new <- apply(ret,ind[-i], function(x) do.call(rbind, x))
+    ret <- abind( ret, new, i, label)
+  }
+  class( ret ) <- cls
+  ret
+}
+#' Create an array of data frames splitting on a formula with marginal faces 
+#'
+#' Like a table but each element consists of the rows of the data frame
+#' for a particular combination of levels of the formula
+#' 
+#' @param dd data frame
+#' @param fmla formula whose RHS creates a table and 
+#'             LHS adds variables to the resulting data frames
+#' @param all adds all variables in the data frame  
+#' @examples
+#' tabf(mtcars, ~ cyl + carb)[1,1]            
+#' tabf(mtcars, ~ cyl + carb) %>% dimnames  
+#' tabf(mtcars, ~ cyl + carb + gear ) %>% Apply(dim) %>% Apply(paste, collapse = ' ')  
+#'           
+#' @export
+tabf <- function(dd, fmla, all = TRUE, ...) {
+  # returns an array of data frames
+  # that can be processed through 
+  # Apply (version of lapply for dimensioned lists)
+  mm <- model.frame(fmla, dd, na.action = NULL)
+  mp <- if(length(fmla) == 3) 
+    model.frame(fmla[-2],mm, na.action = NULL) else mm
+  if(all) mm <- dd
+  ret <- split(mm, mp)
+  tt <- tab__(mp)
+  dim(ret) <- dim(tt)
+  add_faces(ret)
+}
+#' Version of lapply that can return an array of lists
+#' 
+#' Returns an array of lists similar to its input
+#' 
+#' @param X list of array of lists, as in \code{\link{lapply}}
+#' @param fun function to be applied to each element of X
+#' @param ... same as \code{\link{lapply}}
+#' @export
+Apply <- function(X, fun, ...) {
+  X[] <- lapply(X, fun,...)
+  X
 }

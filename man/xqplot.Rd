@@ -10,11 +10,11 @@ xqplot(
   labels = dimnames(x)[[2]],
   ...,
   mfrow = findmfrow(ncol(x)),
-  ask = prod(mfrow) < ncol(x) && dev.interactive(),
+  ask = FALSE,
   mcex = 0.8,
   maxlab = 12,
   debug = F,
-  mar = c(4, 2.5, 2, 1),
+  mar = c(4, 2.5, 4, 1),
   xlab.pos = 2,
   xlab.cex = 0.7,
   sublab.pos = xlab.pos + xlab.cex * 1.15,
@@ -38,7 +38,7 @@ axis.}
 \item{mfrow}{number of rows and columns per page. If missing, an attempt is
 made to choose a reasonable number.}
 
-\item{ask}{FIXME}
+\item{ask}{if TRUE pause after each page, default: FALSE}
 
 \item{mcex}{character expansion factor for marginal text
 \code{mcex}}

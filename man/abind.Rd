@@ -25,6 +25,8 @@ for the dth dimension where dim(ret)\link{d} == dim(arr1)\link{d} + dim(arr2)\li
 \code{abind} binds two conformable arrays along a dimension.
 }
 \details{
+Warning: abind::abind should be preferred to spida2::abind.
+
 dim( arr1 ) and dim( arr2 ) must be equal except in the dth dimension. If
 the length of dim( arr2 ) is 1 less than that of dim( arr1 ), then 'arr2' is
 treated as if it had dropped the dth dimension with size 1.

@@ -1,0 +1,7 @@
+url: http://130.63.179.181/spida2
+template:
+  bootstrap: 5
+  bootswatch: journal
+development:
+  mode: auto
+  

@@ -1,10 +1,5 @@
-0.2.3
-2025-03-20
-* modified `tolong` so the separator is matched only in its last occurrence in each variable name
-  altenatively a pattern can be specified for the 'time' values, e.g. "[0-9]+$"
 0.2.2
-* xqplot_: experimental modified xqplot to work with data frames containing list elements 
-* improved pred.grid to better handle factors with special contrasts
+
 * changed knots.gspline to knots_.gspline to avoid conflict with stats::knots
 * fixed gplots problem
 
@@ -12,11 +7,65 @@
 * paik2 to draw Paik-Agresti diagrams for a numerical response
 2023-08-05
 * Improvements to `paik`
-2020_07_19
-* makegrid uses getD to create a Cartesian product of predictor with the correct types.
-* kable_array used kableExtra to print arrays (in development)
-2020_07_15
-* wald_lrt performs an LRT test to supplement Wald tests by computing the design matrix for the null hypothesis
+2023-06-27
+* add bm25f to save benchmark results to a file
+2023-03-23
+* debugged() lists debugged functions
+2022_08_15
+* Handle Ls with NAs in waldx (and waldf)
+2022_07_25
+* modified lssvd to use MASS::ginv and added used of sandwich::vcovHC to waldx and waldf if robust=TRUE
+2022_06_01
+* Corrected bug in tab that didn't show a frequency of 0 for factor levels absent in data
+2022_05_31
+* new: tabf, Apply, add_faces: tabf is similar to tab in concept but returns an array of rows of a data frame with margins
+* Apply works like lapply but returns the correct structure, like that of its argument
+2022_05_25
+* added tps, tps_ and tpg, to update trellis settings without resetting other parameters as gd and td do
+2022_05_17
+* added 'robust' and 'type' to getFix.lm and to waldx
+2022_05_12
+* improved identification of non-estimable rows of hypothesis L matrix
+2022_05_09
+* improved behaviour of wald with waldx for singular models 
+2022_04_27
+* add p-values to as.data.frame.wald
+2022_04_26
+* sort input variables to ensure that the prediction fram has factors in their internal order, not the order of appearance in the data
+2022_04_21
+* fixed bug in pred.grid
+2022_02_07
+* added 'pred.grid', an easier version of expand.grid for plotting predicted values from a fitted model
+2022_01_29
+* added 'esac': equivalent to nested ifelse statements (see also case for a different syntax) 
+2022_01_27
+* added napply to allow lapply to have access to names of elements of list used as an argument
+2022_01_02
+* linked 'tablemissing_' to naniar::gg_miss_upset
+2021_10_09
+* as.data.frame.wald includes the original wald object as the 'wald' attribute of the returned object
+2021_08_06
+* added getFix.lmerMod and getFix.glmerMod
+2021_07_02
+* 'as.data.frame.wald' now includes the L matrix in the returned data frame so subsetting the data frame can provide selected rows of the L matrix
+* added 'contr.nhelmert' to construct normalized Helmert coding for factors
+2021_06_19
+* added sublast to substitute the last occurrence of a pattern in a string
+2021_03_02
+* added setwd_here which does nothing when knitting
+2020_12_13
+* xqplot: coerce x to data.frame, to correct problem with tibbles
+2020_11_20
+* fixed bug with up
+2020_11_15
+* modified up to return 'Freq'
+* fixed 'counts' in 'paik'
+2020_11_14
+* added empty environment to render_keep
+2020_11_09
+* fixed cvar so 'up' with the 'freq' argument can return 'grouped data' in the sense of Agrest
+2020_11_07
+* fixed getFix.lm to return vcov with NA for rank-deficient models
 2020_03_14
 * added paik from asbio, brewer.pal.show from RColorBrewer::display.brewer.pal, death.penalty data from asbio, and 'getS' to extract
 samples and sampling parameters from a 'stanfit' object in rstan.

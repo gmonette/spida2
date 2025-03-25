@@ -1,3 +1,16 @@
+#' Color to hex
+#' 
+#' @param cname color name
+#' 
+#' Borrowed from 'gplots'
+#' 
+#' @export
+col2hex <- function (cname) 
+{
+  colMat <- col2rgb(cname)
+  rgb(red = colMat[1, ]/255, green = colMat[2, ]/255, blue = colMat[3, 
+  ]/255)
+}
 #'
 #' Colour collection
 #' 
@@ -85,3 +98,5 @@ my = c(RColorBrewer::brewer.pal(9,'Set1')[-6],"#000000")
 
 )
 }
+
+

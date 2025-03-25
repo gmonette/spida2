@@ -8,9 +8,9 @@
 \usage{
 rpfmt(x, ...)
 
-\method{rpfmt}{default}(x, digits = 3, pdigits = 5)
+\method{rpfmt}{default}(x, digits = 3, pdigits = 5, ...)
 
-\method{rpfmt}{wald}(w, ...)
+\method{rpfmt}{wald}(x, ...)
 }
 \arguments{
 \item{x}{a n x 2 matrix or data frame}

@@ -16,7 +16,6 @@ dropLast(arr, drop = FALSE, keep = NULL)
 \description{
 Primarily used to strips totals from a table bordered by totals
 by dropping the last facet.
-The
 }
 \examples{
 (arr <- array(1:24,2:4))

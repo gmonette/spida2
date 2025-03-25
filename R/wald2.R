@@ -82,7 +82,7 @@
 #'        these
 #' @param clevel level for confidence intervals. No confidence intervals if clevel is NULL
 #' @param pred prediction data frame to evaluate fitted model using
-#'        \code{getX(fit) %*% coef}
+#'        \code{getX(fit)\%*\% coef}
 #' @param data data frame used as 'data' attribute fot list elements returned only if
 #'        the corresponding element of \code{Llist} has a NULL data attribute
 #' @param debug (default FALSE) produce verbose information

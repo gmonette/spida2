@@ -226,7 +226,7 @@ M.formula <- function (form, ..., keep.intercept = FALSE) {
 }
 #' @describeIn M factor method
 #' @export
-M.factor <- function( x, base = NULL) {
+M.factor <- function( x, base = NULL, ...) {
   ret <- contrasts(x)[x,]
   if( ! is.null(base)) {
     if ( !is.factor(base)) stop("base must be a factor")

@@ -237,7 +237,7 @@ solve.pdInd <-
     #    attributes(ret) <- attributes(a)
     #    ret
   }
-
+#' @export
 coef.pdInd <-
 function (object, unconstrained = TRUE, ...) 
 {

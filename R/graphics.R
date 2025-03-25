@@ -312,7 +312,252 @@ gd <- function (n=8, pal = "Dark2",
   }
 #' @describeIn td gd to set non-group parameters
 #' @export
-gd_ <- function(...) gd(superpose = FALSE, ...)
+gd_ <- function(...) {
+  gd(superpose = FALSE, ...)
+}
+#' @describeIn td trellis par set for superpose parameters
+#' @export
+tps <- function (...)
+{
+  library(lattice)
+  library(latticeExtra)
+  library(RColorBrewer)
+  
+  args <- list(...)
+  # disp(args)
+  theme <- trellis.par.get()
+  old_theme <- theme
+  nams <- names(args)
+  for(i in seq_along(args)) {
+    # disp(nams[i])
+    switch(nams[i],
+         'lty' = {
+           theme$superpose.line$lty <- args[[i]]
+         },
+         'col' = {
+           theme$superpose.line$col <- args[[i]]
+           theme$superpose.symbol$col <- args[[i]]
+         }, 
+          'symbol_col' = {
+           
+             theme$superpose.symbol$col <- args[[i]]
+             
+           },
+         'line_col' = {
+           theme$superpose.line$col <- args[[i]]
+         },
+         'lwd' = {
+           theme$superpose.line$lwd <- args[[i]]
+           # disp('lwd')
+         },
+         'alpha' = {
+           theme$superpose.line$alpha <- args[[i]]
+           theme$superpose.symbol$alpha <- args[[i]]
+           # disp('alpha')
+         },
+         'symbol_alpha' = {
+           theme$superpose.symbol$alpha <- args[[i]]
+           # disp('did this too')
+           
+         },
+         'line_alpha' = {
+           theme$superpose.line$alpha <- args[[i]]
+           
+         },
+         'font' = {
+           theme$superpose.symbol$font <- args[[i]]
+           
+         },
+         'fill' = {
+           theme$superpose.symbol$fill <- args[[i]]
+           
+         },
+         'cex' = {
+           theme$superpose.symbol$cex <- args[[i]]
+           
+         },
+         'pch' = {
+           theme$superpose.symbol$pch <- args[[i]]
+         },
+         {
+             lnames <- strsplit(nams[i], split = '_', fixed = TRUE)[[1]]
+             larg <- paste(lnames, collapse ='"]][["')
+             expr <- paste0('theme[["',larg,'"]] <- args[[i]]')
+             eval(str2lang(expr))
+         }
+    )
+  }
+  trellis.par.set(theme=theme)
+  invisible(old_theme)
+}
+#' @describeIn td trellis par set for all parameters, special treatment for col, lwd, lty, pch, padding
+#' @export
+tps_ <- function (...)
+{
+  args <- list(...)
+  # disp(args)
+  theme <- trellis.par.get()
+  nams <- names(args)
+  for(i in seq_along(args)) {
+    # disp(nams[i])
+    switch(nams[i],
+           'lty' = {
+             theme$plot.line$lty <- args[[i]]
+           },
+           'col' = {
+             theme$plot.line$col <- args[[i]]
+             theme$plot.symbol$col <- args[[i]]
+           }, 
+           'symbol_col' = {
+             
+             theme$plot.symbol$col <- args[[i]]
+             
+           },
+           'line_col' = {
+             theme$plot.line$col <- args[[i]]
+           },
+           'lwd' = {
+             theme$plot.line$lwd <- args[[i]]
+             # disp('lwd')
+           },
+           'alpha' = {
+             theme$plot.line$alpha <- args[[i]]
+             theme$plot.symbol$alpha <- args[[i]]
+             # disp('alpha')
+           },
+           'symbol_alpha' = {
+             theme$plot.symbol$alpha <- args[[i]]
+             # disp('did this too')
+             
+           },
+           'line_alpha' = {
+             theme$plot.line$alpha <- args[[i]]
+             
+           },
+           'font' = {
+             theme$plot.symbol$font <- args[[i]]
+             
+           },
+           'fill' = {
+             theme$plot.symbol$fill <- args[[i]]
+             
+           },
+           'cex' = {
+             theme$plot.symbol$cex <- args[[i]]
+             
+           },
+           'pch' = {
+             theme$plot.symbol$pch <- args[[i]]
+           },
+           'padding' = {
+             #  left.padding      key.ylab.padding  ylab.axis.padding axis.key.padding  right.padding    
+             theme$layout.widths$axis.key.padding <- args[[i]]
+             theme$layout.widths$right.padding <- args[[i]]
+             theme$layout.widths$left.padding <- args[[i]]
+             theme$layout.widths$ylab.axis.padding <- args[[i]]
+             theme$layout.widths$key.ylab.padding <- args[[i]]
+             
+             # top.padding       main.key.padding  key.axis.padding  axis.xlab.padding xlab.key.padding  key.sub.padding   bottom.padding   
+             
+             theme$layout.heights$top.padding <- args[[i]]
+             theme$layout.heights$main.key.padding <- args[[i]]
+             theme$layout.heights$key.axis.padding <- args[[i]]
+             theme$layout.heights$axis.xlab.padding <- args[[i]]
+             theme$layout.heights$xlab.key.padding <- args[[i]]
+             theme$layout.heights$key.sub.padding <- args[[i]]
+             theme$layout.heights$bottom.padding <- args[[i]]
+             
+           },
+           {
+             lnames <- strsplit(nams[i], split = '_', fixed = TRUE)[[1]]
+             larg <- paste(lnames, collapse ='"]][["')
+             expr <- paste0('theme[["',larg,'"]] <- args[[i]]')
+             eval(str2lang(expr))
+           }
+    )
+  }
+  invisible(trellis.par.set(theme=theme))
+}
+### tpg and tpg_
+#' @describeIn td trellis par set for superpose parameters
+#' @export
+tpg <- function (...)
+{
+  args <- list(...)
+  # disp(args)
+  theme <- trellis.par.get()
+  if(length(args) == 0) return(theme)
+  # nams <- names(args)
+  ret <- list()
+  for(i in seq_along(args)) {
+    # disp(nams[i])
+    ret[[args[[i]]]] <- switch(args[[i]],
+           'lty' = {
+             theme$superpose.line$lty
+           },
+           'col' = {
+             if(identical(theme$superpose.line$col,theme$superpose.symbol$col))
+               theme$superpose.line$col
+             else
+               list(superpose.line = theme$superpose.line$col, superpose.symbol = theme$superpose.symbol$col)
+           }, 
+           'symbol_col' = {
+             
+             theme$superpose.symbol$col
+             
+           },
+           'line_col' = {
+             theme$superpose.line$col
+           },
+           'lwd' = {
+             theme$superpose.line$lwd
+             # disp('lwd')
+           },
+           'alpha' = {
+             list(theme$superpose.line$alpha,
+             theme$superpose.symbol$alpha)
+             if(identical(theme$superpose.line$alpha,theme$superpose.symbol$alpha))
+               theme$superpose.line$alpha
+             else
+               list(superpose.line = theme$superpose.line$alpha, superpose.symbol = theme$superpose.symbol$alpha)
+             
+                         
+           },
+           'symbol_alpha' = {
+             theme$superpose.symbol$alpha
+         
+             
+           },
+           'line_alpha' = {
+             theme$superpose.line$alpha 
+             
+           },
+           'font' = {
+             theme$superpose.symbol$font 
+             
+           },
+           'fill' = {
+             theme$superpose.symbol$fill 
+             
+           },
+           'cex' = {
+             theme$superpose.symbol$cex
+             
+           },
+           'pch' = {
+             theme$superpose.symbol$pch
+           },
+           {
+             lnames <- strsplit(args[[i]], split = '_', fixed = TRUE)[[1]]
+             larg <- paste(lnames, collapse ='"]][["')
+             expr <- paste0('theme[["',larg,'"]]')
+             eval(str2lang(expr))
+           }
+    )
+  }
+  ret
+
+}
 
 ###
 ###  xqplot
@@ -331,7 +576,7 @@ gd_ <- function(...) gd(superpose = FALSE, ...)
 #' @param \dots additional arguments passed to 'plot' command
 #' @param mfrow number of rows and columns per page. If missing, an attempt is
 #' made to choose a reasonable number.
-#' @param ask FIXME
+#' @param ask if TRUE pause after each page, default: FALSE
 #' @param mcex character expansion factor for marginal text
 #' \code{mcex}
 #' @param maxlab maximum number of categories to label in barcharts
@@ -362,12 +607,13 @@ xqplot <- function(x,
                    labels = dimnames(x)[[2]],
                    ...,
                    mfrow = findmfrow (ncol(x)),
-                   ask = prod(mfrow) <
-                     ncol(x) && dev.interactive(),
+                   # ask = prod(mfrow) <
+                   # ncol(x) && dev.interactive(),
+                   ask = FALSE,
                    mcex = 0.8,
                    maxlab = 12 ,
                    debug = F,
-                   mar = c(4, 2.5, 2, 1),
+                   mar = c(4, 2.5, 4, 1),
                    xlab.pos = 2,
                    # new param
                    xlab.cex = .7,
@@ -383,9 +629,8 @@ xqplot <- function(x,
   ## Adapted from myplot.data.frame for R by G. Monette, Oct. 25, 2004
   ##    maxlab is maximum number of labels
   # Turn matrices into variables:
-  if (!is.list(x))
-    x <- as.data.frame(x)
-  if (any (sapply(x, class) == 'matrix')) {
+  x <- as.data.frame(x)
+  if (any (sapply(x, inherits, 'matrix'))) {
     zz <- list()
     for (ii in seq_along(x)) {
       if (is.matrix(x[[ii]])) {

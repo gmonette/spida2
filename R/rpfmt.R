@@ -13,7 +13,7 @@
 rpfmt <- function(x, ...) UseMethod('rpfmt')
 #' @rdname rpfmt
 #' @export
-rpfmt.default <- function(x, digits = 3, pdigits = 5) {
+rpfmt.default <- function(x, digits = 3, pdigits = 5, ...) {
   # x is a n x 2*k matrix or data frame with
   # values in first column and p-values in second
   k <- ncol(x)/2
@@ -34,10 +34,10 @@ rpfmt.default <- function(x, digits = 3, pdigits = 5) {
 #' @rdname rpfmt
 #' @details works on first element of a \code{\link[spida2]{wald}} list
 #' @export
-rpfmt.wald <- function(w, ...) {
-  w <- w[[1]][[2]]
+rpfmt.wald <- function(x, ...) {
+  x <- x[[1]][[2]]
   # disp(w)
-  x <- w[,c("Estimate",'p-value')]
+  x <- x[,c("Estimate",'p-value')]
   rpfmt(x, ...)
 }
 

@@ -12,3 +12,33 @@ years <- function(x,...) UseMethod("years")
 #' @describeIn years method for Date objects
 #' @export
 years.Date <- function(x,...) as.numeric(format(x,"%Y"))
+#' @describeIn years default method
+#' @param date an object that can be converted to a 'Date'
+#' @export
+years.default <- function(x,...) as.numeric(format(as.Date(x),"%Y"))
+#' Extract month as a factor
+#' 
+#' @param date an object that can be converted to a 'Date'
+#' @export
+Months <- function(date,...) {
+  date <- as.Date(date)
+  factor(months(date), levels = c('January','February','March','April','May','June','July','August','September','October',
+                                  'November','December'))
+}
+if(FALSE) {
+  Months('2021_02_23')
+}
+#' Extract day of the week as a factor
+#' 
+#' @param date an object that can be converted to a 'Date'
+#' @param first day of the week, default: "Sunday"
+#' @export
+Weekdays <- function(date,
+                     first = 'Sunday',...){
+  data <- as.Date(date)
+  levs <-  c('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday')
+  if(is.character(first)) first <- match(first, levs)
+  
+  factor(weekdays(date), levels = c('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'))
+}
+#' 

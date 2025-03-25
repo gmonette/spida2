@@ -2,25 +2,10 @@
 % Please edit documentation in R/tolong.R
 \name{tolong}
 \alias{tolong}
-\alias{tolong_old}
 \alias{long}
 \title{Create a long file from a wide file}
 \usage{
 tolong(
-  data,
-  sep = "_",
-  timevar = "time",
-  idvar = "id",
-  ids = 1:nrow(data),
-  valuepattern = if (numericalpattern) "[0-9]+" else ".*",
-  numericalpattern = FALSE,
-  expand = TRUE,
-  safe_sep = "@3-2861-2579@",
-  reverse = F,
-  ...
-)
-
-tolong_old(
   data,
   sep = "_",
   timevar = "time",
@@ -38,10 +23,8 @@ long(
   timevar = "time",
   idvar = "id",
   ids = 1:nrow(data),
-  valuepattern = if (numericalpattern) "[0-9]+" else ".*",
-  numericalpattern = FALSE,
   expand = TRUE,
-  safe_sep = "@3-2861-2579@",
+  safe_sep = "#\%@!",
   reverse = F,
   ...
 )
@@ -49,141 +32,71 @@ long(
 \arguments{
 \item{data}{wide data frame}
 
-\item{sep}{(default '_') single or multiple character separator between
-long names and 'time' value. Variable names with this
-separator are transformed to long variables. If the string
-occurs multiple times in a variable name, only the last
-occurrence is treated as a separator.}
+\item{sep}{(default '_') single character separator between long names and 'time' value.
+Variable names with this separator are transformed to long variables.}
 
-\item{timevar}{(default 'time') names of variable in output
-long file to identify occasions. Its values are taken
-from the suffix following the 'sep' character in each
-time-varying variable.}
+\item{timevar}{(default 'time') names of variable in output long file to identify occasions. Its values are taken from the suffix following
+the 'sep' character in each time-varying variable.}
 
-\item{idvar}{(default: 'id') the variable name used in the
-output long file to identify the provenance row in the
-input wide file.
-It may exist in the input wide file and must, in that
-case, have a unique value in each row. If it does not
-exist, it will be created with values equal to the row
-numbers of the input wide file.}
+\item{idvar}{(default: 'id') the variable name used in the output long file to identify rows in the input wide file. It may exist in the input wide file and must, in that case,
+have a unique value in each row. If it does not exist, it will be created with values equal to the row numbers of the input wide file.}
 
-\item{ids}{(default \code{1:nrow(data)}) values for idvar
-in long file if the variable \code{idvar} does not exist
-in the input wide file. Ignored if \code{idvar} exists
-in \code{data}.}
+\item{ids}{(default \code{1:nrow(data)}) values for idvar in long file if the variable \code{idvar} does not exist in in the input wide file. Ignored
+if \code{idvar} exists in \code{data}.}
 
-\item{valuepattern}{a regular expression to match the form of time values
-at the end of variable names immediately following
-the separator.  Specifying this pattern can avoid
-misinterpreting separators in variable names that
-are not intended to turned into long variables.}
-
-\item{numericalpattern}{(default FALSE) if TRUE,
-\code{valuepattern} is set to "\link{0-9}+$" to match
-numerical values as time values at the end of
-variable names to be turned into long variables.
-This parameter is only
-necessary if the separator occurs in variable names where
-it is not intended to identify a long variable.}
-
-\item{expand}{(default TRUE): if 'time' values are
-inconsistent, fill in missing 'time's with NAs.}
+\item{expand}{(default TRUE): if 'time' values are inconsistent, fill in missing 'time's with NAs.}
 
 \item{safe_sep}{temporary safe? separator}
 
-\item{reverse}{(default FALSE) if TRUE, the 'time' value
-precedes the variable name}
+\item{reverse}{(default FALSE) if TRUE, the 'time' value precedes the
+variable name}
 
-\item{...}{additional parameters are passed to
-\code{\link{reshape}}.}
+\item{...}{additional parameters are passed to \code{\link{reshape}}.}
 }
 \value{
-'long' file with each wide row repeated as many
-times as there are distinct values for the 'timevar'
-variable. The rownames show the provenance of each row
-by combining the value of \code{id} with the value of \code{time}
-separated by a period
+'long' file with each wide row repeated as many times as there are distinct values for the 'timevar' variable.
 }
 \description{
-Uses a minimal number of arguments to create a long file
-using \code{stats::\link{reshape}}. Produces output even
-when long variable names and time values are not fully
-crossed.
+Uses a minimal number of arguments to create a long file using \code{stats::\link{reshape}}. Produces output even when long variable names and time values are not fully crossed.
 }
 \details{
-\code{tolong} is intended for the simple case in which
-'wide' variables in the input data frame are separator string that
-separates the name of the variable in the long file from
-the value of the 'time' variable that identifies the
-corresponding row in the long file, e.g \code{x_1, x_2,
-x_3} or \code{brain.volume_left, brain.volume_right}.  Since
-the separator ('_' by default) may occur in other variables,
-\code{tolong} offers two mechanisms to avoid misinterpreting
-those occurrences as separators. If there are multiple
-occurrences of the separator string in a variable name, only the
-last occurrence is interpreted as a separator.  Secondly,
-the \code{valuepattern} parameter can specify a regular expression
-to identify allowed 'time' value strings at the end of variable
-names.  The common case where the 'time' values are numerical
-can be specified with the \code{numericalpattern} parameter.
+\code{tolong} is intended for the simple case in which 'wide' variables in the input data frame are identified
+by the fact that they contain a separator character that separates the name of the variable in the long file from
+the value of the 'time' variable that identifies the corresponding row in the long file, e.g \code{x_1, x_2, x_3} or
+\code{brain.volume_left, brain.volume_right}.  If the separator ('_' by default) occurs in other variables, it must
+be temporarily substituted.
 
-\code{\link{reshape}} does not work if long variable names
-and time values are not fully crossed, e.g \code{x_1, x_2,
-x_3, y_1, y_2}. By default \code{long} creates additional
-variables with "NAs" so the set of variables given to
-\code{\link{reshape}} is fully crossed, e.g. adding a
-variable \code{y_3 <- NA}.
+\code{\link{reshape}} does not work if long variable names and time values are not fully crossed, e.g \code{x_1, x_2, x_3, y_1, y_2}. By default \code{long}
+creates additional variables with "NAs" so the set of variables given to \code{\link{reshape}} is fully crossed, e.g. adding a variable \code{y_3 <- NA}.
 
-Compare the functionality of \code{tolong} with that of
-\code{\link{tidyr::gather}} and of
-\code{\link{tidyr::pivot_longer}}. 'tolong' depends on the
-format of variable names to identify variables whose values
-become new variables in the long form of the data and which
-labels are used as the indices of the indexing variable,
-whose default name is 'time', which can be set to another
-value with the "timevar" argument. "tolong" can handle many
-'time-varying' variables. "gather" can only handle one.
-"pivot_longer" can handle many and might be considered a
-replacement for "to_long" which has the disadvantage of
-frequently requiring the renaming of variables, an easier
-task for those who have mastered the use of regular
-expressions, but potentially challenging otherwise.
+Compare the functionality of \code{tolong} with that of \code{\link{tidyr::gather}} and of
+\code{\link{tidyr::pivot_longer}}. 'tolong' depends on the format of variable names to
+identify variables whose values become new variables in the long form of the data and which labels
+are used as the indices of the indexing variable, whose default name is 'time', which can
+be set to another value with the "timevar" argument. "tolong" can handle many 'time-varying' variables.
+"gather" can only handle one.  "pivot_longer" can handle many and might be considered a replacement
+for "to_long" which has the disadvantage of frequently requiring the renaming of variables, an
+easier task for those who have mastered the use of regular expressions, but potentially
+challenging otherwise.
 }
 \examples{
 z <- data.frame(id =letters[1:10], id2= 11:20, v_L = 1:10, v_R = 11:20)
-z
 tolong(z)
 tolong(z, timevar = 'Side', idvar = 'idn', ids = LETTERS[1:10])
 tolong(z, timevar = 'Side', idvar = 'idn', ids = z$id2)
 
 # unbalanced times
 z <- data.frame(id =letters[1:10], id2= 11:20, v_L = 1:10, v_R = 11:20, z_L = 21:30)
-z
 tolong(z)
 
 # a separator with multiple occurrences:
 z <- data.frame(id =letters[1:10], id2= 11:20, v_a_L = 1:10, v_a_R = 11:20, z_L = 21:30)
-z
-# The previous version of tolong() would have produced an error 
-# due to multiple occurrences of the default separator '_'
-# but the new version matches only the last occurrence in
-# each variable name. The sublast() function helps by
-# matching only the last occurrence to facilitate 
-# replacing it with a new unique separator, but it is
-# no longer necessary to do this:
-zz <- z
-names(zz) <- sublast('_', '__', names(zz))
-tolong(zz, sep = '__')
-# or, now,, with the same result:
-tolong(z)
-#
-# - sep can use more than one character
-# - the character string is interpreted literally, 
-# i.e. if special regular expression characters
-# they are interpreted literally.
+# tolong(z) would produce an error due to multiple occurrences of the default separator '_'
+names(z) <- sublast('_', '__', names(z))
+tolong(z, sep = '__')
+
+# multi-character sep
 z <- data.frame(id =letters[1:10], id2= 11:20, HPC_head_R = 1:10, HPC_tail_R = 11:20, HPC_head_L = 21:30, HPC_tail_L = 31:40)
-z
 names(z) <- sub("(_[LR]$)","_\\\\1", names(z))
 names(z)
 (zz <- tolong(z, sep = "__", timevar = "Side"))
@@ -192,10 +105,8 @@ tolong(zz, idvar = 'id3' ,timevar = 'Part')
 
 dd <- data.frame( y.a = 1:3, y.b = 1:3, x.a= 1:3, time = 1:3,
     x.b = 11:13, x.c = 21:23, id = c('a','a','b'))
-dd
 tolong(dd, sep = '.')
 dl <- tolong(dd, sep = '.', timevar = "type", idvar = 'patient')
-dl
 towide(dl, idvar = 'patient', timevar = 'type')
 
 # Long file with additional constants
@@ -252,6 +163,5 @@ dl <- tolong(df, sep = ':', reverse = T)
 }
 }
 \seealso{
-\code{\link{towide}} for many examples using both
-'towide' and 'tolong'.
+\code{\link{towide}} for many examples using both 'towide' and 'tolong'.
 }

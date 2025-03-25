@@ -1,11 +1,14 @@
 ##  gsp-util.R
 ##
+##  added
+##
+##
 ##  General polynomial splines: August 8, 2008
 ##  Revised June 16, 2010 to incorporate degree 0 polynomials
 ##    and constraining evaluation of spline to 0 with intercept
 ##   
 ##  Modified: June 15, 2013 - GM
-##  Added specified linear contraints to gsp and 
+##  Added specified linear constraints to gsp and 
 ##  to sc expressed
 ##  in terms of full polynomial parametrization
 ##  
@@ -15,12 +18,17 @@
 ##  Added periodic argument to gsp
 ##
 ##
-#' Generate X matrix estimate Dth derivative of polynomial at x
-#' 
+#' Estimate Dth derivative of 
+#' polynomial at x
+#'
+#' Generate X matrix 
+#' to estimate Dth derivative 
+#' of polynomial at x
+#'
 #' @param x vector of values where derivative evaluated
 #' @param degree of polynomial
 #' @param order of derivative
-#' @param signif significant digits for labelling
+#' @param signif significant digits for labeling
 #' 
 #' @export
 Xmat <- function( x, degree, D = 0, signif = 3) {
@@ -189,6 +197,8 @@ Emat <- function(  knots, degree, smooth , intercept = FALSE, signif = 3) {
 
 #' Orthogonal basis for column space of a matrix
 #' 
+#' Orthogonal basis for column space of a matrix
+#' 
 #' @param X 
 #' @param coef 
 basis  <- function( X , coef = FALSE ) {
@@ -214,6 +224,8 @@ basis  <- function( X , coef = FALSE ) {
 
 
 
+#' Spline tranformation matrix
+#' 
 #' Spline tranformation matrix
 #'
 #' @param knots 
@@ -244,6 +256,8 @@ spline.T <-
 
 
 
+#' Spline estimation function
+#' 
 #' Spline estimation function
 #' 
 #' @param knots 

@@ -146,7 +146,7 @@ ell <- function( center = rep(0,2) , shape = diag(2), radius  = 1, n =100) {
 #' @param x fitted object
 #' @param \dots other arguments passed to method
 #' @export
-cell <- function(x, ... )  UseMethod("cell")
+cell <- function(obj, ... )  UseMethod("cell")
 #' @param which.coef (default 1:2) which parameters to estimate
 #' @param levels (default 0.95)
 #' @param Sheffe logical (default FALSE)
@@ -179,33 +179,33 @@ cell.wald <-
 #' @describeIn cell default method
 #' @export
 cell.default <-
-  function (model, which.coef, levels = 0.95, Scheffe = FALSE, dfn = 2,
+  function (obj, which.coef, levels = 0.95, Scheffe = FALSE, dfn = 2,
             center.pch = 19, center.cex = 1.5, segments = 51, xlab, ylab,
             las = par("las"), col = palette()[2], lwd = 2, lty = 1,
             add = FALSE, ...)
   {
 
     #require(car)
-    which.coef <- if (length(coefficients(model)) == 2)
+    which.coef <- if (length(coefficients(obj)) == 2)
       c(1, 2)
     else {
       if (missing(which.coef)) {
-        if (any(names(coefficients(model)) == "(Intercept)"))
+        if (any(names(coefficients(obj)) == "(Intercept)"))
           c(2, 3)
         else c(1, 2)
       }
       else which.coef
     }
-    coef <- coefficients(model)[which.coef]
+    coef <- coefficients(obj)[which.coef]
     xlab <- if (missing(xlab))
       paste(names(coef)[1], "coefficient")
     ylab <- if (missing(ylab))
       paste(names(coef)[2], "coefficient")
     if(missing(dfn)) {
-      dfn <- if (Scheffe) sum(df.terms(model)) else 2
+      dfn <- if (Scheffe) sum(df.terms(obj)) else 2
     }
-    dfd <- df.residual(model)
-    shape <- vcov(model)[which.coef, which.coef]
+    dfd <- df.residual(obj)
+    shape <- vcov(obj)[which.coef, which.coef]
     ret <- numeric(0)
 
     ret <- ell( coef, shape,sqrt(dfn * qf(levels, dfn, dfd)))

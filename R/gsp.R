@@ -531,7 +531,7 @@ gsp <- function (x, knots, degree = 3,
     class(ret) <- "gsp"
     ret
 }
-
+#' @export
 print.gsp <- function(x, strip.attributes=TRUE, ...){
     nms <- colnames(x)
     ncol <- ncol(x)

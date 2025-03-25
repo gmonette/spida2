@@ -14,7 +14,8 @@ dropLastTotal(mat, names_to_drop = "Total", drop = FALSE)
 \item{drop}{(default FALSE) should one-element dimension be dropped as dimensions}
 }
 \description{
-
+Used to drop "Total" rows and columns after using \code{\link{tab}}. Synonyms for
+legacy: \code{Tab} and \code{pab}.
 }
 \seealso{
 tab, Tab, dropLast

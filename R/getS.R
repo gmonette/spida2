@@ -8,12 +8,13 @@ getS <- function(x,...) UseMethod('getS')
 getS.default <- function(x,...) {
   stop('No method implemented for object of class ',class(x),'\n')
 }
+#' @import rstan
 #' @export
-getS.stanfit <- function(sf) {
+getS.stanfit <- function(x,...) {
   # function to create a data frame
   # of samples from a stanfit object
   # together with sampler parameters
-  sam <- rstan:::as.data.frame.stanfit(sf)
-  pars <- as.data.frame(do.call(rbind,rstan::get_sampler_params(sf, inc_warmup = FALSE)))
+  sam <- rstan:::as.data.frame.stanfit(x)
+  pars <- as.data.frame(do.call(rbind,rstan::get_sampler_params(x, inc_warmup = FALSE)))
   cbind(sam, pars)
 }

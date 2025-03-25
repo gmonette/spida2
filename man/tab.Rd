@@ -23,7 +23,7 @@ tab(x, ...)
 \method{tab}{formula}(fmla, data = sys.frame(sys.parent()), ...)
 
 \method{tab}{data.frame}(
-  dd,
+  x,
   fmla,
   total.margins = TRUE,
   useNA = "ifany",
@@ -34,7 +34,8 @@ tab(x, ...)
   na.rm = NULL,
   all.label = "All",
   simulate = FALSE,
-  B = 2000
+  B = 2000,
+  ...
 )
 
 \method{tab}{default}(

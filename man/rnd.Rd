@@ -7,7 +7,7 @@
 \usage{
 rnd(x, digits, ...)
 
-\method{rnd}{default}(x, digits = 3, ..., verbose = 0)
+\method{rnd}{default}(x, ...)
 }
 \arguments{
 \item{x}{an object to be rounded and formatted}

@@ -23,9 +23,9 @@ labs(x, ...) <- value
 
 \method{[}{data.frame.lab}(x, ...)
 
-\method{labs}{data.frame}(x) <- value
+\method{labs}{data.frame}(x, ...) <- value
 
-\method{labs}{default}(x) <- value
+\method{labs}{default}(x, ...) <- value
 }
 \arguments{
 \item{x}{an object}

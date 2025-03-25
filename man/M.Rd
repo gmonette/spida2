@@ -17,7 +17,7 @@ M(x, ...)
 
 \method{M}{formula}(form, ..., keep.intercept = FALSE)
 
-\method{M}{factor}(x, base = NULL)
+\method{M}{factor}(x, base = NULL, ...)
 
 \method{M}{M}(x, ...)
 

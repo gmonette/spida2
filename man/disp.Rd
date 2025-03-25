@@ -14,3 +14,6 @@ disp(x, head = deparse(substitute(x)))
 \description{
 Useful for debugging as a substitute for printing the value of a variable in a function. It also prints the name of the variable.
 }
+\details{
+Prints object if \code{options(verbose=TRUE)}
+}

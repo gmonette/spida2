@@ -3,14 +3,19 @@
 \name{years}
 \alias{years}
 \alias{years.Date}
+\alias{years.default}
 \title{Get the year of a Date object}
 \usage{
 years(x, ...)
 
 \method{years}{Date}(x, ...)
+
+\method{years}{default}(x, ...)
 }
 \arguments{
 \item{x}{a Date object}
+
+\item{date}{an object that can be converted to a 'Date'}
 }
 \value{
 the year as an integer
@@ -21,5 +26,7 @@ Works like 'months', 'weekdays', etc. for years.
 \section{Methods (by class)}{
 \itemize{
 \item \code{years(Date)}: method for Date objects
+
+\item \code{years(default)}: default method
 
 }}

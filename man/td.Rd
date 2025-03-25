@@ -4,6 +4,9 @@
 \alias{td}
 \alias{gd}
 \alias{gd_}
+\alias{tps}
+\alias{tps_}
+\alias{tpg}
 \title{Set lattice parameters for multiple groups}
 \usage{
 td(...)
@@ -42,6 +45,12 @@ gd(
 )
 
 gd_(...)
+
+tps(...)
+
+tps_(...)
+
+tpg(...)
 }
 \arguments{
 \item{\dots}{FIXME
@@ -114,6 +123,12 @@ device with a white background if new = TRUE.
 \item \code{gd()}: with ggplot2-like theme
 
 \item \code{gd_()}: gd to set non-group parameters
+
+\item \code{tps()}: trellis par set for superpose parameters
+
+\item \code{tps_()}: trellis par set for all parameters, special treatment for col, lwd, lty, pch, padding
+
+\item \code{tpg()}: trellis par set for superpose parameters
 
 }}
 \examples{

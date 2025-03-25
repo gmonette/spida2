@@ -4,7 +4,7 @@
 \alias{gspline}
 \alias{print.gspline}
 \alias{print.gspline_matrix}
-\alias{knots.gspline}
+\alias{knots_.gspline}
 \alias{Gspline}
 \title{General parametric regression splines with variable degrees and smoothness}
 \usage{
@@ -22,12 +22,13 @@ gspline(
 
 \method{print}{gspline}(
   x,
-  show = c("knots", "degree", "smoothness", "G", "constraint_mat", "estimate_mat")
+  show = c("knots", "degree", "smoothness", "G", "constraint_mat", "estimate_mat"),
+  ...
 )
 
 \method{print}{gspline_matrix}(x, ...)
 
-\method{knots}{gspline}(sp)
+knots_.gspline(sp)
 
 Gspline(
   knots,

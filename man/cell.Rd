@@ -6,7 +6,7 @@
 \alias{cell.default}
 \title{Confidence ellipse}
 \usage{
-cell(x, ...)
+cell(obj, ...)
 
 \method{cell}{wald}(
   obj,
@@ -28,7 +28,7 @@ cell(x, ...)
 )
 
 \method{cell}{default}(
-  model,
+  obj,
   which.coef,
   levels = 0.95,
   Scheffe = FALSE,
@@ -47,8 +47,6 @@ cell(x, ...)
 )
 }
 \arguments{
-\item{x}{fitted object}
-
 \item{\dots}{other arguments passed to method}
 
 \item{which.coef}{(default 1:2) which parameters to estimate}
@@ -56,6 +54,8 @@ cell(x, ...)
 \item{levels}{(default 0.95)}
 
 \item{dfn}{(default 2) degrees of freedom for Sheffe multiple test and confidence limits}
+
+\item{x}{fitted object}
 
 \item{Sheffe}{logical (default FALSE)}
 }

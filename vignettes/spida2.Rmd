@@ -1,0 +1,150 @@
+---
+title: "spida2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{spida2}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(spida2)
+```
+
+## spida2: Functions used in the Statistical Consulting Service at York University
+
+The spida2 package is a collection of functions and datasets intended primarily
+for statistical consulting, with a particular emphasis on
+longitudinal and hierarchical data analysis. Some documents related to this 
+package can be found at \url{http://blackwell.math.yorku.ca/R/spida2/doc}
+
+## General Bugs
+
+- `latticeExtra::+.trellis()` in xyplot + xyplot requires the same data set to avoid registration of panels if some levels of panel factors are different in data sets for different panes. 
+- Use `Rbind()` to create a common data frame and different names for plotted tables, e.g. to plot both lines and points. 
+}
+
+## New functions
+
+-  `Rbind()` works on data.frame, missing variables get NA: use to avoid fted panels in latticeExtra
+-  `Apply()` returns list with same structure, e.g. list array
+-  `tabf()` returns result of applying function as a list array
+-  `waldx()` temporary name for rank-deficient aware version of wald
+-  `waldf()` rank-deficient aware version of wald that returns a data frame  L matrix
+-  `subrow()` subtracts selected rows of L matrix from ranges of rows, e.g. compare with comparators
+-  `lchol()` returns lower-triangular L so that G = L'L.
+-  `getR()`, `getG()` and `getV()` urn R, G and V matrices for `nlme::lme()` objects.
+-  `pdInd()` constructs a pdClass for a G matrix with patterns of zero ariances. See
+a vignette at [pdInd: G matrix with a pattern of zeros](http://130.63.179.181/R/spida2/doc/pdInd.html).
+}
+
+## Wald tests and linear hypothesis matrices
+
+-  `wald()` Wald tests with L matrices optionally created with regular ressions. 
+    Uses SVD to handle linear dependencies in rows of L
+-  `walddf()` version of wald that returns a data frame
+-  `as.data.frame.wald()` return a data frame from a wald object
+-  `coef.wald()` method to extract estimated coefficients
+-  `print.wald()` printing method
+-  `Lfx()`  creates hypothesis matrices for derivatives and differences.  example for factor differences
+-  `M()` constructor for M objects to generate portions of design and othesis matrices. Used with  `Lfx()`
+-  `rpfmt()` format estimated values and p-values from a wald test
+-  `Lall()` for lmer objects
+-  `Lc()` for lmer objects
+-  `Lmu()` for lmer objects
+}
+
+## Utilities for fitted objects
+
+-  `getD()` get data frame from a fitted object
+-  `getData()` older version using methods. Might work if previous fails
+-  `getFix()` get fixed effects from a fitted object
+-  `getX()` get X matrix from fitted object
+-  `getV()` get V matrix from a mixed model
+-  `getG()` get G matrix from a mixed model
+-  `getR()` get R matrix from a mixed model
+-  `Vcov()` get estimated variance covariance of fixed effects from a ted object
+}
+
+## Multilevel data frames
+
+-  `capply()`: `capply(x,id,FUN)` applies the
+  function `FUN` to chunks of 'x' formed by levels of 'id'.
+  The result has the same form as 'x' with replication within
+  chunks, if needed.
+-  `up()`, `agg()` and `up_apply()` create summary
+  data sets consisting, by default, of within-id-invariant variables. 
+  Summaries of id-varying variables can also be included. `agg()` can
+  create mean incidence matrices for lower-level factors.
+-  `cvar()` and `dvar()` are designed to be used
+  in linear model formulas to generate 'centered-within-group' and 'within-group
+  deviation' variables. WIth factors, they generate mean incidence matrices.
+-  `varLevel()` and `gicc()`: the level of a variable h respect
+  to a clustering formula and the 'generalized' intra-class correlation coefficient.
+-  `tolong()` and `towide()` are 
+  interfaces to stats(reshape) to facilitate
+  the typical uses of reshape for longitudinal data.
+}
+
+## Splines -- parametric and non-parametric
+
+-  `gsp()` creates a function for a generalized 
+      spline that can
+      be included in a linear model formula. 
+-  `sc()` creates a spline contrast matrix for 
+      general spline hypotheses. The matrix can be included
+      in hypothesis matrices for the `wald()` function.
+-  `smsp()` creates a matrix for a smoothing spline.
+}
+
+## Datasets
+
+-  `hsfull()` Classical data set on high school math achievement and ses.  Bryk and Raudenbush and many other sources.
+-  `iq()` Recovery after traumatic brain injury
+-  `Drugs()` Longitudinal data on drugs and schizophrenia symptoms. ustrates role of control variables with non-random assignment. 
+-  `Indonesia()` Xerophthalmia.
+-  `migraines()` Longitudinal data on migraine treatment and weather
+-  `coffee()` Artificial data on coffee, heart damage and stress. ustrates Simpson's Paradox with continuous predictors.
+-  `hw()` Artificial data on height, weight and health. Illustrates pression.
+-  `Unemp()` U.S. monthly unemployment from January 1995 to February 2019.
+}
+
+## Graphics
+
+-  `gd()` and `td()` are easy interface to set
+      graphical parameters for lattice and graphics. `gd()` sets
+      parameters to make graphs look like ggplot2 graphics. 
+-  `panel.fit()` add fitted values and error bands with `latticeExtra::layer()` or `latticeExtra::glayer()`
+-  `panel.dell()` adds data ellipse with `latticeExtra::layer()` or `latticeExtra::glayer()`
+}
+
+## Miscellaneous utility functions
+
+-  `sortdf()` sort rows of a data frame -- useful in a magrittr pipeline
+-  `assn()` assign -- useful in a magrittr pipeline
+-  `disp()` utility to display value of a variable -- useful for debugging
+-  `getFactorNames()` get names of variables that are factors in a data me
+-  `%less%()` synonym for `setdiff()` as well as
+      `%and%()` and `%or%()`
+-  `labs()` assign, extract and print labels for various objects
+-  `pch()` generate plotting character mnemonically
+-  `pfmt()` format p-values
+-   `print.cat()`
+-  `rnd()` round a vector to keep significant digits in variation in values
+-  `run()` evaluate a string as a command with try
+-  `grepv()` grep(..., value = TRUE)
+}
+
+## String manipulation functions
+
+Function designed to work smoothly with pipes in \pkg{magrittr}:
+-  `sub_()` and `gsub_()` handle substitution inline and return a factor if the input is a factor. 
+-  `name()` changes the names of an object and returns the renamed object 
+

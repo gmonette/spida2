@@ -4,7 +4,7 @@
 \alias{here}
 \title{Directory or filename of active R script}
 \usage{
-here(dir = TRUE)
+here(dir = FALSE)
 }
 \arguments{
 \item{dir}{(default: TRUE) return the directory of the current R script, otherwise the full file name}
