@@ -223,7 +223,7 @@ cc_qr <- function( X , Z = diag( NROW(X)) , ip = diag( NROW(X)), tol = 1e-14 ) {
 #' @param clevel level for confidence intervals. No confidence intervals if clevel is NULL
 #' @param LRT if TRUE, provide likelihood ratio test statistic and p-value
 #' @param pred prediction data frame to evaluate fitted model using
-#'        \code{getX(fit) %*% coef}
+#'        `getX(fit) %*% coef`
 #' @param data data frame used as 'data' attribute fot list elements returned only if
 #'        the corresponding element of \code{Llist} has a NULL data attribute
 #' @param debug (default FALSE) produce verbose information
@@ -1186,7 +1186,7 @@ getFix.lmerMod <- function(fit, ...) getFix.lmer(fit, ...)
 #' @describeIn getFix method for glmerMod objects in the lme4 package
 #' @export
 getFix.glmerMod <- function(fit, ...) getFix.glmer(fit, ...)
-
+#' @export
 getFix.lmerModLmerTest <- function(fit, ...) getFix.lmer(fit, ...)
 
 #' @describeIn getFix method for mer objects in the lme4 package

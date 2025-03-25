@@ -4,7 +4,7 @@
 #' the option to specify desired values for some terms of the
 #' model
 #' 
-#' @param fit a model for which \{code\{getD}} returns the 
+#' @param fit a model for which `getD` returns the 
 #'        model frame, assuming that the response is 
 #'        in the first column
 #' @param ...  predictors in the model for which a different

@@ -7,6 +7,10 @@
 makegrid(fit, ...)
 }
 \arguments{
+\item{fit}{a model for which \code{getD} returns the
+model frame, assuming that the response is
+in the first column}
+
 \item{...}{predictors in the model for which a different
 set of values will be used.}
 }
