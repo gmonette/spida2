@@ -1,0 +1,12 @@
+pandoc: '3.2'
+pkgdown: 2.1.0
+pkgdown_sha: ~
+articles:
+  generalParametricSplines_v2: generalParametricSplines_v2.html
+  generalParametricSplines: generalParametricSplines.html
+  pdInd: pdInd.html
+  spida2: spida2.html
+last_built: 2025-03-25T15:41Z
+urls:
+  reference: http://130.63.179.181/spida2/reference
+  article: http://130.63.179.181/spida2/articles
