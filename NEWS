@@ -1,8 +1,8 @@
 0.2.2
-
+2025-03-25
+* modified tolong so only the last occurrence of the separator gets matched
 * changed knots.gspline to knots_.gspline to avoid conflict with stats::knots
 * fixed gplots problem
-
 2023-08-10
 * paik2 to draw Paik-Agresti diagrams for a numerical response
 2023-08-05
