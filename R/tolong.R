@@ -204,6 +204,7 @@ tolong <- function (data, sep = "_",  timevar = 'time',
                     numericalpattern = FALSE,
                     expand = TRUE, safe_sep = '@3-2861-2579@', 
                     reverse = F, ...) {
+  data <- as.data.frame(data) # if data is a tibble then reshape fails
   if (timevar %in% names(data)) warning(paste("Variable",timevar, "in data is replaced by a variable to mark occasions. Use the 'timevar' argument to specify a different variable name in the output data frame"))
   if (idvar %in% names(data)) {
     idwide <- data[[idvar]]
