@@ -176,7 +176,8 @@ paik <- function (formula, data, counts, resp.lvl = 2,  circle.mult = 1,
   or <- data[, names(data) == ov]
   # new.formula <- formula(counts ~ rv + ov + cv) # not used?
   cl <- levels(data[, names(data) == cond.var])
-  ol <- levels(data[, names(data) == ov])
+  ol <- levels(data[, 
+                    names(data) == ov])
   rl <- levels(data[, names(data) == vars[1]])
   # if(!missing(counts)) data$count <- counts
   # if(is.null(data$count)) {

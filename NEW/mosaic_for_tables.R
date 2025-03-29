@@ -10,5 +10,20 @@ barplot(counts, main="Car Distribution by Gears and VS",
   space = .01,
   legend = rownames(counts))
 
+
+
+
+barchart(counts, 
+         box.width = c(1,2)/3,
+         subscripts = TRUE,
+         panel = function(...) panel.barchart2(..., reference = FALSE),
+         horizontal = FALSE)
+
 library(latticeExtra)
+library(spida2)
 barchart(counts)
+barchart
+methods(barchart)
+ga(barchart.formula)
+ga <- getAnywhere
+panel.barchart2

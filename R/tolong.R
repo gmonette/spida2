@@ -181,6 +181,13 @@
 #'   tolong(sep= '__', timevar = 'year') %>% 
 #'   .[!grepl('^id$',names(.))] %>% 
 #'   towide(timevar = 'vname', idvar = c('code','year'))
+#'   
+#' dd <- data.frame(var__tag_1 = 1:10, var__tag_2 = 1:10)
+#' dd <- data.frame(var__tag_1 = 1:10, var__tag_2 = 1:10)
+#' dd <- data.frame(var.1 = 1:10, var.2 = 1:10)
+#' tolong(dd, sep = '__')
+#' tolong(dd, sep = '.')
+#' 
 #' 
 #' \dontrun{
 #' # Extracting chains from a stanfit object in the 'rstan' package
@@ -208,18 +215,33 @@ tolong <- function (data, sep = "_",  timevar = 'time',
   
   # sample(100000000,3)
   
-  s1 <- '@1-7418-1770@'
-  s2 <- '@2-1549-5289@'
-  s3 <- safe_sep
+  # s1 <- '@1-7418-1770@'
+  # s2 <- '@2-1549-5289@'
+  # s3 <- safe_sep
+  # 
+  # n0 <- names(data)
+  # n1 <- gsub(sep, s1, n0, fixed = TRUE)  # sep to s1  (need to protect if _)
+  # n2 <- gsub('_', s2, n1)                # '_' if not sep to s2
+  # n3 <- gsub(s1, '_', n2)                # sep to '_' which has been protected
+  # n4 <- sub(paste0('(_)(?!.*_.*)(',valuepattern,')$'),paste0(s3,"\\2"), n3, perl = TRUE)  # last sep to s3 + final string
+  # n5 <- gsub('_',safe_sep, n4)                # remaining '_'s back to sep     
+  # 
   
+  str1 <- '@-3480-3285-@'
+  # str2 <- '@-0752-8427-@'
+  str2 <- safe_sep
+  
+  # sep <- '__'
+  # valuepattern <- '.*'
+  # (n0 <- c('val__a.1','val__a.2','val__a.3','val__a.4'))
+  # (n0 <- c('val__a.1','val__a.2','val__a.a','val__a.b'))
   n0 <- names(data)
-  n1 <- gsub(sep, s1, n0, fixed = TRUE)  # sep to s1  (need to protect if _)
-  n2 <- gsub('_', s2, n1)                # '_' if not sep to s2
-  n3 <- gsub(s1, '_', n2)                # sep to '_' which has been protected
-  n4 <- sub(paste0('(_)(?!.*_.*)(',valuepattern,')$'),paste0(s3,"\\2"), n3, perl = TRUE)  # last sep to s3 + final string
-  n5 <- gsub('_',sep, n4)                # remaining '_'s back to sep                                          
-  # d1 <- data
-  names(data) <- n5
+  n1 <- gsub(sep, str1, n0, fixed = TRUE)
+  reppat <- paste0('(',str1,')(?!.*',str1,'.*)(',valuepattern,')$')
+  n2 <- sub(reppat, paste0(str2,"\\2"), n1, perl = TRUE)  # last sep to s3 + final string
+  n3 <- gsub(str1, sep, n2)
+  
+  names(data) <- n3
   if(expand){
     # create variables with NAs for missing time values
     # namessafe <- sub(sep, safe_sep, names(data), fixed = TRUE)
@@ -240,7 +262,7 @@ tolong <- function (data, sep = "_",  timevar = 'time',
                         varying = grep(safe_sep, names(data), fixed = TRUE),
                         timevar = timevar, idvar = idvar,
                         ids = ids,...)
-  names(ret) <- gsub(s2, '_', names(ret), fixed = TRUE)
+  # names(ret) <- gsub(s2, '_', names(ret), fixed = TRUE)
   ret[order(ret[[idvar]]),]
 }
 
@@ -249,23 +271,25 @@ if(FALSE){
   # 
   # Test finding last separator when separator not _
   (zd <- data.frame(a=1:4, b.left.1 = 1:4, b.left.2 =1:4, b.right.1 = 1:4, b.right =1:4 , time = 1:4))
-  tolong_new(zd, sep = '.')  # wrong
-  tolong_new(zd, sep = '.', val = "[0-9]+")  # correct
-  tolong_new(tolong_new(zd, sep = '.', val = "[0-9]+"),sep = '.', timevar = 'side')  # correct
+  tolong(zd, sep = '.')  # wrong
+  tolong(zd, sep = '.', val = "[0-9]+")  # correct
+  tolong(tolong(zd, sep = '.', val = "[0-9]+"),sep = '.', timevar = 'side')  # correct
   
   
   zd <- data.frame(a=1:4, b__1 = 1:4, b__2=1:4, c__1 = 1:4, time = 1:4)
-  tolong_new(zd, sep = '__')
-  tolong_new(zd, sep = '__', timevar = 'occasion', idvar = 'row')
+  tolong(zd, sep = '__')
+  tolong(zd, sep = '__', timevar = 'index')
+  tolong(zd, sep = '__', timevar = 'occasion', idvar = 'row')
   zd <- data.frame(a=1:4, b_left_1 = 1:4, b_right_1=1:4,b_left_2 = 1:4, b_right_2=1:4, c_1 = 1:4, time = 1:4)
-  (zdd <- tolong_new(zd, sep = '_'))
-  (tolong_new(zdd, sep = '_'))
+  (zdd <- tolong(zd, sep = '_'))
+  (tolong(zdd, sep = '_'))
+  (tolong(zdd, sep = '_', timevar = 'side', idvar = 'row'))
   zd <- data.frame(a=1:4, b_left_1 = 1:4, b_right_1=1:4,b_left_2 = 1:4,  c_1 = 1:4, time = 1:4)
-  (zdd <- tolong_new(zd, sep = '_'))
+  (zdd <- tolong(zd, sep = '_'))
   (tolong_new(zdd, sep = '_'))
   zd <- data.frame(a=1:4, b.left.1 = 1:4, b.right.1=1:4,b.left.2 = 1:4,  c.1 = 1:4, time = 1:4)
-  (zdd <- tolong_new(zd, sep = '.'))
-  (tolong_new(zdd, sep = '.'))
+  (zdd <- tolong(zd, sep = '.'))
+  (tolong(zdd, sep = '.'))
   
 }
 #' @export
@@ -335,3 +359,4 @@ long <- tolong
 #  long(z,idvar='rowid')
 #
 #  reshape(direction= 'long', z, sep = '_', v.names= 'v') # does not work
+

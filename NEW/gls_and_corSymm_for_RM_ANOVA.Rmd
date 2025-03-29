@@ -1,0 +1,63 @@
+---
+title: gls with corSymm for Repeated Measures ANOVA
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r}
+library(spida2)
+library(nlme)
+
+# a repeated measures design with 3 occasions
+# 
+
+ 
+ns <- 100 
+n <- 3
+
+dr <- data.frame(id = rep(1:ns, each = n))
+
+dr <- within(
+  dr, 
+  { 
+    rint <- rnorm(ns)[id] 
+    eps <- rnorm(id) 
+    rslope <-rnorm(ns)[id] 
+    x <- rep(1:3, ns) 
+    x2 <- rnorm(id) 
+    y <- rint + rslope*x + eps 
+    y2 <- rint + rslope*x2 + eps 
+    x2_m <- capply(x2, id, mean) 
+  } 
+)
+?corSymm
+# [mixed model - Options for General Correlation Structure in nlme (R) - Cross Validated](https://stats.stackexchange.com/questions/238741/options-for-general-correlation-structure-in-nlme-r)
+corSymm
+methods(class='corSymm')
+drm <- subset(dr, !((1:nrow(dr) %in% sample(nrow(dr),5))))
+dim(drm)
+
+fitcs <- gls(y ~ x , drm, correlation = corSymm( form = ~ x | id), weights = varIdent(form = ~1| x))
+summary(fitcs)
+getV(fitcs)
+getR(fitcs)
+getG(fitcs)
+head(dr) 
+library(nlme) 
+fit <- lme(y ~ x, dr, random = ~ 1 + x|id)
+summary(fit) 
+intervals(fit) 
+getG(fit) 
+getV(fit) 
+getR(fit)
+
+fit2 <- lme(y2 ~ x2, dr, random = ~ 1 + x2|id) 
+summary(fit2)
+intervals(fit2)
+
+fit2c <- lme(y2 ~ x2 + x2_m, dr, random = ~ 1 + x2|id)
+summary(fit2c) 
+intervals(fit2c)
+
+```

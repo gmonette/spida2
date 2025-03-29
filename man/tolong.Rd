@@ -241,6 +241,13 @@ z \%>\%
   tolong(sep= '__', timevar = 'year') \%>\% 
   .[!grepl('^id$',names(.))] \%>\% 
   towide(timevar = 'vname', idvar = c('code','year'))
+  
+dd <- data.frame(var__tag_1 = 1:10, var__tag_2 = 1:10)
+dd <- data.frame(var__tag_1 = 1:10, var__tag_2 = 1:10)
+dd <- data.frame(var.1 = 1:10, var.2 = 1:10)
+tolong(dd, sep = '__')
+tolong(dd, sep = '.')
+
 
 \dontrun{
 # Extracting chains from a stanfit object in the 'rstan' package
