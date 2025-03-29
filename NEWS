@@ -1,4 +1,4 @@
-0.2.2
+0.2.3
 2025-03-25
 * modified tolong so only the last occurrence of the separator gets matched
 * changed knots.gspline to knots_.gspline to avoid conflict with stats::knots
