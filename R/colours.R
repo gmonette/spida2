@@ -108,12 +108,11 @@ cols <- function(pattern = NULL) {
   
   ret <- c(collist, pals)
   ret$cb <- ret[['Okabe-Ito']]
-  if(!is.null(pat)) {
-    which <- grepl(pat, names(ret))
+  if(!is.null(pattern)) {
+    which <- grepl(pattern, names(ret))
     ret <- ret[which]
     if(length(ret)==1) ret <- ret[[1]]
   }
   ret
 }
-cols() %>% names
-cols('cb')
+
