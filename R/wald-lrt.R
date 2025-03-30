@@ -61,6 +61,7 @@ ob <- function(x,  tol = 1e-14) {
 #' @param tol tolerance (default 1e-14)
 #' @examples
 #' #' cc_svd(cbind(1:3))
+#' require(spida2)
 #' cc_svd(cbind(1:3), cbind(1:3,1))
 #' cc_svd(cbind(1:3), cbind(3*c(1,-2,1), 1:3,1))
 #' # challenge with large numbers
@@ -610,6 +611,7 @@ wald_lrt <-
 # Test
 if(FALSE){
   library(nlme)
+  library(lme4)
   fit <- lmer(mathach ~ ses * Sex * Sector + (1 | school), hs)
   summary(fit)
   pred <- expand.grid( ses = seq(-2,2,1), Sex = levels(hs$Sex), Sector = levels(hs$Sector))
