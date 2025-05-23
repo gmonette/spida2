@@ -163,13 +163,17 @@ na20 <- function(x) {
 }
 #' Directory or filename of active R script
 #' 
+#' Uses the `this.path` package to 
+#' 
 #' @param dir (default: TRUE) return the directory of the current R script, otherwise the full file name
 #' 
 #' @export
 here <- function(dir = FALSE) {
-  path <- rstudioapi::getActiveDocumentContext()$path
-  if(dir) path <- dirname(path)
-  path
+  if(dir) {
+    this.path::this.dir()
+  } else {
+    this.path::this.path()
+  }
 }
 #' Set working directory to directory of active R script
 #' 
@@ -178,10 +182,9 @@ here <- function(dir = FALSE) {
 #' 
 #' @export
 setwd_here <- function() {
-  path <- spida2:::here(TRUE)
-#  if(is.null(knitr::opts_knit$get('output.dir'))) setwd(path)
+  path <- this.path::this.dir()
   setwd(path)
-  invisible(here)
+  invisible(path)
 }
 #' Vectorized ifelse with multiple conditions
 #' 
@@ -474,3 +477,20 @@ debugged <- function(environments=search(), all = FALSE) {
   }))
   if(all) return(r) else subset(r, debugged == TRUE)
 } 
+#' Load package or install
+#' 
+#' @param package
+#  @examples
+#  lib("spida2")
+#' @export
+# lib <- function(package){
+#   package <- as.character(substitute(package))
+#   # print(package)
+#   if(require(package, character.only = TRUE)) {
+#     help(p=package)
+#   } else {
+#     install.packages(package)
+#     library(package)
+#     help(p=package)
+#   }
+# }

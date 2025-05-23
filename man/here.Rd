@@ -10,5 +10,5 @@ here(dir = FALSE)
 \item{dir}{(default: TRUE) return the directory of the current R script, otherwise the full file name}
 }
 \description{
-Directory or filename of active R script
+Uses the \code{this.path} package to
 }

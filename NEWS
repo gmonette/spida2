@@ -1,4 +1,6 @@
 0.2.3
+2025-05-23
+* modified here() to use the "this.path" package 
 2025-03-25
 * modified tolong so only the last occurrence of the separator gets matched
 * changed knots.gspline to knots_.gspline to avoid conflict with stats::knots
