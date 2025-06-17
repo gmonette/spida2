@@ -946,6 +946,7 @@ coef.wald <- function( obj , se = FALSE ) {
 #'           \item{df}{denominator degrees of freedom for each effect}
 #'           }
 #' @author Georges Monette
+#' @author Anna Zakharian
 #' @seealso \code{\link{wald}}
 #' @examples
 #' library(nlme)
@@ -1104,6 +1105,18 @@ getFix.stanfit <-
     ret$df <- rep(Inf, length(ret$fixed))
     ret
   }
+#' @describeIn getFix method for `glmmTMB` objects in the `glmmTMB`D package
+#' @export
+getFix.glmmTMB <- function(fit, robust = FALSE, ...) {
+   if(robust) warning(' robust not yet implemented for class lme')
+   # with a contribution by Anna Zakharian
+   require(glmmTMB)
+   ret <- list()
+   ret$fixed <- fixef(fit)$cond
+   ret$vcov <- vcov(fit)$cond
+   ret$df <- rep(Inf, length(ret$fixed))
+   ret
+}
 #' @describeIn getFix print message if getFix id used for a class for which a method has not been written
 #' @export
 getFix.default <- function(fit, ...) stop(paste("Write a 'getFix' method for class",class(fit)))

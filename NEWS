@@ -1,4 +1,6 @@
 0.2.3
+2025-06-16
+* added getFix.glmmTMB method 
 2025-05-23
 * modified here() to use the "this.path" package 
 2025-03-25
