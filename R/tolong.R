@@ -205,7 +205,7 @@ tolong <- function (data, sep = "_",  timevar = 'time',
                     expand = TRUE, safe_sep = '@3-2861-2579@', 
                     reverse = F, ...) {
   data <- as.data.frame(data) # if data is a tibble then reshape fails
-  if (timevar %in% names(data)) warning(paste("Variable",timevar, "in data is replaced by a variable to mark occasions. Use the 'timevar' argument to specify a different variable name in the output data frame"))
+  if (timevar %in% names(data)) warning(paste("Variable",timevar, "in data is replaced by a variable to record occasions. Use the 'timevar' argument to specify a different variable name in the output data frame"))
   if (idvar %in% names(data)) {
     idwide <- data[[idvar]]
     if( length(unique(idwide)) != length(idwide)) {
@@ -214,28 +214,10 @@ tolong <- function (data, sep = "_",  timevar = 'time',
     }
   }
   
-  # sample(100000000,3)
-  
-  # s1 <- '@1-7418-1770@'
-  # s2 <- '@2-1549-5289@'
-  # s3 <- safe_sep
-  # 
-  # n0 <- names(data)
-  # n1 <- gsub(sep, s1, n0, fixed = TRUE)  # sep to s1  (need to protect if _)
-  # n2 <- gsub('_', s2, n1)                # '_' if not sep to s2
-  # n3 <- gsub(s1, '_', n2)                # sep to '_' which has been protected
-  # n4 <- sub(paste0('(_)(?!.*_.*)(',valuepattern,')$'),paste0(s3,"\\2"), n3, perl = TRUE)  # last sep to s3 + final string
-  # n5 <- gsub('_',safe_sep, n4)                # remaining '_'s back to sep     
-  # 
-  
   str1 <- '@-3480-3285-@'
-  # str2 <- '@-0752-8427-@'
+ 
   str2 <- safe_sep
   
-  # sep <- '__'
-  # valuepattern <- '.*'
-  # (n0 <- c('val__a.1','val__a.2','val__a.3','val__a.4'))
-  # (n0 <- c('val__a.1','val__a.2','val__a.a','val__a.b'))
   n0 <- names(data)
   n1 <- gsub(sep, str1, n0, fixed = TRUE)
   reppat <- paste0('(',str1,')(?!.*',str1,'.*)(',valuepattern,')$')
@@ -258,7 +240,10 @@ tolong <- function (data, sep = "_",  timevar = 'time',
     
     for (nn in newnames) data[[nn]] <- NA
   }
-  
+  if(!expand) warning(
+  paste('Ensure all time varying variables have the same set of time fields',
+        'to avert bug in stats::reshape'))
+  data <- data[,sort(names(data))]
   ret <- stats::reshape(data, direction = "long", sep = safe_sep,
                         varying = grep(safe_sep, names(data), fixed = TRUE),
                         timevar = timevar, idvar = idvar,
