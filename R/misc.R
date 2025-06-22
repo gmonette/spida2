@@ -59,12 +59,14 @@ ga <- function (x) {
   structure(list(name = x, objs = objs, where = where, visible = visible, 
                  dups = dups), class = "getAnywhere")
 }
+#' Special contrasts
+#' 
 #' Normalized Helmert contrasts for parsimonious random effects models
 #' 
 #' - [R Library Contrast Coding Systems for categorical variables](https://stats.idre.ucla.edu/r/library/r-library-contrast-coding-systems-for-categorical-variables/)
 #' 
 #' @param n a vector of levels for a factor or the number of levels.
-#' 
+#' @seealso [C_()] for weighted average
 #' @examples
 #' zf <- factor(c("A","B","B","C"))
 #' contrasts(zf) <- contr.nhelmert(3)
@@ -104,7 +106,31 @@ contr.nhelmert <- function(n, ...) {
   ret <- contr.helmert(n,...)
   ret/sqrt(colSums(ret*ret))
 }
-  
+#' Contrasts to make intercept a weighted average 
+#' 
+#' A generalization of treatment contrasts that make
+#' the intercept a weighted average of factor levels
+#' (instead of placing all the weight on the reference level)
+#'  
+#' @param x a factor
+#' @param weights a vector fo relative weights applied to 
+#'        levels of `x`  
+#' @seealso [contr.nhelmert()] for weighted average
+#' @examples
+#' x <- factor(rep(letters[1:4],4))
+#' y <- 1:length(x)
+#' lm(y ~ x)
+#' xx <- C_(x)
+#' lm(y ~ xx)
+C_ <- function(x, weights = rep(1,length(levels(x)))) {
+  x <- as.factor(x)
+  if(is.null(dim(weights))){
+    nams <- levels(x)
+    weights <- rbind(weights, cbind(-1, diag(length(weights)-1)))
+    rownames(weights) <- c('all', paste0(' ',nams[-1], '-', nams[1]) )
+  }
+  C(x, solve(weights)[, -1])
+}
 #' 
 #' Substitute last occurrence of a pattern in a string
 #' 
@@ -163,7 +189,8 @@ na20 <- function(x) {
 }
 #' Directory or filename of active R script
 #' 
-#' Uses the `this.path` package to 
+#' Uses the `this.path` package return the file name
+#' of the current R script or its enclosing directory. 
 #' 
 #' @param dir (default: TRUE) return the directory of the current R script, otherwise the full file name
 #' 

@@ -1,4 +1,6 @@
 0.2.3
+2025-06-21
+* fixed tolong() to avert bug in base::reshape
 2025-06-16
 * added getFix.glmmTMB method 
 2025-05-23

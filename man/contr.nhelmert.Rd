@@ -2,7 +2,7 @@
 % Please edit documentation in R/misc.R
 \name{contr.nhelmert}
 \alias{contr.nhelmert}
-\title{Normalized Helmert contrasts for parsimonious random effects models}
+\title{Special contrasts}
 \usage{
 contr.nhelmert(n, ...)
 }
@@ -10,6 +10,9 @@ contr.nhelmert(n, ...)
 \item{n}{a vector of levels for a factor or the number of levels.}
 }
 \description{
+Normalized Helmert contrasts for parsimonious random effects models
+}
+\details{
 \itemize{
 \item \href{https://stats.idre.ucla.edu/r/library/r-library-contrast-coding-systems-for-categorical-variables/}{R Library Contrast Coding Systems for categorical variables}
 }
@@ -48,4 +51,7 @@ fitpars2 <- lme(grade ~ method, dd,
 summary(fitpars1)
 summary(fitpars2)
 ranef(fitpars2) 
+}
+\seealso{
+\code{\link[=C_]{C_()}} for weighted average
 }
