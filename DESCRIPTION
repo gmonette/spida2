@@ -37,8 +37,7 @@ Suggests:
     glmmTMB,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0),
-    rstan
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr, rmarkdown
 Roxygen: list(markdown = TRUE)
 Depends: 
