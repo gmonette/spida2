@@ -8,7 +8,6 @@ getS <- function(x,...) UseMethod('getS')
 getS.default <- function(x,...) {
   stop('No method implemented for object of class ',class(x),'\n')
 }
-#' @import rstan
 #' @export
 getS.stanfit <- function(x,...) {
   # function to create a data frame
