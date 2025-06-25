@@ -180,8 +180,8 @@ tolong(z)
 #
 # - sep can use more than one character
 # - the character string is interpreted literally, 
-# i.e. if special regular expression characters
-# they are interpreted literally.
+# i.e. special regular expression characters
+# are interpreted literally.
 z <- data.frame(id =letters[1:10], id2= 11:20, HPC_head_R = 1:10, HPC_tail_R = 11:20, HPC_head_L = 21:30, HPC_tail_L = 31:40)
 z
 names(z) <- sub("(_[LR]$)","_\\\\1", names(z))
@@ -208,6 +208,7 @@ dl <- data.frame(name = rep(c('A','B','C'), c(3,3,2)),
                  var2 = 11:18,
                  invar = rep(1:3, c(3,3,2)))
 towide(dl, c('name'), 'site')
+# Note that invariant variables are not expanded to wide form
 #
 # Two indexing variable: e.g. hippocampal volume 2 sides x 3 sites
 #
@@ -247,8 +248,19 @@ dd <- data.frame(var__tag_1 = 1:10, var__tag_2 = 1:10)
 dd <- data.frame(var.1 = 1:10, var.2 = 1:10)
 tolong(dd, sep = '__')
 tolong(dd, sep = '.')
-
-
+# Long form to wide form
+dd <- data.frame(
+    time = c(1,2,1,2,3,1,2,1,3),
+    id = c(1,1,2,2,2,3,3,4,4), 
+    a = c(1,2,3,4,5,6,7,8,9), 
+    b=1:9, 
+    inv = c(1,1,3,3,3,4,4,5,5)) # invariant variable
+dd  # long form
+towide(dd, idvar = 'id', timevar = 'time') 
+# note that invariant variable is not coded in wide form
+dw <- towide(dd, idvar = 'id', timevar = 'time')
+dw[, sort(names(dw))]
+dw[, sort(names(dw))] \%>\% tolong
 \dontrun{
 # Extracting chains from a stanfit object in the 'rstan' package
 # If 'mod' is a stanfit model

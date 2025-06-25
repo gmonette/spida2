@@ -37,10 +37,11 @@ Suggests:
     glmmTMB,
     knitr,
     rmarkdown,
-    testthat (>= 2.1.0),
+    testthat (>= 3.0.0),
     rstan
 VignetteBuilder: knitr, rmarkdown
 Roxygen: list(markdown = TRUE)
 Depends: 
     R (>= 3.5.0),
 BugReports: https://github.com/gmonette/spida2/issues
+Config/testthat/edition: 3

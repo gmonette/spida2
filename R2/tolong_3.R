@@ -120,8 +120,8 @@
 #' #
 #' # - sep can use more than one character
 #' # - the character string is interpreted literally, 
-#' # i.e. special regular expression characters
-#' # are interpreted literally.
+#' # i.e. if special regular expression characters
+#' # they are interpreted literally.
 #' z <- data.frame(id =letters[1:10], id2= 11:20, HPC_head_R = 1:10, HPC_tail_R = 11:20, HPC_head_L = 21:30, HPC_tail_L = 31:40)
 #' z
 #' names(z) <- sub("(_[LR]$)","_\\1", names(z))
@@ -148,7 +148,6 @@
 #'                  var2 = 11:18,
 #'                  invar = rep(1:3, c(3,3,2)))
 #' towide(dl, c('name'), 'site')
-#' # Note that invariant variables are not expanded to wide form
 #' #
 #' # Two indexing variable: e.g. hippocampal volume 2 sides x 3 sites
 #' #
@@ -188,6 +187,12 @@
 #' dd <- data.frame(var.1 = 1:10, var.2 = 1:10)
 #' tolong(dd, sep = '__')
 #' tolong(dd, sep = '.')
+#' 
+#' 
+#' \dontrun{
+#' # Extracting chains from a stanfit object in the 'rstan' package
+#' # If 'mod' is a stanfit model
+#' library(spida2)
 #' # Long form to wide form
 #' dd <- data.frame(
 #'     time = c(1,2,1,2,3,1,2,1,3),
@@ -201,13 +206,6 @@
 #' dw <- towide(dd, idvar = 'id', timevar = 'time')
 #' dw[, sort(names(dw))]
 #' dw[, sort(names(dw))] %>% tolong
-#' \dontrun{
-#' # Extracting chains from a stanfit object in the 'rstan' package
-#' # If 'mod' is a stanfit model
-#' library(rstan)
-#' library(spida2)
-#' df <- as.data.frame(extract(mod, permute = F))
-#' dl <- tolong(df, sep = ':', reverse = T)
 #' }
 #' @export
 tolong <- function (data, sep = "_",  timevar = 'time',
