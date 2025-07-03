@@ -506,18 +506,50 @@ debugged <- function(environments=search(), all = FALSE) {
 } 
 #' Load package or install
 #' 
-#' @param package
+#' @param package to load or to install and load
 #  @examples
 #  lib("spida2")
 #' @export
-# lib <- function(package){
-#   package <- as.character(substitute(package))
-#   # print(package)
-#   if(require(package, character.only = TRUE)) {
-#     help(p=package)
-#   } else {
-#     install.packages(package)
-#     library(package)
-#     help(p=package)
-#   }
-# }
+lib <- function(package){
+  package <- as.character(substitute(package))
+  # print(package)
+  if(require(package, character.only = TRUE)) {
+    help(p=package)
+  } else {
+    install.packages(package)
+    library(package)
+    help(p=package)
+  }
+}
+#' anova, AIC and BIC on model lists
+#' 
+#' These methods work on lists of models in a manner similar
+#' to that in which `do.call(anova, modelList)` should work -- but does not.
+#' 
+#' @param object an optionally named list of models of a type
+#'               for which `anova(mod1, mod1, ...)` would produce
+#'               meaningful output.
+#'
+#' @export
+anova.list <- function(x) {
+  if(is.null(names(x))) names(x) <- paste0('model_',1:length(x))
+  arg <- paste0('`',names(x),'`', collapse = ',' )
+  arg <- paste0('anova(', arg, ')')
+  eval(parse(text = arg), envir = x)
+}
+#' @describeIn anova.list AIC method               
+#' @export
+AIC.list <- function(x) {
+  if(is.null(names(x))) names(x) <- paste0('model_',1:length(x))
+  arg <- paste0('`',names(x),'`', collapse = ',' )
+  arg <- paste0('AIC(', arg, ')')
+  eval(parse(text = arg), envir = x)
+}
+#' @describeIn anova.list BIC method               
+#' @export
+BIC.list <- function(x) {
+  if(is.null(names(x))) names(x) <- paste0('model_',1:length(x))
+  arg <- paste0('`',names(x),'`', collapse = ',' )
+  arg <- paste0('BIC(', arg, ')')
+  eval(parse(text = arg), envir = x)
+}
