@@ -1,4 +1,6 @@
 0.2.3
+2025-07-03
+* added AIC.list BIC.list anova.list
 2025-06-21
 * fixed tolong() to avert bug in base::reshape
 2025-06-16
