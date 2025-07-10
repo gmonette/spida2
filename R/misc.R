@@ -122,6 +122,7 @@ contr.nhelmert <- function(n, ...) {
 #' lm(y ~ x)
 #' xx <- C_(x)
 #' lm(y ~ xx)
+#' @export
 C_ <- function(x, weights = rep(1,length(levels(x)))) {
   x <- as.factor(x)
   if(is.null(dim(weights))){
