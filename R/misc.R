@@ -104,7 +104,7 @@ ga <- function (x) {
 #' @export
 contr.nhelmert <- function(n, ...) {
   ret <- contr.helmert(n,...)
-  ret/sqrt(colSums(ret*ret))
+  t(t(ret)/sqrt(colSums(ret*ret)))
 }
 #' Contrasts to make intercept a weighted average 
 #' 
