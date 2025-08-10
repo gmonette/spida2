@@ -10,12 +10,24 @@ C_(x, weights = rep(1, length(levels(x))))
 \item{x}{a factor}
 
 \item{weights}{a vector fo relative weights applied to
-levels of \code{x}}
+levels of \code{x}, or a square non-singular matrix
+as described in details}
 }
 \description{
-A generalization of treatment contrasts that make
+A generalization of treatment contrasts that makes
 the intercept a weighted average of factor levels
 (instead of placing all the weight on the reference level)
+}
+\details{
+If \code{weights} is a square non-singular matrix, the
+first row should consist of weights that sum to
+1 and it will define the weighted combination of
+of factor levels estimated by the intercept.
+The remaining rows should all have entries
+that sum to zero (i.e. orthogonal to the 1-vector).
+Each row defines a contrast that will be reported
+in the output for regressions that use the factor,
+along with the row's name.
 }
 \examples{
 x <- factor(rep(letters[1:4],4))

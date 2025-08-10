@@ -85,6 +85,7 @@ ga <- function (x) {
 #'       methodmat <- contrasts(methodn)[methodn,]
 #'       grade <- 10 + seq_len(n_treatments)[method] + rnorm(n_schools)[schoolid] + rnorm(nrow(dd))
 #'    })
+#' \dontrun{
 #' fitfull <- lme(grade ~ method, dd, random = ~ 1 + method | schoolid,
 #'  control = list(returnObject = T))     
 #' summary(fitfull)
@@ -94,6 +95,7 @@ ga <- function (x) {
 #' summary(fitfulln)
 #' getG(fitfulln)
 #' getG(fitfulln) %>% svd(nu=0,nv=0)
+#' }
 #' fitpars1 <- lme(grade ~ method, dd, 
 #'    random = list( schoolid = pdBlocked(list(pdDiag(~1), pdIdent(~ methodn - 1))) ))
 #' fitpars2 <- lme(grade ~ method, dd, 
@@ -108,14 +110,25 @@ contr.nhelmert <- function(n, ...) {
 }
 #' Contrasts to make intercept a weighted average 
 #' 
-#' A generalization of treatment contrasts that make
+#' A generalization of treatment contrasts that makes
 #' the intercept a weighted average of factor levels
 #' (instead of placing all the weight on the reference level)
 #'  
 #' @param x a factor
 #' @param weights a vector fo relative weights applied to 
-#'        levels of `x`  
+#'        levels of `x`, or a square non-singular matrix
+#'        as described in details  
 #' @seealso [contr.nhelmert()] for weighted average
+#' @details
+#' If `weights` is a square non-singular matrix, the
+#' first row should consist of weights that sum to
+#' 1 and it will define the weighted combination of 
+#' of factor levels estimated by the intercept.
+#' The remaining rows should all have entries
+#' that sum to zero (i.e. orthogonal to the 1-vector).
+#' Each row defines a contrast that will be reported
+#' in the output for regressions that use the factor,
+#' along with the row's name.
 #' @examples
 #' x <- factor(rep(letters[1:4],4))
 #' y <- 1:length(x)

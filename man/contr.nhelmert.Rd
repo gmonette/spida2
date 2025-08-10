@@ -35,6 +35,7 @@ dd <- within(
       methodmat <- contrasts(methodn)[methodn,]
       grade <- 10 + seq_len(n_treatments)[method] + rnorm(n_schools)[schoolid] + rnorm(nrow(dd))
    })
+\dontrun{
 fitfull <- lme(grade ~ method, dd, random = ~ 1 + method | schoolid,
  control = list(returnObject = T))     
 summary(fitfull)
@@ -44,6 +45,7 @@ fitfulln <- lme(grade ~ method, dd, random = ~ 1 + methodn | schoolid,
 summary(fitfulln)
 getG(fitfulln)
 getG(fitfulln) \%>\% svd(nu=0,nv=0)
+}
 fitpars1 <- lme(grade ~ method, dd, 
    random = list( schoolid = pdBlocked(list(pdDiag(~1), pdIdent(~ methodn - 1))) ))
 fitpars2 <- lme(grade ~ method, dd, 
