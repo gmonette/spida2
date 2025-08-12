@@ -189,6 +189,23 @@
 #'   ret$df <- fit$df 
 #'   ret 
 #' }
+#' 
+#' # 
+#' # Using waldx on a rank deficient model
+#' # with an L matrix that includes a linear
+#' # combination of parameters that is not
+#' # estimable.
+#' 
+#' dd <- data.frame(G = rep(c('a','b'),c(4,4)), H = c('x','y','z')[c(1,2,3,1,2,3,2,3)] , y = rnorm(8))
+#' tab(dd, ~ G + H)
+#' fit <- lm(y ~ H/G - 1, dd)
+#' summary(fit)
+#' L <- cbind( 0,0,0,diag(3))
+#' L
+#' waldx(fit, L)
+#' waldf(fit, L)
+#' 
+#' 
 #' @export
 wald <- 
   function(fit, Llist = "", clevel = 0.95,
@@ -398,14 +415,15 @@ wald <-
   }
 #' @describeIn wald experimental version for singular models. Reports rows of L matrix that are not estimable.
 #' @export
-waldx <- function(fit, Llist = "", clevel = 0.95,
-                  pred = NULL,
-                  data = NULL, debug = FALSE , maxrows = 25,
-                  full = FALSE, fixed = FALSE,
-                  invert = FALSE, method = 'svd',
-                  overdispersion = FALSE,
-                  df = NULL, pars = NULL,
-                  robust = FALSE, type = 'HC3', ...) {
+waldx <- function(
+    fit, Llist = "", clevel = 0.95,
+    pred = NULL,
+    data = NULL, debug = FALSE , maxrows = 25,
+    full = FALSE, fixed = FALSE,
+    invert = FALSE, method = 'svd',
+    overdispersion = FALSE,
+    df = NULL, pars = NULL,
+    robust = FALSE, type = 'HC3', ...) {
   # New version with support for stanfit
   if (full) return(waldx(fit, getX(fit)))
   if(!is.null(pred)) return(waldx(fit, getX(fit,pred)))
@@ -682,7 +700,10 @@ model.matrix(~ ses * Sex * Sector,data=pred)
 
 #' @describeIn wald experimental version with RHS?
 #' @export
-wald2 <- function(fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , maxrows = 25, full = FALSE, fixed = FALSE, invert = FALSE, method = 'svd',df = NULL, RHS = 0) {
+wald2 <- function(
+    fit, Llist = "",clevel=0.95, data = NULL, debug = FALSE , 
+    maxrows = 25, full = FALSE, fixed = FALSE, invert = FALSE, 
+    method = 'svd',df = NULL, RHS = 0) {
 # GM: 2015 08 11:  to do:
 #  Experimental version of wald with RHS
 # NEEDS to be restructured with
