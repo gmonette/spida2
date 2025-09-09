@@ -574,3 +574,34 @@ BIC.list <- function(x) {
   arg <- paste0('BIC(', arg, ')')
   eval(parse(text = arg), envir = x)
 }
+#' Assignment function to append to a list
+#' 
+#' @param x list to which to append
+#' @param after where, default: end
+#' @examples
+#' zzz <- list()
+#' append(zzz) <- 'a'
+#' append(zzz) <- 'b'
+#' append(zzz,1) <- list('d','e')
+#' append(zzz) <- list('f','g')
+#' zzz
+#' @export
+`append<-` <- function(x, value, after = length(x)) {
+  after
+  n <- length(x)
+  x[[n+1]] <- value
+  perm <- c(
+    if(after>0) 1:after else numeric(0),
+    n+1,
+    if(after < n) (after+1):n else numeric(0))
+  x[perm]
+}
+#' Root mean square
+#' 
+#' @param fit any fitted object with a \code{\link{resid}} method.
+#' @export
+rmse <- function(fit) {
+  sqrt(mean(resid(fit)^2))
+}
+
+

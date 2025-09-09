@@ -477,6 +477,11 @@ fit2 <- lme(mathach ~ ses + Sex, hs,
 summary(fit2)
 fit2$modelStruct$reStruct
 debug(pdInd)
+fit6b <- lme(mathach ~ ses + Sex + Minority, hs,
+             random = 
+               list( 
+                 school = pdInd( ~ 1 + ses + Sex + Minority, cov = cov)),
+             control = list(msVerbose=T,returnObject=T,msMaxIter=1000))
 }
 
 

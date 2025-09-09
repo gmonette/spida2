@@ -242,6 +242,23 @@ getFix.mipo <- function( fit, ...){
   ret$df <- fit$df 
   ret 
 }
+
+# 
+# Using waldx on a rank deficient model
+# with an L matrix that includes a linear
+# combination of parameters that is not
+# estimable.
+
+dd <- data.frame(G = rep(c('a','b'),c(4,4)), H = c('x','y','z')[c(1,2,3,1,2,3,2,3)] , y = rnorm(8))
+tab(dd, ~ G + H)
+fit <- lm(y ~ H/G - 1, dd)
+summary(fit)
+L <- cbind( 0,0,0,diag(3))
+L
+waldx(fit, L)
+waldf(fit, L)
+
+
 }
 \references{
 REFERENCES HERE

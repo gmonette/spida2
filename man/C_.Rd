@@ -21,13 +21,19 @@ the intercept a weighted average of factor levels
 \details{
 If \code{weights} is a square non-singular matrix, the
 first row should consist of weights that sum to
-1 and it will define the weighted combination of
+1 and it will define the weighted combination
 of factor levels estimated by the intercept.
 The remaining rows should all have entries
 that sum to zero (i.e. orthogonal to the 1-vector).
 Each row defines a contrast that will be reported
 in the output for regressions that use the factor,
 along with the row's name.
+
+Note that the two conditions above ensure that the
+inverse of the \code{weights} matrix will have its first
+column equal to a column of 1's. This column is removed
+when creating the contrasts matrix for the factor since
+its role in the model will be served by the 'intercept'.
 }
 \examples{
 x <- factor(rep(letters[1:4],4))
