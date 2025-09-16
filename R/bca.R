@@ -30,7 +30,13 @@
 #' @examples
 #' theta <- rnorm(1000, mean=3, sd=4)
 #' bca(theta, conf.level = .95)
-
+#' # 
+#' # Why confidence intervals types matter:
+#' #
+#' exp(rnorm(1000)) %>%   
+#' { print(bca(.)); . } %>% 
+#' { print(mean(.) + c(-1,1)* 1.96*sd(.)); . } %>% 
+#' { quantile(.,c(.025,.975))}
 bca <- function(theta, conf.level = .95){
 
   if(var(theta)==0){
