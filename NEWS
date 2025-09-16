@@ -1,4 +1,6 @@
 0.2.3
+2025-09-15
+* adopted 'bca' from the 'coxed' package
 2025-09-08
 * added append<- rmse
 2025-08-11
