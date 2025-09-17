@@ -11,7 +11,7 @@
 #' bootstrap simulation.
 #' @param conf.level the level of the desired confidence interval, as a proportion. Defaults to
 #' .95 which returns the 95 percent confidence interval.
-#' @param which any combination of 'bca','percentile' or 'normal'; of 'all' to get all.
+#' @param which any combination of 'bca','percentile' or 'normal'; or 'all' to get all.
 #' Defaults to 'bca'.
 #' @details \eqn{BC_a} confidence intervals are typically calculated using influence statistics
 #' from jackknife simulations. For our purposes, however, running jackknife simulation in addition
@@ -31,21 +31,28 @@
 #' @examples
 #' theta <- rnorm(1000, mean=3, sd=4)
 #' bca(theta, conf.level = .95)
+#' bca(theta, conf.level = .95, c('norm', 'perc'))
 #' # 
 #' # Why confidence intervals types matter:
 #' #
-#' bca(rnorm(1000))
-#' bca(exp(rnorm(1000)))
-bca <- function(theta, conf.level = .95, which = 'bca'){
+#' bca(rnorm(1000), 'all')
+#' bca(exp(rnorm(1000)), 'all')
+bca <- function(theta, which = 'bca', conf.level = .95){
+  
+  if(is.numeric(which)) {
+    conf.level <- which
+    which <- 'bca'
+  }
 
+  if(length(which) == 1 && which == 'all') which <- c('bca','normal','percentile')
   if(var(theta)==0){
     lower <- mean(theta)
     upper <- mean(theta)
     return(c(lower, upper))
   }
 
-  if(max(theta)==Inf | min(theta)==-Inf){
-    stop("bca() function does not work when some values are infinite")
+  if(('bca' %in% which) & (max(theta)==Inf | min(theta)==-Inf)){
+    warning("bca() function does not work when some values are infinite")
   }
 
   low <- (1 - conf.level)/2
@@ -70,6 +77,8 @@ bca <- function(theta, conf.level = .95, which = 'bca'){
   rownames(ret) <- c('bca','normal','percentile')
   attr(ret,'conf.level') <- c(conf.level=conf.level) 
   class(ret) <- c('conf_interval', class(ret))
+  ret <- ret[which,]
+  if(dim(ret)[1] == 1) ret <- unlist(ret)
   ret
 }
 #' @export
