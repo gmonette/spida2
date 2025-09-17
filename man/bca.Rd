@@ -4,7 +4,7 @@
 \alias{bca}
 \title{Bias-corrected and accelerated confidence intervals}
 \usage{
-bca(theta, conf.level = 0.95)
+bca(theta, conf.level = 0.95, which = "bca")
 }
 \arguments{
 \item{theta}{a vector that contains draws of a quantity of interest using bootstrap samples.
@@ -13,6 +13,9 @@ bootstrap simulation.}
 
 \item{conf.level}{the level of the desired confidence interval, as a proportion. Defaults to
 .95 which returns the 95 percent confidence interval.}
+
+\item{which}{any combination of 'bca','percentile' or 'normal'; of 'all' to get all.
+Defaults to 'bca'.}
 }
 \value{
 returns a vector of length 2 in which the first element is the lower bound and the
@@ -35,6 +38,11 @@ parameters using only the draws from ordinary bootstrapping.
 \examples{
 theta <- rnorm(1000, mean=3, sd=4)
 bca(theta, conf.level = .95)
+# 
+# Why confidence intervals types matter:
+#
+bca(rnorm(1000))
+bca(exp(rnorm(1000)))
 }
 \references{
 DiCiccio, T. J. and B. Efron. (1996). Bootstrap Confidence Intervals. \emph{Statistical Science}.

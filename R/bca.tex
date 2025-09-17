@@ -1,0 +1,207 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={bca.R},
+  pdfauthor={georges},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{bca.R}
+\author{georges}
+\date{2025-09-15}
+
+\begin{document}
+\maketitle
+
+Bias-corrected and accelerated confidence intervals
+
+This function uses the method proposed by DiCiccio and Efron (1996) to
+generate confidence intervals that produce more accurate coverage rates
+when the distribution of bootstrap draws is non-normal. This code is
+adapted from the \code{BC.CI()} function within the
+\code{\link[mediation]{mediate}} function in the \code{mediation}
+package.
+
+@param theta a vector that contains draws of a quantity of interest
+using bootstrap samples. The length of \code{theta} is equal to the
+number of iterations in the previously-run bootstrap simulation. @param
+conf.level the level of the desired confidence interval, as a
+proportion. Defaults to .95 which returns the 95 percent confidence
+interval.
+
+@details \eqn{BC_a} confidence intervals are typically calculated using
+influence statistics from jackknife simulations. For our purposes,
+however, running jackknife simulation in addition to ordinary
+bootstrapping is too computationally expensive. This function follows
+the procedure outlined by DiCiccio and Efron (1996, p.~201) to calculate
+the bias-correction and acceleration parameters using only the draws
+from ordinary bootstrapping. @return returns a vector of length 2 in
+which the first element is the lower bound and the second element is the
+upper bound
+
+@author Jonathan Kropko \textless jkropko@@virginia.edu\textgreater{}
+and Jeffrey J. Harden \textless jharden@@nd.edu\textgreater, based on
+the code for the \code{\link[mediation]{mediate}} function in the
+\code{mediation} package by Dustin Tingley, Teppei Yamamoto, Kentaro
+Hirose, Luke Keele, and Kosuke Imai. @references DiCiccio, T. J. and B.
+Efron. (1996). Bootstrap Confidence Intervals.
+\emph{Statistical Science}. 11(3): 189--212.
+\url{https://doi.org/10.1214/ss/1032280214} @seealso
+\code{\link[coxed]{coxed}}, \code{\link[rms]{bootcov}},
+\code{\link[mediation]{mediate}} @export @examples theta \textless-
+rnorm(1000, mean=3, sd=4) bca(theta, conf.level = .95) \# \# Why
+confidence intervals types matter: \# bca(rnorm(1000))
+bca(exp(rnorm(1000)))
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bca }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(theta, }\AttributeTok{conf.level =}\NormalTok{ .}\DecValTok{95}\NormalTok{)\{}
+
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{var}\NormalTok{(theta)}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    lower }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(theta)}
+\NormalTok{    upper }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(theta)}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(lower, upper))}
+\NormalTok{  \}}
+
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{max}\NormalTok{(theta)}\SpecialCharTok{==}\ConstantTok{Inf} \SpecialCharTok{|} \FunctionTok{min}\NormalTok{(theta)}\SpecialCharTok{=={-}}\ConstantTok{Inf}\NormalTok{)\{}
+    \FunctionTok{stop}\NormalTok{(}\StringTok{"bca() function does not work when some values are infinite"}\NormalTok{)}
+\NormalTok{  \}}
+
+\NormalTok{  low }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ conf.level)}\SpecialCharTok{/}\DecValTok{2}
+\NormalTok{  high }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ low}
+\NormalTok{  sims }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(theta)}
+\NormalTok{  z.inv }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(theta[theta }\SpecialCharTok{\textless{}} \FunctionTok{mean}\NormalTok{(theta)])}\SpecialCharTok{/}\NormalTok{sims}
+\NormalTok{  z }\OtherTok{\textless{}{-}} \FunctionTok{qnorm}\NormalTok{(z.inv)}
+\NormalTok{  U }\OtherTok{\textless{}{-}}\NormalTok{ (sims }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(theta, }\AttributeTok{na.rm=}\ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{{-}}\NormalTok{ theta)}
+\NormalTok{  top }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(U}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{)}
+\NormalTok{  under }\OtherTok{\textless{}{-}} \DecValTok{6} \SpecialCharTok{*}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(U}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}\SpecialCharTok{\^{}}\NormalTok{\{}\DecValTok{3}\SpecialCharTok{/}\DecValTok{2}\NormalTok{\}}
+\NormalTok{  a }\OtherTok{\textless{}{-}}\NormalTok{ top }\SpecialCharTok{/}\NormalTok{ under}
+\NormalTok{  lower.inv }\OtherTok{\textless{}{-}}  \FunctionTok{pnorm}\NormalTok{(z }\SpecialCharTok{+}\NormalTok{ (z }\SpecialCharTok{+} \FunctionTok{qnorm}\NormalTok{(low))}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ (z }\SpecialCharTok{+} \FunctionTok{qnorm}\NormalTok{(low))))}
+\NormalTok{  lower }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(theta, lower.inv, }\AttributeTok{names=}\ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{  upper.inv }\OtherTok{\textless{}{-}}  \FunctionTok{pnorm}\NormalTok{(z }\SpecialCharTok{+}\NormalTok{ (z }\SpecialCharTok{+} \FunctionTok{qnorm}\NormalTok{(high))}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ (z }\SpecialCharTok{+} \FunctionTok{qnorm}\NormalTok{(high))))}
+\NormalTok{  upper }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(theta, upper.inv, }\AttributeTok{names=}\ConstantTok{FALSE}\NormalTok{)}
+  
+\NormalTok{  ret }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{lower =} \FunctionTok{c}\NormalTok{(lower, }\FunctionTok{mean}\NormalTok{(theta) }\SpecialCharTok{{-}} \FunctionTok{qnorm}\NormalTok{(high)}\SpecialCharTok{*}\FunctionTok{sd}\NormalTok{(theta), }\FunctionTok{quantile}\NormalTok{(theta,low)),}
+    \AttributeTok{upper =} \FunctionTok{c}\NormalTok{(upper, }\FunctionTok{mean}\NormalTok{(theta) }\SpecialCharTok{+} \FunctionTok{qnorm}\NormalTok{(high)}\SpecialCharTok{*}\FunctionTok{sd}\NormalTok{(theta), }\FunctionTok{quantile}\NormalTok{(theta,high))}
+\NormalTok{  )}
+  \FunctionTok{rownames}\NormalTok{(ret) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}bca(mod)\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}normal\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}percentile\textquotesingle{}}\NormalTok{)}
+  \FunctionTok{attr}\NormalTok{(ret,}\StringTok{\textquotesingle{}conf.level\textquotesingle{}}\NormalTok{) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{conf.level=}\NormalTok{conf.level) }
+  \FunctionTok{class}\NormalTok{(ret) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}conf\_interval\textquotesingle{}}\NormalTok{, }\FunctionTok{class}\NormalTok{(ret))}
+\NormalTok{  ret}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+@export
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{print.conf\_interval }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x,...) \{}
+  \FunctionTok{NextMethod}\NormalTok{()}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{attr}\NormalTok{(x,}\StringTok{\textquotesingle{}conf.level\textquotesingle{}}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
