@@ -182,6 +182,7 @@ cell.default <-
   function (obj, which.coef, levels = 0.95, Scheffe = FALSE, dfn = 2,
             center.pch = 19, center.cex = 1.5, segments = 51, xlab, ylab,
             las = par("las"), col = palette()[2], lwd = 2, lty = 1,
+            radius = sqrt(dfn * qf(levels, dfn, dfd)),
             add = FALSE, ...)
   {
 
@@ -208,7 +209,7 @@ cell.default <-
     shape <- vcov(obj)[which.coef, which.coef]
     ret <- numeric(0)
 
-    ret <- ell( coef, shape,sqrt(dfn * qf(levels, dfn, dfd)))
+    ret <- ell( coef, shape, radius)
     colnames(ret) <- c(xlab, ylab)
     ret
   }
