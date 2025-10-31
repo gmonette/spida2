@@ -151,6 +151,7 @@ cell <- function(obj, ... )  UseMethod("cell")
 #' @param levels (default 0.95)
 #' @param Sheffe logical (default FALSE)
 #' @param dfn (default 2) degrees of freedom for Sheffe multiple test and confidence limits
+#' @param radius gives direct control over radius (or radii if a vector) of ellipses
 #' @describeIn cell method for wald object
 #' @export
 cell.wald <-

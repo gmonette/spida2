@@ -42,6 +42,7 @@ cell(obj, ...)
   col = palette()[2],
   lwd = 2,
   lty = 1,
+  radius = sqrt(dfn * qf(levels, dfn, dfd)),
   add = FALSE,
   ...
 )
@@ -54,6 +55,8 @@ cell(obj, ...)
 \item{levels}{(default 0.95)}
 
 \item{dfn}{(default 2) degrees of freedom for Sheffe multiple test and confidence limits}
+
+\item{radius}{gives direct control over radius (or radii if a vector) of ellipses}
 
 \item{x}{fitted object}
 
