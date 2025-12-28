@@ -127,3 +127,33 @@
 #' Simpson, E. H. (1951) The Interpretation of interaction in contingency tables. Journal of the Royal Statistical Society Ser. B 13: 238-241.
 #' @keywords datasets
 "Florida_sentences"
+#' Berkeley Admissions Data by Gender and Department
+#'
+#' This is a famous data set used to illustrate Simpson's Paradox
+#' using admissions data at the University of California at Berkeley
+#' in 1973. The admissions figures showed that men applying
+#' to graduate school were more likely
+#' to be admitted than women.  Studies showed that qualifications
+#' were similar for men and women, so the data were further
+#' analyzed to discover
+#' which departments should be held responsible for the gender
+#' bias in admissions.
+#' 
+#' Surprisingly, in some departments women had a higher 
+#' probability of admission. There were a few departments in which men
+#' were more likely to be admitted but the difference was small.
+#' 
+#' The data and analysis are often held as an example in which a more careful
+#' analysis showed that there was no gender bias favouring men.
+#' Careful reflection might lead to a different conclusion.  
+#'
+#' @format A data set with four variables:
+#'  \describe{
+#'    \item{\code{Dept}}{Department applied to. For anonymity the departments are identified by letters.}
+#'    \item{\code{Gender}}{of the applicant.}
+#'    \item{\code{Status}}{whether \code{Admitted} or \code{Denied}}
+#'    \item{\code{count}}{number of applicants}
+#'  }
+#' @references https://en.wikipedia.org/wiki/Simpson%27s_paradox
+#' @keywords datasets
+"Berkeley"

@@ -348,3 +348,48 @@ if(FALSE){
        xlab = "Victims race", leg.title = "Defendants race",leg.loc="topleft",
        ylab = "", yaxt = "n")
 }
+#' New version of paik
+#' @examples
+paik3(verdict ~ d.race + v.race | count, death.penalty)
+#' @export
+paik3 <- function(form, data){
+  vars <- all.vars(form)
+  y <- data[[yn <- vars[1]]]
+  ynum <- TRUE
+  ylab <- paste('average of',yn)
+  if(!is.numeric(y)) {
+    ynum <- FALSE
+    y <- as.factor(y)
+    if(length(unique(y)) != 2) warning('if y is a factor it should have 2 unique values')
+    y2 <- unique(y)[2]
+    y <- as.numeric(y) - 1
+    ylab <- paste('proportion of', yn,'equal to',y2)
+  }
+  x <- data[[xn <- vars[2]]]
+  z <- data[[zn <- vars[3]]]
+  wt <- if(length(vars) == 4) {
+    data[[vars[4]]]
+  } else {
+    y*0 + 1
+  }
+  dd <- data.frame(y=y, x = x, z = z)
+  dd <- dd[rep(1:nrow(dd), wt),]
+  
+  fit <- lm(y ~ x * z,  dd)
+  fit_marg <- lm(y ~ x, dd)
+  dcond <- up(dd, ~ x + z)
+  dmarg <- up(dd, ~ x)
+  dcond$y <- predict(fit, newdata = dcond)
+  dmarg$y <- predict(fit_marg, newdata = dmarg)
+ print(dcond)
+ print(dmarg)
+  library(latticeExtra)
+ dcond$z <- reorder(dcond$z, -dcond$y)
+  xyplot(y ~ x, dcond, groups = z, type = 'l',
+         xlab = xn, ylab = ylab,
+         auto.key = list(title = zn,cex.title=1))+
+    layer_(panel.grid(v=-1,h=-1))+
+    xyplot(y ~ x, dmarg, type = 'b', lwd =3, col = 'black')+
+    xyplot(y ~ x, dcond, type = 'p', pch = 1, cex = 10*dcond$Freq/max(dcond$Freq))
+}
+
