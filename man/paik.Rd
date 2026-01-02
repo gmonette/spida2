@@ -5,7 +5,16 @@
 \title{Paik-Agresti diagrams
 New version of Paik-Agresti diagrams}
 \usage{
-paik(form, data, ylab, xlab = xn, cex.factor = 10, ...)
+paik(
+  form,
+  data,
+  ylab,
+  xlab = xn,
+  zlab = zn,
+  cex.factor = 10,
+  cex.zlab = 1,
+  ...
+)
 }
 \arguments{
 \item{form}{formula of the form y ~ x + z + count}
@@ -30,4 +39,7 @@ paik(verdict ~ d.race + v.race | count, death.penalty)
 paik(verdict ~ d.race + v.race | count, death.penalty, 
     ylab = 'verdict', main = 'Paik-Agresti Diagram')
 paik(Status ~ Gender + Dept | count, Berkeley)
+gd(lty = 1:4)
+paik(Status ~ Gender + Dept | count, Berkeley,
+    zlab = 'Department')
 }

@@ -13,8 +13,12 @@
 #' paik(verdict ~ d.race + v.race | count, death.penalty, 
 #'     ylab = 'verdict', main = 'Paik-Agresti Diagram')
 #' paik(Status ~ Gender + Dept | count, Berkeley)
+#' gd(lty = 1:4)
+#' paik(Status ~ Gender + Dept | count, Berkeley,
+#'     zlab = 'Department')
 #' @export
-paik <- function(form, data, ylab, xlab = xn, cex.factor = 10, ...){
+paik <- function(form, data, ylab, xlab = xn, zlab = zn,
+                 cex.factor = 10, cex.zlab = 1,...){
   vars <- all.vars(form)
   y <- data[[yn <- vars[1]]]
   ynum <- TRUE
@@ -50,7 +54,7 @@ paik <- function(form, data, ylab, xlab = xn, cex.factor = 10, ...){
   dcond$z <- reorder(dcond$z, -dcond$y)
   print(xyplot(y ~ x, dcond, groups = z, type = 'l', lwd = 2,
          xlab = xlab, ylab = ylab, ...,
-         auto.key = list(title = zn,cex.title=1))+
+         auto.key = list(title = zlab,cex.title=cex.zlab))+
     layer_(panel.grid(v=-1,h=-1))+
     xyplot(y ~ x, dmarg, type = 'b', lwd =3, pch = 16, col = 'black')+
     xyplot(y ~ x, dcond, type = 'p',  pch = 1, cex = cex.factor*dcond$Freq/max(dcond$Freq))
