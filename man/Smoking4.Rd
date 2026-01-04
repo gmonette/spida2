@@ -10,12 +10,12 @@ A data set with 34 variables with mainly self-descriptive names:
 \describe{
 \item{\code{Country}}{Country}
 \item{\code{Continent}}{Continent}
-\item{\code{LE}}{Overall life expectancy at birth}
-\item{\code{CigCon}}{Cigarette consumption per capita per annum}
+\item{\code{LE}}{Overall life expectancy at birth in 2004}
+\item{\code{CigCon}}{Cigarette consumption per capita per annum in 2004}
 \item{\code{LE.q}}{Life expectancy quartile}
 \item{\code{Cont}}{Continent (6 abbreviated)}
 \item{\code{Cont2}}{Continent (6 less abbreviated)}
-\item{\code{HealthExpPC}}{Health Expenditures per capita per annum}
+\item{\code{HealthExpPC}}{Health Expenditures per capita per annum in 2004}
 \item{\code{Year}}{year}
 \item{\code{HE}}{Health Expenditure quartile}
 \item{\code{country}}{Country}

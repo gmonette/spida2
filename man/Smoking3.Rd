@@ -35,9 +35,19 @@ A data set with 24 variables with self-descriptive names:
 
 A data set with 24 variables with self-descriptive names:
 \describe{
-\item{\code{country}}{Country}
-\item{\code{iso3}}{iso 3-letter country abbreviation}
-\item{\code{region}}{Region: 3-letter region designation}
+\item{\code{Country}}{Country name ca 2004}
+\item{\code{Continent}}{Continent}
+\item{\code{LE}}{Life expectancy, ca 2004}
+\item{\code{CigCon}}{Cigarette consumption per capita per year, ca 2004}
+\item{\code{LE.q}}{Life Expectancy quartile}
+\item{\code{Cont}}{Continent, abbreviated}
+\item{\code{Cont2}}{Continent longer abbreviations}
+\item{\code{HealthExpPC}}{Health expenditures per capita per year, ca 2004}
+\item{\code{Year}}{Actual year of early data}
+\item{\code{HE}}{Quartiles for Health Expenditures}
+\item{\code{country}}{Recent country name}
+\item{\code{iso3}}{ISO 3-letter country abbreviation}
+\item{\code{region}}{ISO 3-letter region designation}
 \item{\code{HealthExpPC.Govt.exch}}{Health Expenditures per capita by government in US dollars using current currency exchange rates}
 \item{\code{HealthExpPC.Tot.ppp}}{Total Health Expenditures per capita in US dollars using purchasing power parity exchange rates}
 \item{\code{HealthExpPC.Govt.ppp}}{Health Expenditures per capita by government in US dollars using purchasing power parity exchange rates}
@@ -69,7 +79,8 @@ Smoking3
 \description{
 Smoking data by country and gender in approximately 2004
 
-Smoking data by country and gender in approximately 2004
+Smoking data by country and gender combining different
+sources from ca 2004 and later.
 }
 \examples{
 if(!require("p3d")) remotes::install_github('gmonette/p3d')
@@ -101,22 +112,24 @@ library(spida2)
 data(Smoking3)
 dd <- Smoking3
 head(dd)
-dd$cig <- dd$consumption.cigPC
-dd$Cigarettes <- dd$consumption.cigPC
-dd$pop <- dd$Pop.Total
-dd$Life <- dd$lifeexp.Birth
-dd$region <- factor(dd$region)
-dd$log.total <- log(dd$total)
-dd$Health <- dd$total
-
-ds <- subset( dd, sex == "BTSX")  # Both sexes combined
-rownames(ds) <- ds$country
+dd <- within(dd,
+  {
+    cig <- consumption.cigPC
+    Cigarettes <- consumption.cigPC
+    pop <- Pop.Total
+    Life <- lifeexp.Birth
+    region <- factor(region)
+    log.total <- log(total)
+    Health <- total
+  }
+)
+ds <- subset( dd, sex == "BTSX")  # Data for both sexes combined
+rownames(ds) <- ds$country   # used to identify points in 3D plots
 Init3d(cex = 2)
-Plot3d(Life ~ Cigarettes + Health | region, ds, phi = 0, theta = 0, fov = 0)
-Plot3d(lifeexp.At60 ~ govt + private | region, ds, phi = 0, theta = 0, fov = 0)
+Plot3d(Life ~ Cigarettes + Health | region, ds)
+Plot3d(lifeexp.At60 ~ govt + private | region, ds)
 Id3d()
-Plot3d_par(col = c('#550000','#005500','#000055'))
-Plot3d(lifeexp.At60 ~ govt + private | region, ds, phi = 0, theta = 0, fov = 0)
+Plot3d(lifeexp.At60 ~ govt + private | region, ds)
 
 }
 \keyword{datasets}
