@@ -13,7 +13,7 @@ xqplot(
   ask = FALSE,
   mcex = 0.8,
   maxlab = 12,
-  debug = F,
+  debug = isTRUE(options("debug")),
   mar = c(4, 2.5, 4, 1),
   xlab.pos = 2,
   xlab.cex = 0.7,
@@ -22,7 +22,8 @@ xqplot(
   left.labs = F,
   class = TRUE,
   xaxs = "i",
-  maxvarnamelength = 20
+  maxvarnamelength = 20,
+  type
 )
 }
 \arguments{
@@ -81,7 +82,8 @@ The current version of the function could be made much simpler and more
 transparent. Some code is redundant.
 }
 \examples{
-require(car)
+library(car)
+library(spida2)
 xqplot(Prestige)
 xqplot(Prestige,"n") # normal quantiles
 }
