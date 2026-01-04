@@ -22,8 +22,7 @@ xqplot(
   left.labs = F,
   class = TRUE,
   xaxs = "i",
-  maxvarnamelength = 20,
-  type
+  maxvarnamelength = 20
 )
 }
 \arguments{
