@@ -602,6 +602,15 @@ tpg <- function (...)
 #' library(spida2)
 #' xqplot(Prestige)
 #' xqplot(Prestige,"n") # normal quantiles
+#' xqplot(Prestige, pch = '.', cex = 4, col = 'red')
+#' # from the car package
+#' qqPlot(Prestige$education)
+#' qqPlot(Prestige$income)
+#' # For exponential distribution use the 'distribution root'
+#' # for the quantile function, e.g. 'exp' for 'qexp':
+#' qqPlot(Prestige$income, distribution = 'exp')
+#' qqPlot(Prestige$income, distribution = 'unif')
+#' 
 #' @export
 xqplot <- function(x,
                    ptype = "quantile",
