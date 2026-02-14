@@ -1163,7 +1163,7 @@ coef.wald <- function( obj , se = FALSE ) {
 #' requires a \code{getFix} method for the new class.
 #'
 #' @param fit A fitted model object
-#' @param \dots Other arguments [unused]
+#' @param \dots Other arguments \[unused\]
 #' @return Returns a list with the following components:
 #'      \itemize{
 #'           \item{fixed}{Fixed effect parameter estimates}

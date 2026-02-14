@@ -54,7 +54,7 @@ to max(degree) in each of the length(knots)+1 intervals of the spline. See
 below for examples of a spline that is 0 outside of its boundary knots.}
 
 \item{periodic}{if TRUE generates a period spline on the base interval
-\link{0,max(knots)}. A constraint is generated so that the coefficients generate
+\verb{[0,max(knots)]}. A constraint is generated so that the coefficients generate
 the same values to the right of max(knots) as they do to the right of 0.
 Note that all knots should be strictly positive.}
 

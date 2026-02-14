@@ -1,4 +1,6 @@
 0.2.3
+2026-02-14
+* added fix_xy to 'merge' consistent .x and .y variables after a merge
 2025-09-15
 * adopted 'bca' from the 'coxed' package
 2025-09-08

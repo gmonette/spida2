@@ -131,17 +131,12 @@
 #' all elements must provide all desired constraints. That is the list argument corresponding
 #' to `smoothness = c(1,2,-1)` is `smoothness=list(0:1, 0:2, -1)`. The default is
 #' 1 less than the minimum of adjoining degrees at 
-#' 
-#' 
-#' 
-#' 
-#' 
 #' @param intercept value(s) of x at which the spline has value 0, i.e. the
 #' value(s) of x for which yhat is estimated by the intercept term in the
 #' model. The default is 0. If NULL, the spline is not constrained to evaluate
 #' to 0 for any x.
 #' @param periodic if TRUE generates a period spline on the base interval
-#' [0,max(knots)]. A constraint is generated so that the coefficients generate
+#' `[0,max(knots)]`. A constraint is generated so that the coefficients generate
 #' the same values to the right of max(knots) as they do to the right of 0.
 #' Note that all knots should be strictly positive.
 #' @param lin provides a matrix specifying additional linear contraints on the

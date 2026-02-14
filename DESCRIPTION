@@ -19,7 +19,7 @@ Description: Collection of utility functions for linear and mixed models
 License: GPL-3 + file LICENSE
 LazyLoad: TRUE
 LazyData: TRUE
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Encoding: UTF-8
 Imports: 
     stats,

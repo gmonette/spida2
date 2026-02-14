@@ -70,7 +70,7 @@ the parameters in the
 'full' parametrization that should be estimated by estimated coefficients of the spline.}
 
 \item{periodic}{if TRUE a periodic spline is generated on the base interval
-\link{0,max(knots)}. A constraint is generated so that the coefficients generate, in effect,
+\verb{[0,max(knots)]}. A constraint is generated so that the coefficients generate, in effect,
 the same fitted values and derivatives to the right of max(knots) as they do to the right of 0.
 Note that all knots must be strictly positive. Since the knot at 0 corresponds to the
 knot at 'max(knots)', the knot at 0 must not be explicitly specified. Note also that the

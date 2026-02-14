@@ -29,7 +29,7 @@ correponding names in wide form. Default: '}'.}
 
 \item{add.invariants}{(default TRUE) additional variables that are invariant
 within clusters are kept in output even if not included in 'idvar'
-(default: names(data)[gicc(data, data\link{idvar})]).
+(default: \verb{names(data)[gicc(data, data[idvar])])}.
 For all variables, except \code{idvar} to be treated as time-varying,
 use \code{invar = NULL}.}
 

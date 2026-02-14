@@ -22,7 +22,7 @@
 #' correponding names in wide form. Default: '_'.
 #' @param add.invariants (default TRUE) additional variables that are invariant
 #' within clusters are kept in output even if not included in 'idvar'
-#' (default: names(data)[gicc(data, data[idvar])]).
+#' (default: `names(data)[gicc(data, data[idvar])])`.
 #' For all variables, except \code{idvar} to be treated as time-varying,
 #' use \code{invar = NULL}.
 #' @param \dots Other arguments are passed to \code{\link[stats]{reshape}}.

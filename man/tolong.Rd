@@ -80,7 +80,7 @@ misinterpreting separators in variable names that
 are not intended to turned into long variables.}
 
 \item{numericalpattern}{(default FALSE) if TRUE,
-\code{valuepattern} is set to "\link{0-9}+$" to match
+\code{valuepattern} is set to \verb{[0-9]+$} to match
 numerical values as time values at the end of
 variable names to be turned into long variables.
 This parameter is only

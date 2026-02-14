@@ -403,7 +403,7 @@ atotal <- function(arr, FUN = sum, label = 'Total', ...) {
 #' is extended by arr2.
 #' @param facename Name for the new array dimension
 #' @return The returned value, ret, is an array with dimension dim(arr1) except
-#' for the dth dimension where dim(ret)[d] == dim(arr1)[d] + dim(arr2)[d].
+#' for the dth dimension where `dim(ret)[d] == dim(arr1)[d] + dim(arr2)[d]`.
 #'
 #' @author Georges Monette
 #' @seealso \code{\link[base]{aperm}}, to permute arrays

@@ -55,7 +55,7 @@
 #'   misinterpreting separators in variable names that
 #'   are not intended to turned into long variables.
 #' @param numericalpattern (default FALSE) if TRUE, 
-#'   \code{valuepattern} is set to "[0-9]+$" to match
+#'   \code{valuepattern} is set to `[0-9]+$` to match
 #'   numerical values as time values at the end of
 #'   variable names to be turned into long variables. 
 #'   This parameter is only

@@ -59,7 +59,7 @@ getFix(fit, ...)
 \arguments{
 \item{fit}{A fitted model object}
 
-\item{\dots}{Other arguments \link{unused}}
+\item{\dots}{Other arguments [unused]}
 }
 \value{
 Returns a list with the following components:
