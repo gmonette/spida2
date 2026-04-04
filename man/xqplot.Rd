@@ -8,13 +8,15 @@
 xqplot(
   x,
   ptype = "quantile",
-  labels = dimnames(x)[[2]],
+  labels = names(x),
+  filename = NULL,
+  res = 150,
   ...,
-  mfrow = findmfrow(ncol(x)),
+  mfrow = findmfrow(length(x)),
   ask = FALSE,
   mcex = 0.8,
   maxlab = 12,
-  debug = isTRUE(options("debug")),
+  debug = F,
   mar = c(4, 2.5, 4, 1),
   xlab.pos = 2,
   xlab.cex = 0.7,
@@ -30,6 +32,8 @@ xqplot_(
   x,
   ptype = "quantile",
   labels = names(x),
+  filename = NULL,
+  res = 150,
   ...,
   mfrow = findmfrow(length(x)),
   ask = FALSE,
@@ -54,6 +58,11 @@ xqplot_(
 axis.}
 
 \item{labels}{names for each plot}
+
+\item{filename}{pdf file to use for output using \link[rasterpdf:raster_pdf]{rasterpdf::raster_pdf}. Default NULL.
+If filename is TRUE, output will be sent to a date-stamped file.}
+
+\item{res}{resolution of rasterization if filename is not NULL. Default 150}
 
 \item{\dots}{additional arguments passed to 'plot' command}
 
@@ -113,6 +122,12 @@ library(spida2)
 xqplot(Prestige)
 xqplot(Prestige,"n") # normal quantiles
 xqplot(Prestige, pch = '.', cex = 4, col = 'red')
+# to create a pdf file:  xqplot(Prestige, filename = TRUE)
+# or xqplot(Prestige, filename = 'trial1')
+# or xqplot(Prestige, filename = 'trial100', res = 100)
+# or xqplot(Prestige, filename = 'trial200', res = 200)
+# or xqplot(Prestige, filename = 'trial300', res = 300)
+# or xqplot(Prestige, filename = 'trial600', res = 600)
 # from the car package
 qqPlot(Prestige$education)
 qqPlot(Prestige$income)

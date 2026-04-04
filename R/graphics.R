@@ -570,6 +570,9 @@ tpg <- function (...)
 #' one standard deviation.
 #'
 #' @param x a data frame or list of variables to plot
+#' @param filename pdf file to use for output using [rasterpdf::raster_pdf]. Default NULL.
+#'        If filename is TRUE, output will be sent to a date-stamped file.
+#' @param res resolution of rasterization if filename is not NULL. Default 150 
 #' @param ptype "quantile" (default) or "normal": kind of quantile to plot on x
 #' axis.
 #' @param labels names for each plot
@@ -603,6 +606,12 @@ tpg <- function (...)
 #' xqplot(Prestige)
 #' xqplot(Prestige,"n") # normal quantiles
 #' xqplot(Prestige, pch = '.', cex = 4, col = 'red')
+#' # to create a pdf file:  xqplot(Prestige, filename = TRUE)
+#' # or xqplot(Prestige, filename = 'trial1')
+#' # or xqplot(Prestige, filename = 'trial100', res = 100)
+#' # or xqplot(Prestige, filename = 'trial200', res = 200)
+#' # or xqplot(Prestige, filename = 'trial300', res = 300)
+#' # or xqplot(Prestige, filename = 'trial600', res = 600)
 #' # from the car package
 #' qqPlot(Prestige$education)
 #' qqPlot(Prestige$income)
@@ -613,260 +622,10 @@ tpg <- function (...)
 #' 
 #' @export
 xqplot <- function(x,
-                   ptype = "quantile",
-                   labels = dimnames(x)[[2]],
-                   ...,
-                   mfrow = findmfrow (ncol(x)),
-                   # ask = prod(mfrow) <
-                   # ncol(x) && dev.interactive(),
-                   ask = FALSE,
-                   mcex = 0.8,
-                   maxlab = 12 ,
-                   debug = isTRUE(options('debug')),
-                   mar = c(4, 2.5, 4, 1),
-                   xlab.pos = 2,
-                   # new param
-                   xlab.cex = .7,
-                   # new param
-                   sublab.pos = xlab.pos + xlab.cex * 1.15,
-                   # new param
-                   text.cex.factor = 1 ,
-                   left.labs = F,
-                   class = TRUE,
-                   xaxs = 'i',
-                   maxvarnamelength = 20)
-{
-  # if(!missing(type)) stop("To get normal quantiles, use: ptype = 'n'")
-  ## Adapted from myplot.data.frame for R by G. Monette, Oct. 25, 2004
-  ##    maxlab is maximum number of labels
-  # Turn matrices into variables:
-  x <- as.data.frame(x)
-  if (any (sapply(x, inherits, 'matrix'))) {
-    zz <- list()
-    for (ii in seq_along(x)) {
-      if (is.matrix(x[[ii]])) {
-        if (is.null (colnames(x[[ii]]))) {
-          cnames <- paste(names(x)[ii], 1:ncol(x[[ii]]), sep = '.')
-        } else {
-          cnames <- paste(names(x)[ii], colnames(x[[ii]]), sep = '.')
-        }
-        for (jj in seq_len(ncol (x[[ii]]))) {
-          zz[[cnames[jj]]] <- x[[ii]][, jj]
-        }
-        
-      } else {
-        zz[[names(x)[[ii]]]] <- x[[ii]]
-      }
-    }
-    x <- as.data.frame(zz)
-    #disp( x )
-  }
-  
-  
-  left.labs <- rep(left.labs, length = length(x))
-  findmfrow <- function(x) {
-    if (x > 9)
-      c(3, 4)
-    else
-      cbind(
-        '1' = c(1, 1),
-        '2' = c(1, 2),
-        '3' = c(2, 2),
-        '4' = c(2, 2),
-        '5' = c(2, 3),
-        '6' = c(2, 3),
-        '7' = c(3, 3),
-        '8' = c(3, 3),
-        '9' = c(3, 3)
-      ) [, x]
-  }
-  
-  opt <- par(mfrow = mfrow,
-             ask = ask ,
-             mar = mar + 0.1)
-  on.exit(par(opt))
-  if (debug) {
-    cat("opt:\n")
-    print(opt)
-  }
-  
-  iscat <- function(x)
-    is.factor(x) || is.character(x)
-  
-  Levels <- function(x) {
-    if (is.factor(x))
-      levels(x)
-    else
-      unique(x)
-  }
-  
-  
-  compute.cex <- function(x) {
-    ll <- length(x)
-    cex <- 2 * ifelse(ll < 5, 2,
-                      ifelse(ll < 10, 1,
-                             ifelse(ll < 20, .7, .5))) / mfrow[1]
-  }
-  for (ii in 1:dim(x)[2]) {
-    vv <- x[[ii]]
-    nam <- labels[[ii]]
-    Nmiss <- sum(is.na(vv))
-    N <- length(vv)
-    if (iscat(vv)) {
-      tt <- table(vv)
-      
-      xlab <- paste("N =", N)
-      if (Nmiss > 0) {
-        tt <- c("<NA>" = sum(is.na(vv)), tt)
-        xlab <- paste(xlab, "  Nmiss =", Nmiss)
-      }
-      ll <- names(tt)
-      nn <- length(ll)
-      if (left.labs[ii]) {
-        barplot(
-          tt,
-          horiz = TRUE,
-          xlab = '',
-          cex.names = text.cex.factor * compute.cex(nn)
-        )
-        mtext(xlab, 1, xlab.pos, cex = xlab.cex)
-      }
-      else {
-        zm <- barplot(tt,
-                      names = rep("", nn),
-                      horiz = TRUE,
-                      xlab = '')
-        mtext(xlab, 1, xlab.pos, cex = xlab.cex)
-        
-        ## If nn > maxlab drop labels for smaller frequencies
-        sel <- rep(T, length(tt))
-        tt.sorted <- rev(sort(tt))
-        if (nn > maxlab)
-          sel <- tt > tt.sorted[maxlab]
-        if (debug) {
-          disp(sel)
-          disp(nam)
-          disp(tt)
-          disp(tt.sorted)
-          disp(maxlab)
-          disp(tt.sorted[maxlab])
-          disp(sel)
-          disp(zm[sel])
-          disp(rep(max(tt), nn)[sel])
-          disp(ll[sel])
-        }
-        if (any(sel))
-          text(rep(max(tt), nn)[sel]  ,
-               zm[sel],
-               ll[sel],
-               adj = 1,
-               cex = text.cex.factor * compute.cex(nn))
-      }
-    } # end of iscat(vv)
-    else {
-      sublab <- ""
-      N <- length(vv)
-      Ninfinite <- 0
-      if (any(is.infinite (vv))) {
-        n.pi <- sum(vv == Inf , na.rm = TRUE)
-        n.ni <- sum(vv == -Inf, na.rm = TRUE)
-        Ninfinite <- n.pi + n.ni
-        vv <- vv[!is.infinite(vv)]
-        sublab <- paste(sublab, "-Inf:", n.ni, "+Inf:", n.pi)
-      }
-      Nmiss <- 0
-      if (any (is.na(vv))) {
-        Nmiss <- sum(is.na(vv))
-        vv  <- vv[!is.na(vv)]
-        sublab <- paste(sublab, "NA:", Nmiss)
-      }
-      Nok <- N - Nmiss - Ninfinite
-      if (pmatch(ptype, 'normal', nomatch = 0) == 1) {
-        xxvar <- qnorm(ppoints(length(vv)))
-        xlab <- paste("Normal quantile for", Nok, "obs.")
-      }
-      else {
-        xxvar <- ppoints(length(vv))
-        xlab <- paste("Fraction of", Nok, "obs.")
-      }
-      
-      ## Plot continuous
-      if (Nok == 0) {
-        xxvar <- 1
-        vv <- 1
-        if (sublab == "") {
-          plot(xxvar,
-               vv,
-               xlab = '',
-               ylab = "",
-               type = 'n')
-          # mtext(xlab,1, xlab.pos)
-        } else {
-          plot(xxvar,
-               vv,
-               xlab = '',
-               ylab = "",
-               type = 'n')
-          mtext(sublab, 1, xlab.pos, cex = xlab.cex)
-          #mtext(xlab,1, xlab.pos)
-        }
-        text(1, 1, "NA")
-      }
-      else {
-        if (sublab == "") {
-          plot(xxvar,
-               sort(vv),
-               xlab = '',
-               ylab = "Data",
-               ...)
-          mtext(xlab, 1, xlab.pos, cex = xlab.cex)
-        } else {
-          plot(xxvar,
-               sort(vv),
-               xlab = '',
-               ylab = "Data",
-               ...)
-          mtext(xlab, 1, xlab.pos, cex = xlab.cex)
-          mtext(sublab, 1, sublab.pos , cex = xlab.cex)
-        }
-        xm <- mean(vv)
-        xs <- sqrt(var(vv))
-        abline(h = xm, lty = 1)
-        abline(h = c(xm - xs, xm + xs), lty = 2)
-      }
-    }
-    ## Titles for all plots
-    vlab <- labels[ii]
-    line.offset <- 1.0
-    if (nchar(vlab) > maxvarnamelength) {
-      vlab <-
-        paste(
-          substring(vlab, 1, maxvarnamelength),
-          "\n",
-          substring(vlab, maxvarnamelength + 1)
-        )
-      line.offset <- 0.2
-    }
-    mtext(vlab, 3, line.offset , cex = mcex)
-    if (class)
-      mtext(paste(class(vv), collapse = ', '), 3, 0.2, cex = .7 * mcex)
-  }
-  # par(opt)
-  if (debug) {
-    disp(par())
-  }
-  invisible(0)
-}
-#' @describeIn xqplot experimental version to handle data.frames with list elements
-#' @examples
-#' dd <- data.frame(x = 1:10, y = rnorm(10))
-#' dd$listvar <- list(1,'A',2,4,5,6,7,8,9,10)
-#' dd
-#' xqplot_(dd)
-#' @export
-xqplot_ <- function(x,
                     ptype = "quantile",
                     labels = names(x),
+                    filename = NULL,
+                    res = 150,
                     ...,
                     mfrow = findmfrow (length(x)),
                     ask = FALSE,
@@ -888,6 +647,13 @@ xqplot_ <- function(x,
 {
   ## Adapted from myplot.data.frame for R by G. Monette, Oct. 25, 2004
   ##    maxlab is maximum number of labels
+  if(isTRUE(filename)) filename <- paste0('xqplot_',format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),".pdf")
+  if(!is.null(filename)) {
+    if(!grepl('\\.pdf$',filename)[1]) filename <- paste0(filename, '.pdf')
+    rasterpdf::raster_pdf(filename, res = res)
+    on.exit(rasterpdf::dev.off(), add = TRUE)
+  }
+  # on.exit(dev.off(), add = TRUE)
   # Turn matrices into variables:
   if(!is.data.frame(x)) x <- as.data.frame(x)
   xl <- Filter(is.list, x)
@@ -939,7 +705,7 @@ xqplot_ <- function(x,
   opt <- par(mfrow = mfrow,
              ask = ask ,
              mar = mar + 0.1)
-  on.exit(par(opt))
+  if(is.null(filename)) on.exit(par(opt), add = TRUE)
   if (debug) {
     cat("opt:\n")
     print(opt)
@@ -1113,8 +879,278 @@ xqplot_ <- function(x,
   }
   invisible(0)
 }
+#' @describeIn xqplot experimental version to handle data.frames with list elements
+#' @examples
+#' dd <- data.frame(x = 1:10, y = rnorm(10))
+#' dd$listvar <- list(1,'A',2,4,5,6,7,8,9,10)
+#' dd
+#' xqplot_(dd)
+#' @export
+xqplot_ <- function(x,
+                    ptype = "quantile",
+                    labels = names(x),
+                    filename = NULL,
+                    res = 150,
+                    ...,
+                    mfrow = findmfrow (length(x)),
+                    ask = FALSE,
+                    mcex = 0.8,
+                    maxlab = 12 ,
+                    debug = F,
+                    mar = c(4, 2.5, 4, 1),
+                    xlab.pos = 2,
+                    # new param
+                    xlab.cex = .7,
+                    # new param
+                    sublab.pos = xlab.pos + xlab.cex * 1.15,
+                    # new param
+                    text.cex.factor = 1 ,
+                    left.labs = F,
+                    class = TRUE,
+                    xaxs = 'i',
+                    maxvarnamelength = 20)
+{
+  ## Adapted from myplot.data.frame for R by G. Monette, Oct. 25, 2004
+  ##    maxlab is maximum number of labels
+  if(isTRUE(filename)) filename <- paste0('xqplot_',format(Sys.time(),"%Y-%m-%d_%H-%M-%S"),".pdf")
+  if(!is.null(filename)) {
+    if(!grepl('\\.pdf$',filename)[1]) filename <- paste0(filename, '.pdf')
+    rasterpdf::raster_pdf(filename, res = res)
+    on.exit(rasterpdf::dev.off(), add = TRUE)
+  }
+  # on.exit(dev.off(), add = TRUE)
+  # Turn matrices into variables:
+  if(!is.data.frame(x)) x <- as.data.frame(x)
+  xl <- Filter(is.list, x)
+  x <- Filter(Negate(is.list), x)
+  for(i in seq_along(xl)) {
+    print(paste(names(xl[i]), ' is a list and is not plotted.'))
+  }
+  if (any (sapply(x, inherits, 'matrix'))) {
+    zz <- list()
+    for (ii in seq_along(x)) {
+      if (is.matrix(x[[ii]])) {
+        if (is.null (colnames(x[[ii]]))) {
+          cnames <- paste(names(x)[ii], 1:ncol(x[[ii]]), sep = '.')
+        } else {
+          cnames <- paste(names(x)[ii], colnames(x[[ii]]), sep = '.')
+        }
+        for (jj in seq_len(ncol (x[[ii]]))) {
+          zz[[cnames[jj]]] <- x[[ii]][, jj]
+        }
+        
+      } else {
+        zz[[names(x)[[ii]]]] <- x[[ii]]
+      }
+    }
+    # x <- as.data.frame_(zz)
+    x <- zz                      # leave is as a list
+    #disp( x )
+  }
+  
+  
+  left.labs <- rep(left.labs, length = length(x))
+  findmfrow <- function(x) {
+    if (x > 9)
+      c(3, 4)
+    else
+      cbind(
+        '1' = c(1, 1),
+        '2' = c(1, 2),
+        '3' = c(2, 2),
+        '4' = c(2, 2),
+        '5' = c(2, 3),
+        '6' = c(2, 3),
+        '7' = c(3, 3),
+        '8' = c(3, 3),
+        '9' = c(3, 3)
+      ) [, x]
+  }
+  
+  opt <- par(mfrow = mfrow,
+             ask = ask ,
+             mar = mar + 0.1)
+  if(is.null(filename)) on.exit(par(opt), add = TRUE)
+  if (debug) {
+    cat("opt:\n")
+    print(opt)
+  }
+  
+  iscat <- function(x)
+    is.factor(x) || is.character(x)
+  
+  Levels <- function(x) {
+    if (is.factor(x))
+      levels(x)
+    else
+      unique(x)
+  }
+  
+  
+  compute.cex <- function(x) {
+    ll <- length(x)
+    cex <- 2 * ifelse(ll < 5, 2,
+                      ifelse(ll < 10, 1,
+                             ifelse(ll < 20, .7, .5))) / mfrow[1]
+  }
+  #  for (ii in 1:dim(x)[2]) {
+  for (ii in seq_along(x)) {
+    vv <- x[[ii]]
+    nam <- labels[[ii]]
+    Nmiss <- sum(is.na(vv))
+    N <- length(vv)
+    if (iscat(vv)) {
+      tt <- table(vv)
+      
+      xlab <- paste("N =", N)
+      if (Nmiss > 0) {
+        tt <- c("<NA>" = sum(is.na(vv)), tt)
+        xlab <- paste(xlab, "  Nmiss =", Nmiss)
+      }
+      ll <- names(tt)
+      nn <- length(ll)
+      if (left.labs[ii]) {
+        barplot(
+          tt,
+          horiz = TRUE,
+          xlab = '',
+          cex.names = text.cex.factor * compute.cex(nn)
+        )
+        mtext(xlab, 1, xlab.pos, cex = xlab.cex)
+      }
+      else {
+        zm <- barplot(tt,
+                      names = rep("", nn),
+                      horiz = TRUE,
+                      xlab = '')
+        mtext(xlab, 1, xlab.pos, cex = xlab.cex)
+        
+        ## If nn > maxlab drop labels for smaller frequencies
+        sel <- rep(T, length(tt))
+        tt.sorted <- rev(sort(tt))
+        if (nn > maxlab)
+          sel <- tt > tt.sorted[maxlab]
+        if (debug) {
+          disp(sel)
+          disp(nam)
+          disp(tt)
+          disp(tt.sorted)
+          disp(maxlab)
+          disp(tt.sorted[maxlab])
+          disp(sel)
+          disp(zm[sel])
+          disp(rep(max(tt), nn)[sel])
+          disp(ll[sel])
+        }
+        if (any(sel))
+          text(rep(max(tt), nn)[sel]  ,
+               zm[sel],
+               ll[sel],
+               adj = 1,
+               cex = text.cex.factor * compute.cex(nn))
+      }
+    } # end of iscat(vv)
+    else {
+      sublab <- ""
+      N <- length(vv)
+      Ninfinite <- 0
+      if (any(is.infinite (vv))) {
+        n.pi <- sum(vv == Inf , na.rm = TRUE)
+        n.ni <- sum(vv == -Inf, na.rm = TRUE)
+        Ninfinite <- n.pi + n.ni
+        vv <- vv[!is.infinite(vv)]
+        sublab <- paste(sublab, "-Inf:", n.ni, "+Inf:", n.pi)
+      }
+      Nmiss <- 0
+      if (any (is.na(vv))) {
+        Nmiss <- sum(is.na(vv))
+        vv  <- vv[!is.na(vv)]
+        sublab <- paste(sublab, "NA:", Nmiss)
+      }
+      Nok <- N - Nmiss - Ninfinite
+      if (pmatch(ptype, 'normal', nomatch = 0) == 1) {
+        xxvar <- qnorm(ppoints(length(vv)))
+        xlab <- paste("Normal quantile for", Nok, "obs.")
+      }
+      else {
+        xxvar <- ppoints(length(vv))
+        xlab <- paste("Fraction of", Nok, "obs.")
+      }
+      
+      ## Plot continuous
+      if (Nok == 0) {
+        xxvar <- 1
+        vv <- 1
+        if (sublab == "") {
+          plot(xxvar,
+               vv,
+               xlab = '',
+               ylab = "",
+               type = 'n')
+          # mtext(xlab,1, xlab.pos)
+        } else {
+          plot(xxvar,
+               vv,
+               xlab = '',
+               ylab = "",
+               type = 'n')
+          mtext(sublab, 1, xlab.pos, cex = xlab.cex)
+          #mtext(xlab,1, xlab.pos)
+        }
+        text(1, 1, "NA")
+      }
+      else {
+        if (sublab == "") {
+          plot(xxvar,
+               sort(vv),
+               xlab = '',
+               ylab = "Data",
+               ...)
+          mtext(xlab, 1, xlab.pos, cex = xlab.cex)
+        } else {
+          plot(xxvar,
+               sort(vv),
+               xlab = '',
+               ylab = "Data",
+               ...)
+          mtext(xlab, 1, xlab.pos, cex = xlab.cex)
+          mtext(sublab, 1, sublab.pos , cex = xlab.cex)
+        }
+        xm <- mean(vv)
+        xs <- sqrt(var(vv))
+        abline(h = xm, lty = 1)
+        abline(h = c(xm - xs, xm + xs), lty = 2)
+      }
+    }
+    ## Titles for all plots
+    vlab <- labels[ii]
+    line.offset <- 1.0
+    if (nchar(vlab) > maxvarnamelength) {
+      vlab <-
+        paste(
+          substring(vlab, 1, maxvarnamelength),
+          "\n",
+          substring(vlab, maxvarnamelength + 1)
+        )
+      line.offset <- 0.2
+    }
+    mtext(vlab, 3, line.offset , cex = mcex)
+    if (class)
+      mtext(paste(class(vv), collapse = ', '), 3, 0.2, cex = .7 * mcex)
+  }
+  # par(opt)
+  if (debug) {
+    disp(par())
+  }
+  invisible(0)
+}
+if(FALSE){
+xqplot_(Prestige[,c(1:3,6)])
+par('mfrow')  
+xqplot_(Prestige[,1:3], file = 'tmp/test3.pdf')
+dev.list()
 
-
+}
 
 
 

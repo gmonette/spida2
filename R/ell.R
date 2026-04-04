@@ -334,3 +334,100 @@ Null <- function (M)
   else -seq_len(tmp$rank)
   qr.Q(tmp, complete = TRUE)[, set, drop = FALSE]
 }
+#' Generate line of osculation between two families of ellipses
+#' 
+#' @export
+osculant <- function(x, ...) {
+  UseMethod('osculant')
+}
+#' @param center1 center of first ellipse
+#' @param shape1 shape (variance) of first ellipse
+#' @param center2 center of second ellipse
+#' @param shape2 shape (variance) of second ellipse
+#' @param n number of points to generate, default 100
+#' @examples
+#' cen1 <- c(0,0)
+#' shape1 <- cbind(c(3,2),c(2,4))
+#' cen2 <- c(2,2)
+#' shape2 <- cbind(c(4,-2),c(-2,3))
+#' osculant(cen1, shape1, cen2, shape2)
+#' @rdname osculant 
+#' @export
+osculant.default <- function(
+    center1,
+    shape1,
+    center2,
+    shape2,
+    n = 100) {
+  w1 <- solve(shape1)
+  w2 <- solve(shape2)
+  a1 <- w1 %*% center1
+  a2 <- w2 %*% center2
+  ret <- sapply(seq(0,1, length.out=n),
+         function(k){
+           solve(k * w1 + (1-k) * w2)%*%(k*a1 + (1-k)*a2)
+         }
+           )
+  t(ret)
+}
+#' @param ell1 first ellipse, an object of class `ell` created by [ell()]
+#' @param ell2 second ellipse
+#' @param n number of points to generate, default 100
+#' @examples
+#' ell1 <- ell(c(-5,0),  cbind(c(3,3.1),c(3.1,4) ))
+#' ell2 <- ell(c(5,0),  cbind(c(3,-1),c(-1,4) ))
+#' ell3 <- ell(c(5,0),  cbind(c(3,-.1),c(-.1,.1) ))
+#' ell4 <- ell(c(5,0),  cbind(c(3,0),c(0,.1) ))
+#' ell5 <- ell(c(5,0),  cbind(c(3,0.01),c(0.01,.01) ))
+#' 
+#' osculant(ell1,  ell2) 
+#' 
+#' plot(c(-5,5), c(-5,5), asp = 1)
+#' lines(ell1)
+#' lines(ell2)
+#' osculant(ell1,ell2) %>% lines
+#' ellptsc(ell1) %>% points
+#' elltanc(ell2,c(-1,0)) %>% lines
+#' elltanc(ell1,c(1,0)) %>% lines
+#' elltanc(ell2,elltanc(ell1,c(1,0))) %>% lines
+#' plot(c(-5,5), c(-5,5), asp = 1)
+#' lines(ell1) 
+#' lines(ell3)
+#' osculant(ell1,ell3) %>% lines
+#' lines(ell4, col = 'red')
+#' osculant(ell1,ell4) %>% lines(col='red')
+#' lines(ell5, col = 'blue')
+#' osculant(ell1,ell5) %>% lines(col='blue')
+#' s11 <- 3.0
+#' s12 <- +0.4
+#' rotv <- function(v, theta) {
+#'   rot <- cbind(c(cos(theta),sin(theta)),c(-sin(theta), cos(theta)))
+#'   rot %*% v %*% t(rot)
+#' }
+#' {
+#'   for(theta1 in pi*seq(0:10)/10){
+#'     plot(c(-5,5),2* c(-5,5), asp = 1, type = 'n',
+#'       xlab = '',ylab = '', sub = 'osculating ellipses')
+#'     ell1 <- ell(c(-5,0),  rotv(cbind(c(3,3.1),c(3.1,4) ), theta1), radius =3)
+#'     lines(ell1)
+#'     for(theta in pi*seq(0:100)/100){
+#'       ell6 <- ell(c(10,0),  rotv(cbind(c(s11,s12),c(s12, s12^2/s11 + .1) ), theta))
+#'       lines(ell6, col = 'red')
+#'       osculant(ell1,ell6,500) %>% lines(col='red')
+#'     }
+#'     Sys.sleep(1)
+#'   }
+#' }
+#' @rdname osculant
+#' @export
+osculant.ell <- function(
+    ell1,
+    ell2,
+    n = 100) {
+  cen1 <- center(ell1)
+  shape1 <- attr(ell1,'parms')$radius * attr(ell1,'parms')$shape
+  cen2 <- center(ell2)
+  shape2 <- attr(ell2,'parms')$radius * attr(ell2,'parms')$shape
+  osculant(as.vector(cen1),shape1,as.vector(cen2),shape2,n=n)
+}
+
