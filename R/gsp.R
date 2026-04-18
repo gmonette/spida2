@@ -121,6 +121,10 @@
 #' @param smoothness vector with the degree of smoothness at each knot (0 =
 #' continuity, 1 = smoothness with continuous first derivative, 2 = continuous
 #' second derivative, etc. The value -1 allows a discontinuity at the knot. 
+#' The intervals are constructed so that they are **closed on the right**.  This
+#' implies that observations whose value of `x` is equal to a knot are included
+#' in the interval on the left and the the corresponding coefficients are
+#' estimates of the derivatives assuming **continuity from the left.**
 #' A scalar is recycled so its length equals the
 #' number of knots. Alternatively, 
 #' a list of length equal to the number of knots. Each element of the list is a 
@@ -165,7 +169,8 @@
 #' raised to the power equal to the highest degree in \code{degree}. The values
 #' of \code{x} should be scaled to avoid excessively large values in the spline
 #' matrix and ensuing numerical problems.
-#' @author Monette, G. \email{georges@@yorku.ca}
+#' @author Monette, G. \email{georges@@yorku.ca} with thanks to Hien Thao Mai for
+#'         raising the questions of continuity.
 #' @seealso \code{\link[spida2]{wald}} \code{\link[spida2]{sc}}
 #' @references %% ~put references to the literature/web site here ~
 #' @keywords ~kwd1 ~kwd2
@@ -479,6 +484,22 @@
 #' xyplot( y + predict(fit) ~ x , 
 #'    panel = panel.superpose.2,type = c("p","l")) 
 #' xyplot( predict(fit) ~ x , type = 'l')
+#' 
+#' ## Does the parametrization fit coefficients of polynomials or derivatives
+#' ## Answer: Derivatives
+#' 
+#' simd <- within(
+#'   data.frame(x = seq(-1,2,.01)),
+#'   {
+#'      y <- ifelse(x <= 1, x^2, 1 + 2 * (x-1) - (x-1)^2)
+#'   }
+#' )
+#' xyplot(y ~ x, simd, type = 'l')
+#' sp <- function(x) {
+#'   gsp(x, 1, c(2,2), 1)
+#' }
+#' fit <- lm(y ~ sp(x), simd)
+#' summary(fit)
 #' 
 #' 
 #' ## Smoothing splines

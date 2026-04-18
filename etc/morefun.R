@@ -982,3 +982,19 @@ vmat <- function(...) {
   matrix(aa, nrow = 2)
 }
 
+
+graphics.off()
+{
+  rad <- 10
+  ang <- 0
+  theta <- 0
+  while(TRUE){
+    theta <- theta + .01
+    plot(c(-10,10), c(-10,10), type = 'n', asp = 1)
+    cent <- rad*c(sin(theta),cos(theta))
+    ell(c(0,0), diag(c(20,.2))) %>% lines
+    ell(cent, diag(2)) %>% lines
+    osculant(c(0,0), diag(c(10,2)), cent, diag(2)) %>% lines
+    Sys.sleep(.01)
+  }
+}
