@@ -121,10 +121,19 @@
 #' @param smoothness vector with the degree of smoothness at each knot (0 =
 #' continuity, 1 = smoothness with continuous first derivative, 2 = continuous
 #' second derivative, etc. The value -1 allows a discontinuity at the knot. 
+#' 
 #' The intervals are constructed so that they are **closed on the right**.  This
 #' implies that observations whose value of `x` is equal to a knot are included
-#' in the interval on the left and the the corresponding coefficients are
+#' in the interval on the left and the corresponding coefficients are
 #' estimates of the derivatives assuming **continuity from the left.**
+#' Limits from the right can be estimated using the [sc()] function. However,
+#' an important consequence of the fact that the models assume continuity from 
+#' the left is that observations whose predictor values are at knots participate
+#' in the estimation of parameters for the interval on the left. If an observation
+#' should be treated as belonging to the interval on the right, a relatively 
+#' small increment can be added to the predictor so it belongs to the interval
+#' on the right.
+#'
 #' A scalar is recycled so its length equals the
 #' number of knots. Alternatively, 
 #' a list of length equal to the number of knots. Each element of the list is a 

@@ -37,6 +37,19 @@ in the interval at which the spline must evaluate to 0.}
 \item{smoothness}{vector with the degree of smoothness at each knot (0 =
 continuity, 1 = smoothness with continuous first derivative, 2 = continuous
 second derivative, etc. The value -1 allows a discontinuity at the knot.
+
+The intervals are constructed so that they are \strong{closed on the right}.  This
+implies that observations whose value of \code{x} is equal to a knot are included
+in the interval on the left and the corresponding coefficients are
+estimates of the derivatives assuming \strong{continuity from the left.}
+Limits from the right can be estimated using the \code{\link[=sc]{sc()}} function. However,
+an important consequence of the fact that the models assume continuity from
+the left is that observations whose predictor values are at knots participate
+in the estimation of parameters for the interval on the left. If an observation
+should be treated as belonging to the interval on the right, a relatively
+small increment can be added to the predictor so it belongs to the interval
+on the right.
+
 A scalar is recycled so its length equals the
 number of knots. Alternatively,
 a list of length equal to the number of knots. Each element of the list is a
@@ -495,6 +508,22 @@ xyplot( y + predict(fit) ~ x ,
    panel = panel.superpose.2,type = c("p","l")) 
 xyplot( predict(fit) ~ x , type = 'l')
 
+## Does the parametrization fit coefficients of polynomials or derivatives
+## Answer: Derivatives
+
+simd <- within(
+  data.frame(x = seq(-1,2,.01)),
+  {
+     y <- ifelse(x <= 1, x^2, 1 + 2 * (x-1) - (x-1)^2)
+  }
+)
+xyplot(y ~ x, simd, type = 'l')
+sp <- function(x) {
+  gsp(x, 1, c(2,2), 1)
+}
+fit <- lm(y ~ sp(x), simd)
+summary(fit)
+
 
 ## Smoothing splines
 
@@ -522,7 +551,8 @@ xyplot( logSize ~ days, pred, type = 'l')
 \code{\link[spida2]{wald}} \code{\link[spida2]{sc}}
 }
 \author{
-Monette, G. \email{georges@yorku.ca}
+Monette, G. \email{georges@yorku.ca} with thanks to Hien Thao Mai for
+raising the questions of continuity.
 }
 \keyword{~kwd1}
 \keyword{~kwd2}
