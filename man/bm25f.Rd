@@ -11,7 +11,7 @@ Use the total time for all 15 tests to decide whether you would benefit
 from running time-consuming tasks on a faster server.
 }
 \details{
-Exports information to a file
+Exports information to a file. Use \code{\link[rio:import]{rio::import()}} to read the file.
 }
 \seealso{
 \code{\link[=bm25]{bm25()}} for a benchmark without saving results in a file
