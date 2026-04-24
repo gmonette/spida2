@@ -1,171 +1,107 @@
-0.2.3
-2026-04-18
-* added statement on continuity of splines  
-2026-04-03
-* added function 'osculant' with examples
-2026-02-14
-* added fix_xy to 'merge' consistent .x and .y variables after a merge
-2025-09-15
-* adopted 'bca' from the 'coxed' package
-2025-09-08
-* added append<- rmse
-2025-08-11
-* added example of non-estimable L matrix to ?waldx
-2025-08-10 9004
-* improved documentation for C_
-2025-08-09 9003
-* corrected error in contr.nhelmert
-2025-07-03
-* added AIC.list BIC.list anova.list
-2025-06-21
-* fixed tolong() to avert bug in base::reshape
-2025-06-16
-* added getFix.glmmTMB method 
-2025-05-23
-* modified here() to use the "this.path" package 
-2025-03-25
-* modified tolong so only the last occurrence of the separator gets matched
-* changed knots.gspline to knots_.gspline to avoid conflict with stats::knots
-* fixed gplots problem
-2023-08-10
-* paik2 to draw Paik-Agresti diagrams for a numerical response
-2023-08-05
-* Improvements to `paik`
-2023-06-27
-* add bm25f to save benchmark results to a file
-2023-03-23
-* debugged() lists debugged functions
-2022_08_15
-* Handle Ls with NAs in waldx (and waldf)
-2022_07_25
-* modified lssvd to use MASS::ginv and added used of sandwich::vcovHC to waldx and waldf if robust=TRUE
-2022_06_01
-* Corrected bug in tab that didn't show a frequency of 0 for factor levels absent in data
-2022_05_31
-* new: tabf, Apply, add_faces: tabf is similar to tab in concept but returns an array of rows of a data frame with margins
-* Apply works like lapply but returns the correct structure, like that of its argument
-2022_05_25
-* added tps, tps_ and tpg, to update trellis settings without resetting other parameters as gd and td do
-2022_05_17
-* added 'robust' and 'type' to getFix.lm and to waldx
-2022_05_12
-* improved identification of non-estimable rows of hypothesis L matrix
-2022_05_09
-* improved behaviour of wald with waldx for singular models 
-2022_04_27
-* add p-values to as.data.frame.wald
-2022_04_26
-* sort input variables to ensure that the prediction fram has factors in their internal order, not the order of appearance in the data
-2022_04_21
-* fixed bug in pred.grid
-2022_02_07
-* added 'pred.grid', an easier version of expand.grid for plotting predicted values from a fitted model
-2022_01_29
-* added 'esac': equivalent to nested ifelse statements (see also case for a different syntax) 
-2022_01_27
-* added napply to allow lapply to have access to names of elements of list used as an argument
-2022_01_02
-* linked 'tablemissing_' to naniar::gg_miss_upset
-2021_10_09
-* as.data.frame.wald includes the original wald object as the 'wald' attribute of the returned object
-2021_08_06
-* added getFix.lmerMod and getFix.glmerMod
-2021_07_02
-* 'as.data.frame.wald' now includes the L matrix in the returned data frame so subsetting the data frame can provide selected rows of the L matrix
-* added 'contr.nhelmert' to construct normalized Helmert coding for factors
-2021_06_19
-* added sublast to substitute the last occurrence of a pattern in a string
-2021_03_02
-* added setwd_here which does nothing when knitting
-2020_12_13
-* xqplot: coerce x to data.frame, to correct problem with tibbles
-2020_11_20
-* fixed bug with up
-2020_11_15
-* modified up to return 'Freq'
-* fixed 'counts' in 'paik'
-2020_11_14
-* added empty environment to render_keep
-2020_11_09
-* fixed cvar so 'up' with the 'freq' argument can return 'grouped data' in the sense of Agrest
-2020_11_07
-* fixed getFix.lm to return vcov with NA for rank-deficient models
-2020_03_14
-* added paik from asbio, brewer.pal.show from RColorBrewer::display.brewer.pal, death.penalty data from asbio, and 'getS' to extract
-samples and sampling parameters from a 'stanfit' object in rstan.
-2020_02_13
-* altered 'gd' so it always uses 'superpose=TRUE' as default. Use 'gd_' to get superpose=FALSE
-2020_01_02
-* added getD to get data frame from a model and optionally add rows (made possible by getModelData by J. Fox)
-2019_12_09
-* rename 'gspline' 'Gspline' to avert conflicts with package 'gspline'
-* version 0.2.1
-2019_12_08
-* development version 0.2.0.9000
-* released version 0.2.0
-* added make.grid to generate cartesian product of predictor to help plot fitted responses
-* added getModelData (from gspline)
-* added copy of pipe (from magrittr)
-2019_10_25
-* added panel.barchart2 to allow varying heights/widths of bars in a barchart using lattice 
-2019_07_09
-* added llapply to provide list names and items to function argument in lapply
-# spida2 version 0.2.1 2019_07_09
-2019-04-17
-* modified print.wald to handle repeated row names
-2019-03-21
-* added gspline, a new approach to gsp (in progress)
-* modified sortdf so 'form' can be a variable or list, not just a formula
-2018-11-21
-* added freq argument to 'up' to summarize factor using frequencies. Useful to create data grouped by predictor variables with frequencies for levels of response variable for binomial glm with goodness of fit test 
-2018-10-13
-* added brace
-2018-04-12
-* added verbose argument to Rbind
-2018-03-18
-* getX returns a row of NAs if a variable in data is NA
-2018-03-05
-* Fixed a bug in 'towide'
-2018-02-23
-* The 'form' argument in 'sortdf' does not have to be a formula 
-2017-12-28
-* Added yscale.components.log100real to draw real labels on right side for logged variable
-2017-12-20
-* Added here: get current directory of R script in R Studio
-2017-11-19
-* Added panel.errorbars
-2017-07-10
-* Added getFix.stanfit and modified wald to pass 'pars' parameter
-2017-06-30
-* Added name, sub_, gsub_, getex, getex_
-2017-05-12
-* sortdf:  fixed so single variable data frame remains a data frame
-2017-05-12
-* capply.default rewritten to speed up when by is a list
-2017-05-05
-* Added 'name' to provide naming/renaming facility in a pipeline
-* Added 'sub_' and 'gsub_' to enhance naming/renaming in a pipeline
-2017-04-19
-* Added 'pred' parameter to provide a prediction data frame 'wald' to produce predicted values and SEs for any fit with 'getFix' and 'getX' methods 
-2017-03-26
-* Added 'reverse' parameter to 'tolong' for cases where the 'time' value precedes the variable name: e.g. 'chain.1:beta', 'chain.2:beta' in rstan models
-2017-03-11
-* Added Read_excel to read xls/xlsx files as data frames using the 'readxl' package
-2016-11-17
-* Added 'Levels' function: self-named vector for 'lapply'
-2016-09-13
-* incoporated changes to tab and added new tab_df from WWCa
-2016-08-12
-* modified 'up' by adding 'agg' parameter
-* added 'gpanel.box' to work like 'gpanel.fit' to create confidence interval boxes
-* surveys: wtd_mean, lin_comb, jk_wtd_mean_se, jk_lin_comb_se
-# ????
-* modified Tab, added equivalent tab_ and improved documentation
-* added dropLastTotal and modified tab and Tab to change behavior with Total and All margins
-* added grepv
-* added sortdf, assn -- mainly for magrittr pipeline
+Changes in version 0.2.3.9008 (2026-04-23)
 
-# spida2 0.1.1 2015-12-31
-
-* ported functions accumulated in 'spidanew'
+  * added statement on continuity of splines  
+  * added function 'osculant' with examples
+  * added fix_xy to 'merge' consistent .x and .y variables after a merge 2026-02-14
+  * adopted 'bca' from the 'coxed' package 2025-09-15
+  * added append<- rmse 2025-09-08
+  * added example of non-estimable L matrix to ?waldx 2025-08-11
+  * improved documentation for C_  2025-08-10 9004
+  * corrected error in contr.nhelmert
+  * added AIC.list BIC.list anova.list 2025-07-03
+  2025
+  * fixed tolong() to avert bug in base::reshape
+  * added getFix.glmmTMB method 
+  * modified here() to use the "this.path" package 
+  * modified tolong so only the last occurrence of the separator gets matched
+  * changed knots.gspline to knots_.gspline to avoid conflict with stats::knots
+  * fixed gplots problem
+  2023
+  * paik2 to draw Paik-Agresti diagrams for a numerical response
+  * Improvements to `paik`
+  * add bm25f to save benchmark results to a file
+  * debugged() lists debugged functions
+  2022
+  * Handle Ls with NAs in waldx (and waldf)
+  * modified lssvd to use MASS::ginv and added used of sandwich::vcovHC to waldx and waldf if robust=TRUE
+  * Corrected bug in tab that didn't show a frequency of 0 for factor levels absent in data
+  * new: tabf, Apply, add_faces: tabf is similar to tab in concept but returns an array of rows of a data frame with margins
+  * Apply works like lapply but returns the correct structure, like that of its argument
+  * added tps, tps_ and tpg, to update trellis settings without resetting other parameters as gd and td do
+  * added 'robust' and 'type' to getFix.lm and to waldx
+  * improved identification of non-estimable rows of hypothesis L matrix
+  * improved behaviour of wald with waldx for singular models 
+  * add p-values to as.data.frame.wald
+  * sort input variables to ensure that the prediction fram has factors in their internal order, not the order of appearance in the data
+  * fixed bug in pred.grid
+  * added 'pred.grid', an easier version of expand.grid for plotting predicted values from a fitted model
+  * added 'esac': equivalent to nested ifelse statements (see also case for a different syntax) 
+  * added napply to allow lapply to have access to names of elements of list used as an argument
+  * linked 'tablemissing_' to naniar::gg_miss_upset
+  * as.data.frame.wald includes the original wald object as the 'wald' attribute of the returned object
+  * added getFix.lmerMod and getFix.glmerMod
+  * 'as.data.frame.wald' now includes the L matrix in the returned data frame so subsetting the data frame can provide selected rows of the L matrix
+  * added 'contr.nhelmert' to construct normalized Helmert coding for factors
+  * added sublast to substitute the last occurrence of a pattern in a string
+  * added setwd_here which does nothing when knitting
+  2020
+  * xqplot: coerce x to data.frame, to correct problem with tibbles
+  * fixed bug with up
+  * modified up to return 'Freq'
+  * fixed 'counts' in 'paik'
+  * added empty environment to render_keep
+  * fixed cvar so 'up' with the 'freq' argument can return 'grouped data' in the sense of Agrest
+  * fixed getFix.lm to return vcov with NA for rank-deficient models
+  * added paik from asbio, brewer.pal.show from RColorBrewer::display.brewer.pal, death.penalty data from asbio, and 'getS' to extract samples and sampling parameters from a 'stanfit' object in rstan.
+  * altered 'gd' so it always uses 'superpose=TRUE' as default. Use 'gd_' to get superpose=FALSE
+  * added getD to get data frame from a model and optionally add rows (made possible by getModelData by J. Fox)
+  2019
+  * rename 'gspline' 'Gspline' to avert conflicts with package 'gspline'
+  
+Changes in version 0.2.1 (2019_12_08)
+  
+  * development version 0.2.0.9000
+  * released version 0.2.0
+  * added make.grid to generate cartesian product of predictor to help plot fitted responses
+  * added getModelData (from gspline)
+  * added copy of pipe (from magrittr)
+  * added panel.barchart2 to allow varying heights/widths of bars in a barchart using lattice 
+  * added llapply to provide list names and items to function argument in lapply
+  * modified print.wald to handle repeated row names
+  * added gspline, a new approach to gsp (in progress)
+  * modified sortdf so 'form' can be a variable or list, not just a formula
+2018
+  * added freq argument to 'up' to summarize factor using frequencies. Useful to create data grouped by predictor variables with frequencies for levels of response variable for binomial glm with goodness of fit test 
+  * added brace
+  * added verbose argument to Rbind
+  * getX returns a row of NAs if a variable in data is NA
+  * Fixed a bug in 'towide'
+  * The 'form' argument in 'sortdf' does not have to be a formula 
+2017
+  * Added yscale.components.log100real to draw real labels on right side for logged variable
+  * Added here: get current directory of R script in R Studio
+  * Added panel.errorbars
+  * Added getFix.stanfit and modified wald to pass 'pars' parameter
+  * Added name, sub_, gsub_, getex, getex_
+  * sortdf:  fixed so single variable data frame remains a data frame
+  * capply.default rewritten to speed up when by is a list
+  * Added 'name' to provide naming/renaming facility in a pipeline
+  * Added 'sub_' and 'gsub_' to enhance naming/renaming in a pipeline
+  * Added 'pred' parameter to provide a prediction data frame 'wald' to produce predicted values and SEs for any fit with 'getFix' and 'getX' methods 
+  * Added 'reverse' parameter to 'tolong' for cases where the 'time' value precedes the variable name: e.g. 'chain.1:beta', 'chain.2:beta' in rstan models
+  * Added Read_excel to read xls/xlsx files as data frames using the 'readxl' package
+2016
+  * Added 'Levels' function: self-named vector for 'lapply'
+  * incoporated changes to tab and added new tab_df from WWCa
+  * modified 'up' by adding 'agg' parameter
+  * added 'gpanel.box' to work like 'gpanel.fit' to create confidence interval boxes
+  * surveys: wtd_mean, lin_comb, jk_wtd_mean_se, jk_lin_comb_se
+  * modified Tab, added equivalent tab_ and improved documentation
+  * added dropLastTotal and modified tab and Tab to change behavior with Total and All margins
+  * added grepv
+  * added sortdf, assn -- mainly for magrittr pipeline
+  
+Changes in version 0.1.1 2015-12-31
+  
+  * ported functions accumulated in 'spidanew'
 
