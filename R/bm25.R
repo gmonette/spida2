@@ -3,7 +3,7 @@
 #' Use the total time for all 15 tests to decide whether you would benefit
 #' from running time-consuming tasks on a faster server.
 #' 
-#' Exports information to a file
+#' Exports information to a file. Use [rio::import()] to read the file.
 #' 
 #' @seealso [bm25()] for a benchmark without saving results in a file
 #' 
