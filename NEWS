@@ -1,3 +1,7 @@
+Changes in version 0.2.3.9009 (2026-09-09)
+
+  * modified towide, added keep.invariants
+
 Changes in version 0.2.3.9008 (2026-04-23)
 
   * added statement on continuity of splines  

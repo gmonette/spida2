@@ -34,6 +34,13 @@ within clusters are kept in output even if not included in 'idvar'
 For all variables, except \code{idvar} to be treated as time-varying,
 use \code{invar = NULL}.}
 
+\item{keep.invariants}{(default TRUE) renamed 'add.invariants' to
+better describe the behaviour of the parameter. If FALSE, then all
+variables are treated as if they potentially vary and are included
+in time-varying variable (except that they happen to be constant).
+If TRUE, invariant variables are segregated and are not turned to
+wide form, but are re-merged with the data.}
+
 \item{\dots}{Other arguments are passed to \code{\link[stats]{reshape}}.}
 }
 \value{
