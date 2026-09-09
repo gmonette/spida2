@@ -904,4 +904,22 @@ stress <- function(mc.cores = 8,N=1000000) {
     numeric(0)
   }, mc.cores = mc.cores)
 }
-
+#' Custom benchmark for comparisons
+#' 
+#' Use: `system.time(bm())`
+#' 
+#' @export
+bm <- function(N = 3000){
+  ran  <- system.time(a <- matrix(rnorm(N^2),N,N))
+  cp <- system.time(a <- crossprod(a,a))
+  ch <- system.time(lc <- chol(a))
+  ei <- system.time(ev <- eigen(a))
+  eiR <- system.time(ev <- Rcpp::Rcpp.eigen(a))
+  svd <- system.time(svd(a))
+  svdn <- system.time(svd(a, nu = 0, nv = 0))
+  ret <- rbind(rnorm=ran,crossprod = cp, cholesky = ch, eigen = ei, svd = svd, svdn = svdn)
+  ret <- ret[,1:3]
+  ret <- rbind(ret, colSums(ret))
+  ret <- cbind(ret, mult = round(ret[,1]/ret[,3],3))
+  print(ret)
+}

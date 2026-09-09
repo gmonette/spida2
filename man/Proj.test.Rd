@@ -6,11 +6,6 @@
 \usage{
 Proj.test(x, fun = Proj)
 }
-\arguments{
-\item{x}{}
-
-\item{fun}{}
-}
 \description{
 Test accuracy of projection method.
 }

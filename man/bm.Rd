@@ -4,13 +4,17 @@
 \alias{bm}
 \title{Another benchmark}
 \usage{
-bm(n = 1)
+bm(N = 3000)
+
+bm(N = 3000)
 }
 \arguments{
 \item{n}{number of replications, default 1}
 }
 \description{
 This benchmark is designed to show results for specific funtions.
+
+Use: \code{system.time(bm())}
 }
 \details{
 For example. qr is not parallelized with openblas-open mp

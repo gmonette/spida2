@@ -6,11 +6,6 @@
 \usage{
 basis(X, coef = FALSE)
 }
-\arguments{
-\item{X}{}
-
-\item{coef}{}
-}
 \description{
 Orthogonal basis for column space of a matrix
 }

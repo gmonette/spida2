@@ -18,7 +18,7 @@ of occasions (ranging from 1 to 5) on the following 7 variables.
 }
 }
 \usage{
-iq
+data(iq)
 }
 \description{
 A subset of data gathered on

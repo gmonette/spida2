@@ -22,7 +22,7 @@ A data frame with 7185 observations on the following 9 variables.
 Bryk and Raudenbush (COMPLETE)
 }
 \usage{
-hsfull
+data(hsfull)
 }
 \description{
 This is a classical data set from the field of education used to illustrate

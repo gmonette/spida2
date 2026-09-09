@@ -15,7 +15,7 @@ variables.
 }
 }
 \usage{
-death.penalty
+data(death.penalty)
 }
 \description{
 Dataset detailing death penalty 674 homicide trials in the

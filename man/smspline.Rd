@@ -6,11 +6,6 @@
 \usage{
 smspline(formula, data)
 }
-\arguments{
-\item{formula}{}
-
-\item{data}{}
-}
 \description{
 Generate a smoothing spline
 }

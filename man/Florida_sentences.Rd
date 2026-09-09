@@ -15,7 +15,7 @@ variables.
 }
 }
 \usage{
-Florida_sentences
+data(Florida_sentences)
 }
 \description{
 Dataset detailing death penalty 674 homicide trials in the

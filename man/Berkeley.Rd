@@ -14,7 +14,7 @@ A data set with four variables:
 }
 }
 \usage{
-Berkeley
+data(Berkeley)
 }
 \description{
 This is a famous data set used to illustrate Simpson's Paradox

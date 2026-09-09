@@ -10,6 +10,7 @@ towide(
   timevar = "time",
   sep = "_",
   add.invariants = TRUE,
+  keep.invariants = add.invariants,
   ...
 )
 }
@@ -56,8 +57,11 @@ Only 'time'-varying variables are expanded to wide form.
 }
 \examples{
 \dontrun{
+# 
 # Subjects A, B observed on varying occasions, measuring variables
 #  x and y in different locations
+# default behaviour segregates invariant variables
+
 dd <- data.frame( subject = c('A','A','B'),
                   time = c(1,2,1), 
                   y.left = 1:3, y.right = 1:3, 

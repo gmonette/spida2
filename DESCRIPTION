@@ -19,7 +19,6 @@ Description: Collection of utility functions for linear and mixed models
 License: GPL-3 + file LICENSE
 LazyLoad: TRUE
 LazyData: TRUE
-RoxygenNote: 7.3.3
 Encoding: UTF-8
 Imports: 
     stats,
@@ -44,3 +43,4 @@ Depends:
     R (>= 3.5.0),
 BugReports: https://github.com/gmonette/spida2/issues
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0

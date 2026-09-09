@@ -45,7 +45,7 @@ A data set with 34 variables with mainly self-descriptive names:
 }
 }
 \usage{
-Smoking4
+data(Smoking4)
 }
 \description{
 Smoking data by country and gender in approximately 2004

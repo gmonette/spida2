@@ -6,17 +6,6 @@
 \usage{
 spline.T(knots, degree, smooth, lin = NULL, intercept = 0, signif = 3)
 }
-\arguments{
-\item{knots}{}
-
-\item{degree}{}
-
-\item{smooth}{}
-
-\item{intercept}{}
-
-\item{signif}{}
-}
 \description{
 Spline tranformation matrix
 }

@@ -72,9 +72,9 @@ A data set with 24 variables with self-descriptive names:
 }
 }
 \usage{
-Smoking3
+data(Smoking3)
 
-Smoking3
+data(Smoking3)
 }
 \description{
 Smoking data by country and gender in approximately 2004

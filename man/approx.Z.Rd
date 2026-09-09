@@ -6,13 +6,6 @@
 \usage{
 approx.Z(Z, oldtimes, newtimes)
 }
-\arguments{
-\item{Z}{}
-
-\item{oldtimes}{}
-
-\item{newtimes}{}
-}
 \description{
 Approximation for semi-parametric splines
 }

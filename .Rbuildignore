@@ -6,3 +6,5 @@
 ^play/.*$
 ^scraps/.*$
 ^pkgdown$
+^\.positai$
+^\.claude$

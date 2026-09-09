@@ -6,9 +6,6 @@
 \usage{
 Proj(x)
 }
-\arguments{
-\item{x}{}
-}
 \description{
 Matrix of orthogonal projection into column space of matrix.
 }

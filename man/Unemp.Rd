@@ -12,7 +12,7 @@ A data set with 290 rows an two variables:
 }
 }
 \usage{
-Unemp
+data(Unemp)
 }
 \description{
 Monthly unemployment data in the U.S. from 1995-01-01 to 2019-02-01

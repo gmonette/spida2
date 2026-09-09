@@ -6,17 +6,6 @@
 \usage{
 spline.E(knots, degree, smooth, lin = NULL, intercept = 0, signif = 3)
 }
-\arguments{
-\item{knots}{}
-
-\item{degree}{}
-
-\item{smooth}{}
-
-\item{intercept}{}
-
-\item{signif}{}
-}
 \description{
 Spline estimation function
 }

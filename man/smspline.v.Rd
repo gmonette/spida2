@@ -6,9 +6,6 @@
 \usage{
 smspline.v(time)
 }
-\arguments{
-\item{time}{}
-}
 \description{
 smspline.v from library splines with better ginverse
 }

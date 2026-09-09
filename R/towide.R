@@ -33,8 +33,11 @@
 #' name the variables in wide form.
 #' @examples
 #' \dontrun{
+#' # 
 #' # Subjects A, B observed on varying occasions, measuring variables
 #' #  x and y in different locations
+#' # default behaviour segregates invariant variables
+#' 
 #' dd <- data.frame( subject = c('A','A','B'),
 #'                   time = c(1,2,1), 
 #'                   y.left = 1:3, y.right = 1:3, 
@@ -182,7 +185,36 @@
 #' dw
 #' }
 #' @export
-towide <- function(data,
+towide <-
+  function (data, idvar = "id", timevar = "time", sep = "_", 
+            add.invariants = TRUE, 
+            keep.invariants = add.invariants,
+            ...) {
+    invars <- function(data, idvar) {
+      ret <- sapply(data, function(x) {
+        max(capply(x, data[, idvar], function(y) length(unique(y))))
+      })
+      ret <- ret == 1
+      ret
+    }
+    invars <- names(data)[invars(data, idvar)] 
+    if(keep.invariants && (length(invars) > 0)) {
+      dinv <- data[, invars, drop = FALSE]
+      dinv <- dinv[!duplicated(data[idvar]), , drop = FALSE]
+      dl <- data[, unique(c(idvar, timevar, names(data) %less% invars)), drop = FALSE]
+    } else {
+      dinv <- numeric(0)
+      dl <- data
+    }
+    dw <- stats::reshape(dl, direction = "wide", idvar = idvar, 
+                         timevar = timevar, sep = sep, ...)
+    if(length(dinv)) {
+      merge(dw, dinv, by = idvar)
+    } else dw
+  }
+
+#' @export
+towide_previous <- function(data,
            idvar = 'id',
            timevar = 'time',
            sep = '_',
